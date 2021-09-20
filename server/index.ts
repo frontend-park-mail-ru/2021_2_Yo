@@ -7,7 +7,6 @@ import cookie from "cookie-parser";
 const app = express();
 app.use(body.json())
 app.use(morgan('dev'))
-// app.use(express.static(path.resolve(path.resolve(), '..', 'public')));
 app.use(express.static('public'));
 app.use(express.static('dist/public'));
 app.use(express.static('public/server'));

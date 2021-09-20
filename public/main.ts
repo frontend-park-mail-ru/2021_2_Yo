@@ -1,4 +1,2 @@
-import Header from "./components/Header/Header.js";
-
-const header = new Header()
-header.render()
+// Пример импорта компоненты:
+// import Name from "./components/name/Name.js"

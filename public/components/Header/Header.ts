@@ -1,4 +1,4 @@
-// import './Header.css'
+
 
 export default class HeaderComponent {
     #parent: HTMLElement
@@ -12,8 +12,16 @@ export default class HeaderComponent {
         header.id = "header";
         header.innerHTML = `
             <div id="headerContent">
-                <img src="./img/logo.png">
-                <img src="./img/geo.png">
+                <div id="geo">
+                    <img src="./img/logo.png">
+                    <img id="geoimg" src="./img/geo.png">
+                    <span>Москва</span>
+                </div>
+                <input type="text" placeholder="Поиск...">
+                <div id="userBox">
+                    <img src="https://source.boringavatars.com/marble/60/Валентин">
+                    <span>Валентин</span>
+                </div>
             </div>
         `;
         this.#parent.appendChild(header);
