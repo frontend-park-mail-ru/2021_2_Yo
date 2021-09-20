@@ -1,2 +1,2 @@
 // Пример импорта компоненты:
-// import ComponentName from "./components/name/Name.js"
+// import Name from "./components/name/Name.js"
