@@ -9,9 +9,9 @@
         "noImplicitThis": true,
         "strictBindCallApply": true,
         // Other
-        "module": "es6",
         "esModuleInterop": true,
         "target": "es6",
+        "module": "es6",
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
