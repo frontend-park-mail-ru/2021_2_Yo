@@ -1,0 +1,25 @@
+#header {
+    height: 100px;
+    /* position: absolute; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    /* padding: 0 300px; */
+    padding: 0 15%;
+    background: linear-gradient(90deg, #C6C1FF 0%, rgba(255, 125, 250, 0.38) 100%);
+}
+#headerContent {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+ /* #logo { */
+    /* height: 87px; */
+    /* width: 223px; */
+ /* } */
+
+ /* #geo{ */
+    /* height: 35px; */
+    /* height: ; */
+ /* } */
