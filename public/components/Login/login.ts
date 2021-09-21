@@ -1,3 +1,5 @@
+import {Request} from "../../modules/request.js";
+
 export class LoginComponent {
     #parent
 
@@ -13,11 +15,11 @@ export class LoginComponent {
         this.#parent.appendChild(background)
 
         const formBackground = document.createElement('div')
-        formBackground.className = "formBackground"
+        formBackground.className = "authFormBackground"
         background.appendChild(formBackground)
 
         const authorizeLabel = document.createElement('p')
-        authorizeLabel.className = "authLabel"
+        authorizeLabel.className = "label"
         authorizeLabel.textContent = "Авторизация"
 
         const form = document.createElement('form');
@@ -48,20 +50,18 @@ export class LoginComponent {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
 
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({email, password})
-            }).then(response => {
+            const request = new Request()
+            request.Post({
+                url: '/login', body: {email, password}, callback: (response: Response) => {
                     if (response.status === 200) {
-                        alert('пришло');
+                        const answer = JSON.stringify(response.json())
+                        alert(answer)
                         return;
                     }
-                    alert('не пришло');
+                    alert('не пришло')
+                    return
                 }
-            );
+            })
         })
 
         formBackground.appendChild(authorizeLabel)

@@ -2,8 +2,6 @@ input {
     width: 700px;
     height: 60px;
     display: block;
-    margin-left: 92px;
-    margin-right: 92px;
     background: #FFFFFF;
     mix-blend-mode: normal;
     border: 1px solid #000000;
@@ -19,19 +17,17 @@ input {
     background: #001065;
 }
 
-.formBackground {
+.authFormBackground {
     display: inline-block;
-    left: 398px;
-    top: 792px;
+    position: center;
+    padding: 174px 92px 78px;
 
     background: #FFFCFC;
     mix-blend-mode: normal;
     border-radius: 30px;
-
 }
 
 p {
-    margin-left: 92px;
     margin-bottom: 2px;
     margin-top: 18px;
     font-family: Roboto, serif;
@@ -43,14 +39,7 @@ p {
     color: #000000;
 }
 
-.authLabel {
-    width: 592px;
-    height: 113px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 174px;
-
+.label {
     font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
@@ -59,11 +48,11 @@ p {
 }
 
 .submitBtn {
-    width: 223px;
+    width: auto;
     height: 60px;
     margin-top: 46px;
-    margin-bottom: 78px;
-    padding: 0;
+    padding-left: 48px;
+    padding-right: 48px;
 
     background: #000000;
     mix-blend-mode: normal;
@@ -79,4 +68,25 @@ p {
     line-height: 42px;
 
     color: #FFFFFF;
+}
+
+.signupBackground {
+    background: linear-gradient(137.34deg, #0E0063 0%, #5E0043 100%);
+}
+
+.signupFormBackground {
+    display: inline-block;
+    padding: 141px 313px 78px 93px;
+
+    background: #FFFCFC;
+    mix-blend-mode: normal;
+    border-radius: 30px;
+}
+
+.smallerLabel {
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 56px;
 }
