@@ -35,7 +35,6 @@ export default class EventsHeaderComponent {
         `;
         const source = header.innerHTML;
         const template = Handlebars.compile(source);
-        console.log(template);
         header.innerHTML = template(cfg);
         this.#parent.appendChild(header);
     }
