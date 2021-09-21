@@ -1,2 +1,8 @@
-// Пример импорта компоненты:
-// import Name from "./components/name/Name.js"
+import HeaderComponent from "./components/Header/Header.js"
+import EventHeaderComponent from "./components/EventsHeader/EventsHeader.js"
+
+declare global {
+    interface Window {
+        Handlebars: any;
+    }
+}
