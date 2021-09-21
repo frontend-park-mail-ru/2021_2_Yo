@@ -1,7 +1,7 @@
 import {Request} from "../../modules/request.js";
 
 export class LoginComponent {
-    #parent
+    #parent: HTMLElement
 
     constructor({parent = document.body} = {}) {
         this.#parent = parent
