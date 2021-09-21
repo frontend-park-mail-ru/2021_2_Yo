@@ -18,7 +18,7 @@ const cfg = {
 }
 
 export default class EventsHeaderComponent {
-    #parent
+    #parent: HTMLElement
 
     constructor(parent: HTMLElement = document.body) {
         this.#parent = parent;
