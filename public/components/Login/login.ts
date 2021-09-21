@@ -1,4 +1,4 @@
-import {Request} from "../../modules/request.js";
+// import {Request} from "../../modules/request.js";
 
 export class LoginComponent {
     #parent: HTMLElement
@@ -50,18 +50,18 @@ export class LoginComponent {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
 
-            const request = new Request()
-            request.Post({
-                url: '/login', body: {email, password}, callback: (response: Response) => {
-                    if (response.status === 200) {
-                        const answer = JSON.stringify(response.json())
-                        alert(answer)
-                        return;
-                    }
-                    alert('не пришло')
-                    return
-                }
-            })
+            // const request = new Request()
+            // request.Post({
+            //     url: '/login', body: {email, password}, callback: (response: Response) => {
+            //         if (response.status === 200) {
+            //             const answer = JSON.stringify(response.json())
+            //             alert(answer)
+            //             return;
+            //         }
+            //         alert('не пришло')
+            //         return
+            //     }
+            // })
         })
 
         formBackground.appendChild(authorizeLabel)
