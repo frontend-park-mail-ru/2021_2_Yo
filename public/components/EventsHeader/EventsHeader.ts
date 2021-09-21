@@ -1,10 +1,3 @@
-declare global {
-    interface Window {
-        Handlebars: any;
-    }
-}
-const Handlebars = window.Handlebars;
-
 const cfg = {
     eventTypes: [
     { href : "/#", name : "Выставки" },
@@ -26,15 +19,14 @@ export default class EventsHeaderComponent {
 
     render() {
         const header = document.createElement('div');
-        header.innerHTML = `
+        const source = `
             <div id="eHeader">
                 {{#each eventTypes}}
-                    <a class="eventAnchor" href="{{this.href}}">{{this.name}}</a>
+                    <a class="eventAnchor" href="{{href}}">{{name}}</a>
                 {{/each}}
             </div>
         `;
-        const source = header.innerHTML;
-        const template = Handlebars.compile(source);
+        const template = window.Handlebars.compile(source);
         header.innerHTML = template(cfg);
         this.#parent.appendChild(header);
     }
