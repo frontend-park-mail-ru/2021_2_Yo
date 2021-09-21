@@ -1,10 +1,8 @@
-
-
 export default class HeaderComponent {
     #parent: HTMLElement
 
     constructor(parent: HTMLElement = document.body) {
-        this.#parent = parent
+        this.#parent = parent;
     }
 
     render() {
@@ -27,11 +25,3 @@ export default class HeaderComponent {
         this.#parent.appendChild(header);
     }
 }
-
-// const Header = () => {
-//     const header = document.createElement('header')
-//     header.innerHTML = '<div>abs</div>'
-//     return header
-// }
-
-// export default Header
