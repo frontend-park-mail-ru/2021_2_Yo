@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        // Strict Checks
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "alwaysStrict": true,
+        "strictPropertyInitialization": true,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "strictBindCallApply": true,
+        // Other
+        "esModuleInterop": true,
+        "target": "es6",
+        "module": "es6",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": ".",
+        "paths": {
+            "*": [
+                "node_modules/*"
+            ]
+        }
+    },
+    "include": [
+        "./public",
+        "./server",
+    ]
+}
