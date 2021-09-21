@@ -1,0 +1,23 @@
+#fHeader {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8%;
+    background: linear-gradient(90deg, #001065 0%, rgba(7, 80, 189, 0.765104) 57.29%, rgba(250, 0, 255, 0.59) 100%);
+}
+
+#fHeader div {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+#fHeader img {
+    height: 60px;
+    margin-left: 10px;
+}
+
