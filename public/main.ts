@@ -8,10 +8,15 @@ declare global {
     }
 }
 
-const header = new HeaderComponent();
-const eHeader = new EventHeaderComponent();
-const fHeader = new FilterHeaderComponent();
+const app = document.createElement('div');
+app.id = 'App';
+
+const header = new HeaderComponent(app);
+const eHeader = new EventHeaderComponent(app);
+const fHeader = new FilterHeaderComponent(app);
 
 header.render();
 eHeader.render();
 fHeader.render();
+
+document.body.innerHTML = app.outerHTML;
