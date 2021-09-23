@@ -1,17 +1,13 @@
-#header {
-    height: 100px;
-    display: flex;
-    align-items: center;
-    padding: 0 8%;
+.mainHeader {
     background: linear-gradient(90deg, #C6C1FF 0%, rgba(255, 125, 250, 0.38) 100%);
 }
-#headerContent {
+.mhContent {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-#geo {
+.geo {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,11 +16,11 @@
     font-weight: 400;
     text-align: center;
 }
-#geoimg {
+.geoimg {
     height: 30px;
     width: 30px;
 }
-#headerContent input {
+.mhContent input {
     height: 60px;
     width: 540px;
     box-sizing: border-box;
@@ -35,13 +31,13 @@
     border: solid 3px black;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-#userBox {
+.userBox {
     display: flex;
     align-items: center;
     text-align: center;
     font-size: 30px;
     color: white;
 }
-#header span {
+.mainHeader span {
      margin-left: 10px;
 }
