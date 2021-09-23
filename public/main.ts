@@ -7,3 +7,9 @@ declare global {
         Handlebars: any;
     }
 }
+
+const header = new HeaderComponent();
+const eHeader = new EventHeaderComponent();
+
+header.render();
+eHeader.render();
