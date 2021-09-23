@@ -71,6 +71,9 @@ p {
 }
 
 .signupBackground {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     background: linear-gradient(137.34deg, #0E0063 0%, #5E0043 100%);
 }
 
