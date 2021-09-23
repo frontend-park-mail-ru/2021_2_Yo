@@ -1,6 +1,6 @@
 // import {Request} from "../../modules/request.js";
 
-export class LoginComponent {
+export default class LoginComponent {
     #parent: HTMLElement
 
     constructor({parent = document.body} = {}) {
