@@ -7,3 +7,11 @@ declare global {
         Handlebars: any;
     }
 }
+
+const header = new HeaderComponent();
+const eHeader = new EventHeaderComponent();
+const fHeader = new FilterHeaderComponent();
+
+header.render();
+eHeader.render();
+fHeader.render();
