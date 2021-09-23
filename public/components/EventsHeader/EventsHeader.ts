@@ -13,21 +13,19 @@ const cfg = {
 export default class EventsHeaderComponent {
     #parent: HTMLElement
 
-    constructor(parent: HTMLElement = document.body) {
+    constructor(parent: HTMLElement) {
         this.#parent = parent;
     }
 
     render() {
-        const header = document.createElement('div');
         const source = `
-            <div id="eHeader">
+            <header class="eHeader">
                 {{#each eventTypes}}
                     <a class="eventAnchor" href="{{href}}">{{name}}</a>
                 {{/each}}
-            </div>
+            </header>
         `;
         const template = window.Handlebars.compile(source);
-        header.innerHTML = template(cfg);
-        this.#parent.appendChild(header);
+        this.#parent.innerHTML += template(cfg);
     }
 }

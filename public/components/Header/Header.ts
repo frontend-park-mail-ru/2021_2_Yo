@@ -1,27 +1,27 @@
 export default class HeaderComponent {
     #parent: HTMLElement
 
-    constructor(parent: HTMLElement = document.body) {
+    constructor(parent: HTMLElement) {
         this.#parent = parent;
     }
 
     render() {
-        const header = document.createElement('div');
-        header.id = "header";
+        const header = document.createElement('header');
+        header.className = 'mainHeader';
         header.innerHTML = `
-            <div id="headerContent">
-                <div id="geo">
+            <div class="mhContent">
+                <div class="geo">
                     <img src="./img/logo.png">
-                    <img id="geoimg" src="./img/geo.png">
+                    <img class="geoimg" src="./img/geo.png">
                     <span>Москва</span>
                 </div>
                 <input type="text" placeholder="Поиск...">
-                <div id="userBox">
+                <div class="userBox">
                     <img src="https://source.boringavatars.com/marble/60/Валентин">
                     <span>Валентин</span>
                 </div>
             </div>
         `;
-        this.#parent.appendChild(header);
+        this.#parent.innerHTML += header.outerHTML;
     }
 }

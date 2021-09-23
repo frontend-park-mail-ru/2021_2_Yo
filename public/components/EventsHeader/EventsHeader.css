@@ -1,9 +1,5 @@
-#eHeader {
-    height: 100px;
-    display: flex;
-    align-items: center;
+.eHeader {
     justify-content: space-between;
-    padding: 0 8%;
 }
 
 .eventAnchor {
