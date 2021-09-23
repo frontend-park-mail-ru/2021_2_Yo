@@ -6,18 +6,18 @@ export default class FilterHeaderComponent {
     }
 
     render() {
-        const header = document.createElement('div');
-        header.id = "fHeader";
+        const header = document.createElement('header');
+        header.className = 'fHeader';
         header.innerHTML = `
-            <div id="calendar">
+            <div class="fSubblock">
                 <span>Календарь событий</span>
-                <img src="./img/calendar.png">
+                <img class="fImg" src="./img/calendar.png">
             </div>
-            <div id="filter">
+            <div class="fSubblock">
                 <span>Поиск по фильтрам</span>
-                <img src="./img/filter.png">
+                <img class="fImg" src="./img/filter.png">
             </div>
         `;
-        this.#parent.appendChild(header);
+        this.#parent.innerHTML += header.outerHTML;
     }
 }
