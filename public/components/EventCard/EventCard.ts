@@ -15,21 +15,20 @@ export default class EventCardComponent {
     }
 
     render() {
-        const card = document.createElement('div');
-        card.className = "eventCard";
         const source = `
-            <div class="cover">
-                <img src="{{imgUrl}}">
-                <div class="eventName">{{name}}</div>
-                <div class="eventViews">
-                    <img src="./img/viewed.png">
-                    <span>{{viewed}}</span>
+            <div class="eventCard">
+                <div class="cover">
+                    <img src="{{imgUrl}}">
+                    <div class="eventName">{{name}}</div>
+                    <div class="eventViews">
+                        <img src="./img/viewed.png">
+                        <span>{{viewed}}</span>
+                    </div>
                 </div>
+                <div class="description">{{description}}</div>
             </div>
-            <div class="description">{{description}}</div>
         `;
         const template = window.Handlebars.compile(source);
-        card.innerHTML = template(this.#data);
-        this.#parent.innerHTML += card.outerHTML;
+        this.#parent.innerHTML += template(this.#data);
     }
 }
