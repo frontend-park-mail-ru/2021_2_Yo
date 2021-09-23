@@ -1,7 +1,7 @@
 export default class HeaderComponent {
     #parent: HTMLElement
 
-    constructor(parent: HTMLElement = document.body) {
+    constructor(parent: HTMLElement) {
         this.#parent = parent;
     }
 

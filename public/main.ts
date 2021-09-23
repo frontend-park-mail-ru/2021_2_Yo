@@ -7,8 +7,13 @@ declare global {
     }
 }
 
-const header = new HeaderComponent();
-const eHeader = new EventHeaderComponent();
+const app = document.createElement('div');
+app.id = 'App';
+
+const header = new HeaderComponent(app);
+const eHeader = new EventHeaderComponent(app);
 
 header.render();
 eHeader.render();
+
+document.body.innerHTML = app.outerHTML;
