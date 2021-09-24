@@ -7,18 +7,18 @@ export default class HeaderComponent {
 
     render() {
         const header = document.createElement('header');
-        header.className = 'mainHeader';
+        header.className = 'mHeader';
         header.innerHTML = `
             <div class="mhContent">
                 <div class="geo">
                     <img src="./img/logo.png">
-                    <img class="geoimg" src="./img/geo.png">
-                    <span>Москва</span>
+                    <img id="geoimg" src="./img/geo.png">
+                    <span class="imgCaption">Москва</span>
                 </div>
-                <input type="text" placeholder="Поиск...">
+                <input id="searchInput" type="text" placeholder="Поиск...">
                 <div class="userBox">
                     <img src="https://source.boringavatars.com/marble/60/Валентин">
-                    <span>Валентин</span>
+                    <span class="imgCaption">Валентин</span>
                 </div>
             </div>
         `;

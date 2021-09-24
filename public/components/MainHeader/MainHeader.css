@@ -1,4 +1,4 @@
-.mainHeader {
+.mHeader {
     background: linear-gradient(90deg, #C6C1FF 0%, rgba(255, 125, 250, 0.38) 100%);
 }
 .mhContent {
@@ -16,11 +16,11 @@
     font-weight: 400;
     text-align: center;
 }
-.geoimg {
+#geoimg {
     height: 30px;
     width: 30px;
 }
-.mhContent input {
+#searchInput {
     height: 60px;
     width: 540px;
     box-sizing: border-box;
@@ -38,6 +38,6 @@
     font-size: 30px;
     color: white;
 }
-.mainHeader span {
+.imgCaption {
      margin-left: 10px;
 }

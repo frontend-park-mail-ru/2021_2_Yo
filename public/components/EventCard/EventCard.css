@@ -15,7 +15,7 @@
     text-align: left;
 }
 
-.cover > img {
+.eventBG {
     width: 100%;
     height: 100%;
     border-radius: 20px;
@@ -37,7 +37,7 @@
     align-items: center;
 }
 
-.eventViews img {
+.eventViewsImg {
     height: 18px;
     margin-right: 10px;
 }

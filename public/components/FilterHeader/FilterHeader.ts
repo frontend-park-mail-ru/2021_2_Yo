@@ -11,11 +11,11 @@ export default class FilterHeaderComponent {
         header.innerHTML = `
             <div class="fSubblock">
                 <span>Календарь событий</span>
-                <img class="fImg" src="./img/calendar.png">
+                <img id="calendarimg" class="fImg" src="./img/calendar.png">
             </div>
             <div class="fSubblock">
                 <span>Поиск по фильтрам</span>
-                <img class="fImg" src="./img/filter.png">
+                <img id="filterimg" class="fImg" src="./img/filter.png">
             </div>
         `;
         this.#parent.innerHTML += header.outerHTML;

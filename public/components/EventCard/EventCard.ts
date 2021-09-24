@@ -18,10 +18,10 @@ export default class EventCardComponent {
         const source = `
             <div class="eventCard">
                 <div class="cover">
-                    <img src="{{imgUrl}}">
+                    <img class="eventBG" src="{{imgUrl}}">
                     <div class="eventName">{{name}}</div>
                     <div class="eventViews">
-                        <img src="./img/viewed.png">
+                        <img class="eventViewsImg" src="./img/viewed.png">
                         <span>{{viewed}}</span>
                     </div>
                 </div>
