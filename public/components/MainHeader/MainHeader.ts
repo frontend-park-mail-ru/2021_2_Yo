@@ -1,27 +1,32 @@
-export default class HeaderComponent {
-    #parent: HTMLElement
+import { UserData } from "../../types.js";
 
-    constructor(parent: HTMLElement) {
+export default class MainHeaderComponent {
+    #parent: HTMLElement
+    #user: UserData
+
+    constructor(parent: HTMLElement, user: UserData) {
         this.#parent = parent;
+        this.#user = user;
     }
 
     render() {
-        const header = document.createElement('header');
-        header.className = 'mHeader';
-        header.innerHTML = `
-            <div class="mhContent">
-                <div class="geo">
-                    <img src="./img/logo.png">
-                    <img id="geoimg" src="./img/geo.png">
-                    <span class="imgCaption">Москва</span>
+        const source = `
+            <header class="mHeader">
+                <div class="mhContent">
+                    <div class="geo">
+                        <img src="./img/logo.png">
+                        <img id="geoimg" src="./img/geo.png">
+                        <span class="imgCaption">{{geo}}</span>
+                    </div>
+                    <input id="searchInput" type="text" placeholder="Поиск...">
+                    <div class="userBox">
+                        <img src="https://source.boringavatars.com/marble/60/{{name}}">
+                        <span class="imgCaption">{{name}}</span>
+                    </div>
                 </div>
-                <input id="searchInput" type="text" placeholder="Поиск...">
-                <div class="userBox">
-                    <img src="https://source.boringavatars.com/marble/60/Валентин">
-                    <span class="imgCaption">Валентин</span>
-                </div>
-            </div>
+            </header>
         `;
-        this.#parent.innerHTML += header.outerHTML;
+        const template = window.Handlebars.compile(source);
+        this.#parent.innerHTML += template(this.#user);
     }
 }

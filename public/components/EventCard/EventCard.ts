@@ -1,9 +1,4 @@
-export type EventCardData = {
-    imgUrl: string;
-    viewed: number;
-    name: string;
-    description: string;
-}
+import { EventCardData } from "../../types.js";
 
 export default class EventCardComponent {
     #parent: HTMLElement

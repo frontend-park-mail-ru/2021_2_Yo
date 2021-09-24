@@ -1,4 +1,5 @@
-import EventCardComponent, { EventCardData } from "../EventCard/EventCard.js"
+import EventCardComponent from "../EventCard/EventCard.js"
+import { EventCardData } from "../../types.js";
 
 
 export default class EventRowComponent {

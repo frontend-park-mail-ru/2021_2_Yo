@@ -10,7 +10,7 @@ const cfg = {
     ],
 }
 
-export default class EventsHeaderComponent {
+export default class EventHeaderComponent {
     #parent: HTMLElement
 
     constructor(parent: HTMLElement) {
