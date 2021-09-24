@@ -6,5 +6,5 @@ declare global {
     }
 }
 
-const signup = new LoginComponent()
-signup.render()
+const login = new LoginComponent()
+login.render()
