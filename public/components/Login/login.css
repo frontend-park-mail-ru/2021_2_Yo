@@ -13,7 +13,9 @@ input {
 }
 
 .background {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     background: #001065;
 }
 

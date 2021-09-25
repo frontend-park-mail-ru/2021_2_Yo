@@ -14,7 +14,7 @@
         "module": "es6",
         "moduleResolution": "node",
         "outDir": "dist",
-        "baseUrl": ".",
+        "baseUrl": "./public",
         "paths": {
             "*": [
                 "node_modules/*",
@@ -23,6 +23,6 @@
     },
     "include": [
         "./public",
-        "./server",
+        "./server"
     ]
 }
