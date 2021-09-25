@@ -37,13 +37,13 @@ export default class SignupComponent {
         const template = window.Handlebars.compile(source)
         this.#parent.innerHTML += template()
 
-        const errorsPlace = document.getElementById('errors') as HTMLElement
+        const errorsBlock = document.getElementById('errors') as HTMLElement
 
         const form = document.getElementById('regForm')
         form?.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            errorsPlace.innerHTML = ''
+            errorsBlock.innerHTML = ''
 
             let flagEmpty: boolean = false
             let flagIncorrectPasswords: boolean = false
@@ -98,10 +98,10 @@ export default class SignupComponent {
             }
 
             if (flagEmpty) {
-                errorsPlace.innerHTML += window.Handlebars.compile(`<p class='errorP'>Заполните все поля</p>`)()
+                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Заполните все поля</p>`)()
             }
             if (flagIncorrectPasswords) {
-                errorsPlace.innerHTML += window.Handlebars.compile(`<p class='errorP'>Пароли не совпадают</p>`)()
+                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Пароли не совпадают</p>`)()
             }
         })
     }
