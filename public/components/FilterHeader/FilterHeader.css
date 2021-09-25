@@ -16,3 +16,7 @@
     height: 60px;
     margin-left: 10px;
 }
+
+.fImg:hover {
+    cursor: pointer;
+}

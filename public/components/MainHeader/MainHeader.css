@@ -1,5 +1,5 @@
 .mHeader {
-    background: linear-gradient(90deg, #C6C1FF 0%, rgba(255, 125, 250, 0.38) 100%);
+    background: linear-gradient(90deg, #C6C1FF 0%, rgba(255, 25, 250, 0.38) 100%);
 }
 .mhContent {
     width: 100%;
@@ -38,6 +38,13 @@
     font-size: 30px;
     color: white;
 }
-.imgCaption {
-     margin-left: 10px;
+
+.authAnchor {
+    color: white;
+    text-decoration: none;
+    font-size: 26px;
+}
+
+.rightSideText {
+     margin-left: 20px;
 }
