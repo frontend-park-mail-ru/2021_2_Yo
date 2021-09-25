@@ -13,12 +13,11 @@
         "target": "es6",
         "module": "es6",
         "moduleResolution": "node",
-        "sourceMap": true,
         "outDir": "dist",
         "baseUrl": ".",
         "paths": {
             "*": [
-                "node_modules/*"
+                "node_modules/*",
             ]
         }
     },
