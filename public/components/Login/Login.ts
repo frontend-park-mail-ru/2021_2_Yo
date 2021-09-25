@@ -6,32 +6,30 @@ export default class LoginComponent {
     }
 
     render() {
-        const formSource = `
-                <p>Email</p>
-                <input type='email' id='emailInput'>
-                <p>Пароль</p>
-                <input type='password' id='passwordInput'>
-                <input type='submit' class='submitBtn'>
-        `
-
         const source = `
             <div class = 'background'>
                 <div class ='authFormBackground' id='authFormBackground'>
                     <p class = 'label'>Авторизация</p>
-                    <form id='authForm'>`
-            + formSource +
-            `
+                    <form id='authForm'>
+                        <p>Email</p>
+                        <input type='email' id='emailInput'>
+                        <p>Пароль</p>
+                        <input type='password' id='passwordInput'>
+                        <input type='submit' class='submitBtn'>
+                        <div id='errors'>
+                        </div>
                     </form>
                 </div>
             </div>
         `
 
-        let template = window.Handlebars.compile(source)
+        const template = window.Handlebars.compile(source)
         this.#parent.innerHTML += template()
 
+        const errorsBlock = document.getElementById('errors') as HTMLElement
 
-        const form = document.getElementById('authForm')
-        form?.addEventListener('submit', (e) => {
+        const form = document.getElementById('authForm') as HTMLFormElement
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
             const emailInput = document.getElementById('emailInput') as HTMLInputElement
             const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
@@ -39,18 +37,20 @@ export default class LoginComponent {
             const email = emailInput.value.trim()
             const password = passwordInput.value.trim()
 
-            form.innerHTML = formSource
+            errorsBlock.innerHTML = ''
 
-            if (email === '') {
-                const error = '<p class="errorP">Введите Email</p>'
-                template = window.Handlebars.compile(error)
-                form.innerHTML += template()
+            if (!email) {
+                emailInput.style.border = '1px solid red'
+                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите Email</p>')()
+            } else {
+                emailInput.style.border = '1px solid green'
             }
 
-            if (password === '') {
-                const error = '<p class="errorP">Введите пароль</p>'
-                template = window.Handlebars.compile(error)
-                form.innerHTML += template()
+            if (!password) {
+                passwordInput.style.border = '1px solid red'
+                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите пароль</p>')()
+            } else {
+                passwordInput.style.border = '1px solid green'
             }
         })
     }
