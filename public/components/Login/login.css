@@ -105,3 +105,11 @@ p {
 
     color: darkred;
 }
+
+.inputError {
+    border: 1px solid red
+}
+
+.inputCorrect {
+    border: 1px solid green
+}
