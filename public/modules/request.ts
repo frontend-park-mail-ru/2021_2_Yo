@@ -1,40 +1,49 @@
-import {response} from "express";
-
 const METHODS = {
     POST: 'POST',
     GET: 'GET',
 };
 
 export class Request {
-    Get(args: object) {
-        return this.#request({method: METHODS.GET, ...args});
+    getFetch(url: string) {
+        let statusCode: number;
+
+        return fetch(url, {
+            method: METHODS.GET
+        }).then((response) => {
+            statusCode = response.status;
+            return response.json();
+        }).then((parsedBody) => {
+            return {
+                status: statusCode,
+                parsedBody
+            };
+        }).catch((error) => {
+            return error
+        })
     }
 
-    Post(args: object) {
-        return this.#request({method: METHODS.POST, ...args});
-    }
+    postFetch(url: string, body: {}) {
+        let statusCode: number;
 
-    #request({
-                 method = METHODS.GET, url = '/', body = {}, callback = (res: Response) => {
-            // empty
-        }
-             }) {
-        if (method === METHODS.GET) {
-            fetch(url).then(res =>
-                callback(res)
-            )
-        } else {
-            fetch(url, {
-                method: 'POST',
-                credentials: "include",
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(body)
-            }).then(res =>
-                callback(res)
-            )
-        }
+        return fetch(url, {
+            method: METHODS.POST,
+            credentials: 'include',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(body)
+        }).then((response) => {
+            statusCode = response.status;
+            return response.json();
+        }).then((parsedBody) => {
+            return {
+                status: statusCode,
+                parsedBody
+            };
+        }).catch((error) => {
+            return error
+        })
     }
 }
 
