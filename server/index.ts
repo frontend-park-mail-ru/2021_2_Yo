@@ -12,16 +12,16 @@ app.use(express.static('dist/public'));
 app.use(express.static('public/server'));
 app.use(cookie());
 
-app.post('/login', (req,  res) => {
-//
+app.post('/login', (req, res) => {
+    //
 });
 
-app.post('/signup', (req,  res) => {
-//
+app.post('/signup', (req, res) => {
+    //
 });
 
 const port = process.env.PORT || 3000;
 
-app.listen(port,  () => {
+app.listen(port, () => {
     console.log(`Server listening at: http://localhost:${port}`);
 });
