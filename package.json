@@ -26,5 +26,8 @@
     "tslib": "^2.3.1",
     "tslint": "^6.1.3",
     "typescript": "^4.4.3"
+  },
+  "engines": {
+    "node": "15.14.0"
   }
 }
