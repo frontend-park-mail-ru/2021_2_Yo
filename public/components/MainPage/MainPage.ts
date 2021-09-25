@@ -8,9 +8,9 @@ import MainHeaderComponent from "../MainHeader/MainHeader.js";
 export default class MainPageComponent {
     #parent: HTMLElement
     #events: EventCardData[]
-    #user: UserData
+    #user: UserData | undefined
 
-    constructor(parent: HTMLElement, events: EventCardData[], user: UserData) {
+    constructor(parent: HTMLElement, events: EventCardData[], user?: UserData) {
         this.#parent = parent;
         this.#events = events;
         this.#user = user;
