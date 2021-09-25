@@ -10,11 +10,10 @@
     "start": "node ."
   },
   "dependencies": {
-    "express": "^4.17.1",
     "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "ts-node": "^10.2.1",
-    "uuid": "^8.3.2"
+    "ts-node": "^10.2.1"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
