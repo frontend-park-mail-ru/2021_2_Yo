@@ -26,16 +26,15 @@ export function authInputsValidation(errorsBlock: HTMLElement, emailInput: HTMLI
     return valid
 }
 
-export function signupInputsValidation(errorsBlock: HTMLElement): boolean {
+export function signupInputsValidation(errorsBlock: HTMLElement,
+                                       nameInput: HTMLInputElement,
+                                       surnameInput: HTMLInputElement,
+                                       emailInput: HTMLInputElement,
+                                       passwordInput1: HTMLInputElement,
+                                       passwordInput2: HTMLInputElement): boolean {
     let valid: boolean
 
     errorsBlock.innerHTML = ''
-
-    const nameInput = document.getElementById('nameInput') as HTMLInputElement
-    const surnameInput = document.getElementById('surnameInput') as HTMLInputElement
-    const emailInput = document.getElementById('emailInput') as HTMLInputElement
-    const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement
-    const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement
 
     const flagEmpty = checkInputsEmpty(nameInput, surnameInput, emailInput, passwordInput1, passwordInput2)
     const flagPasswordLength = checkPasswordsLength(passwordInput1, passwordInput2)

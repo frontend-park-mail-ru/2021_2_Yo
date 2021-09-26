@@ -1,4 +1,5 @@
-import { signupInputsValidation } from "../../modules/validation.js";
+import {signupInputsValidation} from "../../modules/validation.js";
+import {Request} from "../../modules/request";
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -43,9 +44,39 @@ export default class SignupPageComponent {
 
         const form = document.getElementById('regForm')
         form?.addEventListener('submit', (event) => {
-            console.log(123);
             event.preventDefault();
-            const valid = signupInputsValidation(errorsBlock);
+
+            errorsBlock.innerHTML = ''
+
+            const nameInput = document.getElementById('nameInput') as HTMLInputElement
+            const surnameInput = document.getElementById('surnameInput') as HTMLInputElement
+            const emailInput = document.getElementById('emailInput') as HTMLInputElement
+            const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement
+            const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement
+
+            const name = nameInput.value.trim()
+            const surname = surnameInput.value.trim()
+            const email = emailInput.value.trim()
+            const password1 = passwordInput1.value.trim()
+
+            const valid = signupInputsValidation(errorsBlock, nameInput, surnameInput, emailInput, passwordInput1, passwordInput2);
+            if (valid) {
+                const req = new Request()
+                req.postFetch('https://yobmstu.herokuapp.com/signup', {
+                    name: name,
+                    surname: surname,
+                    email: email,
+                    password: password1
+                })
+                    .then(({status, parsedBody}) => {
+                        console.log(status, " ", parsedBody)
+                        if (status == 200) {
+                            // все ок, можешь забирать юзера на главную
+                        } else {
+                            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка авторизации</p>`)()
+                        }
+                    })
+            }
         });
     }
 }
