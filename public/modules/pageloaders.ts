@@ -7,7 +7,6 @@ import { anchorsConfig, pagesConfig } from "../config.js";
 function clickHandler() {
     const app = document.getElementById('App') as HTMLElement;
     app.addEventListener('click', e => {
-        console.log("lala");
         const target = e.target as EventTarget;
         if (target instanceof HTMLAnchorElement) {
             e.preventDefault();
