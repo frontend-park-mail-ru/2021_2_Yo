@@ -1,3 +1,5 @@
+import {authInputsValidation} from '../../modules/validation.js'
+
 export default class LoginComponent {
     #parent: HTMLElement
 
@@ -31,42 +33,8 @@ export default class LoginComponent {
         const form = document.getElementById('authForm') as HTMLFormElement
         form.addEventListener('submit', (event) => {
             event.preventDefault()
-            const valid = this.inputsValidation(event, errorsBlock)
-            if (valid) {
-                alert('можно отправлять')
-            } else {
-                alert('нельзя отправлять')
-            }
+            const valid = authInputsValidation(errorsBlock)
         })
     }
 
-    inputsValidation(event: Event, errorsBlock: HTMLElement): boolean {
-        let valid = true
-
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement
-        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
-
-        const email = emailInput.value.trim()
-        const password = passwordInput.value.trim()
-
-        errorsBlock.innerHTML = ''
-
-        if (!email) {
-            valid = false
-            emailInput.className = 'inputError'
-            errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите Email</p>')()
-        } else {
-            emailInput.className = 'inputCorrect'
-        }
-
-        if (!password) {
-            valid = false
-            passwordInput.className = 'inputError'
-            errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите пароль</p>')()
-        } else {
-            passwordInput.className = 'inputCorrect'
-        }
-
-        return valid
-    }
 }
