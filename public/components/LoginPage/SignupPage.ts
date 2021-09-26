@@ -1,5 +1,5 @@
 import {signupInputsValidation} from "../../modules/validation.js";
-import {Request} from "../../modules/request";
+import {Request} from "../../modules/request.js";
 
 export default class SignupPageComponent {
     #parent: HTMLElement
