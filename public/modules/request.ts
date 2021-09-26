@@ -8,7 +8,8 @@ export class Request {
         let statusCode: number;
 
         return fetch(url, {
-            method: METHODS.GET
+            method: METHODS.GET,
+            mode: 'cors'
         }).then((response) => {
             statusCode = response.status;
             return response.json();
