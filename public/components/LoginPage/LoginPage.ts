@@ -1,3 +1,5 @@
+import { authInputsValidation } from "../../modules/validation.js";
+
 export default class LoginPageComponent {
     #parent: HTMLElement
 
@@ -15,47 +17,28 @@ export default class LoginPageComponent {
                         <input type='email' id='emailInput'>
                         <p>Пароль</p>
                         <input type='password' id='passwordInput'>
-                        <input type='submit' class='submitBtn'>
+                        <input type='submit' value="ВОЙТИ" class='submitBtn'>
                         <div id='errors'>
                         </div>
                     </form>
                 </div>
             </div>
-        `
+        `;
 
-        const template = window.Handlebars.compile(source)
-        this.#parent.innerHTML += template()
+        const template = window.Handlebars.compile(source);
+        this.#parent.innerHTML += template();
 
-        const errorsBlock = document.getElementById('errors') as HTMLElement
+        const errorsBlock = document.getElementById('errors') as HTMLElement;
 
-        const form = document.getElementById('authForm') as HTMLFormElement
+        const form = document.getElementById('authForm') as HTMLFormElement;
+        const formm = document.getElementById('authForm');
+        console.log(form);
+        console.log(formm);
         form.addEventListener('submit', (event) => {
-            this.inputsValidation(event, errorsBlock)
-        })
+            console.log(123);
+            event.preventDefault();
+            const valid = authInputsValidation(errorsBlock);
+        });
     }
 
-    inputsValidation(event: Event, errorsBlock: HTMLElement) {
-        event.preventDefault();
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement
-        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
-
-        const email = emailInput.value.trim()
-        const password = passwordInput.value.trim()
-
-        errorsBlock.innerHTML = ''
-
-        if (!email) {
-            emailInput.className = 'inputError'
-            errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите Email</p>')()
-        } else {
-            emailInput.className = 'inputCorrect'
-        }
-
-        if (!password) {
-            passwordInput.className = 'inputError'
-            errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите пароль</p>')()
-        } else {
-            passwordInput.className = 'inputCorrect'
-        }
-    }
 }

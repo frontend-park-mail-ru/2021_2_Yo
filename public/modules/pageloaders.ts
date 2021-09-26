@@ -2,20 +2,18 @@ import { EventCardData, PageKeys } from "../types.js";
 import MainPageComponent from "../components/MainPage/MainPage.js";
 import LoginPageComponent from "../components/LoginPage/LoginPage.js";
 import SignupPageComponent from "../components/LoginPage/SignupPage.js";
-import { anchorsConfig, pagesConfig } from "../config.js";
+import { pagesConfig } from "../config.js";
 
-function clickHandler() {
-    const app = document.getElementById('App') as HTMLElement;
-    app.addEventListener('click', e => {
-        const target = e.target as EventTarget;
-        if (target instanceof HTMLAnchorElement) {
-            e.preventDefault();
-            const sec = target.dataset.section as PageKeys;
-            window.history.pushState({}, '', target.href);
-            pagesConfig[sec]();
-        }
-    });
-}
+
+const clickHandler = (e: MouseEvent) => {
+    const target = e.target as EventTarget;
+    if (target instanceof HTMLAnchorElement) {
+        e.preventDefault();
+        const sec = target.dataset.section as PageKeys;
+        window.history.pushState({}, '', target.href);
+        pagesConfig[sec]();
+    }
+};
 
 export function menuPage() {
     const app = document.getElementById('App') as HTMLElement;
@@ -34,25 +32,21 @@ export function menuPage() {
     const main = new MainPageComponent(app, events);
     main.render();
 
-    document.body.innerHTML = app.outerHTML;
-
-    clickHandler();
+    app.addEventListener('click', clickHandler);
 }
 
 export function loginPage() {
     const app = document.getElementById('App') as HTMLElement;
+    app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
     const login = new LoginPageComponent(app);
     login.render();
-
-    document.body.innerHTML = app.outerHTML;
 }
 
 export function signupPage() {
     const app = document.getElementById('App') as HTMLElement;
+    app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
     const signup = new SignupPageComponent(app);
     signup.render();
-
-    document.body.innerHTML = app.outerHTML;
 }
