@@ -30,16 +30,16 @@ export function menuPage() {
     const events = Array(9).fill(event);
     // const user: UserData = {id: 1, name: 'Саша', geo: 'Мытищи'};
     const req = new Request()
-    req.getFetch('https://yobmstu.herokuapp.com/user').then(
-        ({status, parsedBody}) => {
-            console.log(status, " ", parsedBody)
-            if (status === 200) {
-                // все ок, редирект на главную
-            } else {
-                // ошибка
-            }
-        }
-    )
+    // req.getFetch('https://yobmstu.herokuapp.com/user').then(
+    //     ({status, parsedBody}) => {
+    //         console.log(status, " ", parsedBody)
+    //         if (status === 200) {
+    //             // все ок, редирект на главную
+    //         } else {
+    //             // ошибка
+    //         }
+    //     }
+    // )
 
     const main = new MainPageComponent(app, events);
     main.render();
