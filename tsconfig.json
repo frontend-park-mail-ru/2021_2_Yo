@@ -10,8 +10,8 @@
         "strictBindCallApply": true,
         // Other
         "esModuleInterop": true,
-        "target": "es6",
-        "module": "es6",
+        "target": "esnext",
+        "module": "esnext",
         "moduleResolution": "node",
         "outDir": "dist",
         "baseUrl": "./public",

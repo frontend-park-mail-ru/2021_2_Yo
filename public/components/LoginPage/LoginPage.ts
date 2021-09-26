@@ -32,7 +32,6 @@ export default class LoginPageComponent {
         const errorsBlock = document.getElementById('errors') as HTMLElement;
 
         const form = document.getElementById('authForm') as HTMLFormElement;
-
         form.addEventListener('submit', (event) => {
             event.preventDefault();
 
