@@ -30,12 +30,19 @@ export default class LoginComponent {
 
         const form = document.getElementById('authForm') as HTMLFormElement
         form.addEventListener('submit', (event) => {
-            this.inputsValidation(event, errorsBlock)
+            event.preventDefault()
+            const valid = this.inputsValidation(event, errorsBlock)
+            if (valid) {
+                alert('можно отправлять')
+            } else {
+                alert('нельзя отправлять')
+            }
         })
     }
 
-    inputsValidation(event: Event, errorsBlock: HTMLElement) {
-        event.preventDefault();
+    inputsValidation(event: Event, errorsBlock: HTMLElement): boolean {
+        let valid = true
+
         const emailInput = document.getElementById('emailInput') as HTMLInputElement
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
 
@@ -45,6 +52,7 @@ export default class LoginComponent {
         errorsBlock.innerHTML = ''
 
         if (!email) {
+            valid = false
             emailInput.className = 'inputError'
             errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите Email</p>')()
         } else {
@@ -52,10 +60,13 @@ export default class LoginComponent {
         }
 
         if (!password) {
+            valid = false
             passwordInput.className = 'inputError'
             errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите пароль</p>')()
         } else {
             passwordInput.className = 'inputCorrect'
         }
+
+        return valid
     }
 }

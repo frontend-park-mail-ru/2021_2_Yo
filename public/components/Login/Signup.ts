@@ -41,24 +41,44 @@ export default class SignupComponent {
 
         const form = document.getElementById('regForm')
         form?.addEventListener('submit', (event) => {
-            this.inputsValidation(event, errorsBlock)
+            event.preventDefault()
+            const valid = this.inputsValidation(errorsBlock)
+            if (valid) {
+                alert('можно отправлять')
+            } else {
+                alert('нельзя отправлять')
+            }
         })
     }
 
-    inputsValidation(event: Event, errorsBlock: HTMLElement) {
-        event.preventDefault();
+    inputsValidation(errorsBlock: HTMLElement): boolean {
+        let valid = true
 
         errorsBlock.innerHTML = ''
 
         const flagEmpty = this.checkInputsEmpty()
+        const flagPasswordLength = this.checkPasswordsLength()
         const flagIncorrectPasswords = this.checkPasswords()
+        const flagForbiddenSymbols = this.checkForbiddenSymbols()
 
         if (flagEmpty) {
+            valid = false
             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Заполните все поля</p>`)()
         }
         if (flagIncorrectPasswords) {
+            valid = false
             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Пароли не совпадают</p>`)()
         }
+        if (flagForbiddenSymbols) {
+            valid = false
+            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Запрещенные символы в полях ввода</p>`)()
+        }
+        if (flagPasswordLength) {
+            valid = false
+            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Пароль должен содержать не менее 8 символов</p>`)()
+        }
+
+        return valid
     }
 
     checkInputsEmpty(): boolean {
@@ -79,15 +99,11 @@ export default class SignupComponent {
         if (!name) {
             nameInput.className = 'inputError'
             flagEmpty = true
-        } else {
-            nameInput.className = 'inputCorrect'
         }
 
         if (!surname) {
             surnameInput.className = 'inputError'
             flagEmpty = true
-        } else {
-            surnameInput.className = 'inputCorrect'
         }
 
         if (!email) {
@@ -123,11 +139,52 @@ export default class SignupComponent {
             passwordInput1.className = 'inputError'
             passwordInput2.className = 'inputError'
             flagIncorrectPasswords = true
-        } else {
-            passwordInput1.className = 'inputCorrect'
-            passwordInput2.className = 'inputCorrect'
         }
 
         return flagIncorrectPasswords
+    }
+
+    checkForbiddenSymbols(): boolean {
+        let flagForbiddenSymbols = false
+
+        const nameInput = document.getElementById('nameInput') as HTMLInputElement
+        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement
+
+        const name = nameInput.value.trim()
+        const surname = surnameInput.value.trim()
+
+        if (name.match('^[a-zA-Zа-яА-Я]+$')) {
+            nameInput.className = 'inputCorrect'
+        } else if (name) {
+            nameInput.className = 'inputError'
+            flagForbiddenSymbols = true
+        }
+
+        if (surname.match('^[a-zA-Zа-яА-Я]+$')) {
+            surnameInput.className = 'inputCorrect'
+        } else if (surname) {
+            surnameInput.className = 'inputError'
+            flagForbiddenSymbols = true
+        }
+
+        return flagForbiddenSymbols
+    }
+
+    checkPasswordsLength(): boolean {
+        let flagPasswordLength = false
+
+        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement
+        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement
+
+        const password1 = passwordInput1.value.trim()
+        const password2 = passwordInput2.value.trim()
+
+        if (password1.length < 8 || password2.length < 8) {
+            passwordInput1.className = 'inputError'
+            passwordInput2.className = 'inputError'
+            flagPasswordLength = true
+        }
+
+        return flagPasswordLength
     }
 }

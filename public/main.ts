@@ -22,3 +22,4 @@ const main = new MainPageComponent(app, events);
 main.render();
 
 document.body.innerHTML = app.outerHTML;
+
