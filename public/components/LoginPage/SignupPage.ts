@@ -70,7 +70,7 @@ export default class SignupPageComponent {
                 })
                     .then(({status, parsedBody}) => {
                         console.log(status, " ", parsedBody)
-                        if (status == 200) {
+                        if (status === 200) {
                             // все ок, можешь забирать юзера на главную
                         } else {
                             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка авторизации</p>`)()
