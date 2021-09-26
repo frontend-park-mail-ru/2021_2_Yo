@@ -50,7 +50,7 @@ export default class LoginPageComponent {
                 req.postFetch('https://yobmstu.herokuapp.com/signin', {email: email, password: password})
                     .then(({status, parsedBody}) => {
                         console.log(status, " ", parsedBody)
-                        if (status == 200) {
+                        if (status === 200) {
                             // все ок, редирект на главную
                         } else {
                             console.log("error")
