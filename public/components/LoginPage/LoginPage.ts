@@ -1,4 +1,5 @@
-import { authInputsValidation } from "../../modules/validation.js";
+import {authInputsValidation} from "../../modules/validation.js";
+import {Request} from "../../modules/request";
 
 export default class LoginPageComponent {
     #parent: HTMLElement
@@ -31,13 +32,24 @@ export default class LoginPageComponent {
         const errorsBlock = document.getElementById('errors') as HTMLElement;
 
         const form = document.getElementById('authForm') as HTMLFormElement;
-        const formm = document.getElementById('authForm');
-        console.log(form);
-        console.log(formm);
+
         form.addEventListener('submit', (event) => {
-            console.log(123);
             event.preventDefault();
-            const valid = authInputsValidation(errorsBlock);
+
+            const emailInput = document.getElementById('emailInput') as HTMLInputElement
+            const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
+
+            const email = emailInput.value.trim()
+            const password = passwordInput.value.trim()
+
+            const valid = authInputsValidation(errorsBlock, emailInput, passwordInput);
+            if (valid) {
+                const req = new Request()
+                req.postFetch('https://yobmstu.herokuapp.com/signin', {email: email, password: password})
+                    .then(({status, parsedBody}) => {
+                        console.log(status, " ", parsedBody)
+                    })
+            }
         });
     }
 
