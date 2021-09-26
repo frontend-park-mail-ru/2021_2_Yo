@@ -30,7 +30,7 @@ export function menuPage() {
     const events = Array(9).fill(event);
     // const user: UserData = {id: 1, name: 'Саша', geo: 'Мытищи'};
     const req = new Request()
-    req.getFetch('https://yobmstu.herokuapp.com/').then(
+    req.getFetch('https://yobmstu.herokuapp.com/user').then(
         ({status, parsedBody}) => {
             console.log(status, " ", parsedBody)
             if (status === 200) {
