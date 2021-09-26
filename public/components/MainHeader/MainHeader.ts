@@ -1,4 +1,5 @@
 import { UserData } from "../../types.js";
+import { anchorsConfig } from "../../config.js";
 
 export default class MainHeaderComponent {
     #parent: HTMLElement
@@ -15,27 +16,30 @@ export default class MainHeaderComponent {
                 <div class="mhContent">
                     <div class="geo">
                         <img src="./img/logo.png">
-                        {{#if this}}
+                        {{#if user}}'
                             <img id="geoimg" src="./img/geo.png">
-                            <span class="imgCaption">{{geo}}</span>
+                            <span class="imgCaption">{{user.geo}}</span>
                         {{/if}}
                     </div>
                     <input id="searchInput" type="text" placeholder="Поиск...">
-                    {{#if this}}
+                    {{#if user}}
                         <div class="userBox">
-                            <img src="https://source.boringavatars.com/marble/60/{{name}}">
-                            <span class="rightSideText">{{name}}</span>
+                            <img src="https://source.boringavatars.com/marble/60/{{user.name}}">
+                            <span class="rightSideText">{{user.name}}</span>
                         </div>
                     {{else}}
                         <div class="authBox">
-                            <a class="authAnchor" href="/login">Войти</a>
-                            <a class="authAnchor rightSideText" href="/signup">Регистрация</a>
+                            {{#each authAnchors}}
+                                <a class="authAnchor" href="{{href}}" data-section="{{key}}">{{name}}</a>
+                            {{/each}}
                         </div>
                     {{/if}}
                 </div>
             </header>
         `;
         const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML += template(this.#user);
+        const user = this.#user;
+        const authAnchors = anchorsConfig.authAnchors;
+        this.#parent.innerHTML += template({user, authAnchors});
     }
 }

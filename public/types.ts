@@ -16,3 +16,8 @@ export type UserData = {
     name: string;
     geo: string;
 }
+
+export enum PageKeys {
+    Login = 'login',
+    Signup = 'signup',
+}

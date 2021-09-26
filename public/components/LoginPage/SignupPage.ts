@@ -1,8 +1,8 @@
-export default class SignupComponent {
+export default class SignupPageComponent {
     #parent: HTMLElement
 
-    constructor({parent = document.body} = {}) {
-        this.#parent = parent
+    constructor(parent: HTMLElement) {
+        this.#parent = parent;
     }
 
     render() {
