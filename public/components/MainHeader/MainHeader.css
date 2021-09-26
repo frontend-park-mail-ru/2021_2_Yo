@@ -39,7 +39,7 @@
     color: white;
 }
 
-.authBox a + a {
+.authAnchor:last-child {
     margin-left: 20px;
 }
 
