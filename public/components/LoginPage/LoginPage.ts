@@ -53,6 +53,7 @@ export default class LoginPageComponent {
                         if (status == 200) {
                             // все ок, редирект на главную
                         } else {
+                            console.log("error")
                             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка авторизации</p>`)()
                         }
                     })

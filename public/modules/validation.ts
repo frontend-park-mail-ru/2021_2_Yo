@@ -41,8 +41,6 @@ export function signupInputsValidation(errorsBlock: HTMLElement,
     const flagIncorrectPasswords = checkPasswords(passwordInput1, passwordInput2)
     const flagForbiddenSymbols = checkForbiddenSymbols(nameInput, surnameInput)
 
-    const errors = ''
-
     if (flagEmpty) {
         errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Заполните все поля</p>`)()
     }
