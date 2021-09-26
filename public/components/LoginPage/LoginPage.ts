@@ -31,11 +31,7 @@ export default class LoginPageComponent {
         const errorsBlock = document.getElementById('errors') as HTMLElement;
 
         const form = document.getElementById('authForm') as HTMLFormElement;
-        const formm = document.getElementById('authForm');
-        console.log(form);
-        console.log(formm);
         form.addEventListener('submit', (event) => {
-            console.log(123);
             event.preventDefault();
             const valid = authInputsValidation(errorsBlock);
         });

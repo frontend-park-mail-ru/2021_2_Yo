@@ -10,12 +10,12 @@ const clickHandler = (e: MouseEvent) => {
     if (target instanceof HTMLAnchorElement) {
         e.preventDefault();
         const sec = target.dataset.section as PageKeys;
-        window.history.pushState({}, '', target.href);
         pagesConfig[sec]();
     }
 };
 
-export function menuPage() {
+export function mainPage() {
+    window.history.pushState({}, '', '/');
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
@@ -36,6 +36,8 @@ export function menuPage() {
 }
 
 export function loginPage() {
+    window.history.pushState({}, '', '/login');
+
     const app = document.getElementById('App') as HTMLElement;
     app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
@@ -44,9 +46,20 @@ export function loginPage() {
 }
 
 export function signupPage() {
+    window.history.pushState({}, '', '/signup');
+
     const app = document.getElementById('App') as HTMLElement;
     app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
     const signup = new SignupPageComponent(app);
     signup.render();
+}
+
+export function errorPage() {
+    const app = document.getElementById('App') as HTMLElement;
+    app.removeEventListener('click', clickHandler);
+    app.innerHTML = `
+        <h1>ERROR</h1>
+        <h2>Котик, ты шото с урлом напутал, давай больше без приколов<3</h2>
+    `;
 }

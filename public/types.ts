@@ -21,3 +21,9 @@ export enum PageKeys {
     Login = 'login',
     Signup = 'signup',
 }
+
+export enum UrlPathnames {
+    Main = '/',
+    Login = '/login',
+    Signup = '/signup',
+}

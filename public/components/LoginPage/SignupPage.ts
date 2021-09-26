@@ -43,7 +43,6 @@ export default class SignupPageComponent {
 
         const form = document.getElementById('regForm')
         form?.addEventListener('submit', (event) => {
-            console.log(123);
             event.preventDefault();
             const valid = signupInputsValidation(errorsBlock);
         });
