@@ -73,7 +73,7 @@ export default class SignupPageComponent {
                         if (status === 200) {
                             // все ок, можешь забирать юзера на главную
                         } else {
-                            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка авторизации</p>`)()
+                            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка регистрации</p>`)()
                         }
                     })
             }
