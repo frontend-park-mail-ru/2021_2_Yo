@@ -1,6 +1,7 @@
 import {signupInputsValidation} from "../../modules/validation.js";
 import {Request} from "../../modules/request.js";
-import {mainPage} from "../../modules/pageloaders.js";
+import route from "../../modules/routing.js";
+import { UrlPathnames } from "../../types.js";
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -76,7 +77,7 @@ export default class SignupPageComponent {
                                 const error = parsedBody.error;
                                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
                             } else {
-                                mainPage();
+                                route(UrlPathnames.Main);
                             }
                         }
                     })

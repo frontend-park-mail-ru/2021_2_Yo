@@ -1,18 +1,16 @@
-import {EventCardData, PageKeys, UserData} from "../types.js";
+import {EventCardData, PageKeys, UrlPathnames, UserData} from "../types.js";
 import MainPageComponent from "../components/MainPage/MainPage.js";
 import LoginPageComponent from "../components/LoginPage/LoginPage.js";
 import SignupPageComponent from "../components/LoginPage/SignupPage.js";
-import {pagesConfig} from "../config.js";
 import {Request} from "./request.js";
+import route from "./routing.js"
 
 
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
     if (target instanceof HTMLAnchorElement) {
         e.preventDefault();
-        window.history.pushState({}, '', target.href);
-        const sec = target.dataset.section as PageKeys;
-        pagesConfig[sec]();
+        route(target.href as UrlPathnames);
     }
 };
 
@@ -37,7 +35,7 @@ export function mainPage() {
             if (status === 200) {
                 // все ок, редирект на главную
                 user = {id: 1, name: parsedBody.name, geo: 'Мытищи'};
-            } 
+            }
             const main = new MainPageComponent(app, events, user);
             main.render();
             app.addEventListener('click', clickHandler);
