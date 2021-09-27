@@ -1,4 +1,4 @@
-import {EventCardData, PageKeys} from "../types.js";
+import {EventCardData, PageKeys, UserData} from "../types.js";
 import MainPageComponent from "../components/MainPage/MainPage.js";
 import LoginPageComponent from "../components/LoginPage/LoginPage.js";
 import SignupPageComponent from "../components/LoginPage/SignupPage.js";
@@ -29,19 +29,21 @@ export function mainPage() {
     };
     const events = Array(9).fill(event);
     // const user: UserData = {id: 1, name: 'Саша', geo: 'Мытищи'};
+    let user: undefined | UserData = undefined;
     const req = new Request()
     req.getFetch('https://yobmstu.herokuapp.com/user').then(
         ({status, parsedBody}) => {
             console.log(status, " ", parsedBody)
             if (status === 200) {
                 // все ок, редирект на главную
+                user = {id: 1, name: parsedBody.name, geo: 'Мытищи'}
             } else {
                 // ошибка
             }
         }
     )
 
-    const main = new MainPageComponent(app, events);
+    const main = new MainPageComponent(app, events, user);
     main.render();
 
     app.addEventListener('click', clickHandler);
