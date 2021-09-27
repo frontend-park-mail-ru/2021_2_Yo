@@ -37,11 +37,13 @@ export function mainPage() {
             if (status === 200) {
                 // все ок, редирект на главную
                 user = {id: 1, name: parsedBody.name, geo: 'Мытищи'}
+                console.log('fetch:', user);
             } else {
                 // ошибка
             }
         }
     )
+    console.log('mainpage', user);
 
     const main = new MainPageComponent(app, events, user);
     main.render();
