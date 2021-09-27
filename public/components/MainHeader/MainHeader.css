@@ -39,6 +39,10 @@
     color: white;
 }
 
+.rightSideText {
+    margin-left: 20px;
+}
+
 .authAnchor:last-child {
     margin-left: 20px;
 }
