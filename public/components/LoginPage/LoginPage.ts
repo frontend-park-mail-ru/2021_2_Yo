@@ -1,5 +1,6 @@
 import {authInputsValidation} from "../../modules/validation.js";
 import {Request} from "../../modules/request.js";
+import { mainPage } from "../../modules/pageloaders.js";
 
 export default class LoginPageComponent {
     #parent: HTMLElement
@@ -51,6 +52,7 @@ export default class LoginPageComponent {
                         console.log(status, " ", parsedBody)
                         if (status === 200) {
                             // все ок, редирект на главную
+                            mainPage();
                         } else {
                             console.log("error")
                             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка авторизации</p>`)()
