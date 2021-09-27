@@ -53,7 +53,8 @@ export default class LoginPageComponent {
                         if (status === 200) {
                             mainPage();
                         } else {
-                            const error = parsedBody.error
+                            // const error = parsedBody.error
+                            const error = 'pipyao';
                             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)()
                         }
                     })
