@@ -51,12 +51,16 @@ export default class LoginPageComponent {
                     .then(({status, parsedBody}) => {
                         console.log(status, " ", parsedBody)
                         if (status === 200) {
-                            mainPage();
-                        } else {
-                            const error = parsedBody.error
-                            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)()
+                            if (parsedBody['error']) {
+                                const error = parsedBody['error'];
+                                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+                            } else {
+                                mainPage();
+                            }
                         }
-                    })
+                    }
+                )
+
             }
         });
     }
