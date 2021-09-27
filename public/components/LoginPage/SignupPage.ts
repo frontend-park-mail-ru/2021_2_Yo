@@ -74,7 +74,8 @@ export default class SignupPageComponent {
                         if (status === 200) {
                             mainPage()
                         } else {
-                            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка регистрации</p>`)()
+                            const error = parsedBody.error
+                            errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)()
                         }
                     })
             }
