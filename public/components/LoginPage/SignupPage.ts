@@ -1,5 +1,6 @@
 import {signupInputsValidation} from "../../modules/validation.js";
 import {Request} from "../../modules/request.js";
+import {mainPage} from "../../modules/pageloaders";
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -71,7 +72,7 @@ export default class SignupPageComponent {
                     .then(({status, parsedBody}) => {
                         console.log(status, " ", parsedBody)
                         if (status === 200) {
-                            // все ок, редирект на главную
+                            mainPage()
                         } else {
                             errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Ошибка регистрации</p>`)()
                         }
