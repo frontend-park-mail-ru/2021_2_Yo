@@ -1,10 +1,10 @@
-import {signupInputsValidation} from "../../modules/validation.js";
+import { signupInputsValidation } from "../../modules/validation.js";
 
-export default class SignupComponent {
+export default class SignupPageComponent {
     #parent: HTMLElement
 
-    constructor({parent = document.body} = {}) {
-        this.#parent = parent
+    constructor(parent: HTMLElement) {
+        this.#parent = parent;
     }
 
     render() {
@@ -35,16 +35,17 @@ export default class SignupComponent {
                     </form>
                 </div>
             </div>
-        `
-        const template = window.Handlebars.compile(source)
-        this.#parent.innerHTML += template()
+        `;
+        const template = window.Handlebars.compile(source);
+        this.#parent.innerHTML += template();
 
-        const errorsBlock = document.getElementById('errors') as HTMLElement
+        const errorsBlock = document.getElementById('errors') as HTMLElement;
 
         const form = document.getElementById('regForm')
         form?.addEventListener('submit', (event) => {
-            event.preventDefault()
-            const valid = signupInputsValidation(errorsBlock)
-        })
+            console.log(123);
+            event.preventDefault();
+            const valid = signupInputsValidation(errorsBlock);
+        });
     }
 }

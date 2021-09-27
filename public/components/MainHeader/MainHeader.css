@@ -39,12 +39,16 @@
     color: white;
 }
 
+.rightSideText {
+    margin-left: 20px;
+}
+
+.authAnchor:last-child {
+    margin-left: 20px;
+}
+
 .authAnchor {
     color: white;
     text-decoration: none;
     font-size: 26px;
-}
-
-.rightSideText {
-     margin-left: 20px;
 }

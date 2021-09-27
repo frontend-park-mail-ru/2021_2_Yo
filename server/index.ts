@@ -3,8 +3,6 @@ import body from "body-parser"
 import morgan from "morgan";
 import cookie from "cookie-parser";
 
-import SignupComponent from "../public/components/Login/Signup.js"
-
 const app = express();
 
 app.use(body.json())

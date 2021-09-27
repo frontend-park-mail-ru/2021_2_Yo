@@ -1,14 +1,4 @@
-const cfg = {
-    eventTypes: [
-    { href : "/#", name : "Выставки" },
-    { href : "/#", name : "Концерты" },
-    { href : "/#", name : "Вечеринки" },
-    { href : "/#", name : "Театр" },
-    { href : "/#", name : "Кино" },
-    { href : "/#", name : "Экскурсии" },
-    { href : "/#", name : "Фестивали" },
-    ],
-}
+import { anchorsConfig } from "../../config.js";
 
 export default class EventHeaderComponent {
     #parent: HTMLElement
@@ -20,12 +10,12 @@ export default class EventHeaderComponent {
     render() {
         const source = `
             <header class="eHeader">
-                {{#each eventTypes}}
-                    <a class="eventAnchor" href="{{href}}">{{name}}</a>
+                {{#each eventAnchors}}
+                    <a class="eventAnchor" href="{{href}}" data-section="{{key}}">{{name}}</a>
                 {{/each}}
             </header>
         `;
         const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML += template(cfg);
+        this.#parent.innerHTML += template(anchorsConfig);
     }
 }

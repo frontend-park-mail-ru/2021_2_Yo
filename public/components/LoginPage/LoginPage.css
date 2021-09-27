@@ -17,6 +17,7 @@ input {
     align-items: center;
     justify-content: space-around;
     background: #001065;
+    padding: 60px 0px;
 }
 
 .authFormBackground {
@@ -32,7 +33,6 @@ input {
 p {
     margin-bottom: 2px;
     margin-top: 18px;
-    font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
@@ -42,7 +42,6 @@ p {
 }
 
 .label {
-    font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 96px;
@@ -72,11 +71,16 @@ p {
     color: #FFFFFF;
 }
 
+.submitBtn:hover {
+    cursor: pointer;
+}
+
 .signupBackground {
     display: flex;
     align-items: center;
     justify-content: space-around;
     background: linear-gradient(137.34deg, #0E0063 0%, #5E0043 100%);
+    padding: 60px 0px;
 }
 
 .signupFormBackground {
@@ -89,7 +93,6 @@ p {
 }
 
 .smallerLabel {
-    font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 48px;
@@ -97,7 +100,6 @@ p {
 }
 
 .errorP {
-    font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;

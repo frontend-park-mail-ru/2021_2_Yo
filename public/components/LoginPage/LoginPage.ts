@@ -1,10 +1,10 @@
-import {authInputsValidation} from '../../modules/validation.js'
+import { authInputsValidation } from "../../modules/validation.js";
 
-export default class LoginComponent {
+export default class LoginPageComponent {
     #parent: HTMLElement
 
-    constructor({parent = document.body} = {}) {
-        this.#parent = parent
+    constructor(parent: HTMLElement) {
+        this.#parent = parent;
     }
 
     render() {
@@ -17,24 +17,25 @@ export default class LoginComponent {
                         <input type='email' id='emailInput'>
                         <p>Пароль</p>
                         <input type='password' id='passwordInput'>
-                        <input type='submit' class='submitBtn'>
+                        <input type='submit' value="ВОЙТИ" class='submitBtn'>
                         <div id='errors'>
                         </div>
                     </form>
                 </div>
             </div>
-        `
+        `;
 
-        const template = window.Handlebars.compile(source)
-        this.#parent.innerHTML += template()
+        const template = window.Handlebars.compile(source);
+        this.#parent.innerHTML += template();
 
-        const errorsBlock = document.getElementById('errors') as HTMLElement
+        const errorsBlock = document.getElementById('errors') as HTMLElement;
 
-        const form = document.getElementById('authForm') as HTMLFormElement
+        const form = document.getElementById('authForm') as HTMLFormElement;
+
         form.addEventListener('submit', (event) => {
-            event.preventDefault()
-            const valid = authInputsValidation(errorsBlock)
-        })
+            event.preventDefault();
+            const valid = authInputsValidation(errorsBlock);
+        });
     }
 
 }
