@@ -10,7 +10,7 @@ export class Request {
         return fetch(url, {
             method: METHODS.GET,
             mode: 'cors',
-            credentials: "same-origin"
+            credentials: "include"
         }).then((response) => {
             statusCode = response.status;
             return response.json();
