@@ -16,7 +16,7 @@ export default class MainHeaderComponent {
                 <div class="mhContent">
                     <div class="geo">
                         <img src="./img/logo.png">
-                        {{#if user}}'
+                        {{#if user}}
                             <img id="geoimg" src="./img/geo.png">
                             <span class="imgCaption">{{user.geo}}</span>
                         {{/if}}
