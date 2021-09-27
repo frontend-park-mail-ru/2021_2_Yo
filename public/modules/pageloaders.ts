@@ -10,13 +10,13 @@ const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
     if (target instanceof HTMLAnchorElement) {
         e.preventDefault();
+        window.history.pushState({}, '', target.href);
         const sec = target.dataset.section as PageKeys;
         pagesConfig[sec]();
     }
 };
 
 export function mainPage() {
-    window.history.pushState({}, '', '/');
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
@@ -43,13 +43,9 @@ export function mainPage() {
             app.addEventListener('click', clickHandler);
         }
     )
-
-
 }
 
 export function loginPage() {
-    window.history.pushState({}, '', '/login');
-
     const app = document.getElementById('App') as HTMLElement;
     app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
@@ -58,8 +54,6 @@ export function loginPage() {
 }
 
 export function signupPage() {
-    window.history.pushState({}, '', '/signup');
-
     const app = document.getElementById('App') as HTMLElement;
     app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
