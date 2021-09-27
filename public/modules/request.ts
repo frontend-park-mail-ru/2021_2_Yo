@@ -9,7 +9,8 @@ export class Request {
 
         return fetch(url, {
             method: METHODS.GET,
-            mode: 'cors'
+            mode: 'cors',
+            credentials: "same-origin"
         }).then((response) => {
             statusCode = response.status;
             return response.json();
