@@ -64,9 +64,9 @@ export default class SignupPageComponent {
             if (valid) {
                 const req = new Request()
                 req.postFetch('https://yobmstu.herokuapp.com/signup', {
-                    name: name,
-                    surname: surname,
-                    email: email,
+                    name,
+                    surname,
+                    email,
                     password: password1
                 })
                     .then(({status, parsedBody}) => {

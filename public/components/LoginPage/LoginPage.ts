@@ -47,12 +47,12 @@ export default class LoginPageComponent {
             const valid = authInputsValidation(errorsBlock, emailInput, passwordInput);
             if (valid) {
                 const req = new Request()
-                req.postFetch('https://yobmstu.herokuapp.com/signin', {email: email, password: password})
+                req.postFetch('https://yobmstu.herokuapp.com/signin', {email, password})
                     .then(({status, parsedBody}) => {
                         console.log(status, " ", parsedBody)
                         if (status === 200) {
-                            if (parsedBody['error']) {
-                                const error = parsedBody['error'];
+                            if (parsedBody.error) {
+                                const error = parsedBody.error;
                                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
                             } else {
                                 mainPage();
