@@ -1,32 +1,37 @@
-export function authInputsValidation(errorsBlock: HTMLElement): boolean {
-    let valid = true
+import {InputErrors} from "../types.js";
 
-    const emailInput = document.getElementById('emailInput') as HTMLInputElement
-    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
-
-    const email = emailInput.value.trim()
-    const password = passwordInput.value.trim()
-
-    errorsBlock.innerHTML = ''
-
-    if (!email) {
-        valid = false
-        emailInput.className = 'inputError'
-        errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите Email</p>')()
-    } else {
-        emailInput.className = 'inputCorrect'
-    }
-
-    if (password.length < 8) {
-        valid = false
-        passwordInput.className = 'inputError'
-        errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Пароль не может быть короче 8 символов</p>')()
-    } else {
-        passwordInput.className = 'inputCorrect'
-    }
-
-    return valid
-}
+// export function authInputsValidation(errorsBlock: HTMLElement): boolean {
+//     let valid = true
+//
+//
+//     errorsBlock.innerHTML = ''
+//
+//     if (!email) {
+//         valid = false
+//         emailInput.className = 'inputError'
+//         errorsBlock.innerHTML += window.Handlebars.compile('<p class='
+//         errorP
+//         '>Введите Email</p>'
+//     )
+//         ()
+//     } else {
+//         emailInput.className = 'inputCorrect'
+//     }
+//
+//     if (password.length < 8) {
+//         valid = false
+//         passwordInput.className = 'inputError'
+//         errorsBlock.innerHTML += window.Handlebars.compile('<p class='
+//         errorP
+//         '>Пароль не может быть короче 8 символов</p>'
+//     )
+//         ()
+//     } else {
+//         passwordInput.className = 'inputCorrect'
+//     }
+//
+//     return valid
+// }
 
 export function signupInputsValidation(errorsBlock: HTMLElement): boolean {
     let valid: boolean
@@ -158,4 +163,46 @@ function checkPasswordsLength(passwordInput1: HTMLInputElement, passwordInput2: 
     }
 
     return flagPasswordLength
+}
+
+export function validateFields(inputs: Map<string, InputErrors>) {
+    let email = inputs.get('email') as InputErrors
+    email.errors.push(checkEmpty(email.input.value.trim()))
+
+    let password = inputs.get('password') as InputErrors
+    password.errors.push(checkEmpty(password.input.value.trim()))
+    password.errors.push(checkPasswordLength(password.input.value.trim()))
+
+}
+
+function checkEmpty(value: string): string {
+    if (!value) {
+        return 'ErrorEmptyInput'
+    } else {
+        return ''
+    }
+}
+
+function checForbiddenSymbols(value: string): string {
+    if (!value.match('^[a-zA-Zа-яА-Я]+$')) {
+        return 'ErrorForbiddenSymbols'
+    } else {
+        return ''
+    }
+}
+
+function checkPasswordLength(value: string): string {
+    if (value.length < 8) {
+        return 'ErrorShortPassword'
+    } else {
+        return ''
+    }
+}
+
+function checkPasswordsEqual(pas1: string, pas2: string): string {
+    if (pas1 !== pas2) {
+        return 'ErrorPasswordsAreNotEqual'
+    } else {
+        return ''
+    }
 }

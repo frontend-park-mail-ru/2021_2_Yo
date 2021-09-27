@@ -21,3 +21,8 @@ export enum PageKeys {
     Login = 'login',
     Signup = 'signup',
 }
+
+export type InputErrors = {
+    errors: string[],
+    input: HTMLInputElement
+}
