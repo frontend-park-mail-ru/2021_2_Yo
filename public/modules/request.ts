@@ -67,7 +67,8 @@ const fetchHandle = async (responsePromise: Promise<Response>) => {
 }
 
 async function postFetch(url: string, body: {}) {
-    const responsePromise = fetch(url, {
+    let HTTPStatus: number;
+    const res = await fetch(url, {
         method: METHODS.POST,
         credentials: 'include',
         mode: 'cors',
@@ -75,35 +76,35 @@ async function postFetch(url: string, body: {}) {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(body)
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        return {
+            status: HTTPStatus,
+            json: data,
+        }
     });
-    const res = await fetchHandle(responsePromise);
 
     console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
 }
 
 async function getFetch(url: string) {
-    const responsePromise = fetch(url, {
-        method: METHODS.POST,
-        credentials: 'include',
+    let HTTPStatus: number;
+    const res = await fetch(url, {
+        method: METHODS.GET,
         mode: 'cors',
-    }).then(response => response);
-    const res = await fetchHandle(responsePromise);
-
-    // let HTTPStatus: number;
-    // const res = await fetch(url, {
-    //     method: METHODS.GET,
-    //     mode: 'cors',
-    //     credentials: "include"
-    // }).then((response) => {
-    //     HTTPStatus = response.status;
-    //     return response.json();
-    // }).then(data => {
-    //     return {
-    //         status: HTTPStatus,
-    //         json: data,
-    //     };
-    // });
+        credentials: "include"
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        return {
+            status: HTTPStatus,
+            json: data,
+        };
+    });
 
     console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
