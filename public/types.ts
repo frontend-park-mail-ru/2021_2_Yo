@@ -31,6 +31,8 @@ export enum UrlPathnames {
 export enum ApiUrls {
     User = '/user',
     Events = '/events',
+    Login = '/login',
+    Signup = '/signup',
 }
 
 export type ApiPostLoginData = {
