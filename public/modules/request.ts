@@ -83,26 +83,27 @@ async function postFetch(url: string, body: {}) {
 }
 
 async function getFetch(url: string) {
-    const responsePromise = fetch(url, {
-        method: METHODS.POST,
-        credentials: 'include',
-        mode: 'cors',
-    });
-    const res = await fetchHandle(responsePromise);
-
-    // const res = await fetch(url, {
-    //     method: METHODS.GET,
+    // const responsePromise = fetch(url, {
+    //     method: METHODS.POST,
+    //     credentials: 'include',
     //     mode: 'cors',
-    //     credentials: "include"
-    // }).then((response) => {
-    //     HTTPStatus = response.status;
-    //     return response.json();
-    // }).then(data => {
-    //     return {
-    //         status: HTTPStatus,
-    //         json: data,
-    //     };
     // });
+    // const res = await fetchHandle(responsePromise);
+
+    let HTTPStatus: number;
+    const res = await fetch(url, {
+        method: METHODS.GET,
+        mode: 'cors',
+        credentials: "include"
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        return {
+            status: HTTPStatus,
+            json: data,
+        };
+    });
 
     console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
