@@ -1,5 +1,3 @@
-import { response } from "express";
-import { stat } from "fs";
 import { EventCardData, UserData } from "../types.js";
 
 const METHODS = {
@@ -59,7 +57,7 @@ const fetchHandle = (responsePromise: Promise<Response>) => {
     let HTTPStatus: number;
     return responsePromise.then((response) => {
         HTTPStatus = response.status;
-        return response.json(); 
+        return response.json();
     }).then(data => {
         return {
             status: HTTPStatus,
@@ -113,8 +111,8 @@ async function getFetch(url: string) {
 export async function getUser(): Promise<UserData | undefined> {
     const {status, json} = await getFetch(API + '/user');
     if (status === 200) {
-        if (json['status'] === 200) {
-            return {id: 1, name: json['body']['name'], geo: 'Мытищи'};
+        if (json.status === 200) {
+            return {id: 1, name: json.body.name, geo: 'Мытищи'};
         }
     }
     return undefined;
@@ -123,27 +121,27 @@ export async function getUser(): Promise<UserData | undefined> {
 export async function getEvents(): Promise<EventCardData[]> {
     const {status, json} = await getFetch(API + '/events');
     if (status === 200) {
-        if (json['status'] === 200) {
-            return json['body']['events'] as EventCardData[];
+        if (json.status === 200) {
+            return json.body.events as EventCardData[];
         }
     }
     return [];
 }
 
-export async function postLogin() {
-    
-}
-const req = new Request()
-                req.postFetch('https://yobmstu.herokuapp.com/signin', {email, password})
-                    .then(({status, parsedBody}) => {
-                        console.log(status, " ", parsedBody)
-                        if (status === 200) {
-                            if (parsedBody.error) {
-                                const error = parsedBody.error;
-                                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
-                            } else {
-                                route(UrlPathnames.Main);
-                            }
-                        }
-                    }
-                )
+// export async function postLogin() {
+
+// }
+// const req = new Request()
+//                 req.postFetch('https://yobmstu.herokuapp.com/signin', {email, password})
+//                     .then(({status, parsedBody}) => {
+//                         console.log(status, " ", parsedBody)
+//                         if (status === 200) {
+//                             if (parsedBody.error) {
+//                                 const error = parsedBody.error;
+//                                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+//                             } else {
+//                                 route(UrlPathnames.Main);
+//                             }
+//                         }
+//                     }
+//                 )
