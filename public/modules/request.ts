@@ -1,4 +1,5 @@
-import { EventCardData, UserData } from "../types.js";
+import { response } from "express";
+import { ApiUrls, EventCardData, UserData } from "../types.js";
 
 const METHODS = {
     POST: 'POST',
@@ -53,7 +54,7 @@ export class Request {
     }
 }
 
-async function fetchHandle (responsePromise: Promise<Response>) {
+async function handleFetch (responsePromise: Promise<Response>) {
     let HTTPStatus: number;
     return responsePromise.then((response) => {
         HTTPStatus = response.status;
@@ -67,8 +68,7 @@ async function fetchHandle (responsePromise: Promise<Response>) {
 }
 
 async function postFetch(url: string, body: {}) {
-    let HTTPStatus: number;
-    const res = await fetch(url, {
+    const responsePromise = fetch(url, {
         method: METHODS.POST,
         credentials: 'include',
         mode: 'cors',
@@ -76,15 +76,8 @@ async function postFetch(url: string, body: {}) {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(body)
-    }).then((response) => {
-        HTTPStatus = response.status;
-        return response.json();
-    }).then(data => {
-        return {
-            status: HTTPStatus,
-            json: data,
-        }
     });
+    const res = await handleFetch(responsePromise);
 
     console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
@@ -96,29 +89,14 @@ async function getFetch(url: string) {
         mode: 'cors',
         credentials: "include"
     });
-    const res = await fetchHandle(responsePromise);
-
-    // let HTTPStatus: number;
-    // const res = await fetch(url, {
-    //     method: METHODS.GET,
-    //     mode: 'cors',
-    //     credentials: "include"
-    // }).then((response) => {
-    //     HTTPStatus = response.status;
-    //     return response.json();
-    // }).then(data => {
-    //     return {
-    //         status: HTTPStatus,
-    //         json: data,
-    //     };
-    // });
+    const res = await handleFetch(responsePromise);
 
     console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
 }
 
 export async function getUser(): Promise<UserData | undefined> {
-    const {status, json} = await getFetch(API + '/user');
+    const {status, json} = await getFetch(API + ApiUrls.User);
     if (status === 200) {
         if (json.status === 200) {
             return {id: 1, name: json.body.name, geo: 'Мытищи'};
@@ -137,9 +115,17 @@ export async function getEvents(): Promise<EventCardData[]> {
     return [];
 }
 
-// export async function postLogin() {
-
-// }
+export async function postLogin(email: string, password: string): Promise<undefined | string> {
+    const {status, json} = await postFetch('https://yobmstu.herokuapp.com/signin', {email, password});
+    if (status === 200) {
+        if (json['status'] === 200) {
+            return undefined;
+        } else {
+            return json['message'] as string;
+        }
+    }
+    return undefined; 
+}
 // const req = new Request()
 //                 req.postFetch('https://yobmstu.herokuapp.com/signin', {email, password})
 //                     .then(({status, parsedBody}) => {
