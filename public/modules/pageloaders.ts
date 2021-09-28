@@ -2,7 +2,7 @@ import {EventCardData, PageKeys, UrlPathnames, UserData} from "../types.js";
 import MainPageComponent from "../components/MainPage/MainPage.js";
 import LoginPageComponent from "../components/LoginPage/LoginPage.js";
 import SignupPageComponent from "../components/LoginPage/SignupPage.js";
-import {getUser, Request} from "./request.js";
+import {getEvents, getUser, Request} from "./request.js";
 import route from "./routing.js"
 
 
@@ -18,31 +18,13 @@ export async function mainPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
-    // TODO: запросить данные с бека, а не вот это вот все
-    const event: EventCardData = {
-        imgUrl: '/img/tusa.jpeg',
-        viewed: 126,
-        name: 'Джуса туса',
-        description: 'дискотека это тусовка или просто сборище? 8 лет. Дискотека - это когда есть диджей и в этом деле разбираются все и молодежь и взрослые.'
-    };
-    const events = Array(9).fill(event);
-    // const user: UserData = {id: 1, name: 'Саша', geo: 'Мытищи'};
-    // let user: UserData;
-    // const req = new Request()
-    // req.getFetch('https://yobmstu.herokuapp.com/user').then(
-    //     ({HTTPStatus, parsedBody}) => {
-    //         console.log(HTTPStatus, " ", parsedBody)
-    //         if (HTTPStatus === 200) {
-    //             const {status, body} = parsedBody;
-    //             if (status === 200) {
-    //                 user = {id: 1, name: body.name, geo: 'Мытищи'};
-    //             }
-    //         }
-    //         const main = new MainPageComponent(app, events, user);
-    //         main.render();
-    //         app.addEventListener('click', clickHandler);
-    //     }
-    // )
+    // const event: EventCardData = {
+    //     imgUrl: '/img/tusa.jpeg',
+    //     viewed: 126,
+    //     name: 'Джуса туса',
+    //     description: 'дискотека это тусовка или просто сборище? 8 лет. Дискотека - это когда есть диджей и в этом деле разбираются все и молодежь и взрослые.'
+    // };
+    const events = await getEvents();
     const user = await getUser();
     const main = new MainPageComponent(app, events, user);
     main.render();
