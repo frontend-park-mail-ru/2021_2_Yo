@@ -4,7 +4,6 @@ import EventHeaderComponent from "../EventHeader/EventHeader.js";
 import FilterHeaderComponent from "../FilterHeader/FilterHeader.js";
 import MainHeaderComponent from "../MainHeader/MainHeader.js";
 
-
 export default class MainPageComponent {
     #parent: HTMLElement
     #events: EventCardData[]

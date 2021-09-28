@@ -28,6 +28,56 @@ export function signupValidateFields(inputs: Map<string, InputErrors>) {
     if (checkPasswordsEqual(password1.value, password2.value)) {
         password1.errors.push('Пароли не совпадают');
         password2.errors.push('Пароли не совпадают');
+export function authInputsValidation(errorsBlock: HTMLElement, emailInput: HTMLInputElement, passwordInput: HTMLInputElement): boolean {
+    let valid = true
+
+    const email = emailInput.value.trim()
+    const password = passwordInput.value.trim()
+
+    errorsBlock.innerHTML = ''
+
+    if (!email) {
+        valid = false
+        emailInput.className = 'inputError'
+        errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Введите Email</p>')()
+    } else {
+        emailInput.className = 'inputCorrect'
+    }
+
+    if (password.length < 8) {
+        valid = false
+        passwordInput.className = 'inputError'
+        errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">Пароль не может быть короче 8 символов</p>')()
+    } else {
+        passwordInput.className = 'inputCorrect'
+    }
+
+    return valid
+}
+
+export function signupInputsValidation(errorsBlock: HTMLElement,
+                                       nameInput: HTMLInputElement,
+                                       surnameInput: HTMLInputElement,
+                                       emailInput: HTMLInputElement,
+                                       passwordInput1: HTMLInputElement,
+                                       passwordInput2: HTMLInputElement): boolean {
+    let valid: boolean
+
+    errorsBlock.innerHTML = ''
+
+    const flagEmpty = checkInputsEmpty(nameInput, surnameInput, emailInput, passwordInput1, passwordInput2)
+    const flagPasswordLength = checkPasswordsLength(passwordInput1, passwordInput2)
+    const flagIncorrectPasswords = checkPasswords(passwordInput1, passwordInput2)
+    const flagForbiddenSymbols = checkForbiddenSymbols(nameInput, surnameInput)
+
+    if (flagEmpty) {
+        errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Заполните все поля</p>`)()
+    }
+    if (flagIncorrectPasswords) {
+        errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Пароли не совпадают</p>`)()
+    }
+    if (flagForbiddenSymbols) {
+        errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Запрещенные символы в полях ввода</p>`)()
     }
 }
 

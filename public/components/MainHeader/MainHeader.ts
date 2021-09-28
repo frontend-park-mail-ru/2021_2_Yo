@@ -30,7 +30,7 @@ export default class MainHeaderComponent {
                     {{else}}
                         <div class="authBox">
                             {{#each authAnchors}}
-                                <a class="authAnchor" href="{{href}}" data-section="{{key}}">{{name}}</a>
+                                <a class="authAnchor" href="{{href}}">{{name}}</a>
                             {{/each}}
                         </div>
                     {{/if}}

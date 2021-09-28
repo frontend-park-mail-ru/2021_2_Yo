@@ -1,9 +1,13 @@
+:root {
+    --event-card-bg: #343434;
+}
+
 .eventCard {
     width: 330px;
     height: 400px;
     display: block;
     border-radius: 30px;
-    background-color: #343434;
+    background-color: var(--event-card-bg);
     color: white;
     font-weight: bold;
 }

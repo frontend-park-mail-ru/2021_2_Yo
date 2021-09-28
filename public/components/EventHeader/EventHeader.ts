@@ -11,7 +11,7 @@ export default class EventHeaderComponent {
         const source = `
             <header class="eHeader">
                 {{#each eventAnchors}}
-                    <a class="eventAnchor" href="{{href}}" data-section="{{key}}">{{name}}</a>
+                    <a class="eventAnchor" href="{{href}}">{{name}}</a>
                 {{/each}}
             </header>
         `;

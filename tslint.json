@@ -5,8 +5,11 @@
     ],
     "jsRules": {},
     "rules": {
+        "variable-name": [
+            "allow-leading-underscore"
+        ],
         "trailing-comma": [ false ],
-        "no-console": false
+        "eofline": true
     },
     "rulesDirectory": []
 }

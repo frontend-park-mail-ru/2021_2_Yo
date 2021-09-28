@@ -26,4 +26,39 @@ export type InputErrors = {
     errors: string[],
     input: HTMLInputElement
     value: string
+  
+export enum UrlPathnames {
+    Main = '/',
+    Login = '/login',
+    Signup = '/signup',
+}
+
+export enum ApiUrls {
+    User = '/user',
+    Events = '/events',
+    Login = '/login',
+    Signup = '/signup',
+}
+
+export type FetchResponseData = {
+    status: number;
+    json: ApiResponseJson;
+}
+
+export type ApiResponseJson = {
+    status: number;
+    message: string;
+    body: any;
+}
+
+export type ApiPostLoginData = {
+    email: string;
+    password: string;
+}
+
+export type ApiPostSignupData = {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
 }

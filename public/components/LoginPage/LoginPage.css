@@ -1,10 +1,15 @@
+:root {
+    --dirty-white: #FFFCFC;
+    --login-bg: #001065;
+}
+
 input {
     width: 700px;
     height: 60px;
     display: block;
-    background: #FFFFFF;
+    background: white;
     mix-blend-mode: normal;
-    border: 1px solid #000000;
+    border: 1px solid black;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 11px;
@@ -16,7 +21,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: #001065;
+    background: var(--login-bg);
     padding: 60px 0px;
 }
 
@@ -25,7 +30,7 @@ input {
     position: center;
     padding: 174px 92px 78px;
 
-    background: #FFFCFC;
+    background: var(--dirty-white);
     mix-blend-mode: normal;
     border-radius: 30px;
 }
@@ -38,7 +43,7 @@ p {
     font-size: 24px;
     line-height: 28px;
 
-    color: #000000;
+    color: black;
 }
 
 .label {
@@ -55,20 +60,19 @@ p {
     padding-left: 48px;
     padding-right: 48px;
 
-    background: #000000;
+    background: black;
     mix-blend-mode: normal;
-    border: 1px solid #FFFFFF;
+    border: 1px solid white;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 11px;
 
-    font-family: Roboto, serif;
     font-style: normal;
     font-weight: normal;
     font-size: 36px;
     line-height: 42px;
 
-    color: #FFFFFF;
+    color: white;
 }
 
 .submitBtn:hover {
@@ -87,7 +91,7 @@ p {
     display: inline-block;
     padding: 141px 313px 78px 93px;
 
-    background: #FFFCFC;
+    background: var(--dirty-white);
     mix-blend-mode: normal;
     border-radius: 30px;
 }
