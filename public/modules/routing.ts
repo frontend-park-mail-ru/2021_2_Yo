@@ -1,13 +1,13 @@
 import { UrlPathnames } from "../types.js";
 import { mainPage, signupPage, loginPage, errorPage } from "./pageloaders.js";
 
-export default function route(path?: undefined | UrlPathnames) {
+export default async function route(path?: undefined | UrlPathnames) {
     if (path) {
         window.history.pushState({}, '', path);
     }
     switch (window.location.pathname) {
         case UrlPathnames.Main:
-            mainPage();
+            await mainPage();
             break;
         case UrlPathnames.Login:
             loginPage();

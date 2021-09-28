@@ -71,14 +71,16 @@ async function getFetch(url: string) {
             };
         });
 
-        console.log(res);
+        console.log('HTTP status: ', res.status, '; body: ', res.body);
         return res;
     }
 
 export async function getUser(): Promise<UserData | undefined> {
     const {status, body} = await getFetch(API + '/user');
     if (status === 200) {
-        return {id: 1, name: body['name'], geo: 'Мытищи'};
+        if (body.status === 200) {
+            return {id: 1, name: body['name'], geo: 'Мытищи'};
+        }
     }
     return undefined;
 }
