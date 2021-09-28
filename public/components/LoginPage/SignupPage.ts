@@ -47,13 +47,13 @@ export default class SignupPageComponent {
         event.preventDefault();
 
         const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-        errorsBlock.innerHTML = ''
+        errorsBlock.innerHTML = '';
 
-        const nameInput = document.getElementById('nameInput') as HTMLInputElement
-        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement
-        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement
-        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement
+        const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
+        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
+        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
 
         const inputs = new Map([
             ['email', {
@@ -85,6 +85,6 @@ export default class SignupPageComponent {
 
         signupValidateFields(inputs);
 
-        const valid = showErrors(inputs, errorsBlock)
+        const valid = showErrors(inputs, errorsBlock);
     }
 }
