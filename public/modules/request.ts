@@ -1,3 +1,5 @@
+import { UserData } from "../types.js";
+
 const METHODS = {
     POST: 'POST',
     GET: 'GET',
@@ -49,4 +51,7 @@ export class Request {
     }
 }
 
+// export function getUser():UserData {
+//     let user: Use
+// }
 

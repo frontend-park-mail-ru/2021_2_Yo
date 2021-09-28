@@ -27,14 +27,16 @@ export function mainPage() {
     };
     const events = Array(9).fill(event);
     // const user: UserData = {id: 1, name: 'Саша', geo: 'Мытищи'};
-    let user: undefined | UserData;
+    let user: UserData;
     const req = new Request()
     req.getFetch('https://yobmstu.herokuapp.com/user').then(
         ({status, parsedBody}) => {
             console.log(status, " ", parsedBody)
             if (status === 200) {
-                // все ок, редирект на главную
-                user = {id: 1, name: parsedBody.name, geo: 'Мытищи'};
+                const {status, body} = parsedBody;
+                if (status === 200) {
+                    user = {id: 1, name: body.name, geo: 'Мытищи'};
+                }
             }
             const main = new MainPageComponent(app, events, user);
             main.render();
