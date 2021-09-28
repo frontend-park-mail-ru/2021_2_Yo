@@ -58,7 +58,6 @@ export default class LoginPageComponent {
         ]);
 
         authValidateFields(inputs);
-        console.log(this)
         const valid = this.showErrors(inputs, errorsBlock);
         if (valid) {
             const postData: ApiPostLoginData = {
@@ -98,5 +97,5 @@ export default class LoginPageComponent {
 
         return valid;
     }
-        
+
 }
