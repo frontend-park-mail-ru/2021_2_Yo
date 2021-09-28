@@ -1,3 +1,4 @@
+import { response } from "express";
 import { EventCardData, UserData } from "../types.js";
 
 const METHODS = {
@@ -87,7 +88,7 @@ async function getFetch(url: string) {
         method: METHODS.POST,
         credentials: 'include',
         mode: 'cors',
-    });
+    }).then(response => response);
     const res = await fetchHandle(responsePromise);
 
     // let HTTPStatus: number;
