@@ -71,7 +71,7 @@ async function getFetch(url: string) {
             };
         });
 
-        console.log('HTTP status: ', res.status, '; body: ', res.body);
+        console.log('HTTP status: ', res.status, '; json: ', res.body);
         return res;
     }
 
