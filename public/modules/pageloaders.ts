@@ -5,7 +5,6 @@ import SignupPageComponent from "../components/LoginPage/SignupPage.js";
 import {getEvents, getUser} from "./request.js";
 import route from "./routing.js"
 
-
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
     if (target instanceof HTMLAnchorElement) {

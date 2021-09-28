@@ -1,7 +1,6 @@
 import EventCardComponent from "../EventCard/EventCard.js"
 import { EventCardData } from "../../types.js";
 
-
 export default class EventRowComponent {
     #parent: HTMLElement
     #data: EventCardData[]

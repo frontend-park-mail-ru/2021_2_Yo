@@ -63,7 +63,7 @@ export default class SignupPageComponent {
 
             const valid = signupInputsValidation(errorsBlock, nameInput, surnameInput, emailInput, passwordInput1, passwordInput2);
             if (valid) {
-                const postData: ApiPostSignupData = {name: name, surname: surname, email: email, password: password1};
+                const postData: ApiPostSignupData = {name, surname, email, password: password1};
                 const error = await postSignup(postData);
                 if (error) {
                     errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();

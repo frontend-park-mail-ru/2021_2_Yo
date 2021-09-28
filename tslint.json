@@ -9,7 +9,8 @@
             "allow-leading-underscore"
         ],
         "trailing-comma": [ false ],
-        "no-console": false
+        "no-console": false,
+        "eofline": true
     },
     "rulesDirectory": []
 }

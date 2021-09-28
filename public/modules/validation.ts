@@ -1,7 +1,6 @@
 export function authInputsValidation(errorsBlock: HTMLElement, emailInput: HTMLInputElement, passwordInput: HTMLInputElement): boolean {
     let valid = true
 
-
     const email = emailInput.value.trim()
     const password = passwordInput.value.trim()
 

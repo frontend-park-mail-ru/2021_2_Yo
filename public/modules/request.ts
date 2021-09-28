@@ -1,4 +1,4 @@
-import { ApiPostLoginData, ApiPostSignupData, ApiUrls, EventCardData, UserData } from "../types.js";
+import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, ApiUrls, EventCardData, FetchResponseData, UserData } from "../types.js";
 
 const METHODS = {
     POST: 'POST',
@@ -7,15 +7,16 @@ const METHODS = {
 
 const API = 'https://yobmstu.herokuapp.com';
 
-async function handleFetch (responsePromise: Promise<Response>) {
+async function handleFetch (responsePromise: Promise<Response>): Promise<FetchResponseData> {
     let HTTPStatus: number;
     return responsePromise.then((response) => {
         HTTPStatus = response.status;
         return response.json();
     }).then(data => {
+        const json = data as ApiResponseJson;
         return {
             status: HTTPStatus,
-            json: data,
+            json: json,
         }
     })
 }
@@ -55,11 +56,11 @@ export async function getUser(): Promise<UserData | undefined> {
             return {id: 1, name: json.body.name, geo: 'Мытищи'};
         }
     }
-    return undefined;
+    return;
 }
 
 export async function getEvents(): Promise<EventCardData[]> {
-    const {status, json} = await getFetch(API + '/events');
+    const {status, json} = await getFetch(API + ApiUrls.Events);
     if (status === 200) {
         if (json.status === 200) {
             return json.body.events as EventCardData[];
@@ -71,23 +72,23 @@ export async function getEvents(): Promise<EventCardData[]> {
 export async function postLogin(postData: ApiPostLoginData): Promise<undefined | string> {
     const {status, json} = await postFetch(API + ApiUrls.Login, postData);
     if (status === 200) {
-        if (json['status'] === 200) {
-            return undefined;
+        if (json.status === 200) {
+            return;
         } else {
-            return json['message'] as string;
+            return json.message as string;
         }
     }
-    return undefined; 
+    return;
 }
 
 export async function postSignup(postData: ApiPostSignupData): Promise<undefined | string> {
     const {status, json} = await postFetch(API + ApiUrls.Signup, postData);
     if (status === 200) {
-        if (json['status'] === 200) {
-            return undefined;
+        if (json.status === 200) {
+            return;
         } else {
-            return json['message'] as string;
+            return json.message as string;
         }
     }
-    return undefined; 
+    return;
 }

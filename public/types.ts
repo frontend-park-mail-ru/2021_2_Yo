@@ -35,6 +35,17 @@ export enum ApiUrls {
     Signup = '/signup',
 }
 
+export type FetchResponseData = {
+    status: number;
+    json: ApiResponseJson;
+}
+
+export type ApiResponseJson = {
+    status: number;
+    message: string;
+    body: any;
+}
+
 export type ApiPostLoginData = {
     email: string;
     password: string;

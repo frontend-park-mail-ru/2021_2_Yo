@@ -47,7 +47,7 @@ export default class LoginPageComponent {
 
             const valid = authInputsValidation(errorsBlock, emailInput, passwordInput);
             if (valid) {
-                const postData: ApiPostLoginData = {email: email, password: password};
+                const postData: ApiPostLoginData = {email, password};
                 const error =  await postLogin(postData);
                 if (error) {
                     errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
