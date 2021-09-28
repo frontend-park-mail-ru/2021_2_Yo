@@ -30,9 +30,9 @@ export function mainPage() {
     let user: UserData;
     const req = new Request()
     req.getFetch('https://yobmstu.herokuapp.com/user').then(
-        ({status, parsedBody}) => {
-            console.log(status, " ", parsedBody)
-            if (status === 200) {
+        ({HTTPStatus, parsedBody}) => {
+            console.log(HTTPStatus, " ", parsedBody)
+            if (HTTPStatus === 200) {
                 const {status, body} = parsedBody;
                 if (status === 200) {
                     user = {id: 1, name: body.name, geo: 'Мытищи'};
