@@ -1,5 +1,5 @@
 import {signupInputsValidation} from "../../modules/validation.js";
-import {postLogin, Request} from "../../modules/request.js";
+import {postLogin, postSignup, Request} from "../../modules/request.js";
 import route from "../../modules/routing.js";
 import { ApiPostSignupData, UrlPathnames } from "../../types.js";
 
@@ -64,7 +64,7 @@ export default class SignupPageComponent {
             const valid = signupInputsValidation(errorsBlock, nameInput, surnameInput, emailInput, passwordInput1, passwordInput2);
             if (valid) {
                 const postData: ApiPostSignupData = {name: name, surname: surname, email: email, password: password1};
-                const error = await postLogin(postData);
+                const error = await postSignup(postData);
                 if (error) {
                     errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
                 } else {
