@@ -71,6 +71,7 @@ async function getFetch(url: string) {
             };
         });
 
+        console.log(res);
         return res;
     }
 
