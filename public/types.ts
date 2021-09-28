@@ -22,6 +22,11 @@ export enum PageKeys {
     Signup = 'signup',
 }
 
+export type InputErrors = {
+    errors: string[],
+    input: HTMLInputElement
+    value: string
+  
 export enum UrlPathnames {
     Main = '/',
     Login = '/login',

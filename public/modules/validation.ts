@@ -1,3 +1,33 @@
+import {InputErrors} from "../types.js";
+
+export function authValidateFields(inputs: Map<string, InputErrors>) {
+    const email = inputs.get('email') as InputErrors;
+    email.errors.push(checkEmail(email.value));
+
+    const password = inputs.get('password') as InputErrors;
+    password.errors.push(checkPasswordLength(password.value));
+}
+
+export function signupValidateFields(inputs: Map<string, InputErrors>) {
+    const name = inputs.get('name') as InputErrors;
+    const surname = inputs.get('surname') as InputErrors;
+    const email = inputs.get('email') as InputErrors;
+    const password1 = inputs.get('password1') as InputErrors;
+    const password2 = inputs.get('password2') as InputErrors;
+
+    name.errors.push(checkEmpty(name.value));
+    name.errors.push(checkForbiddenSymbols(name.value));
+
+    surname.errors.push(checkEmpty(surname.value));
+    surname.errors.push(checkForbiddenSymbols(surname.value));
+
+    email.errors.push(checkEmail(email.value));
+
+    password1.errors.push(checkPasswordLength(password1.value));
+    password2.errors.push(checkPasswordLength(password2.value));
+    if (checkPasswordsEqual(password1.value, password2.value)) {
+        password1.errors.push('Пароли не совпадают');
+        password2.errors.push('Пароли не совпадают');
 export function authInputsValidation(errorsBlock: HTMLElement, emailInput: HTMLInputElement, passwordInput: HTMLInputElement): boolean {
     let valid = true
 
@@ -49,107 +79,39 @@ export function signupInputsValidation(errorsBlock: HTMLElement,
     if (flagForbiddenSymbols) {
         errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Запрещенные символы в полях ввода</p>`)()
     }
-    if (flagPasswordLength) {
-        errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>Пароль должен содержать не менее 8 символов</p>`)()
-    }
-
-    valid = !(flagEmpty || flagIncorrectPasswords || flagPasswordLength || flagForbiddenSymbols)
-
-    return valid
 }
 
-function checkInputsEmpty(nameInput: HTMLInputElement,
-                          surnameInput: HTMLInputElement,
-                          emailInput: HTMLInputElement,
-                          passwordInput1: HTMLInputElement,
-                          passwordInput2: HTMLInputElement): boolean {
-    let flagEmpty = false
-
-    const name = nameInput.value.trim()
-    const surname = surnameInput.value.trim()
-    const email = emailInput.value.trim()
-    const password1 = passwordInput1.value.trim()
-    const password2 = passwordInput2.value.trim()
-
-    if (!name) {
-        nameInput.className = 'inputError'
-        flagEmpty = true
+function checkEmpty(value: string): string {
+    if (!value) {
+        return 'Заполните все поля';
     }
-
-    if (!surname) {
-        surnameInput.className = 'inputError'
-        flagEmpty = true
-    }
-
-    if (!email) {
-        emailInput.className = 'inputError'
-        flagEmpty = true
-    } else {
-        emailInput.className = 'inputCorrect'
-    }
-
-    if (!password1) {
-        passwordInput1.className = 'inputError'
-        flagEmpty = true
-    }
-
-    if (!password2) {
-        passwordInput2.className = 'inputError'
-        flagEmpty = true
-    }
-
-    return flagEmpty
+    return '';
 }
 
-function checkPasswords(passwordInput1: HTMLInputElement, passwordInput2: HTMLInputElement): boolean {
-    let flagIncorrectPasswords = false
-
-    const password1 = passwordInput1.value.trim()
-    const password2 = passwordInput2.value.trim()
-
-    if (password1 !== password2) {
-        passwordInput1.className = 'inputError'
-        passwordInput2.className = 'inputError'
-        flagIncorrectPasswords = true
+function checkForbiddenSymbols(value: string): string {
+    if (!value.match('^[a-zA-Zа-яА-Я]+$')) {
+        return 'Поля "Имя" и "Фамилия" могут содержать только буквы';
     }
-
-    return flagIncorrectPasswords
+    return '';
 }
 
-function checkForbiddenSymbols(nameInput: HTMLInputElement, surnameInput: HTMLInputElement): boolean {
-    let flagForbiddenSymbols = false
-
-    const name = nameInput.value.trim()
-    const surname = surnameInput.value.trim()
-
-    if (name.match('^[a-zA-Zа-яА-Я]+$')) {
-        nameInput.className = 'inputCorrect'
-    } else if (name) {
-        nameInput.className = 'inputError'
-        flagForbiddenSymbols = true
+function checkPasswordLength(value: string): string {
+    if (value.length < 8) {
+        return 'Пароль не может быть короче 8 символов';
     }
-
-    if (surname.match('^[a-zA-Zа-яА-Я]+$')) {
-        surnameInput.className = 'inputCorrect'
-    } else if (surname) {
-        surnameInput.className = 'inputError'
-        flagForbiddenSymbols = true
-    }
-
-    return flagForbiddenSymbols
+    return '';
 }
 
-function checkPasswordsLength(passwordInput1: HTMLInputElement, passwordInput2: HTMLInputElement): boolean {
-    let flagPasswordLength = false
-
-    const password1 = passwordInput1.value.trim()
-    const password2 = passwordInput2.value.trim()
-
-    if (password1.length < 8 || password2.length < 8) {
-        passwordInput1.className = 'inputError'
-        passwordInput2.className = 'inputError'
-        flagPasswordLength = true
+function checkPasswordsEqual(pas1: string, pas2: string): boolean {
+    if (pas1 !== pas2) {
+        return true;
     }
+    return false;
+}
 
-    return flagPasswordLength
+function checkEmail(value: string): string {
+    if (!value.match('([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$')) {
+        return 'Неправильный формат Email. Пример правильного формата: mail@mail.ru';
+    }
+    return '';
 }
