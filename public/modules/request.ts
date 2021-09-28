@@ -5,7 +5,7 @@ const METHODS = {
     GET: 'GET',
 };
 
-const API = 'https://yobmstu.herokuapp.com';
+const API = 'https://bmstusasa.herokuapp.com';
 
 async function handleFetch (responsePromise: Promise<Response>): Promise<FetchResponseData> {
     let HTTPStatus: number;
