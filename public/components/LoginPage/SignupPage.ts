@@ -70,25 +70,6 @@ export default class SignupPageComponent {
                 } else {
                     route(UrlPathnames.Main);
                 }
-
-                // const req = new Request()
-                // req.postFetch('https://yobmstu.herokuapp.com/signup', {
-                //     name,
-                //     surname,
-                //     email,
-                //     password: password1
-                // })
-                //     .then(({status, parsedBody}) => {
-                //         console.log(status, " ", parsedBody)
-                //         if (status === 200) {
-                //             if (parsedBody.error) {
-                //                 const error = parsedBody.error;
-                //                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
-                //             } else {
-                //                 route(UrlPathnames.Main);
-                //             }
-                //         }
-                //     })
             }
         });
     }
