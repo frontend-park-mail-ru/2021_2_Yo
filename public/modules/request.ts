@@ -120,7 +120,7 @@ export async function postLogin(email: string, password: string): Promise<undefi
         if (json['status'] === 200) {
             return undefined;
         } else {
-            return json['message'] as string;
+            return json['body']['message'] as string;
         }
     }
     return undefined; 
