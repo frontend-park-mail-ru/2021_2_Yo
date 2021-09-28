@@ -1,5 +1,5 @@
 import {signupInputsValidation} from "../../modules/validation.js";
-import {postLogin, postSignup, Request} from "../../modules/request.js";
+import {postSignup} from "../../modules/request.js";
 import route from "../../modules/routing.js";
 import { ApiPostSignupData, UrlPathnames } from "../../types.js";
 

@@ -1,6 +1,4 @@
 import { UrlPathnames } from "./types.js";
-import { signupPage } from "./modules/pageloaders.js";
-import { loginPage } from "./modules/pageloaders.js";
 
 export const anchorsConfig = {
     eventAnchors: [

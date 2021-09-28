@@ -7,52 +7,6 @@ const METHODS = {
 
 const API = 'https://yobmstu.herokuapp.com';
 
-export class Request {
-    getFetch(url: string) {
-        let statusCode: number;
-
-        return fetch(url, {
-            method: METHODS.GET,
-            mode: 'cors',
-            credentials: "include"
-        }).then((response) => {
-            statusCode = response.status;
-            return response.json();
-        }).then((parsedBody) => {
-            return {
-                status: statusCode,
-                parsedBody
-            };
-        }).catch((error) => {
-            return error
-        })
-    }
-
-    postFetch(url: string, body: {}) {
-        let statusCode: number;
-
-        return fetch(url, {
-            method: METHODS.POST,
-            credentials: 'include',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(body)
-        }).then((response) => {
-            statusCode = response.status;
-            return response.json();
-        }).then((parsedBody) => {
-            return {
-                status: statusCode,
-                parsedBody
-            };
-        }).catch((error) => {
-            return error
-        })
-    }
-}
-
 async function handleFetch (responsePromise: Promise<Response>) {
     let HTTPStatus: number;
     return responsePromise.then((response) => {

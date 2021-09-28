@@ -1,4 +1,4 @@
-import {EventCardData, PageKeys, UrlPathnames, UserData} from "../types.js";
+import {UrlPathnames} from "../types.js";
 import MainPageComponent from "../components/MainPage/MainPage.js";
 import LoginPageComponent from "../components/LoginPage/LoginPage.js";
 import SignupPageComponent from "../components/LoginPage/SignupPage.js";
@@ -18,13 +18,6 @@ export async function mainPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
-    // const event: EventCardData = {
-    //     imgUrl: '/img/tusa.jpeg',
-    //     viewed: 126,
-    //     name: 'Джуса туса',
-    //     description: 'дискотека это тусовка или просто сборище? 8 лет. Дискотека - это когда есть диджей и в этом деле разбираются все и молодежь и взрослые.'
-    // };
-    // const events = Array(9).fill(event);
     const events = await getEvents();
     const user = await getUser();
     const main = new MainPageComponent(app, events, user);

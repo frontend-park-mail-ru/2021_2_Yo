@@ -1,6 +1,5 @@
 import {authInputsValidation} from "../../modules/validation.js";
-import {postLogin, Request} from "../../modules/request.js";
-import {mainPage} from "../../modules/pageloaders.js";
+import {postLogin} from "../../modules/request.js";
 import route from "../../modules/routing.js";
 import { ApiPostLoginData, UrlPathnames } from "../../types.js";
 
@@ -55,21 +54,6 @@ export default class LoginPageComponent {
                 } else {
                     route(UrlPathnames.Main);
                 }
-                // const req = new Request()
-                // req.postFetch('https://yobmstu.herokuapp.com/signin', {email, password})
-                //     .then(({status, parsedBody}) => {
-                //         console.log(status, " ", parsedBody)
-                //         if (status === 200) {
-                //             if (parsedBody.error) {
-                //                 const error = parsedBody.error;
-                //                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
-                //             } else {
-                //                 route(UrlPathnames.Main);
-                //             }
-                //         }
-                //     }
-                // )
-
             }
         });
     }
