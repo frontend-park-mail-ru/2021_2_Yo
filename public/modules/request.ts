@@ -1,4 +1,4 @@
-import { ApiUrls, EventCardData, UserData } from "../types.js";
+import { ApiPostLoginData, ApiPostSignupData, ApiUrls, EventCardData, UserData } from "../types.js";
 
 const METHODS = {
     POST: 'POST',
@@ -114,8 +114,8 @@ export async function getEvents(): Promise<EventCardData[]> {
     return [];
 }
 
-export async function postLogin(email: string, password: string): Promise<undefined | string> {
-    const {status, json} = await postFetch('https://yobmstu.herokuapp.com/signin', {email, password});
+export async function postLogin(postData: ApiPostLoginData): Promise<undefined | string> {
+    const {status, json} = await postFetch('https://yobmstu.herokuapp.com/signin', postData);
     if (status === 200) {
         if (json['status'] === 200) {
             return undefined;
@@ -125,17 +125,15 @@ export async function postLogin(email: string, password: string): Promise<undefi
     }
     return undefined; 
 }
-// const req = new Request()
-//                 req.postFetch('https://yobmstu.herokuapp.com/signin', {email, password})
-//                     .then(({status, parsedBody}) => {
-//                         console.log(status, " ", parsedBody)
-//                         if (status === 200) {
-//                             if (parsedBody.error) {
-//                                 const error = parsedBody.error;
-//                                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
-//                             } else {
-//                                 route(UrlPathnames.Main);
-//                             }
-//                         }
-//                     }
-//                 )
+
+export async function postSignup(postData: ApiPostSignupData): Promise<undefined | string> {
+    const {status, json} = await postFetch('https://yobmstu.herokuapp.com/signin', postData);
+    if (status === 200) {
+        if (json['status'] === 200) {
+            return undefined;
+        } else {
+            return json['body']['message'] as string;
+        }
+    }
+    return undefined; 
+}

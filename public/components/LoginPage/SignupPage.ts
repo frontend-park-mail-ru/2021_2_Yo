@@ -1,7 +1,7 @@
 import {signupInputsValidation} from "../../modules/validation.js";
-import {Request} from "../../modules/request.js";
+import {postLogin, Request} from "../../modules/request.js";
 import route from "../../modules/routing.js";
-import { UrlPathnames } from "../../types.js";
+import { ApiPostSignupData, UrlPathnames } from "../../types.js";
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -45,7 +45,7 @@ export default class SignupPageComponent {
         const errorsBlock = document.getElementById('errors') as HTMLElement;
 
         const form = document.getElementById('regForm')
-        form?.addEventListener('submit', (event) => {
+        form?.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             errorsBlock.innerHTML = ''
@@ -63,24 +63,32 @@ export default class SignupPageComponent {
 
             const valid = signupInputsValidation(errorsBlock, nameInput, surnameInput, emailInput, passwordInput1, passwordInput2);
             if (valid) {
-                const req = new Request()
-                req.postFetch('https://yobmstu.herokuapp.com/signup', {
-                    name,
-                    surname,
-                    email,
-                    password: password1
-                })
-                    .then(({status, parsedBody}) => {
-                        console.log(status, " ", parsedBody)
-                        if (status === 200) {
-                            if (parsedBody.error) {
-                                const error = parsedBody.error;
-                                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
-                            } else {
-                                route(UrlPathnames.Main);
-                            }
-                        }
-                    })
+                const postData: ApiPostSignupData = {name: name, surname: surname, email: email, password: password1};
+                const error = await postLogin(postData);
+                if (error) {
+                    errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+                } else {
+                    route(UrlPathnames.Main);
+                }
+
+                // const req = new Request()
+                // req.postFetch('https://yobmstu.herokuapp.com/signup', {
+                //     name,
+                //     surname,
+                //     email,
+                //     password: password1
+                // })
+                //     .then(({status, parsedBody}) => {
+                //         console.log(status, " ", parsedBody)
+                //         if (status === 200) {
+                //             if (parsedBody.error) {
+                //                 const error = parsedBody.error;
+                //                 errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+                //             } else {
+                //                 route(UrlPathnames.Main);
+                //             }
+                //         }
+                //     })
             }
         });
     }

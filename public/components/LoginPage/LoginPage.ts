@@ -2,7 +2,7 @@ import {authInputsValidation} from "../../modules/validation.js";
 import {postLogin, Request} from "../../modules/request.js";
 import {mainPage} from "../../modules/pageloaders.js";
 import route from "../../modules/routing.js";
-import { UrlPathnames } from "../../types.js";
+import { ApiPostLoginData, UrlPathnames } from "../../types.js";
 
 export default class LoginPageComponent {
     #parent: HTMLElement
@@ -48,7 +48,8 @@ export default class LoginPageComponent {
 
             const valid = authInputsValidation(errorsBlock, emailInput, passwordInput);
             if (valid) {
-                const error =  await postLogin(email, password);
+                const postData: ApiPostLoginData = {email: email, password: password};
+                const error =  await postLogin(postData);
                 if (error) {
                     errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
                 } else {

@@ -32,3 +32,15 @@ export enum ApiUrls {
     User = '/user',
     Events = '/events',
 }
+
+export type ApiPostLoginData = {
+    email: string;
+    password: string;
+}
+
+export type ApiPostSignupData = {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+}
