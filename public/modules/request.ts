@@ -120,7 +120,7 @@ export async function postLogin(postData: ApiPostLoginData): Promise<undefined |
         if (json['status'] === 200) {
             return undefined;
         } else {
-            return json['body']['message'] as string;
+            return json['message'] as string;
         }
     }
     return undefined; 
@@ -132,7 +132,7 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
         if (json['status'] === 200) {
             return undefined;
         } else {
-            return json['body']['message'] as string;
+            return json['message'] as string;
         }
     }
     return undefined; 
