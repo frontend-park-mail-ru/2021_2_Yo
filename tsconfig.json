@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        // Strict Checks
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "alwaysStrict": true,
+        "strictPropertyInitialization": true,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "strictBindCallApply": true,
+        // Other
+        "esModuleInterop": true,
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "baseUrl": "./public",
+        "paths": {
+            "*": [
+                "node_modules/*",
+            ]
+        }
+    },
+    "include": [
+        "./public",
+        "./server"
+    ]
+}

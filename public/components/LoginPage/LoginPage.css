@@ -1,0 +1,125 @@
+:root {
+    --dirty-white: #FFFCFC;
+    --login-bg: #001065;
+}
+
+input {
+    width: 700px;
+    height: 60px;
+    display: block;
+    background: white;
+    mix-blend-mode: normal;
+    border: 1px solid black;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 11px;
+    font-size: 20px;
+    padding: 0 0 0 20px;
+}
+
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: var(--login-bg);
+    padding: 60px 0px;
+}
+
+.authFormBackground {
+    display: inline-block;
+    position: center;
+    padding: 174px 92px 78px;
+
+    background: var(--dirty-white);
+    mix-blend-mode: normal;
+    border-radius: 30px;
+}
+
+p {
+    margin-bottom: 2px;
+    margin-top: 18px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+
+    color: black;
+}
+
+.label {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 96px;
+    line-height: 112px;
+}
+
+.submitBtn {
+    width: auto;
+    height: 60px;
+    margin-top: 46px;
+    padding-left: 48px;
+    padding-right: 48px;
+
+    background: black;
+    mix-blend-mode: normal;
+    border: 1px solid white;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 11px;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 42px;
+
+    color: white;
+}
+
+.submitBtn:hover {
+    cursor: pointer;
+}
+
+.signupBackground {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: linear-gradient(137.34deg, #0E0063 0%, #5E0043 100%);
+    padding: 60px 0px;
+}
+
+.signupFormBackground {
+    display: inline-block;
+    padding: 141px 313px 78px 93px;
+
+    background: var(--dirty-white);
+    mix-blend-mode: normal;
+    border-radius: 30px;
+}
+
+.smallerLabel {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 56px;
+}
+
+.errorP {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+
+    color: darkred;
+}
+
+.inputError {
+    border: 1px solid red
+}
+
+.inputCorrect {
+    border: 1px solid green
+}
+
+.topFormDiv {
+    padding-bottom: 42px
+}

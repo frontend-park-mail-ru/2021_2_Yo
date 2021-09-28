@@ -1,0 +1,52 @@
+:root {
+    --event-card-bg: #343434;
+}
+
+.eventCard {
+    width: 330px;
+    height: 400px;
+    display: block;
+    border-radius: 30px;
+    background-color: var(--event-card-bg);
+    color: white;
+    font-weight: bold;
+}
+
+.cover {
+    position: relative;
+    width: 100%; 
+    height: 200px;
+    text-align: left;
+}
+
+.eventBG {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.eventName {
+    position: absolute;
+    top: 13px;
+    left: 16px;
+    font-size: 30px;
+}
+
+.eventViews {
+    position: absolute;
+    bottom: 13px;
+    right: 16px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.eventViewsImg {
+    height: 18px;
+    margin-right: 10px;
+}
+
+.description {
+    padding: 15px;
+    font-size: 20px;
+}

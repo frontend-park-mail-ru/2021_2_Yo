@@ -1,0 +1,10 @@
+.eHeader {
+    justify-content: space-between;
+}
+
+.eventAnchor {
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+    font-style: bold;
+}
