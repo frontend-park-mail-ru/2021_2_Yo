@@ -53,7 +53,7 @@ export class Request {
     }
 }
 
-const fetchHandle = async (responsePromise: Promise<Response>) => {
+async function fetchHandle (responsePromise: Promise<Response>) {
     let HTTPStatus: number;
     return responsePromise.then((response) => {
         HTTPStatus = response.status;
@@ -91,20 +91,27 @@ async function postFetch(url: string, body: {}) {
 }
 
 async function getFetch(url: string) {
-    let HTTPStatus: number;
-    const res = await fetch(url, {
+    const responsePromise = fetch(url, {
         method: METHODS.GET,
         mode: 'cors',
         credentials: "include"
-    }).then((response) => {
-        HTTPStatus = response.status;
-        return response.json();
-    }).then(data => {
-        return {
-            status: HTTPStatus,
-            json: data,
-        };
     });
+    const res = await fetchHandle(responsePromise);
+
+    // let HTTPStatus: number;
+    // const res = await fetch(url, {
+    //     method: METHODS.GET,
+    //     mode: 'cors',
+    //     credentials: "include"
+    // }).then((response) => {
+    //     HTTPStatus = response.status;
+    //     return response.json();
+    // }).then(data => {
+    //     return {
+    //         status: HTTPStatus,
+    //         json: data,
+    //     };
+    // });
 
     console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
