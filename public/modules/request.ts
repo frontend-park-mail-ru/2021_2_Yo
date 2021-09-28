@@ -127,7 +127,7 @@ export async function postLogin(postData: ApiPostLoginData): Promise<undefined |
 }
 
 export async function postSignup(postData: ApiPostSignupData): Promise<undefined | string> {
-    const {status, json} = await postFetch('https://yobmstu.herokuapp.com/signin', postData);
+    const {status, json} = await postFetch('https://yobmstu.herokuapp.com/signup', postData);
     if (status === 200) {
         if (json['status'] === 200) {
             return undefined;
