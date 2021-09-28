@@ -2,7 +2,7 @@ import {EventCardData, PageKeys, UrlPathnames, UserData} from "../types.js";
 import MainPageComponent from "../components/MainPage/MainPage.js";
 import LoginPageComponent from "../components/LoginPage/LoginPage.js";
 import SignupPageComponent from "../components/LoginPage/SignupPage.js";
-import {Request} from "./request.js";
+import {getUser, Request} from "./request.js";
 import route from "./routing.js"
 
 
@@ -14,7 +14,7 @@ const clickHandler = (e: MouseEvent) => {
     }
 };
 
-export function mainPage() {
+export async function mainPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
@@ -27,22 +27,26 @@ export function mainPage() {
     };
     const events = Array(9).fill(event);
     // const user: UserData = {id: 1, name: 'Саша', geo: 'Мытищи'};
-    let user: UserData;
-    const req = new Request()
-    req.getFetch('https://yobmstu.herokuapp.com/user').then(
-        ({HTTPStatus, parsedBody}) => {
-            console.log(HTTPStatus, " ", parsedBody)
-            if (HTTPStatus === 200) {
-                const {status, body} = parsedBody;
-                if (status === 200) {
-                    user = {id: 1, name: body.name, geo: 'Мытищи'};
-                }
-            }
-            const main = new MainPageComponent(app, events, user);
-            main.render();
-            app.addEventListener('click', clickHandler);
-        }
-    )
+    // let user: UserData;
+    // const req = new Request()
+    // req.getFetch('https://yobmstu.herokuapp.com/user').then(
+    //     ({HTTPStatus, parsedBody}) => {
+    //         console.log(HTTPStatus, " ", parsedBody)
+    //         if (HTTPStatus === 200) {
+    //             const {status, body} = parsedBody;
+    //             if (status === 200) {
+    //                 user = {id: 1, name: body.name, geo: 'Мытищи'};
+    //             }
+    //         }
+    //         const main = new MainPageComponent(app, events, user);
+    //         main.render();
+    //         app.addEventListener('click', clickHandler);
+    //     }
+    // )
+    const user = await getUser();
+    const main = new MainPageComponent(app, events, user);
+    main.render();
+    app.addEventListener('click', clickHandler);
 }
 
 export function loginPage() {
