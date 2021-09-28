@@ -18,13 +18,14 @@ export async function mainPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
-    // const event: EventCardData = {
-    //     imgUrl: '/img/tusa.jpeg',
-    //     viewed: 126,
-    //     name: 'Джуса туса',
-    //     description: 'дискотека это тусовка или просто сборище? 8 лет. Дискотека - это когда есть диджей и в этом деле разбираются все и молодежь и взрослые.'
-    // };
-    const events = await getEvents();
+    const event: EventCardData = {
+        imgUrl: '/img/tusa.jpeg',
+        viewed: 126,
+        name: 'Джуса туса',
+        description: 'дискотека это тусовка или просто сборище? 8 лет. Дискотека - это когда есть диджей и в этом деле разбираются все и молодежь и взрослые.'
+    };
+    const events = Array(9).fill(event);
+    // const events = await getEvents();
     const user = await getUser();
     const main = new MainPageComponent(app, events, user);
     main.render();
