@@ -29,30 +29,32 @@ export default class LoginPageComponent {
 
         const form = document.getElementById('authForm') as HTMLFormElement;
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
+        form.addEventListener('submit', this.authorization);
+    }
 
-            const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-            errorsBlock.innerHTML = ''
+    authorization(event: Event) {
+        event.preventDefault();
 
-            const emailInput = document.getElementById('emailInput') as HTMLInputElement
-            const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
-            const inputs = new Map([
-                ['email', {
-                    input: emailInput,
-                    errors: [],
-                    value: emailInput.value.trim()
-                }],
-                ['password', {
-                    input: passwordInput,
-                    errors: [],
-                    value: passwordInput.value.trim()
-                }],
-            ]);
+        const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
+        errorsBlock.innerHTML = ''
 
-            authValidateFields(inputs);
+        const emailInput = document.getElementById('emailInput') as HTMLInputElement
+        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
+        const inputs = new Map([
+            ['email', {
+                input: emailInput,
+                errors: [],
+                value: emailInput.value.trim()
+            }],
+            ['password', {
+                input: passwordInput,
+                errors: [],
+                value: passwordInput.value.trim()
+            }],
+        ]);
 
-            const valid = showErrors(inputs, errorsBlock)
-        });
+        authValidateFields(inputs);
+
+        const valid = showErrors(inputs, errorsBlock)
     }
 }

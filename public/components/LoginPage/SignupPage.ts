@@ -39,50 +39,52 @@ export default class SignupPageComponent {
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML += template();
 
-        const form = document.getElementById('regForm')
-        form?.addEventListener('submit', (event) => {
-            event.preventDefault();
+        const form = document.getElementById('regForm') as HTMLFormElement
+        form.addEventListener('submit', this.registration);
+    }
 
-            const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-            errorsBlock.innerHTML = ''
+    registration(event: Event) {
+        event.preventDefault();
 
-            const nameInput = document.getElementById('nameInput') as HTMLInputElement
-            const surnameInput = document.getElementById('surnameInput') as HTMLInputElement
-            const emailInput = document.getElementById('emailInput') as HTMLInputElement
-            const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement
-            const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement
+        const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
+        errorsBlock.innerHTML = ''
 
-            const inputs = new Map([
-                ['email', {
-                    input: emailInput,
-                    errors: [],
-                    value: emailInput.value.trim()
-                }],
-                ['password1', {
-                    input: passwordInput1,
-                    errors: [],
-                    value: passwordInput1.value.trim()
-                }],
-                ['password2', {
-                    input: passwordInput2,
-                    errors: [],
-                    value: passwordInput2.value.trim()
-                }],
-                ['name', {
-                    input: nameInput,
-                    errors: [],
-                    value: nameInput.value.trim()
-                }],
-                ['surname', {
-                    input: surnameInput,
-                    errors: [],
-                    value: surnameInput.value.trim()
-                }],
-            ]);
+        const nameInput = document.getElementById('nameInput') as HTMLInputElement
+        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement
+        const emailInput = document.getElementById('emailInput') as HTMLInputElement
+        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement
+        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement
 
-            signupValidateFields(inputs);
+        const inputs = new Map([
+            ['email', {
+                input: emailInput,
+                errors: [],
+                value: emailInput.value.trim()
+            }],
+            ['password1', {
+                input: passwordInput1,
+                errors: [],
+                value: passwordInput1.value.trim()
+            }],
+            ['password2', {
+                input: passwordInput2,
+                errors: [],
+                value: passwordInput2.value.trim()
+            }],
+            ['name', {
+                input: nameInput,
+                errors: [],
+                value: nameInput.value.trim()
+            }],
+            ['surname', {
+                input: surnameInput,
+                errors: [],
+                value: surnameInput.value.trim()
+            }],
+        ]);
 
-            const valid = showErrors(inputs, errorsBlock)
-        });
+        signupValidateFields(inputs);
+
+        const valid = showErrors(inputs, errorsBlock)
     }
 }
