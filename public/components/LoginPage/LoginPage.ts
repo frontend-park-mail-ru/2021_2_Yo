@@ -1,4 +1,5 @@
-import {authValidateFields, showErrors} from "../../modules/validation.js";
+import {authValidateFields} from "../../modules/validation.js";
+import {InputErrors} from "../../types";
 
 export default class LoginPageComponent {
     #parent: HTMLElement;
@@ -29,7 +30,7 @@ export default class LoginPageComponent {
 
         const form = document.getElementById('authForm') as HTMLFormElement;
 
-        form.addEventListener('submit', this.authorization);
+        form.addEventListener('submit', this.authorization.bind(this));
     }
 
     authorization(event: Event) {
@@ -54,7 +55,32 @@ export default class LoginPageComponent {
         ]);
 
         authValidateFields(inputs);
+        console.log(this)
+        const valid = this.showErrors(inputs, errorsBlock);
+    }
 
-        const valid = showErrors(inputs, errorsBlock)
+    showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
+        const errors: string[] = [];
+        let valid = true;
+
+        inputs.forEach((item) => {
+            item.input.className = 'inputCorrect';
+            item.errors.forEach(error => {
+                if (error) {
+                    item.input.className = 'inputError';
+                    valid = false;
+                    if (error && errors.indexOf(error) === -1) {
+                        errors.push(error);
+                    }
+                }
+            })
+        });
+
+        const temp = window.Handlebars.compile(`{{#each errors}}
+                                                <p class='errorP'>{{this}}</p>
+                                            {{/each}}`);
+        errorsBlock.innerHTML += temp({errors});
+
+        return valid;
     }
 }

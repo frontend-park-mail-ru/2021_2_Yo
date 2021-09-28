@@ -1,4 +1,5 @@
-import {showErrors, signupValidateFields} from "../../modules/validation.js";
+import {signupValidateFields} from "../../modules/validation.js";
+import {InputErrors} from "../../types";
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -40,7 +41,7 @@ export default class SignupPageComponent {
         this.#parent.innerHTML += template();
 
         const form = document.getElementById('regForm') as HTMLFormElement
-        form.addEventListener('submit', this.registration);
+        form.addEventListener('submit', this.registration.bind(this));
     }
 
     registration(event: Event) {
@@ -85,6 +86,31 @@ export default class SignupPageComponent {
 
         signupValidateFields(inputs);
 
-        const valid = showErrors(inputs, errorsBlock);
+        const valid = this.showErrors(inputs, errorsBlock);
+    }
+
+    showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
+        const errors: string[] = [];
+        let valid = true;
+
+        inputs.forEach((item) => {
+            item.input.className = 'inputCorrect';
+            item.errors.forEach(error => {
+                if (error) {
+                    item.input.className = 'inputError';
+                    valid = false;
+                    if (error && errors.indexOf(error) === -1) {
+                        errors.push(error);
+                    }
+                }
+            })
+        });
+
+        const temp = window.Handlebars.compile(`{{#each errors}}
+                                                <p class='errorP'>{{this}}</p>
+                                            {{/each}}`);
+        errorsBlock.innerHTML += temp({errors});
+
+        return valid;
     }
 }

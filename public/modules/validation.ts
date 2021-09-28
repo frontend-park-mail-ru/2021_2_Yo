@@ -31,31 +31,6 @@ export function signupValidateFields(inputs: Map<string, InputErrors>) {
     }
 }
 
-export function showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
-    const errors: string[] = [];
-    let valid = true;
-
-    inputs.forEach((item) => {
-        item.input.className = 'inputCorrect';
-        item.errors.forEach(error => {
-            if (error) {
-                item.input.className = 'inputError';
-                valid = false;
-                if (error && errors.indexOf(error) === -1) {
-                    errors.push(error);
-                }
-            }
-        })
-    });
-
-    const temp = window.Handlebars.compile(`{{#each errors}}
-                                                <p class='errorP'>{{this}}</p>
-                                            {{/each}}`);
-    errorsBlock.innerHTML += temp({errors});
-
-    return valid
-}
-
 function checkEmpty(value: string): string {
     if (!value) {
         return 'Заполните все поля';
