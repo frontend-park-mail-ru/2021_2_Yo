@@ -16,7 +16,7 @@ async function handleFetch (responsePromise: Promise<Response>): Promise<FetchRe
         const json = data as ApiResponseJson;
         return {
             status: HTTPStatus,
-            json: json,
+            json,
         }
     })
 }
@@ -33,7 +33,6 @@ async function postFetch(url: string, body: {}) {
     });
     const res = await handleFetch(responsePromise);
 
-    console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
 }
 
@@ -45,7 +44,6 @@ async function getFetch(url: string) {
     });
     const res = await handleFetch(responsePromise);
 
-    console.log('HTTP status:', res.status, '; json:', res.json);
     return res;
 }
 
