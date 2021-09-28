@@ -27,6 +27,8 @@ export type InputErrors = {
     input: HTMLInputElement
     value: string
   
+}
+
 export enum UrlPathnames {
     Main = '/',
     Login = '/login',

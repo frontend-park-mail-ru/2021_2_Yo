@@ -1,6 +1,5 @@
 import {authValidateFields} from "../../modules/validation.js";
 import {InputErrors} from "../../types";
-import {authInputsValidation} from "../../modules/validation.js";
 import {postLogin} from "../../modules/request.js";
 import route from "../../modules/routing.js";
 import { ApiPostLoginData, UrlPathnames } from "../../types.js";
@@ -37,7 +36,7 @@ export default class LoginPageComponent {
         form.addEventListener('submit', this.authorization.bind(this));
     }
 
-    authorization(event: Event) {
+    async authorization(event: Event) {
         event.preventDefault();
 
         const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
@@ -61,6 +60,18 @@ export default class LoginPageComponent {
         authValidateFields(inputs);
         console.log(this)
         const valid = this.showErrors(inputs, errorsBlock);
+        if (valid) {
+            const postData: ApiPostLoginData = {
+                email: inputs.get('email')?.value as string,
+                password: inputs.get('password')?.value as string,
+            };
+            const error = await postLogin(postData);
+            if (error) {
+                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+            } else {
+                route(UrlPathnames.Main);
+            }
+        }
     }
 
     showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
@@ -81,33 +92,11 @@ export default class LoginPageComponent {
         });
 
         const temp = window.Handlebars.compile(`{{#each errors}}
-                                                <p class='errorP'>{{this}}</p>
-                                            {{/each}}`);
+                                                    <p class='errorP'>{{this}}</p>
+                                                {{/each}}`);
         errorsBlock.innerHTML += temp({errors});
 
         return valid;
     }
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            errorsBlock.innerHTML = ''
-
-            const emailInput = document.getElementById('emailInput') as HTMLInputElement
-            const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
-
-            const email = emailInput.value.trim()
-            const password = passwordInput.value.trim()
-
-            const valid = authInputsValidation(errorsBlock, emailInput, passwordInput);
-            if (valid) {
-                const postData: ApiPostLoginData = {email, password};
-                const error =  await postLogin(postData);
-                if (error) {
-                    errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
-                } else {
-                    route(UrlPathnames.Main);
-                }
-            }
-        });
-    }
+        
 }
