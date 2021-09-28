@@ -67,19 +67,19 @@ async function getFetch(url: string) {
         }).then(data => {
             return {
                 status: HTTPStatus,
-                body: data,
+                json: data,
             };
         });
 
-        console.log('HTTP status: ', res.status, '; json: ', res.body);
+        console.log('HTTP status:', res.status, '; json:', res.json);
         return res;
     }
 
 export async function getUser(): Promise<UserData | undefined> {
-    const {status, body} = await getFetch(API + '/user');
+    const {status, json} = await getFetch(API + '/user');
     if (status === 200) {
-        if (body.status === 200) {
-            return {id: 1, name: body['name'], geo: 'Мытищи'};
+        if (json.status === 200) {
+            return {id: 1, name: json.body['name'], geo: 'Мытищи'};
         }
     }
     return undefined;
