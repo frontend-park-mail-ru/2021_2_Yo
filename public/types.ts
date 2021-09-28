@@ -25,4 +25,5 @@ export enum PageKeys {
 export type InputErrors = {
     errors: string[],
     input: HTMLInputElement
+    value: string
 }

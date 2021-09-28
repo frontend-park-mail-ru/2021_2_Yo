@@ -1,8 +1,7 @@
-import {authInputsValidation, validateFields} from "../../modules/validation.js";
-import {InputErrors} from "../../types.js"
+import {authValidateFields, showErrors} from "../../modules/validation.js";
 
 export default class LoginPageComponent {
-    #parent: HTMLElement
+    #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -15,12 +14,11 @@ export default class LoginPageComponent {
                     <p class = 'label'>Авторизация</p>
                     <form id='authForm'>
                         <p>Email</p>
-                        <input type='email' id='emailInput'>
+                        <input id='emailInput'>
                         <p>Пароль</p>
                         <input type='password' id='passwordInput'>
                         <input type='submit' value="ВОЙТИ" class='submitBtn'>
-                        <div id='errors'>
-                        </div>
+                        <div id='errorsBlock'></div>
                     </form>
                 </div>
             </div>
@@ -29,34 +27,32 @@ export default class LoginPageComponent {
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML += template();
 
-        const errorsBlock = document.getElementById('errors') as HTMLElement;
-
         const form = document.getElementById('authForm') as HTMLFormElement;
 
         form.addEventListener('submit', (event) => {
             event.preventDefault();
 
+            const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
+            errorsBlock.innerHTML = ''
+
             const emailInput = document.getElementById('emailInput') as HTMLInputElement
             const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
-            let inputs = new Map([
+            const inputs = new Map([
                 ['email', {
                     input: emailInput,
-                    errors: []
+                    errors: [],
+                    value: emailInput.value.trim()
                 }],
                 ['password', {
                     input: passwordInput,
-                    errors: []
+                    errors: [],
+                    value: passwordInput.value.trim()
                 }],
-            ])
+            ]);
 
-            const email = emailInput.value.trim()
-            const password = passwordInput.value.trim()
+            authValidateFields(inputs);
 
-            validateFields(inputs)
-
-            
-            const valid = authInputsValidation(errorsBlock);
+            const valid = showErrors(inputs, errorsBlock)
         });
     }
-
 }
