@@ -1,4 +1,3 @@
-import { response } from "express";
 import { ApiUrls, EventCardData, UserData } from "../types.js";
 
 const METHODS = {
