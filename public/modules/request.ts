@@ -47,6 +47,11 @@ async function getFetch(url: string) {
     return res;
 }
 
+/**
+ * GET запрос пользователя
+ *  
+ * @returns {UserData | undefined} 
+ */
 export async function getUser(): Promise<UserData | undefined> {
     const {status, json} = await getFetch(API + ApiUrls.User);
     if (status === 200) {
@@ -57,6 +62,11 @@ export async function getUser(): Promise<UserData | undefined> {
     return;
 }
 
+/**
+ * GET запрос событий
+ *  
+ * @returns {EventCardData[] | undefined} 
+ */
 export async function getEvents(): Promise<EventCardData[]> {
     const {status, json} = await getFetch(API + ApiUrls.Events);
     if (status === 200) {
@@ -67,6 +77,12 @@ export async function getEvents(): Promise<EventCardData[]> {
     return [];
 }
 
+/**
+ * POST запрос отправки данных авторизации
+ *  
+ * @param {ApiPostLoginData} postData - почта, пароль 
+ * @returns {EventCardData[] | undefined} 
+ */
 export async function postLogin(postData: ApiPostLoginData): Promise<undefined | string> {
     const {status, json} = await postFetch(API + ApiUrls.Login, postData);
     if (status === 200) {
@@ -79,6 +95,12 @@ export async function postLogin(postData: ApiPostLoginData): Promise<undefined |
     return;
 }
 
+/**
+ * POST запрос отправки данных регистрации
+ *  
+ * @param {ApiPostSignupData} postData - имя, фамилия, email, пароль
+ * @returns {EventCardData[] | undefined} 
+ */
 export async function postSignup(postData: ApiPostSignupData): Promise<undefined | string> {
     const {status, json} = await postFetch(API + ApiUrls.Signup, postData);
     if (status === 200) {
