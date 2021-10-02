@@ -1,9 +1,9 @@
-import {UrlPathnames} from "../types.js";
-import MainPageComponent from "../components/MainPage/MainPage.js";
-import LoginPageComponent from "../components/LoginPage/LoginPage.js";
-import SignupPageComponent from "../components/LoginPage/SignupPage.js";
-import {getEvents, getUser} from "./request.js";
-import route from "./routing.js"
+import {UrlPathnames} from '../types.js';
+import MainPageComponent from '../components/MainPage/MainPage.js';
+import LoginPageComponent from '../components/LoginPage/LoginPage.js';
+import SignupPageComponent from '../components/LoginPage/SignupPage.js';
+import {getEvents, getUser} from './request.js';
+import route from './routing.js'
 
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;

@@ -1,8 +1,8 @@
-import {signupValidateFields} from "../../modules/validation.js";
-import {InputErrors} from "../../types";
-import {postSignup} from "../../modules/request.js";
-import route from "../../modules/routing.js";
-import { ApiPostSignupData, UrlPathnames } from "../../types.js";
+import {signupValidateFields} from '../../modules/validation.js';
+import {InputErrors} from '../../types';
+import {postSignup} from '../../modules/request.js';
+import route from '../../modules/routing.js';
+import { ApiPostSignupData, UrlPathnames } from '../../types.js';
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -13,28 +13,28 @@ export default class SignupPageComponent {
 
     render() {
         const source = `
-            <div class = 'signupBackground'>
-                <div class = 'signupFormBackground'>
-                    <p class='label'>Регистрация</p>
-                    <form id='regForm'>
-                        <div class = 'topFormDiv'>
-                            <p class='smallerLabel'>Личные данные</p>
+            <div class = "signupBackground">
+                <div class = "signupFormBackground">
+                    <p class="label">Регистрация</p>
+                    <form id="regForm">
+                        <div class = "topFormDiv">
+                            <p class="smallerLabel">Личные данные</p>
                             <p>Имя</p>
-                            <input id='nameInput'>
+                            <input id="nameInput">
                             <p>Фамилия</p>
-                            <input id='surnameInput'>
+                            <input id="surnameInput">
                         </div>
                         <div>
-                            <p class='smallerLabel'>Данные для входа в аккаунт</p>
+                            <p class="smallerLabel">Данные для входа в аккаунт</p>
                             <p>Email</p>
-                            <input id='emailInput'>
+                            <input id="emailInput">
                             <p>Пароль</p>
-                            <input type='password' id='passwordInput1'>
+                            <input type="password" id="passwordInput1">
                             <p>Пароль еще раз</p>
-                            <input type='password' id='passwordInput2'>
-                            <input class='submitBtn' type='submit' value='ПОДТВЕРДИТЬ'>
+                            <input type="password" id="passwordInput2">
+                            <input class="submitBtn" type="submit" value="ПОДТВЕРДИТЬ">
                         </div>
-                        <div id='errorsBlock'>
+                        <div id="errorsBlock">
                         </div>
                     </form>
                 </div>
@@ -99,7 +99,7 @@ export default class SignupPageComponent {
             };
             const error = await postSignup(postData);
             if (error) {
-                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
             } else {
                 route(UrlPathnames.Main);
             }
@@ -124,7 +124,7 @@ export default class SignupPageComponent {
         });
 
         const temp = window.Handlebars.compile(`{{#each errors}}
-                                                    <p class='errorP'>{{this}}</p>
+                                                    <p class="errorP">{{this}}</p>
                                                 {{/each}}`);
         errorsBlock.innerHTML += temp({errors});
 

@@ -1,4 +1,4 @@
-import { anchorsConfig } from "../../config.js";
+import { anchorsConfig } from '../../config.js';
 
 export default class EventHeaderComponent {
     #parent: HTMLElement

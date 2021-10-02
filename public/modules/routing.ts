@@ -1,5 +1,5 @@
-import { UrlPathnames } from "../types.js";
-import { mainPage, signupPage, loginPage, errorPage } from "./pageloaders.js";
+import { UrlPathnames } from '../types.js';
+import { mainPage, signupPage, loginPage, errorPage } from './pageloaders.js';
 
 export default async function route(path?: undefined | UrlPathnames) {
     if (path) {

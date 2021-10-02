@@ -1,5 +1,5 @@
-import EventRowComponent from "../EventRow/EventRow.js";
-import { EventCardData } from "../../types.js";
+import EventRowComponent from '../EventRow/EventRow.js';
+import { EventCardData } from '../../types.js';
 
 export default class EventBoardComponent {
     #parent: HTMLElement
