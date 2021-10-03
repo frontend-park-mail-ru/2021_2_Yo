@@ -1,8 +1,8 @@
-import {authValidateFields} from "../../modules/validation.js";
-import {InputErrors} from "../../types";
-import {postLogin} from "../../modules/request.js";
-import route from "../../modules/routing.js";
-import { ApiPostLoginData, UrlPathnames } from "../../types.js";
+import {authValidateFields} from '../../modules/validation.js';
+import {InputErrors} from '../../types';
+import {postLogin} from '../../modules/request.js';
+import route from '../../modules/routing.js';
+import { ApiPostLoginData, UrlPathnames } from '../../types.js';
 
 export default class LoginPageComponent {
     #parent: HTMLElement;
@@ -13,16 +13,16 @@ export default class LoginPageComponent {
 
     render() {
         const source = `
-            <div class = 'background'>
-                <div class ='authFormBackground' id='authFormBackground'>
-                    <p class = 'label'>Авторизация</p>
-                    <form id='authForm'>
+            <div class="background">
+                <div class="authFormBackground" id="authFormBackground">
+                    <p class="label">Авторизация</p>
+                    <form id="authForm">
                         <p>Email</p>
-                        <input id='emailInput'>
+                        <input id="emailInput">
                         <p>Пароль</p>
-                        <input type='password' id='passwordInput'>
-                        <input type='submit' value="ВОЙТИ" class='submitBtn'>
-                        <div id='errorsBlock'></div>
+                        <input type="password" id="passwordInput">
+                        <input type="submit" value="ВОЙТИ" class="submitBtn">
+                        <div id="errorsBlock"></div>
                     </form>
                 </div>
             </div>
@@ -66,7 +66,7 @@ export default class LoginPageComponent {
             };
             const error = await postLogin(postData);
             if (error) {
-                errorsBlock.innerHTML += window.Handlebars.compile(`<p class='errorP'>` + error + `</p>`)();
+                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
             } else {
                 route(UrlPathnames.Main);
             }
@@ -91,7 +91,7 @@ export default class LoginPageComponent {
         });
 
         const temp = window.Handlebars.compile(`{{#each errors}}
-                                                    <p class='errorP'>{{this}}</p>
+                                                    <p class="errorP">{{this}}</p>
                                                 {{/each}}`);
         errorsBlock.innerHTML += temp({errors});
 

@@ -1,8 +1,8 @@
-import { EventCardData, UserData } from "../../types.js"
-import EventBoardComponent from "../EventBoard/EventBoard.js";
-import EventHeaderComponent from "../EventHeader/EventHeader.js";
-import FilterHeaderComponent from "../FilterHeader/FilterHeader.js";
-import MainHeaderComponent from "../MainHeader/MainHeader.js";
+import { EventCardData, UserData } from '../../types.js'
+import EventBoardComponent from '../EventBoard/EventBoard.js';
+import EventHeaderComponent from '../EventHeader/EventHeader.js';
+import FilterHeaderComponent from '../FilterHeader/FilterHeader.js';
+import MainHeaderComponent from '../MainHeader/MainHeader.js';
 
 export default class MainPageComponent {
     #parent: HTMLElement

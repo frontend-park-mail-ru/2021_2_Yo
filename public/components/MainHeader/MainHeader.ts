@@ -1,5 +1,5 @@
-import { UserData } from "../../types.js";
-import { anchorsConfig } from "../../config.js";
+import { UserData } from '../../types.js';
+import { anchorsConfig } from '../../config.js';
 
 export default class MainHeaderComponent {
     #parent: HTMLElement

@@ -1,4 +1,4 @@
-import { EventCardData } from "../../types.js";
+import { EventCardData } from '../../types.js';
 
 export default class EventCardComponent {
     #parent: HTMLElement

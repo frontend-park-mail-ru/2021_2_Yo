@@ -1,4 +1,4 @@
-import { UrlPathnames } from "./types.js";
+import { UrlPathnames } from './types.js';
 
 export const anchorsConfig = {
     eventAnchors: [
@@ -11,7 +11,7 @@ export const anchorsConfig = {
         { href: '/#', name: 'Фестивали' },
     ],
     authAnchors: [
-        { href: UrlPathnames.Login, name: "Войти" },
-        { href: UrlPathnames.Signup, name: "Регистрация" },
+        { href: UrlPathnames.Login, name: 'Войти' },
+        { href: UrlPathnames.Signup, name: 'Регистрация' },
     ],
 }

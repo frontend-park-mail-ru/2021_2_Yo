@@ -1,4 +1,4 @@
-import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, ApiUrls, EventCardData, FetchResponseData, UserData } from "../types.js";
+import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, ApiUrls, EventCardData, FetchResponseData, UserData } from '../types.js';
 
 const METHODS = {
     POST: 'POST',
@@ -40,7 +40,7 @@ async function getFetch(url: string) {
     const responsePromise = fetch(url, {
         method: METHODS.GET,
         mode: 'cors',
-        credentials: "include"
+        credentials: 'include'
     });
     const res = await handleFetch(responsePromise);
 
@@ -49,8 +49,8 @@ async function getFetch(url: string) {
 
 /**
  * GET запрос пользователя
- *  
- * @returns {UserData | undefined} 
+ *
+ * @returns {UserData | undefined}
  */
 export async function getUser(): Promise<UserData | undefined> {
     const {status, json} = await getFetch(API + ApiUrls.User);
@@ -64,8 +64,8 @@ export async function getUser(): Promise<UserData | undefined> {
 
 /**
  * GET запрос событий
- *  
- * @returns {EventCardData[] | undefined} 
+ *
+ * @returns {EventCardData[] | undefined}
  */
 export async function getEvents(): Promise<EventCardData[]> {
     const {status, json} = await getFetch(API + ApiUrls.Events);
@@ -79,9 +79,9 @@ export async function getEvents(): Promise<EventCardData[]> {
 
 /**
  * POST запрос отправки данных авторизации
- *  
- * @param {ApiPostLoginData} postData - почта, пароль 
- * @returns {EventCardData[] | undefined} 
+ *
+ * @param {ApiPostLoginData} postData - почта, пароль
+ * @returns {EventCardData[] | undefined}
  */
 export async function postLogin(postData: ApiPostLoginData): Promise<undefined | string> {
     const {status, json} = await postFetch(API + ApiUrls.Login, postData);
@@ -97,9 +97,9 @@ export async function postLogin(postData: ApiPostLoginData): Promise<undefined |
 
 /**
  * POST запрос отправки данных регистрации
- *  
+ *
  * @param {ApiPostSignupData} postData - имя, фамилия, email, пароль
- * @returns {EventCardData[] | undefined} 
+ * @returns {EventCardData[] | undefined}
  */
 export async function postSignup(postData: ApiPostSignupData): Promise<undefined | string> {
     const {status, json} = await postFetch(API + ApiUrls.Signup, postData);

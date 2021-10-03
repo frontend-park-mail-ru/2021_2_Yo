@@ -1,4 +1,4 @@
-import {InputErrors} from "../types.js";
+import {InputErrors} from '../types.js';
 
 export function authValidateFields(inputs: Map<string, InputErrors>) {
     const email = inputs.get('email') as InputErrors;
