@@ -13,30 +13,25 @@ export default class HeaderComponent {
     render() {
         const source = `
             <header class="header">
-                <div class="flex header__content text">
+                <div class="flex header__content header-text">
                     <img class="header__logo" src="./img/logo2.0.png">
                     {{#if user}}
                         <div class="flex">
-                            <img id="geoimg" src="./img/geo2.0.png">
-                            <span class="text_decoration_underline">{{user.geo}}</span>
-                        </div>
-                    {{/if}}
-                    <div class="flex header__search">
-                        <input class="header__search-input" id="searchInput" type="text" placeholder="Поиск...">
-                        <img src="./img/filter2.0.png">
+                            <img id="geoimg" src="./img/geo2.0.png class="header-button"put class="header__search-input" id="searchInput" type="text" placeholder="Поиск...">
+                        <img class="header-button" src="./img/filter2.0.png">
                     </div>
                     <div class="flex header__calendar">
-                        <img src="./img/calendar2.0.png">
-                        <span class="text_decoration_underline">Календарь событий</span>
+                        <img class="header-button" src="./img/calendar2.0.png">
+                        <span class="header-text_decoration_underline">Календарь событий</span>
                     </div>
-                    {{#if user}}
+                    {{#if user}} 
                         <div class="flex">
                             <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
                         </div>
-                        <img src="./img/logout2.0.png">
+                        <img class="header-button" src="./img/logout2.0.png">
                     {{else}}
-                        <div class="header__auth">
+                        <div>
                             {{#each authAnchors}}
                                 <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
                             {{/each}}

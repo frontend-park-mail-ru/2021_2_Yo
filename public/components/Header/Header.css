@@ -4,14 +4,18 @@
     justify-content: space-between;
 }
 
-.text {
+.header-button:hover {
+    cursor: pointer;
+}
+
+.header-text {
     font-size: 20px;
     color: white;
     text-align: center;
     font-weight: 400;
 }
 
-.text_decoration_underline {
+.header-text_decoration_underline {
     text-decoration: underline;
 }
 
@@ -59,6 +63,6 @@
     color: white
 }
 
-.header__auth:last-child {
-    margin-left: 6px;
+.header__auth-anchor:last-child {
+    margin-left: 10px;
 }
