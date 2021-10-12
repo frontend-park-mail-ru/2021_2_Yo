@@ -1,3 +1,4 @@
+import HeaderComponent from '../ Header/Header.js';
 import { EventCardData, UserData } from '../../types.js'
 import EventBoardComponent from '../EventBoard/EventBoard.js';
 import EventHeaderComponent from '../EventHeader/EventHeader.js';
@@ -16,14 +17,16 @@ export default class MainPageComponent {
     }
 
     render() {
-        const mHeader = new MainHeaderComponent(this.#parent, this.#user);
-        const eHeader = new EventHeaderComponent(this.#parent);
-        const fHeader = new FilterHeaderComponent(this.#parent);
+        // const mHeader = new MainHeaderComponent(this.#parent, this.#user);
+        // const eHeader = new EventHeaderComponent(this.#parent);
+        // const fHeader = new FilterHeaderComponent(this.#parent);
+        const Header = new HeaderComponent(this.#parent, this.#user)
         const eBoard = new EventBoardComponent(this.#parent, this.#events);
 
-        mHeader.render();
-        eHeader.render();
-        fHeader.render();
+        // mHeader.render();
+        // eHeader.render();
+        // fHeader.render();
+        Header.render();
         eBoard.render();
     }
 }
