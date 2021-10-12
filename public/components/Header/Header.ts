@@ -23,10 +23,10 @@ export default class HeaderComponent {
                     {{/if}}
                     <div class="flex header__search">
                         <input class="header__search-input" id="searchInput" type="text" placeholder="Поиск...">
-                        <img src="./img/filter2.0">
+                        <img src="./img/filter2.0.png">
                     </div>
                     <div class="flex header__calendar">
-                        <img src="./img/calendar2.0">
+                        <img src="./img/calendar2.0.png">
                         <span text_decoration_underline>Календарь событий</span>
                     </div>
                     {{#if user}}

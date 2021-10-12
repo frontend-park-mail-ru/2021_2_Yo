@@ -1,4 +1,4 @@
-import HeaderComponent from '../ Header/Header.js';
+import HeaderComponent from '../Header/Header.js';
 import { EventCardData, UserData } from '../../types.js'
 import EventBoardComponent from '../EventBoard/EventBoard.js';
 import EventHeaderComponent from '../EventHeader/EventHeader.js';
