@@ -16,7 +16,7 @@ export default class HeaderComponent {
                 <div class="flex header__content text">
                     <img class="header__logo" src="./img/logo2.0.png">
                     {{#if user}}
-                        <div>
+                        <div class="flex">
                             <img id="geoimg" src="./img/geo2.0.png">
                             <span class="text_decoration_underline">{{user.geo}}</span>
                         </div>
@@ -30,8 +30,8 @@ export default class HeaderComponent {
                         <span class="text_decoration_underline">Календарь событий</span>
                     </div>
                     {{#if user}}
-                        <div>
-                            <img class="header_user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
+                        <div class="flex">
+                            <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
                         </div>
                         <img src="./img/logout2.0.png">
