@@ -17,7 +17,12 @@ export default class HeaderComponent {
                     <img class="header__logo" src="./img/logo2.0.png">
                     {{#if user}}
                         <div class="flex">
-                            <img id="geoimg" src="./img/geo2.0.png class="header-button"put class="header__search-input" id="searchInput" type="text" placeholder="Поиск...">
+                            <img id="geoimg" src="./img/geo2.0.png">
+                            <span class="header-text_decoration_underline">{{user.geo}}</span>
+                        </div>
+                    {{/if}}
+                    <div class="flex header__search">
+                        <input class="header__search-input" type="text" placeholder="Поиск...">
                         <img class="header-button" src="./img/filter2.0.png">
                     </div>
                     <div class="flex header__calendar">
