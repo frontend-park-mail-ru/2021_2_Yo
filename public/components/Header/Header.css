@@ -39,6 +39,11 @@
     height: 32px;
     background: transparent;
     border: 1px solid white;
+    border-radius: 2px;
+}
+
+.header__search-input::placeholder {
+    color: white
 }
 
 .header__calendar {
@@ -48,6 +53,10 @@
 .header__user-avatar {
     width: 32px;
     margin-right: 6px;
+}
+
+.header__auth-anchor {
+    color: white
 }
 
 .header__auth:last-child {

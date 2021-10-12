@@ -18,7 +18,7 @@ export default class HeaderComponent {
                     {{#if user}}
                         <div>
                             <img id="geoimg" src="./img/geo2.0.png">
-                            <span text_decoration_underline>{{user.geo}}</span>
+                            <span class="text_decoration_underline">{{user.geo}}</span>
                         </div>
                     {{/if}}
                     <div class="flex header__search">
@@ -27,7 +27,7 @@ export default class HeaderComponent {
                     </div>
                     <div class="flex header__calendar">
                         <img src="./img/calendar2.0.png">
-                        <span text_decoration_underline>Календарь событий</span>
+                        <span class="text_decoration_underline">Календарь событий</span>
                     </div>
                     {{#if user}}
                         <div>
@@ -38,7 +38,7 @@ export default class HeaderComponent {
                     {{else}}
                         <div class="header__auth">
                             {{#each authAnchors}}
-                                <a class="" href="{{href}}">{{name}}</a>
+                                <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
                             {{/each}}
                         </div>
                     {{/if}}
