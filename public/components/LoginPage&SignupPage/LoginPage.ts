@@ -27,7 +27,7 @@ export default class LoginPageComponent {
                         </div>
                         <div class="buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
-                            <input value="НАЗАД" class="buttons__button-back button-back">
+                            <a class="buttons__button-back button-back">НАЗАД</a>
                         </div>
                     </form>
                 </div>

@@ -2,6 +2,7 @@
     --form-bg: linear-gradient(90deg, #F3F2FF 0%, #FFE6FE 100%);
     --login-bg: #001065;
     --submit-btn: #490063;
+    --back-btn: #005E5E;
 }
 
 .background {
@@ -56,7 +57,7 @@
 }
 
 .buttons__button-submit {
-
+    margin-left: 35px;
 }
 
 .button-submit {
@@ -80,7 +81,24 @@
     color: white;
 }
 
-.submitBtn:hover {
+.button-submit:hover {
+    cursor: pointer;
+}
+
+.button-back {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-decoration-line: underline;
+    color: var(--back-btn);
+}
+
+.buttons__button-back {
+    margin-right: 36px;
+}
+
+.button-back:hover {
     cursor: pointer;
 }
 
