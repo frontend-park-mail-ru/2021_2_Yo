@@ -2,7 +2,7 @@ import {authValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
 import {postLogin} from '../../modules/request.js';
 import route from '../../modules/routing.js';
-import { ApiPostLoginData, UrlPathnames } from '../../types.js';
+import {ApiPostLoginData, UrlPathnames} from '../../types.js';
 
 export default class LoginPageComponent {
     #parent: HTMLElement;
@@ -14,12 +14,12 @@ export default class LoginPageComponent {
     render() {
         const source = `
             <div class="background">
-                <div class="authFormBackground" id="authFormBackground">
-                    <p class="label">Авторизация</p>
+                <div class="authform" id="authFormBackground">
+                    <p class="authform__label label">Авторизация</p>
                     <form id="authForm">
-                        <p>Email</p>
-                        <input id="emailInput">
-                        <p>Пароль</p>
+                        <p class="authform__input-label input-label">Email</p>
+                        <input class ="authform__input input" id="emailInput">
+                        <p class="authform__input-label">Пароль</p>
                         <input type="password" id="passwordInput">
                         <input type="submit" value="ВОЙТИ" class="submitBtn">
                         <div id="errorsBlock"></div>
