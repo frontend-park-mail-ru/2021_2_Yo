@@ -57,7 +57,7 @@
 }
 
 .buttons__button-submit {
-    margin-left: 35px;
+    margin: 0 35px;
 }
 
 .button-submit {
@@ -94,7 +94,7 @@
 }
 
 .buttons__button-back {
-    margin-right: 35px;
+    margin: 0 35px;
 }
 
 .button-back:hover {
