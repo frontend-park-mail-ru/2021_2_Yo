@@ -29,7 +29,7 @@
     line-height: 45px;
 }
 
-.authform__input-label {
+.input-block__input-label {
     margin: 0 0px 0px 35px;
 }
 
@@ -40,7 +40,7 @@
     line-height: 33px;
 }
 
-.authform__input {
+.input-block__input {
     margin: 0 0px 0px 35px;
 }
 
@@ -50,6 +50,10 @@
     border-radius: 2px;
     width: 515px;
     height: 32px;
+}
+
+.input-block {
+    padding-bottom: 21px;
 }
 
 .authform__button-submit {

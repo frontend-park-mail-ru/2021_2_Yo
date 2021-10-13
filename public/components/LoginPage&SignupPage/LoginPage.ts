@@ -17,10 +17,14 @@ export default class LoginPageComponent {
                 <div class="authform" id="authFormBackground">
                     <p class="authform__label label">Авторизация</p>
                     <form id="authForm">
-                        <p class="authform__input-label input-label">Email</p>
-                        <input class ="authform__input input" id="emailInput">
-                        <p class="authform__input-label input-label">Пароль</p>
-                        <input type="password" class ="authform__input input" id="passwordInput">
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Email</p>
+                            <input class ="input-block__input input" id="emailInput">
+                        </div>
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Пароль</p>
+                            <input type="password" class ="input-block__input input" id="passwordInput">
+                        </div>
                         <input type="submit" value="ВОЙТИ" class="authform__button-submit button-submit">
                     </form>
                 </div>
