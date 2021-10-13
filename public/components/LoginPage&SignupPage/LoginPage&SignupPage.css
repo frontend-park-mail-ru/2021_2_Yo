@@ -50,6 +50,10 @@
     margin-right: 35px;
 }
 
+.input-block__input-label {
+    margin: 0 0 0 0;
+}
+
 .authform__button-submit {
 
 }
