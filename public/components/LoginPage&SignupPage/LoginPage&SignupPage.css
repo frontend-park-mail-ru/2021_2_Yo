@@ -91,6 +91,7 @@
     line-height: 28px;
     text-decoration-line: underline;
     color: var(--back-btn);
+    height: 40px;
 }
 
 .buttons__button-back {
