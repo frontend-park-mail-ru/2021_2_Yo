@@ -15,7 +15,7 @@ export default class SignupPageComponent {
         const source = `
             <div class = "background">
                 <div class = "authform">
-                    <p class="authform__label">Регистрация</p>
+                    <p class="authform__label label">Регистрация</p>
                     <form id="regForm">
                         <div class="input-block">
                             <p class="input-block__input-label input-label">Имя</p>
@@ -37,7 +37,10 @@ export default class SignupPageComponent {
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
                             <input class ="input-block__input input" type="password" id="passwordInput2">
                         </div>
-                            <input class="submitBtn" type="submit" value="ПОДТВЕРДИТЬ">\
+                        <div class="buttons">
+                            <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
+                            <a class="buttons__button-back button-back">НАЗАД</a>
+                        </div>
                     </form>
                 </div>
             </div>
