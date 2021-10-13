@@ -83,7 +83,8 @@
 
 .button-submit:before {
     content: "";
-    top: 3px;
+    top: -15px;
+    z-index: -1;
     background: white;
     mix-blend-mode: normal;
     border: 1px solid black;
