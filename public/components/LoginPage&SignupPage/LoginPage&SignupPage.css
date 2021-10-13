@@ -3,20 +3,6 @@
     --login-bg: #001065;
 }
 
-input {
-    width: 700px;
-    height: 60px;
-    display: block;
-    background: white;
-    mix-blend-mode: normal;
-    border: 1px solid black;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 11px;
-    font-size: 20px;
-    padding: 0 0 0 20px;
-}
-
 .background {
     display: flex;
     align-items: center;
@@ -54,15 +40,20 @@ input {
     line-height: 33px;
 }
 
-p {
-    margin-bottom: 2px;
-    margin-top: 18px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
+.authform__input {
+    margin-left: 35px;
+}
 
-    color: black;
+.input {
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 2px;
+    width: 515px;
+    height: 32px;
+}
+
+.authform__button-submit {
+
 }
 
 .label {

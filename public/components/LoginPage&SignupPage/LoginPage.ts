@@ -19,10 +19,9 @@ export default class LoginPageComponent {
                     <form id="authForm">
                         <p class="authform__input-label input-label">Email</p>
                         <input class ="authform__input input" id="emailInput">
-                        <p class="authform__input-label">Пароль</p>
-                        <input type="password" id="passwordInput">
-                        <input type="submit" value="ВОЙТИ" class="submitBtn">
-                        <div id="errorsBlock"></div>
+                        <p class="authform__input-label input-label">Пароль</p>
+                        <input type="password" class ="authform__input input" id="passwordInput">
+                        <input type="submit" value="ВОЙТИ" class="authform__button-submit button-submit">
                     </form>
                 </div>
             </div>
