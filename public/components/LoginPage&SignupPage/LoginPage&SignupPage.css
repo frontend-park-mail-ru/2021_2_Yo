@@ -83,6 +83,7 @@
 
 .button-submit:before {
     content: "";
+    position: relative;
     top: -15px;
     z-index: -1;
     background: white;
