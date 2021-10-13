@@ -13,29 +13,31 @@ export default class SignupPageComponent {
 
     render() {
         const source = `
-            <div class = "signupBackground">
-                <div class = "signupFormBackground">
-                    <p class="label">Регистрация</p>
+            <div class = "background">
+                <div class = "authform">
+                    <p class="authform__label">Регистрация</p>
                     <form id="regForm">
-                        <div class = "topFormDiv">
-                            <p class="smallerLabel">Личные данные</p>
-                            <p>Имя</p>
-                            <input id="nameInput">
-                            <p>Фамилия</p>
-                            <input id="surnameInput">
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Имя</p>
+                            <input class ="input-block__input input" id="nameInput">
                         </div>
-                        <div>
-                            <p class="smallerLabel">Данные для входа в аккаунт</p>
-                            <p>Email</p>
-                            <input id="emailInput">
-                            <p>Пароль</p>
-                            <input type="password" id="passwordInput1">
-                            <p>Пароль еще раз</p>
-                            <input type="password" id="passwordInput2">
-                            <input class="submitBtn" type="submit" value="ПОДТВЕРДИТЬ">
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Фамилия</p>
+                            <input class ="input-block__input input" id="surnameInput">
                         </div>
-                        <div id="errorsBlock">
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Email</p>
+                            <input class ="input-block__input input" id="emailInput">
                         </div>
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Пароль</p>
+                            <input class ="input-block__input input" type="password" id="passwordInput1">
+                        </div>
+                        <div class="input-block">
+                            <p class="input-block__input-label input-label">Пароль еще раз</p>
+                            <input class ="input-block__input input" type="password" id="passwordInput2">
+                        </div>
+                            <input class="submitBtn" type="submit" value="ПОДТВЕРДИТЬ">\
                     </form>
                 </div>
             </div>
