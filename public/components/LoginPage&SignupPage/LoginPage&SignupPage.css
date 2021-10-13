@@ -82,7 +82,7 @@
 }
 
 .button-submit:before {
-    content: "";
+    content: "ВОЙТИ";
     position: relative;
     top: -15px;
     z-index: -1;
