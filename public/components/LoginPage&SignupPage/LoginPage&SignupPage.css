@@ -92,8 +92,18 @@
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 2px;
+
     width: 185px;
     height: 45px;
+    padding: 6px 50px;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-decoration-line: underline;
+
+    color: white;
 }
 
 .button-submit:hover {
