@@ -29,19 +29,11 @@
     line-height: 45px;
 }
 
-.input-block__input-label {
-    margin: 0 0px 0px 35px;
-}
-
 .input-label {
     font-style: normal;
     font-weight: normal;
     font-size: 28px;
     line-height: 33px;
-}
-
-.input-block__input {
-    margin: 0 0px 0px 35px;
 }
 
 .input {
@@ -54,6 +46,8 @@
 
 .input-block {
     padding-bottom: 21px;
+    margin-left: 35px;
+    margin-right: 35px;
 }
 
 .authform__button-submit {
