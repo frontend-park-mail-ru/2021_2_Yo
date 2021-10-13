@@ -60,7 +60,7 @@
     margin-left: 35px;
 }
 
-.button-submit {
+.button-submit::after {
     background: var(--submit-btn);
     mix-blend-mode: normal;
     border: 1px solid black;
@@ -81,7 +81,7 @@
     color: white;
 }
 
-.button-submit::after {
+.button-submit::before {
     background: white;
     mix-blend-mode: normal;
     border: 1px solid black;
