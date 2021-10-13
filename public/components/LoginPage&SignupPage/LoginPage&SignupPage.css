@@ -94,8 +94,7 @@
 }
 
 .buttons__button-back {
-    /*margin-right: 35px;*/
-    margin-left: auto;
+    margin-right: 35px;
 }
 
 .button-back:hover {
@@ -105,6 +104,8 @@
 .buttons {
     margin-bottom: 30px;
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .signupBackground {
