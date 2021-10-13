@@ -81,7 +81,8 @@
     color: white;
 }
 
-.button-submit:active {
+.button-submit:before {
+    content: "";
     top: 3px;
     background: white;
     mix-blend-mode: normal;
