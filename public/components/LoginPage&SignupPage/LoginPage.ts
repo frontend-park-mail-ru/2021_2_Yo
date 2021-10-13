@@ -25,7 +25,10 @@ export default class LoginPageComponent {
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input type="password" class ="input-block__input input" id="passwordInput">
                         </div>
-                        <input type="submit" value="ВОЙТИ" class="authform__button-submit button-submit">
+                        <div class="buttons">
+                            <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
+                            <input value="НАЗАД" class="buttons__button-back button-back">
+                        </div>
                     </form>
                 </div>
             </div>
