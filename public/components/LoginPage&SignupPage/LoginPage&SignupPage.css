@@ -94,8 +94,8 @@
 }
 
 .buttons__button-back {
-    position: absolute;
-    right: 35px;
+    margin-right: 35px;
+    margin-left: auto;
 }
 
 .button-back:hover {
@@ -103,7 +103,6 @@
 }
 
 .buttons {
-    position: fixed;
     margin-bottom: 30px;
     margin-top: 30px;
 }
