@@ -99,10 +99,10 @@ export default class LoginPageComponent {
             })
         });
 
-        const temp = window.Handlebars.compile(`{{#each errors}}
-                                                    <p class="errorP">{{this}}</p>
-                                                {{/each}}`);
-        errorsBlock.innerHTML += temp({errors});
+        // const temp = window.Handlebars.compile(`{{#each errors}}
+        //                                             <p class="errorP">{{this}}</p>
+        //                                         {{/each}}`);
+        // errorsBlock.innerHTML += temp({errors});
 
         return valid;
     }
