@@ -31,12 +31,13 @@
 }
 
 .header__search {
-    width: 440px;
+    /* width: 440px; */
+    width: 22.9vw;
 }
 
 .header__search-input {
     /* width: 404px; */
-    width: 22.9vw;
+    width: 21vw;
     height: 32px;
     background: transparent;
     border: 1px solid white;
