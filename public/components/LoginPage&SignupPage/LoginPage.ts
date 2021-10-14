@@ -91,6 +91,9 @@ export default class LoginPageComponent {
                     valid = false;
                     if (error && errors.indexOf(error) === -1) {
                         errors.push(error);
+                        const temp = window.Handlebars.compile(`<p class="errorP">{{error}}</p>`);
+                        let par = item.input.parentElement as HTMLElement
+                        par.innerHTML+=temp({error})
                     }
                 }
             })
