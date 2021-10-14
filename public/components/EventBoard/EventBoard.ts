@@ -43,8 +43,9 @@ export default class EventBoardComponent {
             this.#data.push(this.#data[0])
         }
         this.#data = this.#data.map(e => {
-            e.description = 'Маскарад. Прикольно и весело.'
-            return e
+            e.description = 'Маскарад. Прикольно и весело.';
+            e.imgUrl = '/img/tusa2.0.png';
+            return e;
         });
         const source = `
             <div class="board">
@@ -52,11 +53,14 @@ export default class EventBoardComponent {
                     {{#each this}}
                         <div class="events__e{{@index}} events__e-wrapper">
                             <img class="events__image" src="{{imgUrl}}">
-                            <span class="events__description">{{description}}</span>
-                            <div class="events__viewed">
-                                <img src="./img/viewed2.0.png">
-                                <span class="events__viewed-score">{{viewed}}</span>
+                            <div class="events__content">
+                                <span class="events__description">{{description}}</span>
+                                <div class="events__viewed">
+                                    <img src="./img/viewed2.0.png">
+                                    <span class="events__viewed-score">{{viewed}}</span>
+                                </div>
                             </div>
+                            
                         </div>
                     {{/each}}
                 </div>
