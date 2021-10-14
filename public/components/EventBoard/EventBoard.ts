@@ -44,7 +44,7 @@ export default class EventBoardComponent {
                 <div class="events">
                     {{#each this}}
                         <div class="events__e{{index}}">
-                            <img src="{{imgUrl}}">
+                            <img class="events__image" src="{{imgUrl}}">
                         </div>
                     {{/each}}
                 </div>

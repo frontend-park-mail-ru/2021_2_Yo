@@ -1,6 +1,6 @@
 .board {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -15,6 +15,13 @@
     "events__e7  events__e7  events__e7  events__e7  events__e9  events__e9  events__e11 events__e11 events__e12 events__e12 events__e12 events__e12" 
     ;
     grid-template-rows: 4fr 3fr 2fr 2fr;
+    gap: 10px;
 }
 
+.events__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
