@@ -60,7 +60,6 @@ export default class EventBoardComponent {
                                     <span class="events__viewed-score">{{viewed}}</span>
                                 </div>
                             </div>
-                            
                         </div>
                     {{/each}}
                 </div>
