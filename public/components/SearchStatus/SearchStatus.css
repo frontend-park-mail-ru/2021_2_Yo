@@ -1,10 +1,16 @@
+.status-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+
 .status {
     width: 67vw;
     height: 56px;
     display: block;
     background-color: white;
     padding: 11px;
-    text-align: center;
+    box-sizing: border-box;
     font-size: 1.46vw;
     color: black;
     margin: 10px 0px;

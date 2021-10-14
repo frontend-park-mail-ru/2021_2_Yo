@@ -10,11 +10,13 @@ export default class SearchStatusComponent {
     render() {
         const source = `
             {{#with this}}
-                <div class="status">
-                    <span>{{question}}</span>
-                    <span class="status__when">{{when}}</span>
-                    <span>{{link}}</span>
-                    <span class="status__city">{{city}}</span>
+                <div class="status-wrapper">
+                    <div class="status">
+                        <span>{{question}}</span>
+                        <span class="status__when">{{when}}</span>
+                        <span>{{link}}</span>
+                        <span class="status__city">{{city}}</span>
+                    </div>
                 </div>
             {{/with}}
         `;
