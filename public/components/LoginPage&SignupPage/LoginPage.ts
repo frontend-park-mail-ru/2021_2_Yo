@@ -81,9 +81,9 @@ export default class LoginPageComponent {
 
         inputs.forEach((item) => {
             let par = item.input.parentElement as HTMLElement
-            if (item.errors.length == 0) {
+            if (item.errors.length === 0) {
                 item.input.classList.add("form-input_correct");
-                while (par.children.length != 2) {
+                while (par.children.length !== 2) {
                     par.removeChild(par.lastChild as ChildNode);
                 }
             } else {
