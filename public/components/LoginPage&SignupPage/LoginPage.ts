@@ -25,6 +25,7 @@ export default class LoginPageComponent {
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input type="password" class ="input-block__input form-input" id="passwordInput">
                         </div>
+                        <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
@@ -68,11 +69,12 @@ export default class LoginPageComponent {
                 password: inputs.get('password')?.value as string,
             };
             const error = await postLogin(postData);
-            // if (error) {
-            //     errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
-            // } else {
-            //     route(UrlPathnames.Main);
-            // }
+            if (error) {
+                let errorsBlock = document.getElementById("errors") as HTMLParagraphElement
+                errorsBlock.textContent = error
+            } else {
+                route(UrlPathnames.Main);
+            }
         }
     }
 
@@ -88,19 +90,22 @@ export default class LoginPageComponent {
                     par.classList.add("input-block_error")
                     valid = false;
                     if (par.innerHTML.indexOf(error) === -1) {
-                        const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
+                        const temp = window.Handlebars.compile(`<p class="input-block__error error">{{error}}</p>`);
                         par.innerHTML += temp({error})
                     }
                 } else {
-                    par.classList.remove("input-block_error")
-                    item.input.classList.remove("form-input_error")
-                    item.input.classList.add("form-input_correct");
-                    while (par.children.length !== 2) {
-                        par.removeChild(par.lastChild as ChildNode);
-                    }
+                    item.errors = item.errors.slice(1)
                 }
             })
 
+            if (!item.errors.length) {
+                par.classList.remove("input-block_error")
+                item.input.classList.remove("form-input_error")
+                item.input.classList.add("form-input_correct");
+                while (par.children.length !== 2) {
+                    par.removeChild(par.lastChild as ChildNode);
+                }
+            }
         });
 
         return valid;
