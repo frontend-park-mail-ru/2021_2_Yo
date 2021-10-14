@@ -3,6 +3,7 @@
     --bg: linear-gradient(137.34deg, #0E0063 0%, #5E0043 100%);
     --submit-btn: #490063;
     --back-btn: #005E5E;
+    --error: #E61A3D;
 }
 
 .background {
@@ -54,6 +55,15 @@
 
 .input-block__input-label {
     margin: 0 0 0 0;
+}
+
+.input-error {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: var(--error);
 }
 
 .buttons__button-submit {

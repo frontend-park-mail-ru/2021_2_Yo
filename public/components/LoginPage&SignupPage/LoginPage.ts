@@ -91,12 +91,13 @@ export default class LoginPageComponent {
                     valid = false;
                     if (error && errors.indexOf(error) === -1) {
                         errors.push(error);
-                        const temp = window.Handlebars.compile(`<p class="errorP">{{error}}</p>`);
+                        const temp = window.Handlebars.compile(`<p class="input-error">{{error}}</p>`);
                         let par = item.input.parentElement as HTMLElement
-                        par.innerHTML+=temp({error})
+                        par.innerHTML += temp({error})
                     }
                 }
             })
+            errors.length = 0;
         });
 
         // const temp = window.Handlebars.compile(`{{#each errors}}
