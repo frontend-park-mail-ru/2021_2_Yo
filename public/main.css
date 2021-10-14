@@ -3,6 +3,12 @@ body {
     font-family: Roboto;
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 /* header {
     height: 100px;
     display: flex;
