@@ -2,7 +2,7 @@ import {signupValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
 import {postSignup} from '../../modules/request.js';
 import route from '../../modules/routing.js';
-import { ApiPostSignupData, UrlPathnames } from '../../types.js';
+import {ApiPostSignupData, UrlPathnames} from '../../types.js';
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -124,14 +124,18 @@ export default class SignupPageComponent {
                         par.innerHTML += temp({error})
                     }
                 } else {
-                    par.classList.remove("input-block_error")
-                    item.input.classList.remove("form-input_error")
-                    item.input.classList.add("form-input_correct");
-                    while (par.children.length !== 2) {
-                        par.removeChild(par.lastChild as ChildNode);
-                    }
+                    item.errors.slice(1)
                 }
             })
+
+            if (!item.errors.length) {
+                par.classList.remove("input-block_error")
+                item.input.classList.remove("form-input_error")
+                item.input.classList.add("form-input_correct");
+                while (par.children.length !== 2) {
+                    par.removeChild(par.lastChild as ChildNode);
+                }
+            }
 
         });
 
