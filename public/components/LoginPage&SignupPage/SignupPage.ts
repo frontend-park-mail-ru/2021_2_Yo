@@ -113,7 +113,7 @@ export default class SignupPageComponent {
 
         inputs.forEach((item) => {
             let par = item.input.parentElement as HTMLElement
-            console.log(item.errors)
+
             item.errors.forEach(error => {
                 if (error) {
                     item.input.classList.add("form-input_error")
