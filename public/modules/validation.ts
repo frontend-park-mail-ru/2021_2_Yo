@@ -39,7 +39,7 @@ function checkEmpty(value: string): string {
 }
 
 function checkForbiddenSymbols(value: string): string {
-    if (!value.match('^[a-zA-Zа-яА-Я]+$')) {
+    if (!value.match('^[a-zA-Zа-яА-Я]+$') && value) {
         return 'Поля "Имя" и "Фамилия" могут содержать только буквы';
     }
     return '';
