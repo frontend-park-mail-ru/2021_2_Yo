@@ -80,20 +80,26 @@ export default class LoginPageComponent {
         let valid = true;
 
         inputs.forEach((item) => {
-            item.input.classList.add("form-input_correct")
-            item.errors.forEach(error => {
-                let par = item.input.parentElement as HTMLElement
-
-                if (error) {
-                    item.input.classList.add("form-input_error")
-                    par.classList.add("input-block_error")
-                    valid = false;
-                    if (par.innerHTML.indexOf(error) === -1) {
-                        const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
-                        par.innerHTML += temp({error})
-                    }
+            let par = item.input.parentElement as HTMLElement
+            if (item.errors.length == 0) {
+                item.input.classList.add("form-input_correct");
+                while (par.children.length != 2) {
+                    par.removeChild(par.lastChild as ChildNode);
                 }
-            })
+            } else {
+                item.errors.forEach(error => {
+
+                    if (error) {
+                        item.input.classList.add("form-input_error")
+                        par.classList.add("input-block_error")
+                        valid = false;
+                        if (par.innerHTML.indexOf(error) === -1) {
+                            const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
+                            par.innerHTML += temp({error})
+                        }
+                    }
+                })
+            }
         });
 
         return valid;
