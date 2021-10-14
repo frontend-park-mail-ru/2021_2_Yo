@@ -55,8 +55,6 @@ export default class SignupPageComponent {
     async registration(event: Event) {
         event.preventDefault();
 
-        const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-
         const nameInput = document.getElementById('nameInput') as HTMLInputElement;
         const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
         const emailInput = document.getElementById('emailInput') as HTMLInputElement;
@@ -115,7 +113,7 @@ export default class SignupPageComponent {
 
         inputs.forEach((item) => {
             let par = item.input.parentElement as HTMLElement
-
+            console.log(item.errors)
             item.errors.forEach(error => {
                 if (error) {
                     item.input.classList.add("form-input_error")
