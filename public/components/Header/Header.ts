@@ -29,7 +29,7 @@ export default class HeaderComponent {
                         <img class="header-button" src="./img/calendar2.0.png">
                         <span class="header-text_decoration_underline">Календарь событий</span>
                     </div>
-                    {{#if user}} 
+                    {{#if user}}
                         <div class="flex">
                             <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
