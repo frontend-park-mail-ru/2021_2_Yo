@@ -1,7 +1,6 @@
 import HeaderComponent from '../Header/Header.js';
 import { EventCardData, UserData } from '../../types.js'
 import EventBoardComponent from '../EventBoard/EventBoard.js';
-import SearchStatus from '../SearchStatus/SearchStatus.js';
 import EventHeaderComponent from '../EventHeader/EventHeader.js';
 import FilterHeaderComponent from '../FilterHeader/FilterHeader.js';
 import MainHeaderComponent from '../MainHeader/MainHeader.js';
@@ -29,14 +28,14 @@ export default class MainPageComponent {
             link: ' в ',
             city: 'Москве',
         }
-        const SearchStatus = new SearchStatusComponent(this.#parent, status)
+        const sStatus = new SearchStatusComponent(this.#parent, status)
         const eBoard = new EventBoardComponent(this.#parent, this.#events);
 
         // mHeader.render();
         // eHeader.render();
         // fHeader.render();
         Header.render();
-        SearchStatus.render();
+        sStatus.render();
         eBoard.render();
     }
 }
