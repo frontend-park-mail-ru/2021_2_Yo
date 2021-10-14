@@ -57,6 +57,10 @@
     margin: 0 0 0 0;
 }
 
+.input-block__input-error {
+    margin: 0;
+}
+
 .input-error {
     font-style: normal;
     font-weight: bold;
