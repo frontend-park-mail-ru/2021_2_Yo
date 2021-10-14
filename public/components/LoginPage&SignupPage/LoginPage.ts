@@ -25,11 +25,11 @@ export default class LoginPageComponent {
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input type="password" class ="input-block__input form-input" id="passwordInput">
                         </div>
+                        <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
                         </div>
-                        <p class="authform__error error" id="errors"></p>
                     </form>
                 </div>
             </div>
