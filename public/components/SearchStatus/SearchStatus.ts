@@ -13,8 +13,8 @@ export default class SearchStatusComponent {
                 <div class="status-wrapper">
                     <div class="status">
                         <span>{{question}}&nbsp;</span>
-                        <span class="status__when">{{when}}&nbsp;</span>
-                        <span>{{link}}&nbsp;</span>
+                        <span class="status__when">{{when}}</span>
+                        <span>&nbsp;{{link}}&nbsp;</span>
                         <span class="status__city">{{city}}</span>
                     </div>
                 </div>

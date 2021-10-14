@@ -23,9 +23,9 @@ export default class MainPageComponent {
         // const fHeader = new FilterHeaderComponent(this.#parent);
         const Header = new HeaderComponent(this.#parent, this.#user)
         const status = {
-            question: 'Где потусить ',
+            question: 'Где потусить',
             when: 'сегодня',
-            link: ' в ',
+            link: 'в',
             city: 'Москве',
         }
         const sStatus = new SearchStatusComponent(this.#parent, status)
