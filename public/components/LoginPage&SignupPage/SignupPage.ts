@@ -120,7 +120,7 @@ export default class SignupPageComponent {
                     par.classList.add("input-block_error")
                     valid = false;
                     if (par.innerHTML.indexOf(error) === -1) {
-                        const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
+                        const temp = window.Handlebars.compile(`<p class="input-block__error error">{{error}}</p>`);
                         par.innerHTML += temp({error})
                     }
                 } else {
@@ -136,7 +136,6 @@ export default class SignupPageComponent {
                     par.removeChild(par.lastChild as ChildNode);
                 }
             }
-
         });
 
         return valid;

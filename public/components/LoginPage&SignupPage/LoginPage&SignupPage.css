@@ -68,7 +68,7 @@
     margin: 0 0 0 0;
 }
 
-.input-block__input-error {
+.input-block__error {
     margin-top: 1px;
     margin-bottom: 5px;
 }
@@ -77,7 +77,11 @@
     padding-bottom: 0;
 }
 
-.input-error {
+.authform__error {
+
+}
+
+.error {
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
