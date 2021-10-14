@@ -3,11 +3,17 @@ body {
     font-family: Roboto;
 }
 
+#App {
+    background-color: #F7F7F7;
+}
+
 .flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
+
 
 /* header {
     height: 100px;

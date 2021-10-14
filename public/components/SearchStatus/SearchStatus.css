@@ -1,0 +1,21 @@
+.status {
+    width: 67vw;
+    height: 56px;
+    display: block;
+    background-color: white;
+    padding: 11px;
+    text-align: center;
+    font-size: 1.46vw;
+    color: black;
+    margin: 10px 0px;
+}
+
+.status__when {
+    color: #FF630B;
+    text-decoration: underline;
+}
+
+.status__city {
+    color: #08BBBB;
+    text-decoration: underline;
+}
