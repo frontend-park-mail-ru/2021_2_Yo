@@ -92,6 +92,7 @@ export default class LoginPageComponent {
                         par.innerHTML += temp({error})
                     }
                 } else {
+                    par.classList.remove("input-block_error")
                     item.input.classList.remove("form-input_error")
                     item.input.classList.add("form-input_correct");
                     while (par.children.length !== 2) {
