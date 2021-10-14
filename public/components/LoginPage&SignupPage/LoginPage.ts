@@ -19,11 +19,11 @@ export default class LoginPageComponent {
                     <form id="authForm">
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input input" id="emailInput">
+                            <input class ="input-block__input form-input" id="emailInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input type="password" class ="input-block__input input" id="passwordInput">
+                            <input type="password" class ="input-block__input form-input" id="passwordInput">
                         </div>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
@@ -45,11 +45,8 @@ export default class LoginPageComponent {
     async authorization(event: Event) {
         event.preventDefault();
 
-        const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-        // errorsBlock.innerHTML = ''
-
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement
-        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
+        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         const inputs = new Map([
             ['email', {
                 input: emailInput,
@@ -64,49 +61,40 @@ export default class LoginPageComponent {
         ]);
 
         authValidateFields(inputs);
-        const valid = this.showErrors(inputs, errorsBlock);
+        const valid = this.showErrors(inputs);
         if (valid) {
             const postData: ApiPostLoginData = {
                 email: inputs.get('email')?.value as string,
                 password: inputs.get('password')?.value as string,
             };
             const error = await postLogin(postData);
-            if (error) {
-                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
-            } else {
-                route(UrlPathnames.Main);
-            }
+            // if (error) {
+            //     errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
+            // } else {
+            //     route(UrlPathnames.Main);
+            // }
         }
     }
 
-    showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
-        const errors: string[] = [];
+    showErrors(inputs: Map<string, InputErrors>): boolean {
         let valid = true;
 
         inputs.forEach((item) => {
-            // item.input.className = 'inputCorrect';
+            item.input.classList.add("form-input_correct")
             item.errors.forEach(error => {
                 let par = item.input.parentElement as HTMLElement
+
                 if (error) {
-                    // item.input.className = 'inputError';
+                    item.input.classList.add("form-input_error")
+                    par.classList.add("input-block_error")
                     valid = false;
-                    if (error && errors.indexOf(error) === -1) {
-                        errors.push(error);
+                    if (par.innerHTML.indexOf(error) === -1) {
                         const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
-                        par.classList.add("input-block_error")
-                        if (par.innerHTML.indexOf(error) === -1) {
-                            par.innerHTML += temp({error})
-                        }
+                        par.innerHTML += temp({error})
                     }
                 }
             })
-            errors.length = 0;
         });
-
-        // const temp = window.Handlebars.compile(`{{#each errors}}
-        //                                             <p class="errorP">{{this}}</p>
-        //                                         {{/each}}`);
-        // errorsBlock.innerHTML += temp({errors});
 
         return valid;
     }

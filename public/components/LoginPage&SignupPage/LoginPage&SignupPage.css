@@ -39,12 +39,20 @@
     line-height: 33px;
 }
 
-.input {
-    border: 1px solid #000000;
+.form-input {
+    border: 1px solid black;
     box-sizing: border-box;
     border-radius: 2px;
     width: 515px;
     height: 32px;
+}
+
+.form-input_correct {
+    border: 1px solid green;
+}
+
+.form-input_error {
+    border: 1px solid red;
 }
 
 .authform__input-block {

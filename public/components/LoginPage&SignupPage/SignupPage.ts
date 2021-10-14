@@ -19,23 +19,23 @@ export default class SignupPageComponent {
                     <form id="regForm">
                         <div class="input-block">
                             <p class="input-block__input-label input-label">Имя</p>
-                            <input class ="input-block__input input" id="nameInput">
+                            <input class ="input-block__input form-input" id="nameInput">
                         </div>
                         <div class="input-block">
                             <p class="input-block__input-label input-label">Фамилия</p>
-                            <input class ="input-block__input input" id="surnameInput">
+                            <input class ="input-block__input form-input" id="surnameInput">
                         </div>
                         <div class="input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input input" id="emailInput">
+                            <input class ="input-block__input form-input" id="emailInput">
                         </div>
                         <div class="input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input class ="input-block__input input" type="password" id="passwordInput1">
+                            <input class ="input-block__input form-input" type="password" id="passwordInput1">
                         </div>
                         <div class="input-block">
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
-                            <input class ="input-block__input input" type="password" id="passwordInput2">
+                            <input class ="input-block__input form-input" type="password" id="passwordInput2">
                         </div>
                         <div class="buttons">
                             <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
