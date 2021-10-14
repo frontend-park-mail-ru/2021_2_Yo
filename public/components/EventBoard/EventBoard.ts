@@ -46,8 +46,13 @@ export default class EventBoardComponent {
             <div class="board">
                 <div class="events">
                     {{#each this}}
-                        <div class="events__e{{@index}}">
+                        <div class="events__e{{@index}} image-wrapper">
                             <img class="events__image" src="{{imgUrl}}">
+                            <span class="events__description">{{description}}<span>
+                            <div class="events__viewed">
+                                <img src="./img/viewed2.0.png">
+                                <span>{{viewed}}</span>
+                            </div>
                         </div>
                     {{/each}}
                 </div>

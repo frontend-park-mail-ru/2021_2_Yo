@@ -25,6 +25,10 @@
     display: block;
 }
 
+.image-wrapper {
+    position: relative;
+}
+
 .events__e0 {
     grid-area: events__e0;
 }
@@ -75,4 +79,19 @@
 
 .events__e12 {
     grid-area: events__e12;
+}
+
+.events__description {
+    position: absolute;
+    bottom: 7px;
+}
+
+.events__viewed {
+    width: 3.9vw;
+    position: absolute;
+    top: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2vh;
 }
