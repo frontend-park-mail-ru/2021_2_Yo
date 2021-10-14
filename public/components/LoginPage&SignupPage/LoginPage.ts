@@ -87,7 +87,6 @@ export default class LoginPageComponent {
             // item.input.className = 'inputCorrect';
             item.errors.forEach(error => {
                 let par = item.input.parentElement as HTMLElement
-                par.innerHTML = ''
                 if (error) {
                     // item.input.className = 'inputError';
                     valid = false;
