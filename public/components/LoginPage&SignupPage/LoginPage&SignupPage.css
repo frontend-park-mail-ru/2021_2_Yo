@@ -47,10 +47,13 @@
     height: 32px;
 }
 
-.input-block {
-    padding-bottom: 21px;
+.authform__input-block {
     margin-left: 35px;
     margin-right: 35px;
+}
+
+.input-block {
+    padding-bottom: 21px;
 }
 
 .input-block__input-label {
@@ -119,9 +122,12 @@
     cursor: pointer;
 }
 
-.buttons {
+.authform__buttons {
     margin-bottom: 30px;
     margin-top: 30px;
+}
+
+.buttons {
     display: flex;
     justify-content: space-between;
     text-align: center;

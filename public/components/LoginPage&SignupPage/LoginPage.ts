@@ -17,15 +17,15 @@ export default class LoginPageComponent {
                 <div class="authform" id="authFormBackground">
                     <p class="authform__label label">Авторизация</p>
                     <form id="authForm">
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
                             <input class ="input-block__input input" id="emailInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input type="password" class ="input-block__input input" id="passwordInput">
                         </div>
-                        <div class="buttons">
+                        <div class="authform__buttons buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
                         </div>
@@ -93,7 +93,7 @@ export default class LoginPageComponent {
                         errors.push(error);
                         const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
                         let par = item.input.parentElement as HTMLElement
-                        par.className += "input-block_error"
+                        par.classList.add("input-block_error")
                         par.innerHTML += temp({error})
                     }
                 }
