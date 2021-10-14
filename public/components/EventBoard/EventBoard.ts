@@ -39,11 +39,14 @@ export default class EventBoardComponent {
         //     const row = new EventRowComponent(board, temp);
         //     row.render();
         // }
+        while (this.#data.length < 13) {
+            this.#data.push(this.#data[0])
+        }
         const source = `
             <div class="board">
                 <div class="events">
                     {{#each this}}
-                        <div class="events__e{{index}}">
+                        <div class="events__e{{@index}}">
                             <img class="events__image" src="{{imgUrl}}">
                         </div>
                     {{/each}}
