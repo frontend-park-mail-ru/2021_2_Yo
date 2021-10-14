@@ -105,5 +105,4 @@ export default class LoginPageComponent {
 
         return valid;
     }
-
 }

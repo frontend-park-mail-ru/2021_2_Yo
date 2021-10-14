@@ -94,7 +94,7 @@ export default class SignupPageComponent {
 
         signupValidateFields(inputs);
 
-        const valid = this.showErrors(inputs, errorsBlock);
+        const valid = this.showErrors(inputs);
         if (valid) {
             const postData: ApiPostSignupData = {
                 name: inputs.get('name')?.value as string,
@@ -103,35 +103,40 @@ export default class SignupPageComponent {
                 password: inputs.get('password1')?.value as string
             };
             const error = await postSignup(postData);
-            if (error) {
-                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
-            } else {
-                route(UrlPathnames.Main);
-            }
+            // if (error) {
+            //     errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
+            // } else {
+            //     route(UrlPathnames.Main);
+            // }
         }
     }
 
-    showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
-        const errors: string[] = [];
+    showErrors(inputs: Map<string, InputErrors>): boolean {
         let valid = true;
 
         inputs.forEach((item) => {
-            item.input.className = 'inputCorrect';
+            let par = item.input.parentElement as HTMLElement
+
             item.errors.forEach(error => {
                 if (error) {
-                    item.input.className = 'inputError';
+                    item.input.classList.add("form-input_error")
+                    par.classList.add("input-block_error")
                     valid = false;
-                    if (error && errors.indexOf(error) === -1) {
-                        errors.push(error);
+                    if (par.innerHTML.indexOf(error) === -1) {
+                        const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
+                        par.innerHTML += temp({error})
+                    }
+                } else {
+                    par.classList.remove("input-block_error")
+                    item.input.classList.remove("form-input_error")
+                    item.input.classList.add("form-input_correct");
+                    while (par.children.length !== 2) {
+                        par.removeChild(par.lastChild as ChildNode);
                     }
                 }
-            });
-        });
+            })
 
-        const temp = window.Handlebars.compile(`{{#each errors}}
-                                                    <p class="errorP">{{this}}</p>
-                                                {{/each}}`);
-        errorsBlock.innerHTML += temp({errors});
+        });
 
         return valid;
     }
