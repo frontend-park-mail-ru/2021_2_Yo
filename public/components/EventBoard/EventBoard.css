@@ -37,6 +37,7 @@
     position: relative;
     color: white;
     font-weight: bold;
+    border-radius: 2px;
 }
 
 .events__e0 {

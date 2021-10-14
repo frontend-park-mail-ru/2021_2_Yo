@@ -44,7 +44,7 @@ export default class EventBoardComponent {
         }
         this.#data = this.#data.map(e => {
             e.description = 'Маскарад. Прикольно и весело.';
-            e.imgUrl = '/img/tusa2.0.png';
+            // e.imgUrl = '/img/tusa2.0.png';
             return e;
         });
         const source = `
