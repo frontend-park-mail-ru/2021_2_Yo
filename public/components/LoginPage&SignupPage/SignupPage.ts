@@ -2,7 +2,7 @@ import {signupValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
 import {postSignup} from '../../modules/request.js';
 import route from '../../modules/routing.js';
-import { ApiPostSignupData, UrlPathnames } from '../../types.js';
+import {ApiPostSignupData, UrlPathnames} from '../../types.js';
 
 export default class SignupPageComponent {
     #parent: HTMLElement
@@ -17,27 +17,27 @@ export default class SignupPageComponent {
                 <div class = "authform">
                     <p class="authform__label label">Регистрация</p>
                     <form id="regForm">
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Имя</p>
-                            <input class ="input-block__input input" id="nameInput">
+                            <input class ="input-block__input form-input" id="nameInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Фамилия</p>
-                            <input class ="input-block__input input" id="surnameInput">
+                            <input class ="input-block__input form-input" id="surnameInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input input" id="emailInput">
+                            <input class ="input-block__input form-input" id="emailInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input class ="input-block__input input" type="password" id="passwordInput1">
+                            <input class ="input-block__input form-input" type="password" id="passwordInput1">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
-                            <input class ="input-block__input input" type="password" id="passwordInput2">
+                            <input class ="input-block__input form-input" type="password" id="passwordInput2">
                         </div>
-                        <div class="buttons">
+                        <div class="authform__buttons buttons">
                             <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
                         </div>
@@ -54,9 +54,6 @@ export default class SignupPageComponent {
 
     async registration(event: Event) {
         event.preventDefault();
-
-        const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-        errorsBlock.innerHTML = '';
 
         const nameInput = document.getElementById('nameInput') as HTMLInputElement;
         const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
@@ -94,7 +91,7 @@ export default class SignupPageComponent {
 
         signupValidateFields(inputs);
 
-        const valid = this.showErrors(inputs, errorsBlock);
+        const valid = this.showErrors(inputs);
         if (valid) {
             const postData: ApiPostSignupData = {
                 name: inputs.get('name')?.value as string,
@@ -103,35 +100,44 @@ export default class SignupPageComponent {
                 password: inputs.get('password1')?.value as string
             };
             const error = await postSignup(postData);
-            if (error) {
-                errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
-            } else {
-                route(UrlPathnames.Main);
-            }
+            // if (error) {
+            //     errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
+            // } else {
+            //     route(UrlPathnames.Main);
+            // }
         }
     }
 
-    showErrors(inputs: Map<string, InputErrors>, errorsBlock: HTMLElement): boolean {
-        const errors: string[] = [];
+    showErrors(inputs: Map<string, InputErrors>): boolean {
         let valid = true;
 
         inputs.forEach((item) => {
-            item.input.className = 'inputCorrect';
+            let par = item.input.parentElement as HTMLElement
+
             item.errors.forEach(error => {
                 if (error) {
-                    item.input.className = 'inputError';
+                    item.input.classList.add("form-input_error")
+                    par.classList.add("input-block_error")
                     valid = false;
-                    if (error && errors.indexOf(error) === -1) {
-                        errors.push(error);
+                    if (par.innerHTML.indexOf(error) === -1) {
+                        const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
+                        par.innerHTML += temp({error})
                     }
+                } else {
+                    item.errors = item.errors.slice(1)
                 }
-            });
-        });
+            })
 
-        const temp = window.Handlebars.compile(`{{#each errors}}
-                                                    <p class="errorP">{{this}}</p>
-                                                {{/each}}`);
-        errorsBlock.innerHTML += temp({errors});
+            if (!item.errors.length) {
+                par.classList.remove("input-block_error")
+                item.input.classList.remove("form-input_error")
+                item.input.classList.add("form-input_correct");
+                while (par.children.length !== 2) {
+                    par.removeChild(par.lastChild as ChildNode);
+                }
+            }
+
+        });
 
         return valid;
     }
