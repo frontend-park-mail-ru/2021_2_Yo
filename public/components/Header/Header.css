@@ -3,7 +3,8 @@
 }
 
 .header-text {
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 1vw;
     color: white;
     text-align: center;
     font-weight: 400;
@@ -34,7 +35,8 @@
 }
 
 .header__search-input {
-    width: 404px;
+    /* width: 404px; */
+    width: 22.9vw;
     height: 32px;
     background: transparent;
     border: 1px solid white;
@@ -46,7 +48,8 @@
 }
 
 .header__calendar {
-    width: 227px;
+    /* width: 227px; */
+    width: 11.8vw;
 }
 
 .header__user-avatar {
