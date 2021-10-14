@@ -17,27 +17,27 @@ export default class SignupPageComponent {
                 <div class = "authform">
                     <p class="authform__label label">Регистрация</p>
                     <form id="regForm">
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Имя</p>
                             <input class ="input-block__input form-input" id="nameInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Фамилия</p>
                             <input class ="input-block__input form-input" id="surnameInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
                             <input class ="input-block__input form-input" id="emailInput">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input class ="input-block__input form-input" type="password" id="passwordInput1">
                         </div>
-                        <div class="input-block">
+                        <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
                             <input class ="input-block__input form-input" type="password" id="passwordInput2">
                         </div>
-                        <div class="buttons">
+                        <div class="authform__buttons buttons">
                             <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
                         </div>
@@ -56,7 +56,6 @@ export default class SignupPageComponent {
         event.preventDefault();
 
         const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-        errorsBlock.innerHTML = '';
 
         const nameInput = document.getElementById('nameInput') as HTMLInputElement;
         const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
