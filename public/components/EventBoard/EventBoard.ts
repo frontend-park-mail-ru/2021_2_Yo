@@ -55,7 +55,7 @@ export default class EventBoardComponent {
                             <span class="events__description">{{description}}</span>
                             <div class="events__viewed">
                                 <img src="./img/viewed2.0.png">
-                                <span>{{viewed}}</span>
+                                <span class="events__viewed-score">{{viewed}}</span>
                             </div>
                         </div>
                     {{/each}}
