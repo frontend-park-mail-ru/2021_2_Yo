@@ -124,7 +124,7 @@ export default class SignupPageComponent {
                         par.innerHTML += temp({error})
                     }
                 } else {
-                    item.errors.slice(1)
+                    item.errors = item.errors.slice(1)
                 }
             })
 
