@@ -42,13 +42,17 @@ export default class EventBoardComponent {
         while (this.#data.length < 13) {
             this.#data.push(this.#data[0])
         }
+        this.#data = this.#data.map(e => {
+            e.description = 'Маскарад. Прикольно и весело.'
+            return e
+        });
         const source = `
             <div class="board">
                 <div class="events">
                     {{#each this}}
-                        <div class="events__e{{@index}} image-wrapper">
+                        <div class="events__e{{@index}} events__e-wrapper">
                             <img class="events__image" src="{{imgUrl}}">
-                            <span class="events__description">{{description}}<span>
+                            <span class="events__description">{{description}}</span>
                             <div class="events__viewed">
                                 <img src="./img/viewed2.0.png">
                                 <span>{{viewed}}</span>

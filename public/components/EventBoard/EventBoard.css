@@ -25,8 +25,10 @@
     display: block;
 }
 
-.image-wrapper {
+.events__e-wrapper {
     position: relative;
+    color: white;
+    font-weight: bold;
 }
 
 .events__e0 {
@@ -81,6 +83,18 @@
     grid-area: events__e12;
 }
 
+.events__e0, .events__e1, .events__e2, .events__e7, .events__e12 {
+    font-size: 3.33vh;
+}
+
+.events__e3, .events__e4, .events__e5, .events__e6 {
+    font-size: 2.96vh;
+}
+
+.events__e0, .events__e1, .events__e2, .events__e7, .events__e12 {
+    font-size: 2.22vh;
+}
+
 .events__description {
     position: absolute;
     bottom: 7px;
@@ -90,6 +104,7 @@
     width: 3.9vw;
     position: absolute;
     top: 11px;
+    right: 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
