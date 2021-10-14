@@ -40,12 +40,14 @@ export default class EventBoardComponent {
         //     row.render();
         // }
         const source = `
-            <div class="events">
-                {{#each events}}
-                    <div class="e{{index}}">
-                        <img src="{{imgUrl}}">
-                    </div>
-                {{/each}}
+            <div class="board">
+                <div class="events">
+                    {{#each this}}
+                        <div class="events__e{{index}}">
+                            <img src="{{imgUrl}}">
+                        </div>
+                    {{/each}}
+                </div>
             </div>
         `;
         const template = window.Handlebars.compile(source);
