@@ -46,7 +46,7 @@ export default class LoginPageComponent {
         event.preventDefault();
 
         const errorsBlock = document.getElementById('errorsBlock') as HTMLElement;
-        errorsBlock.innerHTML = ''
+        // errorsBlock.innerHTML = ''
 
         const emailInput = document.getElementById('emailInput') as HTMLInputElement
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement
