@@ -61,6 +61,10 @@
     margin: 0;
 }
 
+.input-block_error {
+    padding-bottom: 0;
+}
+
 .input-error {
     font-style: normal;
     font-weight: bold;

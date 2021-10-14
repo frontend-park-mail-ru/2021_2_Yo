@@ -93,6 +93,7 @@ export default class LoginPageComponent {
                         errors.push(error);
                         const temp = window.Handlebars.compile(`<p class="input-block__input-error input-error">{{error}}</p>`);
                         let par = item.input.parentElement as HTMLElement
+                        par.className += "input-block_error"
                         par.innerHTML += temp({error})
                     }
                 }
