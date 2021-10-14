@@ -7,10 +7,9 @@
 .status {
     width: 67vw;
     height: 56px;
-    display: block;
+    display: flex;
+    align-content: center;
     background-color: white;
-    padding: 11px;
-    box-sizing: border-box;
     font-size: 1.46vw;
     color: black;
     margin: 10px 0px;
