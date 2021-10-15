@@ -37,6 +37,7 @@ export default class SignupPageComponent {
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
                             <input class ="input-block__input form-input" type="password" id="passwordInput2">
                         </div>
+                        <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
@@ -100,11 +101,12 @@ export default class SignupPageComponent {
                 password: inputs.get('password1')?.value as string
             };
             const error = await postSignup(postData);
-            // if (error) {
-            //     errorsBlock.innerHTML += window.Handlebars.compile('<p class="errorP">' + error + '</p>')();
-            // } else {
-            //     route(UrlPathnames.Main);
-            // }
+            if (error) {
+                const errorsBlock = document.getElementById('errors') as HTMLParagraphElement
+                errorsBlock.textContent = error
+            } else {
+                route(UrlPathnames.Main);
+            }
         }
     }
 
