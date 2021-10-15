@@ -25,7 +25,8 @@
 }
 
 .authform__logo {
-    /*position: relative;*/
+    position: absolute;
+    top: 0;
 }
 
 .authform__label {
