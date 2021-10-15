@@ -9,7 +9,7 @@
 .background {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     background: var(--bg);
 }
 
@@ -20,7 +20,7 @@
 }
 
 .authform__logo {
-    position: relative;
+    /*position: relative;*/
 }
 
 .authform__label {
