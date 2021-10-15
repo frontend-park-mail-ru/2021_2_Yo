@@ -4,6 +4,7 @@ import EventBoardComponent from '../EventBoard/EventBoard.js';
 import EventHeaderComponent from '../EventHeader/EventHeader.js';
 import FilterHeaderComponent from '../FilterHeader/FilterHeader.js';
 import MainHeaderComponent from '../MainHeader/MainHeader.js';
+import SearchStatusComponent from '../SearchStatus/SearchStatus.js';
 
 export default class MainPageComponent {
     #parent: HTMLElement
@@ -21,12 +22,20 @@ export default class MainPageComponent {
         // const eHeader = new EventHeaderComponent(this.#parent);
         // const fHeader = new FilterHeaderComponent(this.#parent);
         const Header = new HeaderComponent(this.#parent, this.#user)
+        const status = {
+            question: 'Где потусить',
+            when: 'сегодня',
+            link: 'в',
+            city: 'Москве',
+        }
+        const sStatus = new SearchStatusComponent(this.#parent, status)
         const eBoard = new EventBoardComponent(this.#parent, this.#events);
 
         // mHeader.render();
         // eHeader.render();
         // fHeader.render();
         Header.render();
+        sStatus.render();
         eBoard.render();
     }
 }

@@ -1,13 +1,125 @@
+.board {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .events {
     height: 84vh;
     width: 67vw;
     display: grid;
     grid-template-areas:
-    "e0  e0  e0  e0  e1  e1  e1  e1  e2  e2  e2  e2" 4fr 
-    "e3  e3  e3  e4  e4  e4  e5  e5  e5  e6  e6  e6" 3fr 
-    "e7  e7  e7  e7  e8  e8  e10 e10 e12 e12 e12 e12" 2fr 
-    "e7  e7  e7  e7  e9  e9  e11 e11 e12 e12 e12 e12" 2fr 
+    "events__e0  events__e0  events__e0  events__e0  events__e1  events__e1  events__e1  events__e1  events__e2  events__e2  events__e2  events__e2" 
+    "events__e3  events__e3  events__e3  events__e4  events__e4  events__e4  events__e5  events__e5  events__e5  events__e6  events__e6  events__e6" 
+    "events__e7  events__e7  events__e7  events__e7  events__e8  events__e8  events__e10 events__e10 events__e12 events__e12 events__e12 events__e12" 
+    "events__e7  events__e7  events__e7  events__e7  events__e9  events__e9  events__e11 events__e11 events__e12 events__e12 events__e12 events__e12" 
     ;
+    grid-template-rows: 4fr 3fr 2fr 2fr;
+    gap: 10px;
 }
 
+.events__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
+.events__content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #000000 100%);
+}
+
+.events__e-wrapper {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+.events__e0 {
+    grid-area: events__e0;
+}
+
+.events__e1 {
+    grid-area: events__e1;
+}
+
+.events__e2 {
+    grid-area: events__e2;
+}
+
+.events__e3 {
+    grid-area: events__e3;
+}
+
+.events__e4 {
+    grid-area: events__e4;
+}
+
+.events__e5 {
+    grid-area: events__e5;
+}
+
+.events__e6 {
+    grid-area: events__e6;
+}
+
+.events__e7 {
+    grid-area: events__e7;
+}
+
+.events__e8 {
+    grid-area: events__e8;
+}
+
+.events__e9 {
+    grid-area: events__e9;
+}
+
+.events__e10 {
+    grid-area: events__e10;
+}
+
+.events__e11 {
+    grid-area: events__e11;
+}
+
+.events__e12 {
+    grid-area: events__e12;
+}
+
+.events__e0, .events__e1, .events__e2, .events__e7, .events__e12 {
+    font-size: 3.33vh;
+}
+
+.events__e3, .events__e4, .events__e5, .events__e6 {
+    font-size: 2.96vh;
+}
+
+.events__e8, .events__e9, .events__e10, .events__e11 {
+    font-size: 2.22vh;
+}
+
+.events__description {
+    position: absolute;
+    bottom: 7px;
+    left: 10px;
+    right: 10px;
+}
+
+.events__viewed {
+    position: absolute;
+    top: 11px;
+    right: 22px;
+    display: flex;
+    align-items: center;
+    font-size: 2vh;
+}
+
+.events__viewed-score {
+    margin-left: 5px;
+}
