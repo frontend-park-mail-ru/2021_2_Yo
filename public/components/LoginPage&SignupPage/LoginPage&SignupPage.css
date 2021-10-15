@@ -19,6 +19,10 @@
     border-radius: 12px;
 }
 
+.authform__logo {
+    position: relative;
+}
+
 .authform__label {
     margin-left: 35px;
     margin-top: 103px;
