@@ -23,7 +23,6 @@
 }
 
 .header__content {
-    /* width: 1290px; */
     width: 67vw;
     display: flex;
     justify-content: space-between;
@@ -31,12 +30,10 @@
 }
 
 .header__search {
-    /* width: 440px; */
     width: 22.9vw;
 }
 
 .header__search-input {
-    /* width: 404px; */
     width: 21vw;
     height: 32px;
     background: transparent;
@@ -49,7 +46,6 @@
 }
 
 .header__calendar {
-    /* width: 227px; */
     width: 11.8vw;
 }
 
