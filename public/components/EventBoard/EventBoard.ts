@@ -1,4 +1,3 @@
-// import EventRowComponent from '../EventRow/EventRow.js';
 import { EventCardData } from '../../types.js';
 import bus, {Events} from '../../modules/eventbus.js'
 
@@ -23,7 +22,6 @@ export default class EventBoardComponent {
         }
         data = data.map(e => {
             e.description = 'Маскарат. Не советуем.';
-            // e.imgUrl = '/img/tusa2.0.png';
             return e;
         });
         const source = `
