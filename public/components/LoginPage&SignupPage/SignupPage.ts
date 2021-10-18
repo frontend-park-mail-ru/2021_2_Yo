@@ -14,7 +14,7 @@ export default class SignupPageComponent {
     render() {
         const source = `
             <div class = "background">
-                <img class="authform__logo" src="./img/logo.png">
+                <img class="background__logo" src="./img/logo.png">
                 <div class = "authform">
                     <p class="authform__label label">Регистрация</p>
                     <form id="regForm">

@@ -14,7 +14,7 @@ export default class LoginPageComponent {
     render() {
         const source = `
             <div class="background">
-                <img class="authform__logo" src="./img/logo.png">
+                <img class="background__logo" src="./img/logo.png">
                 <div class="authform" id="authFormBackground">
                     <p class="authform__label label">Авторизация</p>
                     <form id="authForm">
