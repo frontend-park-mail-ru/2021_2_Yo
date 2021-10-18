@@ -17,10 +17,12 @@ export async function mainPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.innerHTML = '';
 
-    const events = await getEvents();
+    // const events = await getEvents();
     const user = await getUser();
-    const main = new MainPageComponent(app, events, user);
+    // const main = new MainPageComponent(app, events, user);
+    const main = new MainPageComponent(app, user);
     main.render();
+    getEvents();
     app.addEventListener('click', clickHandler);
 }
 

@@ -6,17 +6,17 @@ import SearchStatusComponent from '../SearchStatus/SearchStatus.js';
 
 export default class MainPageComponent {
     #parent: HTMLElement
-    #events: EventCardData[]
+    // #events: EventCardData[]
     #user: UserData | undefined
 
-    constructor(parent: HTMLElement, events: EventCardData[], user?: UserData) {
+    // constructor(parent: HTMLElement, events: EventCardData[], user?: UserData) {
+    constructor(parent: HTMLElement,user?: UserData) {
         this.#parent = parent;
-        this.#events = events;
+        // this.#events = events;
         this.#user = user;
     }
 
     render() {
-        const fHeader = new FilterHeaderComponent(this.#parent);
         const Header = new HeaderComponent(this.#parent, this.#user)
         const status = {
             question: 'Где потусить',
@@ -25,10 +25,11 @@ export default class MainPageComponent {
             city: 'Москве',
         }
         const sStatus = new SearchStatusComponent(this.#parent, status)
-        const eBoard = new EventBoardComponent(this.#parent, this.#events);
+        // const eBoard = new EventBoardComponent(this.#parent, this.#events);
+        const eBoard = new EventBoardComponent(this.#parent);
 
         Header.render();
         sStatus.render();
-        eBoard.render();
+        // eBoard.render();
     }
 }
