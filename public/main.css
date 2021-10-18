@@ -3,9 +3,12 @@ body {
     font-family: Roboto;
 }
 
-header {
-    height: 100px;
+#App {
+    background-color: #F7F7F7;
+}
+
+.flex {
     display: flex;
     align-items: center;
-    padding: 0 8%;
+    justify-content: space-between;
 }

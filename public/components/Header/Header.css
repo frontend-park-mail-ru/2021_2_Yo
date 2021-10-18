@@ -1,0 +1,63 @@
+.header-button:hover {
+    cursor: pointer;
+}
+
+.header-text {
+    /* font-size: 20px; */
+    font-size: 1vw;
+    color: white;
+    text-align: center;
+    font-weight: 400;
+}
+
+.header-text_decoration_underline {
+    text-decoration: underline;
+}
+
+.header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
+}
+
+.header__content {
+    width: 67vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__search {
+    width: 22.9vw;
+}
+
+.header__search-input {
+    width: 21vw;
+    height: 32px;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.header__search-input::placeholder {
+    color: white
+}
+
+.header__calendar {
+    width: 11.8vw;
+}
+
+.header__user-avatar {
+    width: 32px;
+    margin-right: 6px;
+}
+
+.header__auth-anchor {
+    color: white
+}
+
+.header__auth-anchor:last-child {
+    margin-left: 10px;
+}

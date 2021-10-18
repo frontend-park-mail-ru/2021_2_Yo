@@ -1,0 +1,158 @@
+:root {
+    --form-bg: linear-gradient(90deg, #F3F2FF 0%, #FFE6FE 100%);
+    --bg: linear-gradient(137.34deg, #0E0063 0%, #5E0043 100%);
+    --submit-btn: #490063;
+    --back-btn: #005E5E;
+    --error: #E61A3D;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+.authform {
+    background: var(--form-bg);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+}
+
+.background__logo {
+    margin-bottom: -83px;
+    z-index: 1;
+}
+
+.authform__label {
+    margin-left: 35px;
+    margin-top: 103px;
+    margin-bottom: 32px;
+}
+
+.label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 45px;
+}
+
+.input-label {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 33px;
+}
+
+.form-input {
+    border: 1px solid black;
+    box-sizing: border-box;
+    border-radius: 2px;
+    width: 515px;
+    height: 32px;
+}
+
+.form-input_correct {
+    border: 1px solid green;
+}
+
+.form-input_error {
+    border: 1px solid red;
+}
+
+.authform__input-block {
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.input-block {
+    padding-bottom: 21px;
+}
+
+.input-block__input-label {
+    margin: 0 0 0 0;
+}
+
+.input-block__error {
+    margin-top: 1px;
+    margin-bottom: 5px;
+}
+
+.input-block_error {
+    padding-bottom: 0;
+}
+
+.authform__error {
+    margin-left: 35px;
+}
+
+.error {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: var(--error);
+}
+
+.buttons__button-submit {
+    margin: 0 35px;
+}
+
+.button-submit {
+    background: var(--submit-btn);
+    mix-blend-mode: normal;
+    border: 1px solid black;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+
+    height: 40px;
+    padding: 6px 50px;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-decoration-line: underline;
+
+    color: white;
+}
+
+.button-submit:hover {
+    cursor: pointer;
+}
+
+.button-back {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-decoration-line: underline;
+    color: var(--back-btn);
+}
+
+.buttons__button-back {
+    margin: 0 35px;
+}
+
+.button-back:hover {
+    cursor: pointer;
+}
+
+.authform__buttons {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
