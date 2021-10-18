@@ -12,12 +12,7 @@ class EventBus {
     }
     
     on(event: Events, callback: (args?: any)=>void) {
-        if (this.#listeners[event]) {
-            this.#listeners[event].push(callback);
-        } else {
-            this.#listeners[event] = [];
-            this.#listeners[event].push(callback);
-        }
+        (this.#listeners[event] || (this.#listeners[event] = [])).push(callback);
     }
     off(event: Events, callback: (args?: any)=>void) {
         this.#listeners[event] = this.#listeners[event]
@@ -26,9 +21,9 @@ class EventBus {
     emit(event: Events, data: any) {
         this.#listeners[event].forEach(
             (listener) => {
-                listener(data)
+                listener(data);
             }
-        )
+        );
     }
 }
 
