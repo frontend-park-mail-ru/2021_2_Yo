@@ -18,11 +18,11 @@ export async function mainPage() {
     app.innerHTML = '';
 
     // const events = await getEvents();
-    getEvents();
     const user = await getUser();
     // const main = new MainPageComponent(app, events, user);
     const main = new MainPageComponent(app, user);
     main.render();
+    getEvents();
     app.addEventListener('click', clickHandler);
 }
 
