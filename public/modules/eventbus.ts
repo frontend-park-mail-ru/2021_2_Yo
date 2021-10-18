@@ -5,13 +5,13 @@ export enum Events {
 }
 
 class EventBus {
-    #listeners: Record<string, ((args?: unknown)=>void)[]>;
+    #listeners: Record<string, ((args?: any)=>void)[]>;
 
     constructor() {
         this.#listeners = {};
     }
     
-    on(event: Events, callback: (args?: unknown)=>void) {
+    on(event: Events, callback: (args?: any)=>void) {
         if (this.#listeners[event]) {
             this.#listeners[event].push(callback);
         } else {
@@ -19,7 +19,7 @@ class EventBus {
             this.#listeners[event].push(callback);
         }
     }
-    off(event: Events, callback: (args?: unknown)=>void) {
+    off(event: Events, callback: (args?: any)=>void) {
         this.#listeners[event] = this.#listeners[event]
             .filter((listener) => { return listener !== callback});
     }

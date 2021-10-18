@@ -1,48 +1,27 @@
 // import EventRowComponent from '../EventRow/EventRow.js';
 import { EventCardData } from '../../types.js';
-
-// export default class EventBoardComponent {
-//     #parent: HTMLElement
-//     #data: EventCardData[]
-
-//     constructor(parent: HTMLElement, data: EventCardData[]) {
-//         this.#parent = parent;
-//         this.#data = data;
-//     }
-
-//     render() {
-//         const board = document.createElement('div');
-//         board.className = 'eventBoard';
-//         for (let i = 0; i < this.#data.length; i += 3) {
-//             const temp = this.#data.slice(i, i + 3);
-//             const row = new EventRowComponent(board, temp);
-//             row.render();
-//         }
-//         this.#parent.innerHTML += board.outerHTML;
-//     }
-// }
+import bus, {Events} from '../../modules/eventbus.js'
 
 export default class EventBoardComponent {
     #parent: HTMLElement
-    #data: EventCardData[]
+    // #data: EventCardData[]
 
-    constructor(parent: HTMLElement, data: EventCardData[]) {
+    // constructor(parent: HTMLElement, data: EventCardData[]) {
+    constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#data = data;
+        bus.on(Events.EventsGet, ((data: EventCardData[]) => {this.render(data)}).bind(this));
+        // this.#data = data;
     }
 
-    render() {
-        // const board = document.createElement('div');
-        // board.className = 'events';
-        // for (let i = 0; i < this.#data.length; i += 3) {
-        //     const temp = this.#data.slice(i, i + 3);
-        //     const row = new EventRowComponent(board, temp);
-        //     row.render();
-        // }
-        while (this.#data.length < 13) {
-            this.#data.push(this.#data[0])
+    // reRender(data: EventCardData[]) {
+        
+    // }
+
+    render(data: EventCardData[]) {
+        while (data.length < 13) {
+            data.push(data[0])
         }
-        this.#data = this.#data.map(e => {
+        data = data.map(e => {
             e.description = 'Маскарат. Не советуем.';
             // e.imgUrl = '/img/tusa2.0.png';
             return e;
@@ -66,6 +45,6 @@ export default class EventBoardComponent {
             </div>
         `;
         const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML += template(this.#data);
+        this.#parent.innerHTML += template(data);
     }
 }

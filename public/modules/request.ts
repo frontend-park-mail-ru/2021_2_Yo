@@ -1,4 +1,5 @@
 import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, ApiUrls, EventCardData, FetchResponseData, UserData } from '../types.js';
+import bus, {Events} from './eventbus.js'
 
 const METHODS = {
     POST: 'POST',
@@ -67,14 +68,23 @@ export async function getUser(): Promise<UserData | undefined> {
  *
  * @returns {EventCardData[] | undefined}
  */
-export async function getEvents(): Promise<EventCardData[]> {
+// export async function getEvents(): Promise<EventCardData[]> {
+//     const {status, json} = await getFetch(API + ApiUrls.Events);
+//     if (status === 200) {
+//         if (json.status === 200) {
+//             return json.body.events as EventCardData[];
+//         }
+//     }
+//     return [];
+// }
+export async function getEvents() {
     const {status, json} = await getFetch(API + ApiUrls.Events);
     if (status === 200) {
         if (json.status === 200) {
-            return json.body.events as EventCardData[];
+            const data = json.body.events as EventCardData[];
+            bus.emit(Events.EventsGet, data);
         }
     }
-    return [];
 }
 
 /**
