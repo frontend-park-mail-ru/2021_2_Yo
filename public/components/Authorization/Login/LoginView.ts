@@ -13,7 +13,7 @@ export default class LoginView {
         bus.on(Events.UserLogin, () => this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
-        bus.on(Events.ValidationOk,this.#showCorrectInputs.bind(this))
+        bus.on(Events.ValidationOk,this.#showCorrectInputs.bind(this));
     }
 
     render() {
@@ -112,6 +112,6 @@ export default class LoginView {
             while (par.children.length !== 2) {
                 par.removeChild(par.lastChild as ChildNode);
             }
-        })
+        });
     }
 }
