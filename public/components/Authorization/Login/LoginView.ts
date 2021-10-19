@@ -44,17 +44,16 @@ export default class LoginView {
         const template = window.Handlebars.compile(source);
         this.parent.innerHTML += template();
 
-        const form = document.getElementById('authForm') as HTMLFormElement;
-
         const emailInput = document.getElementById('emailInput') as HTMLInputElement;
         this.inputs.set('email', emailInput);
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         this.inputs.set('password', passwordInput);
 
-        this.addListeners.bind(this)(form);
+        this.addListeners.bind(this);
     }
 
-    addListeners(form: HTMLFormElement) {
+    addListeners() {
+        const form = document.getElementById('authForm') as HTMLFormElement;
         form.addEventListener('submit', this.authorize.bind(this));
     }
 
