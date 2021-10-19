@@ -10,13 +10,13 @@ export default class LoginView {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-    }
-
-    render() {
         bus.on(Events.UserLogin, this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
         bus.on(Events.ValidationOk, this.#showCorrectInputs.bind(this));
+    }
+
+    render() {
         const source = `
             <div class="background">
                 <img class="background__logo" src="./img/logo.png">
@@ -51,7 +51,7 @@ export default class LoginView {
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         this.#inputs.set('password', passwordInput);
 
-        this.#addListeners(form);
+        this.#addListeners.bind(this)(form);
     }
 
     #addListeners(form: HTMLFormElement) {
@@ -63,9 +63,6 @@ export default class LoginView {
         this.#inputsData.clear();
         this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
         this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
-
-        console.log(this);
-        console.log(this.#inputsData);
 
         bus.emit(Events.SubmitLogin, this.#inputsData);
     }

@@ -16,9 +16,9 @@ export default class LoginController {
     }
 
     #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
-        console.log('emited');
+        console.log(inputsData);
         authValidateFields(inputsData);
-
+        console.log(inputsData);
         let valid = true;
 
         inputsData.forEach((item) => {
