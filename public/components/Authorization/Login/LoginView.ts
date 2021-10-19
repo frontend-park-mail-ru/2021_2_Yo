@@ -27,11 +27,11 @@ export default class LoginView {
                     <form id="authForm">
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input form-input" id="this.#emailInput">
+                            <input class ="input-block__input form-input" id="emailInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input type="password" class ="input-block__input form-input" id="this.#passwordInput">
+                            <input type="password" class ="input-block__input form-input" id="passwordInput">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
@@ -59,8 +59,6 @@ export default class LoginView {
 
     #authorize(event: Event) {
         event.preventDefault();
-        alert(this.#emailInput)
-        alert(this.#emailInput.value.trim())
         this.#inputs.set('email', {
             input: this.#emailInput,
             errors: [],
