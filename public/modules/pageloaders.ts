@@ -2,8 +2,9 @@ import { UrlPathnames } from '../types.js';
 import MainPageComponent from '../components/MainPage/MainPage.js';
 import LoginPageComponent from '../components/LoginPage&SignupPage/LoginPage.js';
 import SignupPageComponent from '../components/LoginPage&SignupPage/SignupPage.js';
-import {getEvents, getUser} from './request/request.js';
+import { getUser } from './request/request.js';
 import route from './routing.js';
+import MainPageController from '../components/MainPage/controller.js';
 
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
@@ -13,17 +14,16 @@ const clickHandler = (e: MouseEvent) => {
     }
 };
 
-export async function mainPage() {
-    const app = document.getElementById('App') as HTMLElement;
-    app.innerHTML = '';
+export function mainPage() {
+    // const app = document.getElementById('App') as HTMLElement;
+    // app.innerHTML = '';
 
-    // const events = await getEvents();
-    const user = await getUser();
-    // const main = new MainPageComponent(app, events, user);
-    const main = new MainPageComponent(app, user);
-    main.render();
-    void getEvents();
-    app.addEventListener('click', clickHandler);
+    // const user = await getUser();
+    // const main = new MainPageComponent(app, user);
+    // main.render();
+    // void getEvents();
+    // app.addEventListener('click', clickHandler);
+    const controller = new MainPageController();
 }
 
 export function loginPage() {
