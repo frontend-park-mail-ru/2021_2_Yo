@@ -60,7 +60,11 @@ export default class LoginView {
     authorize(event: Event) {
         event.preventDefault();
 
+        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        errorsBlock.innerHTML = '';
+
         this.inputsData.clear();
+        console.log(this.inputs.get('email')?.value.trim(), this.inputs.get('password')?.value.trim());
         this.inputsData.set('email', {errors: [], value: this.inputs.get('email')?.value.trim() as string});
         this.inputsData.set('password', {errors: [], value: this.inputs.get('password')?.value.trim() as string});
 
@@ -68,8 +72,6 @@ export default class LoginView {
     }
 
     redirect() {
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
-        errorsBlock.innerHTML = '';
         void route(UrlPathnames.Main);
     }
 
