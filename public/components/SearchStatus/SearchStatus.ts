@@ -1,6 +1,6 @@
 export default class SearchStatusComponent {
-    #parent: HTMLElement
-    #data: any
+    #parent: HTMLElement;
+    #data: any;
 
     constructor(parent: HTMLElement, data: any) {
         this.#parent = parent;
@@ -24,4 +24,5 @@ export default class SearchStatusComponent {
         this.#parent.innerHTML += template(this.#data);
     }
 }
+
 

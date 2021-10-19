@@ -1,5 +1,5 @@
 export default class FilterHeaderComponent {
-    #parent: HTMLElement
+    #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;

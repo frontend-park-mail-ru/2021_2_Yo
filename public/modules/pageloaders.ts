@@ -3,13 +3,13 @@ import MainPageComponent from '../components/MainPage/MainPage.js';
 import LoginPageComponent from '../components/LoginPage&SignupPage/LoginPage.js';
 import SignupPageComponent from '../components/LoginPage&SignupPage/SignupPage.js';
 import {getEvents, getUser} from './request.js';
-import route from './routing.js'
+import route from './routing.js';
 
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
     if (target instanceof HTMLAnchorElement) {
         e.preventDefault();
-        route(target.href as UrlPathnames);
+        void route(target.href as UrlPathnames);
     }
 };
 
@@ -22,7 +22,7 @@ export async function mainPage() {
     // const main = new MainPageComponent(app, events, user);
     const main = new MainPageComponent(app, user);
     main.render();
-    getEvents();
+    void getEvents();
     app.addEventListener('click', clickHandler);
 }
 

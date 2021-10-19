@@ -1,14 +1,14 @@
 import { EventCardData } from '../../types.js';
-import bus, {Events} from '../../modules/eventbus.js'
+import bus, {Events} from '../../modules/eventbus.js';
 
 export default class EventBoardComponent {
-    #parent: HTMLElement
+    #parent: HTMLElement;
     // #data: EventCardData[]
 
     // constructor(parent: HTMLElement, data: EventCardData[]) {
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        bus.on(Events.EventsGet, ((data: EventCardData[]) => {this.render(data)}).bind(this));
+        bus.on(Events.EventsGet, ((data: EventCardData[]) => {this.render(data);}).bind(this));
         // this.#data = data;
     }
 
@@ -18,7 +18,7 @@ export default class EventBoardComponent {
 
     render(data: EventCardData[]) {
         while (data.length < 13) {
-            data.push(data[0])
+            data.push(data[0]);
         }
         data = data.map(e => {
             e.description = 'Маскарат. Не советуем.';
@@ -42,7 +42,7 @@ export default class EventBoardComponent {
                 </div>
             </div>
         `;
-        const template = window.Handlebars.compile(source);
+        const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML += template(data);
     }
 }

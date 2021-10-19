@@ -16,7 +16,7 @@ class EventBus {
     }
     off(event: Events, callback: (args?: any)=>void) {
         this.#listeners[event] = this.#listeners[event]
-            .filter((listener) => { return listener !== callback});
+            .filter((listener) => { return listener !== callback;});
     }
     emit(event: Events, data: any) {
         this.#listeners[event].forEach(

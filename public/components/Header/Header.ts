@@ -2,8 +2,8 @@ import { UserData } from '../../types.js';
 import { anchorsConfig } from '../../config.js';
 
 export default class HeaderComponent {
-    #parent: HTMLElement
-    #user: UserData | undefined
+    #parent: HTMLElement;
+    #user: UserData | undefined;
 
     constructor(parent: HTMLElement, user?: UserData) {
         this.#parent = parent;

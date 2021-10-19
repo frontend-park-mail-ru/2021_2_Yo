@@ -1,0 +1,64 @@
+{
+    // Настройки проекта
+    "env": {
+		// Проект для браузера
+		"browser": true,
+        "node": true,
+		// Включаем возможности ES6
+		"es6": true,
+		// Добавляем возможности ES2017
+		"es2017": true
+    },
+    // Наборы правил
+    "extends": [
+		// Базовый набор правил eslint
+		"eslint:recommended",
+        // "google",
+		// Отключаем правила из базового набора
+		"plugin:@typescript-eslint/eslint-recommended",
+		// Базовые правила для TypeScript
+		"plugin:@typescript-eslint/recommended",
+		 // Правила TS, требующие инфо о типах
+		"plugin:@typescript-eslint/recommended-requiring-type-checking"
+	],
+	// Движок парсинга
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		// Движку нужен проект TS для правил с типами
+		"project": "tsconfig.json",
+		"tsconfigRootDir": "."
+	},
+	// Плагин с наборами правил для TypeScript
+	"plugins": ["@typescript-eslint"],
+	"rules": {
+        "indent": ["error", 4],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+        "no-duplicate-imports": "warn",
+        "no-var": "error",
+        "no-redeclare": "error",
+        "no-unused-vars": "off",
+        "require-jsdoc": "off",
+        "no-multi-spaces": "off",
+        "key-spacing": ["error", { "beforeColon": false, "afterColon": true, "mode": "minimum" }],
+        "max-len": ["error", 130],
+        "no-undef": "off",
+        "new-cap": "off",
+        "eol-last": "error",
+        "no-multiple-empty-lines": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        /* eslint-disable  @typescript-eslint/no-explicit-any */
+        /* eslint-disable  @typescript-eslint/no-unsafe-assignment */
+        /* eslint-disable  @typescript-eslint/no-unsafe-call */
+        /* eslint-disable  @typescript-eslint/no-unsafe-member-access */
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "comma-dangle": "off"
+    }
+}
