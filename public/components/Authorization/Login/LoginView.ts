@@ -64,6 +64,7 @@ export default class LoginView {
         this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
         this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
         console.log(this.#inputsData);
+        console.log(this);
 
         bus.emit(Events.SubmitLogin, this.#inputsData);
     }
