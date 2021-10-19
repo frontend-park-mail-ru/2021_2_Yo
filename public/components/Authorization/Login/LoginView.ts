@@ -10,7 +10,7 @@ export default class LoginView {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        bus.on(Events.UserLogin, () => this.#redirect.bind(this));
+        bus.on(Events.UserLogin, this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
         bus.on(Events.ValidationOk, this.#showCorrectInputs.bind(this));
@@ -55,7 +55,6 @@ export default class LoginView {
     }
 
     #addListeners(form: HTMLFormElement) {
-        console.log('c  ', this.#inputsData);
         form.addEventListener('submit', this.#authorize.bind(this));
     }
 
@@ -63,19 +62,18 @@ export default class LoginView {
         event.preventDefault();
         this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
         this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
+        console.log(this.#inputsData);
 
         bus.emit(Events.SubmitLogin, this.#inputsData);
     }
 
-    #redirect = (): void => {
+    #redirect() {
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
         errorsBlock.innerHTML = '';
         void route(UrlPathnames.Main);
     };
 
     #showValidationErrors(inputsData: Map<string, { errors: string[], value: string }>) {
-        console.log(this.#inputs);
-        console.log(this.#inputsData);
         inputsData.forEach((item, key) => {
             const par = this.#inputs.get(key)?.parentElement as HTMLElement;
             item.errors.forEach(error => {
