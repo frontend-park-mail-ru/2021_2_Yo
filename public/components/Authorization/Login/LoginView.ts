@@ -10,10 +10,10 @@ export default class LoginView {
 
     constructor(parent: HTMLElement) {
         this.parent = parent;
-        bus.on(Events.UserLogin, this.redirect.bind(this));
-        bus.on(Events.AuthError, this.showServerErrors.bind(this));
-        bus.on(Events.ValidationError, this.showValidationErrors.bind(this));
-        bus.on(Events.ValidationOk, this.showCorrectInputs.bind(this));
+        bus.on(Events.UserLogin, this.#redirect.bind(this));
+        bus.on(Events.AuthError, this.#showServerErrors.bind(this));
+        bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
+        bus.on(Events.ValidationOk, this.#showCorrectInputs.bind(this));
     }
 
     render() {
@@ -49,20 +49,20 @@ export default class LoginView {
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         this.inputs.set('password', passwordInput);
 
-        this.addListeners.bind(this);
+        this.#addListeners.bind(this);
     }
 
-    addListeners() {
+    #addListeners() {
         const form = document.getElementById('authForm') as HTMLFormElement;
-        form.addEventListener('submit', this.authorize.bind(this));
+        form.addEventListener('submit', this.#authorize.bind(this));
     }
 
-    removeListeners() {
+    #removeListeners() {
         const form = document.getElementById('authForm') as HTMLFormElement;
-        form.removeEventListener('submit', this.authorize.bind(this));
+        form.removeEventListener('submit', this.#authorize.bind(this));
     }
 
-    authorize(event: Event) {
+    #authorize(event: Event) {
         event.preventDefault();
 
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
@@ -75,11 +75,11 @@ export default class LoginView {
         bus.emit(Events.SubmitLogin, this.inputsData);
     }
 
-    redirect() {
+    #redirect() {
         void route(UrlPathnames.Main);
     }
 
-    showValidationErrors() {
+    #showValidationErrors() {
         this.inputsData.forEach((item, key) => {
             const input = this.inputs.get(key) as HTMLElement;
             const par = input.parentElement as HTMLElement;
@@ -110,12 +110,12 @@ export default class LoginView {
         });
     }
 
-    showServerErrors(error: string) {
+    #showServerErrors(error: string) {
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
         errorsBlock.textContent = error;
     }
 
-    showCorrectInputs() {
+    #showCorrectInputs() {
         this.inputs.forEach(input => {
             const par = input.parentElement as HTMLElement;
             par.classList.remove('input-block_error');
