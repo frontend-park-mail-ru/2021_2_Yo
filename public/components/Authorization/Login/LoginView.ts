@@ -54,7 +54,7 @@ export default class LoginView {
     }
 
     #addListeners() {
-        this.#form.addEventListener('submit', this.#authorize);
+        this.#form.addEventListener('submit', this.#authorize.bind(this));
     }
 
     #authorize(event: Event) {
