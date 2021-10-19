@@ -86,7 +86,7 @@ export default class LoginView {
             item.errors.forEach(error => {
                 if (error) {
                     input.classList.add('form-input_error');
-                    // par.classList.add('input-block_error');
+                    par.classList.add('input-block_error');
                     // if (par.innerHTML.indexOf(error) === -1) {
                     //     const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
                     //     par.innerHTML += temp({error});
