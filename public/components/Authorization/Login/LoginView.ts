@@ -78,18 +78,18 @@ export default class LoginView {
 
     showValidationErrors() {
         this.inputsData.forEach((item, key) => {
-            console.log(key);
             const input = this.inputs.get(key) as HTMLElement;
             const par = input.parentElement as HTMLElement;
-            console.log(this.inputs);
-            console.log(par);
             item.errors.forEach(error => {
                 if (error) {
                     input.classList.add('form-input_error');
                     par.classList.add('input-block_error');
                     if (par.innerHTML.indexOf(error) === -1) {
-                        const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
-                        par.innerHTML += temp({error});
+                        const p = document.createElement('p');
+                        p.classList.add('input-block__error');
+                        p.classList.add('error');
+                        p.textContent = error;
+                        par.appendChild(p);
                     }
                 } else {
                     item.errors = item.errors.slice(1);
