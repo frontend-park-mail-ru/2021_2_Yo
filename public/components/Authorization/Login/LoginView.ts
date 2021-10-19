@@ -67,13 +67,16 @@ export default class LoginView {
     }
 
     #redirect = (): void => {
+        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        errorsBlock.innerHTML = '';
         void route(UrlPathnames.Main);
     };
 
     #showValidationErrors(inputsData: Map<string, { errors: string[], value: string }>) {
+        console.log(this.#inputs);
+        console.log(this.#inputsData);
         inputsData.forEach((item, key) => {
             const par = this.#inputs.get(key)?.parentElement as HTMLElement;
-            console.log(this.#inputs);
             item.errors.forEach(error => {
                 if (error) {
                     this.#inputs.get(key)?.classList.add('form-input_error');
