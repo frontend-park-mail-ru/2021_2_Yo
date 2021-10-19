@@ -7,18 +7,6 @@ export default class LoginView {
     #form: HTMLFormElement;
     #emailInput: HTMLInputElement;
     #passwordInput: HTMLInputElement;
-    // #inputs = new Map([
-    //     ['email', {
-    //         input: this.#emailInput,
-    //         errors: [],
-    //         value: ''
-    //     }],
-    //     ['password', {
-    //         input: this.#passwordInput,
-    //         errors: [],
-    //         value: ''
-    //     }],
-    // ]);
     #inputs = new Map<string, InputErrors>();
 
     constructor(parent: HTMLElement) {
@@ -66,6 +54,11 @@ export default class LoginView {
     }
 
     #addListeners() {
+        this.#form.addEventListener('submit', this.#authorize.bind(this));
+    }
+
+    #authorize(event: Event) {
+        event.preventDefault();
         this.#inputs.set('email', {
             input: this.#emailInput,
             errors: [],
@@ -76,12 +69,6 @@ export default class LoginView {
             errors: [],
             value: this.#passwordInput.value.trim()
         })
-        this.#form.addEventListener('submit', this.#authorize.bind(this));
-    }
-
-    #authorize(event: Event) {
-        event.preventDefault();
-
         bus.emit(Events.SubmitLogin, this.#inputs)
     }
 
