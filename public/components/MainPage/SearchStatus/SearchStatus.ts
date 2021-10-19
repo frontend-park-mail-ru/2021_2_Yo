@@ -1,13 +1,17 @@
 export default class SearchStatusComponent {
     #parent: HTMLElement;
-    #data: any;
 
-    constructor(parent: HTMLElement, data: any) {
+    constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#data = data;
     }
 
     render() {
+        const status = {
+            question: 'Где потусить',
+            when: 'сегодня',
+            link: 'в',
+            city: 'Москве',
+        };
         const source = `
             {{#with this}}
                 <div class="status-wrapper">
@@ -21,7 +25,7 @@ export default class SearchStatusComponent {
             {{/with}}
         `;
         const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML += template(this.#data);
+        this.#parent.innerHTML += template(status);
     }
 }
 

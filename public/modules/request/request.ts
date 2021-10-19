@@ -1,5 +1,5 @@
 import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, 
-    ApiUrls, EventCardData, FetchResponseData, UserData } from '../../types.js';
+    ApiUrls, EventCardData, FetchResponseData, UrlPathnames, UserData } from '../../types.js';
 import Bus from '../eventbus/eventbus.js';
 import Events from '../eventbus/events.js';
 
@@ -79,15 +79,15 @@ export async function getUser(): Promise<UserData | undefined> {
 //     }
 //     return [];
 // }
-export async function getEvents() {
-    const {status, json} = await getFetch(API + ApiUrls.Events);
-    if (status === 200) {
-        if (json.status === 200) {
-            const data = json.body.events as EventCardData[];
-            Bus.emit(Events.EventsGet, data);
-        }
-    }
-}
+// export async function getEvents() {
+//     const {status, json} = await getFetch(API + ApiUrls.Events);
+//     if (status === 200) {
+//         if (json.status === 200) {
+//             const data = json.body.events as EventCardData[];
+//             Bus.emit(Events.EventsGet, data);
+//         }
+//     }
+// }
 
 /**
  * POST запрос отправки данных авторизации
@@ -123,4 +123,23 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
         }
     }
     return;
+}
+
+export function fetchGet(url: ApiUrls, event: Events) {
+    return fetch( API + url, {
+        method: METHODS.GET,
+        mode: 'cors',
+        credentials: 'include'
+    }).then((response) => {
+        // HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        const json = data as ApiResponseJson;
+        Bus.emit(event, json.body);
+        // return {
+        //     // status: HTTPStatus,
+        //     Bus.
+        //     json,
+        // };
+    });
 }

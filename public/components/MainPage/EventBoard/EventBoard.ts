@@ -1,23 +1,21 @@
 import { EventCardData } from '../../../types.js';
-import bus from '../../../modules/eventbus/eventbus.js';
+import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
 export default class EventBoardComponent {
     #parent: HTMLElement;
-    // #data: EventCardData[]
 
-    // constructor(parent: HTMLElement, data: EventCardData[]) {
     constructor(parent: HTMLElement) {
+        Bus.emit(Events.EventsReq, undefined);
+        Bus.on(Events.EventsRes, this.#eventsHandle);
         this.#parent = parent;
-        bus.on(Events.EventsGet, ((data: EventCardData[]) => {this.render(data);}).bind(this));
-        // this.#data = data;
     }
 
-    // reRender(data: EventCardData[]) {
-        
-    // }
+    #eventsHandle = ((data: EventCardData[]) => {
+        this.rerender(data);
+    }).bind(this);
 
-    render(data: EventCardData[]) {
+    rerender(data: EventCardData[]) {
         while (data.length < 13) {
             data.push(data[0]);
         }
@@ -45,5 +43,11 @@ export default class EventBoardComponent {
         `;
         const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML += template(data);
+    }
+
+    render() {
+        this.#parent.innerHTML = `
+            <div id="loader"><div>
+        `;
     }
 }

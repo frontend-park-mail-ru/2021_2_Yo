@@ -1,13 +1,34 @@
-import { UserData } from '../../types.js';
-import { anchorsConfig } from '../../config.js';
+import { UserData } from '../../../types.js';
+import { anchorsConfig } from '../../../config.js';
+import Bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 
 export default class HeaderComponent {
     #parent: HTMLElement;
-    #user: UserData | undefined;
 
-    constructor(parent: HTMLElement, user?: UserData) {
+    constructor(parent: HTMLElement) {
+        Bus.emit(Events.UserReq, undefined);
+        Bus.on(Events.UserReq, this.#userHandle);
         this.#parent = parent;
-        this.#user = user;
+    }
+
+    #userHandle = ((user: UserData) => {
+        this.rerender(user);
+    }).bind(this);
+
+    rerender(user: UserData) {
+        const userBlock = document.getElementById('user-block') as HTMLElement;
+        const source = `
+            {{#with this}}
+                <div class="flex">
+                    <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{name}}">
+                    <span>{{name}}</span>
+                </div>
+                <img class="header-button" src="./img/logout2.0.png">
+            {{with}}
+        `;
+        const template = window.Handlebars.compile(source);
+        userBlock.innerHTML = template.render(user);
     }
 
     render() {
@@ -15,6 +36,7 @@ export default class HeaderComponent {
             <header class="header">
                 <div class="flex header__content header-text">
                     <img class="header__logo" src="./img/logo2.0.png">
+
                     {{#if user}}
                         <div class="flex">
                             <img id="geoimg" src="./img/geo2.0.png">
@@ -29,25 +51,18 @@ export default class HeaderComponent {
                         <img class="header-button" src="./img/calendar2.0.png">
                         <span class="header-text_decoration_underline">Календарь событий</span>
                     </div>
-                    {{#if user}}
-                        <div class="flex">
-                            <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
-                            <span>{{user.name}}</span>
-                        </div>
-                        <img class="header-button" src="./img/logout2.0.png">
-                    {{else}}
+                    <div id="user-block">
                         <div>
                             {{#each authAnchors}}
                                 <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
                             {{/each}}
                         </div>
-                    {{/if}}
+                    </div>
                 </div>
             </header>
         `;
         const template = window.Handlebars.compile(source);
-        const user = this.#user;
         const authAnchors = anchorsConfig.authAnchors;
-        this.#parent.innerHTML += template({user, authAnchors});
+        this.#parent.innerHTML += template({authAnchors});
     }
 }

@@ -1,7 +1,10 @@
 enum Events {
+    UserRes = 'user:response',
+    UserReq = 'user:request',
     UserSignup = 'user:signup',
     UserLogin = 'user:login',
-    EventsGet = 'events:get',
+    EventsReq = 'events:request',
+    EventsRes = 'events:response'
 }
 
 export default Events;
