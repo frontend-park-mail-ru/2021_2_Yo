@@ -78,7 +78,7 @@ export default class LoginView {
         this.#inputsData.forEach((item, key) => {
             console.log(key);
             const par = this.#inputs.get(key)?.parentElement as HTMLElement;
-            console.log(par)
+            console.log(par);
             item.errors.forEach(error => {
                 if (error) {
                     this.#inputs.get(key)?.classList.add('form-input_error');
