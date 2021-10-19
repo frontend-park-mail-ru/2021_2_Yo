@@ -87,10 +87,10 @@ export default class LoginView {
                 if (error) {
                     input.classList.add('form-input_error');
                     par.classList.add('input-block_error');
-                    // if (par.innerHTML.indexOf(error) === -1) {
-                    //     const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
-                    //     par.innerHTML += temp({error});
-                    // }
+                    if (par.innerHTML.indexOf(error) === -1) {
+                        const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
+                        par.innerHTML += temp({error});
+                    }
                 } else {
                     item.errors = item.errors.slice(1);
                 }
