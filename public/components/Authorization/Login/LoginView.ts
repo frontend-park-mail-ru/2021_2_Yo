@@ -60,6 +60,7 @@ export default class LoginView {
 
     #authorize(event: Event) {
         event.preventDefault();
+
         this.#inputsData.clear();
         this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
         this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
@@ -73,8 +74,8 @@ export default class LoginView {
         void route(UrlPathnames.Main);
     }
 
-    #showValidationErrors(inputsData: Map<string, { errors: string[], value: string }>) {
-        inputsData.forEach((item, key) => {
+    #showValidationErrors() {
+        this.#inputsData.forEach((item, key) => {
             const par = this.#inputs.get(key)?.parentElement as HTMLElement;
             item.errors.forEach(error => {
                 if (error) {
