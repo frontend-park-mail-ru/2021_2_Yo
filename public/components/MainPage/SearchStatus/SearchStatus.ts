@@ -25,7 +25,8 @@ export default class SearchStatusComponent {
             {{/with}}
         `;
         const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML += template(status);
+        console.log(template);
+        this.#parent.innerHTML = template(status);
     }
 }
 

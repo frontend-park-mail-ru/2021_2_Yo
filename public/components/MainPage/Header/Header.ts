@@ -7,9 +7,9 @@ export default class HeaderComponent {
     #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
+        this.#parent = parent;
         Bus.emit(Events.UserReq, undefined);
         Bus.on(Events.UserReq, this.#userHandle);
-        this.#parent = parent;
     }
 
     #userHandle = ((user: UserData) => {
@@ -18,7 +18,7 @@ export default class HeaderComponent {
 
     rerender(user: UserData) {
         const userBlock = document.getElementById('user-block') as HTMLElement;
-        const source = `
+        let source = `
             {{#with this}}
                 <div class="flex">
                     <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{name}}">
@@ -27,8 +27,20 @@ export default class HeaderComponent {
                 <img class="header-button" src="./img/logout2.0.png">
             {{with}}
         `;
-        const template = window.Handlebars.compile(source);
+        let template = window.Handlebars.compile(source);
         userBlock.innerHTML = template.render(user);
+
+        const geoBlock = document.getElementById('geo-block') as HTMLElement;
+        source = `
+            {{#with user}}
+                <div class="flex">
+                    <img id="geoimg" src="./img/geo2.0.png">
+                    <span class="header-text_decoration_underline">{{user.geo}}</span>
+                </div>
+            {{/with}}
+        `;
+        template = window.Handlebars.compile(source);
+        geoBlock.innerHTML = template.render(user);
     }
 
     render() {
@@ -36,13 +48,7 @@ export default class HeaderComponent {
             <header class="header">
                 <div class="flex header__content header-text">
                     <img class="header__logo" src="./img/logo2.0.png">
-
-                    {{#if user}}
-                        <div class="flex">
-                            <img id="geoimg" src="./img/geo2.0.png">
-                            <span class="header-text_decoration_underline">{{user.geo}}</span>
-                        </div>
-                    {{/if}}
+                    <div id="geo-block"></div>
                     <div class="flex header__search">
                         <input class="header__search-input" type="text" placeholder="Поиск...">
                         <img class="header-button" src="./img/filter2.0.png">
@@ -62,7 +68,8 @@ export default class HeaderComponent {
             </header>
         `;
         const template = window.Handlebars.compile(source);
+        console.log(template);
         const authAnchors = anchorsConfig.authAnchors;
-        this.#parent.innerHTML += template({authAnchors});
+        this.#parent.innerHTML = template({authAnchors});
     }
 }
