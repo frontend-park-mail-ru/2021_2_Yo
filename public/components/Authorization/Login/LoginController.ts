@@ -9,16 +9,15 @@ export default class LoginController {
     #model: LoginModel;
 
     constructor() {
+        this.#model = new LoginModel();
         this.#view = new LoginView(document.getElementById('App') as HTMLElement);
         this.#view.render();
-        this.#model = new LoginModel();
         bus.on(Events.SubmitLogin, this.#makeValidation.bind(this));
     }
 
     #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
-        console.log(inputsData);
         authValidateFields(inputsData);
-        console.log(inputsData);
+
         let valid = true;
 
         inputsData.forEach((item) => {
