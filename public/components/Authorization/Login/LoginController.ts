@@ -15,12 +15,12 @@ export default class LoginController {
         this.#model = new LoginModel();
     }
 
-    #makeValidation = (args: { inputs: Map<string, InputErrors> }): void => {
-        alert(args.inputs);
-        authValidateFields(args.inputs);
+    #makeValidation = (inputs: Map<string, InputErrors>): void => {
+        alert(inputs);
+        authValidateFields(inputs);
 
         let valid = true;
-        args.inputs.forEach((item) => {
+        inputs.forEach((item) => {
             item.errors.forEach(error => {
                 if (error) {
                     valid = false;
@@ -29,7 +29,7 @@ export default class LoginController {
         });
 
         if (valid) {
-            this.#model.login(args.inputs);
+            this.#model.login(inputs);
         }
     }
 }
