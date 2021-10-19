@@ -4,12 +4,12 @@ import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
 export default class LoginView {
-    parent: HTMLElement;
-    inputs = new Map<string, HTMLInputElement>();
-    inputsData = new Map<string, { errors: string[], value: string }>();
+    #parent: HTMLElement;
+    #inputs = new Map<string, HTMLInputElement>();
+    #inputsData = new Map<string, { errors: string[], value: string }>();
 
     constructor(parent: HTMLElement) {
-        this.parent = parent;
+        this.#parent = parent;
         bus.on(Events.UserLogin, this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
@@ -42,12 +42,12 @@ export default class LoginView {
         `;
 
         const template = window.Handlebars.compile(source);
-        this.parent.innerHTML += template();
+        this.#parent.innerHTML += template();
 
         const emailInput = document.getElementById('emailInput') as HTMLInputElement;
-        this.inputs.set('email', emailInput);
+        this.#inputs.set('email', emailInput);
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
-        this.inputs.set('password', passwordInput);
+        this.#inputs.set('password', passwordInput);
 
         this.#addListeners.bind(this);
     }
@@ -68,11 +68,11 @@ export default class LoginView {
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
         errorsBlock.innerHTML = '';
 
-        this.inputsData.clear();
-        this.inputsData.set('email', {errors: [], value: this.inputs.get('email')?.value.trim() as string});
-        this.inputsData.set('password', {errors: [], value: this.inputs.get('password')?.value.trim() as string});
+        this.#inputsData.clear();
+        this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
+        this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
 
-        bus.emit(Events.SubmitLogin, this.inputsData);
+        bus.emit(Events.SubmitLogin, this.#inputsData);
     }
 
     #redirect() {
@@ -80,8 +80,8 @@ export default class LoginView {
     }
 
     #showValidationErrors() {
-        this.inputsData.forEach((item, key) => {
-            const input = this.inputs.get(key) as HTMLElement;
+        this.#inputsData.forEach((item, key) => {
+            const input = this.#inputs.get(key) as HTMLElement;
             const par = input.parentElement as HTMLElement;
             item.errors.forEach(error => {
                 if (error) {
@@ -116,7 +116,7 @@ export default class LoginView {
     }
 
     #showCorrectInputs() {
-        this.inputs.forEach(input => {
+        this.#inputs.forEach(input => {
             const par = input.parentElement as HTMLElement;
             par.classList.remove('input-block_error');
             input.classList.remove('form-input_error');
