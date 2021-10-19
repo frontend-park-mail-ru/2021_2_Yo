@@ -1,6 +1,6 @@
 import {signupValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
-import {postSignup} from '../../modules/request.js';
+import {postSignup} from '../../modules/request/request.js';
 import route from '../../modules/routing.js';
 import {ApiPostSignupData, UrlPathnames} from '../../types.js';
 
