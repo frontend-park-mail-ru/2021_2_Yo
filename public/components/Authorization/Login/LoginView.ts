@@ -4,9 +4,9 @@ import bus, {Events} from '../../../modules/eventbus.js';
 
 export default class LoginView {
     #parent: HTMLElement;
-    #form: HTMLFormElement = new HTMLFormElement();
-    #emailInput: HTMLInputElement = new HTMLInputElement();
-    #passwordInput: HTMLInputElement = new HTMLInputElement();
+    #form: HTMLFormElement;
+    #emailInput: HTMLInputElement;
+    #passwordInput: HTMLInputElement;
     // #inputs = new Map([
     //     ['email', {
     //         input: this.#emailInput,
@@ -23,6 +23,9 @@ export default class LoginView {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
+        this.#form = document.getElementById('authForm') as HTMLFormElement;
+        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement
+        this.#passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         bus.on(Events.UserLogin, this.#redirect)
         bus.on(Events.AuthError, this.#showErrors)
     }
