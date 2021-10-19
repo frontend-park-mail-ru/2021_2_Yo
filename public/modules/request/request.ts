@@ -1,5 +1,7 @@
-import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, ApiUrls, EventCardData, FetchResponseData, UserData } from '../types.js';
-import bus, {Events} from './eventbus.js'
+import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, 
+    ApiUrls, EventCardData, FetchResponseData, UserData } from '../../types.js';
+import bus from '../eventbus/eventbus.js';
+import Events from '../eventbus/events.js';
 
 const METHODS = {
     POST: 'POST',
@@ -18,11 +20,11 @@ async function handleFetch (responsePromise: Promise<Response>): Promise<FetchRe
         return {
             status: HTTPStatus,
             json,
-        }
-    })
+        };
+    });
 }
 
-async function postFetch(url: string, body: {}) {
+async function postFetch(url: string, body: any) {
     const responsePromise = fetch(url, {
         method: METHODS.POST,
         credentials: 'include',
@@ -99,7 +101,7 @@ export async function postLogin(postData: ApiPostLoginData): Promise<undefined |
         if (json.status === 200) {
             return;
         } else {
-            return json.message as string;
+            return json.message;
         }
     }
     return;
@@ -117,7 +119,7 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
         if (json.status === 200) {
             return;
         } else {
-            return json.message as string;
+            return json.message;
         }
     }
     return;

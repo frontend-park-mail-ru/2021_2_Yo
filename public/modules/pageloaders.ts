@@ -2,15 +2,15 @@ import {UrlPathnames} from '../types.js';
 import MainPageComponent from '../components/MainPage/MainPage.js';
 import LoginPageComponent from '../components/Authorization/LoginPage.js';
 import SignupPageComponent from '../components/Authorization/SignupPage.js';
-import {getEvents, getUser} from './request.js';
-import route from './routing.js'
+import {getEvents, getUser} from './request/request.js';
 import LoginController from '../components/Authorization/Login/LoginController.js';
+import route from './routing.js';
 
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
     if (target instanceof HTMLAnchorElement) {
         e.preventDefault();
-        route(target.href as UrlPathnames);
+        void route(target.href as UrlPathnames);
     }
 };
 
@@ -23,7 +23,7 @@ export async function mainPage() {
     // const main = new MainPageComponent(app, events, user);
     const main = new MainPageComponent(app, user);
     main.render();
-    getEvents();
+    void getEvents();
     app.addEventListener('click', clickHandler);
 }
 
@@ -33,7 +33,7 @@ export function loginPage() {
     // app.innerHTML = '';
     // const login = new LoginPageComponent(app);
     // login.render();
-    const loginController = new LoginController()
+    const loginController = new LoginController();
 }
 
 export function signupPage() {

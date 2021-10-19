@@ -14,4 +14,4 @@ export const anchorsConfig = {
         { href: UrlPathnames.Login, name: 'Войти' },
         { href: UrlPathnames.Signup, name: 'Регистрация' },
     ],
-}
+};

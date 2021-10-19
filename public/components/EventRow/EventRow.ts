@@ -1,9 +1,9 @@
-import EventCardComponent from '../EventCard/EventCard.js'
+import EventCardComponent from '../EventCard/EventCard.js';
 import { EventCardData } from '../../types.js';
 
 export default class EventRowComponent {
-    #parent: HTMLElement
-    #data: EventCardData[]
+    #parent: HTMLElement;
+    #data: EventCardData[];
 
     constructor(parent: HTMLElement, data: EventCardData[]) {
         this.#parent = parent;

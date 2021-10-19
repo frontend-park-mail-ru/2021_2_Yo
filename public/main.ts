@@ -6,7 +6,7 @@ app.id = 'App';
 document.body.innerHTML = app.outerHTML;
 
 window.onpopstate = () => {
-    route();
+    void route();
 };
 
-route();
+void route();

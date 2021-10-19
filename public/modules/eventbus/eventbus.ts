@@ -1,10 +1,4 @@
-export enum Events {
-    UserSignup = 'user:signup',
-    UserLogin = 'user:login',
-    EventsGet = 'events:get',
-    AuthError = 'auth:error',
-    SubmitLogin = 'submit:login'
-}
+import Events from './events.js';
 
 class EventBus {
     #listeners: Record<string, ((args?: any) => void)[]>;
@@ -19,9 +13,7 @@ class EventBus {
 
     off(event: Events, callback: (args?: any) => void) {
         this.#listeners[event] = this.#listeners[event]
-            .filter((listener) => {
-                return listener !== callback
-            });
+            .filter((listener) => { return listener !== callback;});
     }
 
     emit(event: Events, data: any) {

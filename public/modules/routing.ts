@@ -6,16 +6,16 @@ export default async function route(path?: undefined | UrlPathnames) {
         window.history.pushState({}, '', path);
     }
     switch (window.location.pathname) {
-        case UrlPathnames.Main:
-            await mainPage();
-            break;
-        case UrlPathnames.Login:
-            loginPage();
-            break;
-        case UrlPathnames.Signup:
-            signupPage();
-            break;
-        default:
-            errorPage();
+    case UrlPathnames.Main:
+        await mainPage();
+        break;
+    case UrlPathnames.Login:
+        loginPage();
+        break;
+    case UrlPathnames.Signup:
+        signupPage();
+        break;
+    default:
+        errorPage();
     }
 }

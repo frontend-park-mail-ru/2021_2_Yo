@@ -1,6 +1,7 @@
 import {ApiPostLoginData, InputErrors} from '../../../types.js';
-import {postLogin} from '../../../modules/request.js';
-import bus, {Events} from '../../../modules/eventbus.js';
+import {postLogin} from '../../../modules/request/request.js';
+import bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 
 export default class LoginModel {
     async login(inputs: Map<string, InputErrors>) {
@@ -14,7 +15,7 @@ export default class LoginModel {
         if (error) {
             bus.emit(Events.AuthError, error);
         } else {
-            bus.emit(Events.UserLogin, null)
+            bus.emit(Events.UserLogin, null);
         }
     }
 }

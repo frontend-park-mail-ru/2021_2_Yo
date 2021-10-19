@@ -1,8 +1,8 @@
 import { EventCardData } from '../../types.js';
 
 export default class EventCardComponent {
-    #parent: HTMLElement
-    #data: EventCardData
+    #parent: HTMLElement;
+    #data: EventCardData;
 
     constructor(parent: HTMLElement, data: EventCardData) {
         this.#parent = parent;

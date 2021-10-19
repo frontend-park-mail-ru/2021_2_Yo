@@ -1,15 +1,14 @@
-import express from 'express'
-import body from 'body-parser'
+import express from 'express';
+import body from 'body-parser';
 import morgan from 'morgan';
 import cookie from 'cookie-parser';
-import { dirname } from 'path';
+import path, {dirname} from 'path';
 import { fileURLToPath } from 'url';
-import path from 'path';
 
 const app = express();
 
-app.use(body.json())
-app.use(morgan('dev'))
+app.use(body.json());
+app.use(morgan('dev'));
 app.use(express.static('public'));
 app.use(express.static('dist/public'));
 app.use(express.static('public/server'));

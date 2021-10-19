@@ -1,6 +1,6 @@
 import {authValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
-import {postLogin} from '../../modules/request.js';
+import {postLogin} from '../../modules/request/request.js';
 import route from '../../modules/routing.js';
 import {ApiPostLoginData, UrlPathnames} from '../../types.js';
 
@@ -41,7 +41,7 @@ export default class LoginPageComponent {
 
         const form = document.getElementById('authForm') as HTMLFormElement;
 
-        form.addEventListener('submit', this.authorization.bind(this));
+        form.addEventListener('submit', () => this.authorization.bind(this));
     }
 
     async authorization(event: Event) {
@@ -71,10 +71,10 @@ export default class LoginPageComponent {
             };
             const error = await postLogin(postData);
             if (error) {
-                const errorsBlock = document.getElementById('errors') as HTMLParagraphElement
-                errorsBlock.textContent = error
+                const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+                errorsBlock.textContent = error;
             } else {
-                route(UrlPathnames.Main);
+                void route(UrlPathnames.Main);
             }
         }
     }
@@ -83,25 +83,25 @@ export default class LoginPageComponent {
         let valid = true;
 
         inputs.forEach((item) => {
-            const par = item.input.parentElement as HTMLElement
+            const par = item.input.parentElement as HTMLElement;
 
             item.errors.forEach(error => {
                 if (error) {
-                    item.input.classList.add('form-input_error')
-                    par.classList.add('input-block_error')
+                    item.input.classList.add('form-input_error');
+                    par.classList.add('input-block_error');
                     valid = false;
                     if (par.innerHTML.indexOf(error) === -1) {
                         const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
-                        par.innerHTML += temp({error})
+                        par.innerHTML += temp({error});
                     }
                 } else {
-                    item.errors = item.errors.slice(1)
+                    item.errors = item.errors.slice(1);
                 }
-            })
+            });
 
             if (!item.errors.length) {
-                par.classList.remove('input-block_error')
-                item.input.classList.remove('form-input_error')
+                par.classList.remove('input-block_error');
+                item.input.classList.remove('form-input_error');
                 item.input.classList.add('form-input_correct');
                 while (par.children.length !== 2) {
                     par.removeChild(par.lastChild as ChildNode);

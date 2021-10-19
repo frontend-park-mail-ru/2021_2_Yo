@@ -1,7 +1,7 @@
 import { anchorsConfig } from '../../config.js';
 
 export default class EventHeaderComponent {
-    #parent: HTMLElement
+    #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;

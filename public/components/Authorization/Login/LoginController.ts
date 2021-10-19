@@ -1,4 +1,5 @@
-import bus, {Events} from '../../../modules/eventbus.js';
+import bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 import {authValidateFields} from '../../../modules/validation.js';
 import {InputErrors} from '../../../types.js';
 import LoginView from './LoginView.js';
@@ -24,13 +25,13 @@ export default class LoginController {
                 if (error) {
                     valid = false;
                 }
-            })
+            });
         });
 
         if (valid) {
-            this.#model.login(inputs);
+            void this.#model.login(inputs);
         } else {
-            bus.emit(Events.AuthError, inputs)
+            bus.emit(Events.AuthError, inputs);
         }
-    }
+    };
 }

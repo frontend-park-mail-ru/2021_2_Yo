@@ -1,6 +1,7 @@
 import {ApiPostLoginData, InputErrors, UrlPathnames} from '../../../types.js';
 import route from '../../../modules/routing.js';
-import bus, {Events} from '../../../modules/eventbus.js';
+import bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 
 export default class LoginView {
     #parent: HTMLElement;
@@ -12,10 +13,10 @@ export default class LoginView {
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#form = document.getElementById('authForm') as HTMLFormElement;
-        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement
+        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement;
         this.#passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
-        bus.on(Events.UserLogin, this.#redirect.bind(this))
-        bus.on(Events.AuthError, this.#showErrors.bind(this))
+        bus.on(Events.UserLogin, ()=>this.#redirect.bind(this));
+        bus.on(Events.AuthError, this.#showErrors.bind(this));
     }
 
     render() {
@@ -47,10 +48,10 @@ export default class LoginView {
         this.#parent.innerHTML += template();
 
         this.#form = document.getElementById('authForm') as HTMLFormElement;
-        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement
+        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement;
         this.#passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
 
-        this.#addListeners()
+        this.#addListeners();
     }
 
     #addListeners() {
@@ -63,39 +64,39 @@ export default class LoginView {
             input: this.#emailInput,
             errors: [],
             value: this.#emailInput.value.trim()
-        })
+        });
         this.inputs.set('password', {
             input: this.#passwordInput,
             errors: [],
             value: this.#passwordInput.value.trim()
-        })
-        bus.emit(Events.SubmitLogin, this.inputs)
+        });
+        bus.emit(Events.SubmitLogin, this.inputs);
     }
 
-    #redirect = async (args: { inputs: Map<string, InputErrors> }): Promise<void> => {
-        route(UrlPathnames.Main);
-    }
+    #redirect = (args: { inputs: Map<string, InputErrors> }): void => {
+        void route(UrlPathnames.Main);
+    };
 
     #showErrors(inputs: Map<string, InputErrors>) {
         inputs.forEach((item) => {
-            const par = item.input.parentElement as HTMLElement
+            const par = item.input.parentElement as HTMLElement;
 
             item.errors.forEach(error => {
                 if (error) {
-                    item.input.classList.add('form-input_error')
-                    par.classList.add('input-block_error')
+                    item.input.classList.add('form-input_error');
+                    par.classList.add('input-block_error');
                     if (par.innerHTML.indexOf(error) === -1) {
                         const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
-                        par.innerHTML += temp({error})
+                        par.innerHTML += temp({error});
                     }
                 } else {
-                    item.errors = item.errors.slice(1)
+                    item.errors = item.errors.slice(1);
                 }
-            })
+            });
 
             if (!item.errors.length) {
-                par.classList.remove('input-block_error')
-                item.input.classList.remove('form-input_error')
+                par.classList.remove('input-block_error');
+                item.input.classList.remove('form-input_error');
                 item.input.classList.add('form-input_correct');
                 while (par.children.length !== 2) {
                     par.removeChild(par.lastChild as ChildNode);
