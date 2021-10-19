@@ -7,7 +7,7 @@ export default class LoginView {
     #form: HTMLFormElement;
     #emailInput: HTMLInputElement;
     #passwordInput: HTMLInputElement;
-    #inputs = new Map<string, InputErrors>();
+    inputs = new Map<string, InputErrors>();
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -59,17 +59,17 @@ export default class LoginView {
 
     #authorize(event: Event) {
         event.preventDefault();
-        this.#inputs.set('email', {
+        this.inputs.set('email', {
             input: this.#emailInput,
             errors: [],
             value: this.#emailInput.value.trim()
         })
-        this.#inputs.set('password', {
+        this.inputs.set('password', {
             input: this.#passwordInput,
             errors: [],
             value: this.#passwordInput.value.trim()
         })
-        bus.emit(Events.SubmitLogin, this.#inputs)
+        bus.emit(Events.SubmitLogin, this.inputs)
     }
 
     #redirect = async (args: { inputs: Map<string, InputErrors> }): Promise<void> => {
@@ -90,8 +90,7 @@ export default class LoginView {
                         par.innerHTML += temp({error})
                     }
                 } else {
-                    item
-                        .errors = item.errors.slice(1)
+                    item.errors = item.errors.slice(1)
                 }
             })
 

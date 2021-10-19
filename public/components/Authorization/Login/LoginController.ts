@@ -16,6 +16,7 @@ export default class LoginController {
     }
 
     #makeValidation = (args: { inputs: Map<string, InputErrors> }): void => {
+        alert(args);
         authValidateFields(args.inputs);
 
         let valid = true;
