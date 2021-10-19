@@ -55,15 +55,15 @@ async function getFetch(url: string) {
  *
  * @returns {UserData | undefined}
  */
-export async function getUser(): Promise<UserData | undefined> {
-    const {status, json} = await getFetch(API + ApiUrls.User);
-    if (status === 200) {
-        if (json.status === 200) {
-            return {id: 1, name: json.body.name, geo: 'Мытищи'};
-        }
-    }
-    return;
-}
+// export async function getUser(): Promise<UserData | undefined> {
+//     const {status, json} = await getFetch(API + ApiUrls.User);
+//     if (status === 200) {
+//         if (json.status === 200) {
+//             return {id: 1, name: json.body.name, geo: 'Мытищи'};
+//         }
+//     }
+//     return;
+// }
 
 /**
  * GET запрос событий
@@ -125,17 +125,23 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
     return;
 }
 
-export function fetchGet(url: ApiUrls, event: Events) {
+export function fetchGet(url: ApiUrls, callback: (args?: any) => void) {
+    let HTTPStatus: number;
+
     return fetch( API + url, {
         method: METHODS.GET,
         mode: 'cors',
         credentials: 'include'
     }).then((response) => {
-        // HTTPStatus = response.status;
+        HTTPStatus = response.status;
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
-        Bus.emit(event, json.body);
+        callback({
+            status: HTTPStatus,
+            json: json,
+        });
+        // Bus.emit(event, json.body);
         // return {
         //     // status: HTTPStatus,
         //     Bus.

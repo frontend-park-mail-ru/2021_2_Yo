@@ -12,7 +12,6 @@ export type EventCardData = {
 }
 
 export type UserData = {
-    id: number;
     name: string;
     geo: string;
 }
