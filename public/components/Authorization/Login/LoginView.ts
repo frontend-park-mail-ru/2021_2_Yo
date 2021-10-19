@@ -59,6 +59,8 @@ export default class LoginView {
 
     #authorize(event: Event) {
         event.preventDefault();
+        alert(this.#emailInput)
+        alert(this.#emailInput.value.trim())
         this.#inputs.set('email', {
             input: this.#emailInput,
             errors: [],
