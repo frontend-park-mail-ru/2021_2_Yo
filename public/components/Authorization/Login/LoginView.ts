@@ -49,13 +49,17 @@ export default class LoginView {
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         this.inputs.set('password', passwordInput);
 
-        const form = document.getElementById('authForm') as HTMLFormElement;
-
-        this.addListeners.bind(this)(form);
+        this.addListeners.bind(this);
     }
 
-    addListeners(form: HTMLFormElement) {
+    addListeners() {
+        const form = document.getElementById('authForm') as HTMLFormElement;
         form.addEventListener('submit', this.authorize.bind(this));
+    }
+
+    removeListeners() {
+        const form = document.getElementById('authForm') as HTMLFormElement;
+        form.removeEventListener('submit', this.authorize.bind(this));
     }
 
     authorize(event: Event) {
