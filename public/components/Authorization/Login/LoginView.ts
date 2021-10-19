@@ -77,12 +77,13 @@ export default class LoginView {
     #showValidationErrors() {
         this.#inputsData.forEach((item, key) => {
             console.log(key);
-            const par = this.#inputs.get(key)?.parentElement as HTMLElement;
+            const input = this.#inputs.get(key) as HTMLElement;
+            const par = input.parentElement as HTMLElement;
             console.log(this.#inputs);
             console.log(par);
             item.errors.forEach(error => {
                 if (error) {
-                    this.#inputs.get(key)?.classList.add('form-input_error');
+                    input.classList.add('form-input_error');
                     par.classList.add('input-block_error');
                     if (par.innerHTML.indexOf(error) === -1) {
                         const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
@@ -95,8 +96,8 @@ export default class LoginView {
 
             if (!item.errors.length) {
                 par.classList.remove('input-block_error');
-                this.#inputs.get(key)?.classList.remove('form-input_error');
-                this.#inputs.get(key)?.classList.add('form-input_correct');
+                input.classList.remove('form-input_error');
+                input.classList.add('form-input_correct');
                 while (par.children.length !== 2) {
                     par.removeChild(par.lastChild as ChildNode);
                 }
