@@ -1,6 +1,7 @@
 import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, 
-    ApiUrls, EventCardData, FetchResponseData, UserData } from '../types.js';
-import bus, {Events} from './eventbus.js';
+    ApiUrls, EventCardData, FetchResponseData, UserData } from '../../types.js';
+import bus from '../eventbus/eventbus.js';
+import Events from '../eventbus/events.js';
 
 const METHODS = {
     POST: 'POST',

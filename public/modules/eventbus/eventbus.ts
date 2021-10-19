@@ -1,8 +1,4 @@
-export enum Events {
-    UserSignup = 'user:signup',
-    UserLogin = 'user:login',
-    EventsGet = 'events:get',
-}
+import Events from './events.js';
 
 class EventBus {
     #listeners: Record<string, ((args?: any)=>void)[]>;

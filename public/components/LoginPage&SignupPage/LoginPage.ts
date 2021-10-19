@@ -1,6 +1,6 @@
 import {authValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
-import {postLogin} from '../../modules/request.js';
+import {postLogin} from '../../modules/request/request.js';
 import route from '../../modules/routing.js';
 import {ApiPostLoginData, UrlPathnames} from '../../types.js';
 
