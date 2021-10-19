@@ -1,5 +1,5 @@
 import {ApiPostLoginData, InputErrors, UrlPathnames} from "../../../types.js";
-import route from "../../../modules/routing";
+import route from "../../../modules/routing.js";
 import bus, {Events} from '../../../modules/eventbus.js';
 
 export default class LoginView {
