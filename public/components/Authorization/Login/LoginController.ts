@@ -29,6 +29,8 @@ export default class LoginController {
 
         if (valid) {
             this.#model.login(inputs);
+        } else {
+            bus.emit(Events.AuthError, inputs)
         }
     }
 }
