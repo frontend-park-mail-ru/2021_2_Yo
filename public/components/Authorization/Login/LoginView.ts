@@ -7,18 +7,19 @@ export default class LoginView {
     #form = document.getElementById('authForm') as HTMLFormElement;
     #emailInput = document.getElementById('this.#emailInput') as HTMLInputElement;
     #passwordInput = document.getElementById('this.#passwordInput') as HTMLInputElement;
-    #inputs = new Map([
-        ['email', {
-            input: this.#emailInput,
-            errors: [],
-            value: this.#emailInput.value.trim()
-        }],
-        ['password', {
-            input: this.#passwordInput,
-            errors: [],
-            value: this.#passwordInput.value.trim()
-        }],
-    ]);
+    // #inputs = new Map([
+    //     ['email', {
+    //         input: this.#emailInput,
+    //         errors: [],
+    //         value: ''
+    //     }],
+    //     ['password', {
+    //         input: this.#passwordInput,
+    //         errors: [],
+    //         value: ''
+    //     }],
+    // ]);
+    #inputs = new Map<string, InputErrors>();
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -58,6 +59,16 @@ export default class LoginView {
     }
 
     #addListeners() {
+        this.#inputs.set('email', {
+            input: this.#emailInput,
+            errors: [],
+            value: this.#emailInput.value.trim()
+        })
+        this.#inputs.set('password', {
+            input: this.#passwordInput,
+            errors: [],
+            value: this.#passwordInput.value.trim()
+        })
         this.#form.addEventListener('submit', this.#authorize.bind(this));
     }
 
