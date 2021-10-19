@@ -13,7 +13,7 @@ export default class LoginView {
         bus.on(Events.UserLogin, () => this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
-        bus.on(Events.ValidationOk,this.#showCorrectInputs.bind(this));
+        bus.on(Events.ValidationOk, this.#showCorrectInputs.bind(this));
     }
 
     render() {
@@ -73,7 +73,7 @@ export default class LoginView {
     #showValidationErrors(inputsData: Map<string, { errors: string[], value: string }>) {
         inputsData.forEach((item, key) => {
             const par = this.#inputs.get(key)?.parentElement as HTMLElement;
-
+            console.log(this.#inputs);
             item.errors.forEach(error => {
                 if (error) {
                     this.#inputs.get(key)?.classList.add('form-input_error');

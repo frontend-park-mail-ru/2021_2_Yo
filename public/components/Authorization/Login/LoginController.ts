@@ -9,10 +9,10 @@ export default class LoginController {
     #model: LoginModel;
 
     constructor() {
-        bus.on(Events.SubmitLogin, this.#makeValidation.bind(this));
         this.#view = new LoginView(document.getElementById('App') as HTMLElement);
         this.#view.render();
         this.#model = new LoginModel();
+        bus.on(Events.SubmitLogin, this.#makeValidation.bind(this));
     }
 
     #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
