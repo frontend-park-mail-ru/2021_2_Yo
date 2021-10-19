@@ -13,7 +13,7 @@ export default class EventBoardComponent {
     }
 
     // reRender(data: EventCardData[]) {
-        
+
     // }
 
     render(data: EventCardData[]) {

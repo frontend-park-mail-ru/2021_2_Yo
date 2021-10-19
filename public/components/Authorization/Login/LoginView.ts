@@ -1,5 +1,5 @@
-import {ApiPostLoginData, InputErrors, UrlPathnames} from "../../../types.js";
-import route from "../../../modules/routing.js";
+import {ApiPostLoginData, InputErrors, UrlPathnames} from '../../../types.js';
+import route from '../../../modules/routing.js';
 import bus, {Events} from '../../../modules/eventbus.js';
 
 export default class LoginView {
@@ -54,7 +54,7 @@ export default class LoginView {
     }
 
     #addListeners() {
-        this.#form.addEventListener('submit', this.#authorize.bind(this));
+        this.#form.addEventListener('submit', this.#authorize);
     }
 
     #authorize(event: Event) {

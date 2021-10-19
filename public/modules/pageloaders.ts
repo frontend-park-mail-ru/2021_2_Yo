@@ -4,7 +4,7 @@ import LoginPageComponent from '../components/Authorization/LoginPage.js';
 import SignupPageComponent from '../components/Authorization/SignupPage.js';
 import {getEvents, getUser} from './request.js';
 import route from './routing.js'
-import LoginController from "../components/Authorization/Login/LoginController.js";
+import LoginController from '../components/Authorization/Login/LoginController.js';
 
 const clickHandler = (e: MouseEvent) => {
     const target = e.target as EventTarget;
@@ -33,7 +33,7 @@ export function loginPage() {
     // app.innerHTML = '';
     // const login = new LoginPageComponent(app);
     // login.render();
-    let loginController = new LoginController()
+    const loginController = new LoginController()
 }
 
 export function signupPage() {

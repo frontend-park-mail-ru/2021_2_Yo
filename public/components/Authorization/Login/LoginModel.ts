@@ -1,5 +1,5 @@
-import {ApiPostLoginData, InputErrors} from "../../../types.js";
-import {postLogin} from "../../../modules/request.js";
+import {ApiPostLoginData, InputErrors} from '../../../types.js';
+import {postLogin} from '../../../modules/request.js';
 import bus, {Events} from '../../../modules/eventbus.js';
 
 export default class LoginModel {
