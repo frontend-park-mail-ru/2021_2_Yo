@@ -60,6 +60,7 @@ export default class LoginView {
 
     #authorize(event: Event) {
         event.preventDefault();
+        this.#inputsData.clear();
         this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
         this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
         console.log(this.#inputsData);
