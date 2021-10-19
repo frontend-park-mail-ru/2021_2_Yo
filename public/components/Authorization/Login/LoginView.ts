@@ -78,8 +78,7 @@ export default class LoginView {
 
     #showErrors(inputs: Map<string, InputErrors>) {
         inputs.forEach((item) => {
-            const
-                par = item.input.parentElement as HTMLElement
+            const par = item.input.parentElement as HTMLElement
 
             item.errors.forEach(error => {
                 if (error) {
