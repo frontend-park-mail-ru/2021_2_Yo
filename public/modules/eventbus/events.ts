@@ -4,6 +4,7 @@ enum Events {
     EventsGet = 'events:get',
     AuthError = 'auth:error',
     ValidationError = 'validation:error',
+    ValidationOk = 'validation:ok',
     SubmitLogin = 'submit:login'
 }
 

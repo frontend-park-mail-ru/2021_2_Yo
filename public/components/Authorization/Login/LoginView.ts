@@ -1,23 +1,19 @@
-import {ApiPostLoginData, UrlPathnames} from '../../../types.js';
+import {UrlPathnames} from '../../../types.js';
 import route from '../../../modules/routing.js';
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
 export default class LoginView {
     #parent: HTMLElement;
-    // #form: HTMLFormElement;
-    // #emailInput: HTMLInputElement;
-    // #passwordInput: HTMLInputElement;
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string }>();
-
-    // inputs= new Map<string, InputErrors>();
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         bus.on(Events.UserLogin, () => this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
+        bus.on(Events.ValidationOk,this.#showCorrectInputs.bind(this))
     }
 
     render() {
@@ -55,7 +51,7 @@ export default class LoginView {
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         this.#inputs.set('password', passwordInput);
 
-        this.#addListeners(form);
+        this.#addListeners.bind(this)(form);
     }
 
     #addListeners(form: HTMLFormElement) {
@@ -105,5 +101,17 @@ export default class LoginView {
     #showServerErrors(error: string) {
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
         errorsBlock.textContent = error;
+    }
+
+    #showCorrectInputs() {
+        this.#inputs.forEach(input => {
+            const par = input.parentElement as HTMLElement;
+            par.classList.remove('input-block_error');
+            input.classList.remove('form-input_error');
+            input.classList.add('form-input_correct');
+            while (par.children.length !== 2) {
+                par.removeChild(par.lastChild as ChildNode);
+            }
+        })
     }
 }

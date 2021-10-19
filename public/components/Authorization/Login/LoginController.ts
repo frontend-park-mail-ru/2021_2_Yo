@@ -29,6 +29,7 @@ export default class LoginController {
         });
 
         if (valid) {
+            bus.emit(Events.ValidationOk, inputsData);
             void this.#model.login(inputsData);
         } else {
             bus.emit(Events.ValidationError, inputsData);
