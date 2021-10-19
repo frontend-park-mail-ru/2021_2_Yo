@@ -1,4 +1,4 @@
-import {UrlPathnames} from '../types.js';
+import { UrlPathnames } from '../types.js';
 import MainPageComponent from '../components/MainPage/MainPage.js';
 import LoginPageComponent from '../components/LoginPage&SignupPage/LoginPage.js';
 import SignupPageComponent from '../components/LoginPage&SignupPage/SignupPage.js';

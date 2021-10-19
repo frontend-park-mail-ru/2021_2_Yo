@@ -1,7 +1,6 @@
 import HeaderComponent from '../Header/Header.js';
 import { EventCardData, UserData } from '../../types.js';
 import EventBoardComponent from '../EventBoard/EventBoard.js';
-import FilterHeaderComponent from '../FilterHeader/FilterHeader.js';
 import SearchStatusComponent from '../SearchStatus/SearchStatus.js';
 
 export default class MainPageComponent {
