@@ -10,13 +10,13 @@ export default class LoginView {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
+    }
+
+    render() {
         bus.on(Events.UserLogin, this.#redirect.bind(this));
         bus.on(Events.AuthError, this.#showServerErrors.bind(this));
         bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
         bus.on(Events.ValidationOk, this.#showCorrectInputs.bind(this));
-    }
-
-    render() {
         const source = `
             <div class="background">
                 <img class="background__logo" src="./img/logo.png">
