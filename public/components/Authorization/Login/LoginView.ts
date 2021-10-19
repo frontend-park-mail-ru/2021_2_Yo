@@ -71,7 +71,7 @@ export default class LoginView {
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
         errorsBlock.innerHTML = '';
         void route(UrlPathnames.Main);
-    };
+    }
 
     #showValidationErrors(inputsData: Map<string, { errors: string[], value: string }>) {
         inputsData.forEach((item, key) => {
