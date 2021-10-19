@@ -1,22 +1,23 @@
-import {ApiPostLoginData, InputErrors, UrlPathnames} from '../../../types.js';
+import {ApiPostLoginData, UrlPathnames} from '../../../types.js';
 import route from '../../../modules/routing.js';
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
 export default class LoginView {
     #parent: HTMLElement;
-    #form: HTMLFormElement;
-    #emailInput: HTMLInputElement;
-    #passwordInput: HTMLInputElement;
-    inputs = new Map<string, InputErrors>();
+    // #form: HTMLFormElement;
+    // #emailInput: HTMLInputElement;
+    // #passwordInput: HTMLInputElement;
+    #inputs = new Map<string, HTMLInputElement>();
+    #inputsData = new Map<string, { errors: string[], value: string }>();
+
+    // inputs= new Map<string, InputErrors>();
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#form = document.getElementById('authForm') as HTMLFormElement;
-        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement;
-        this.#passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
-        bus.on(Events.UserLogin, ()=>this.#redirect.bind(this));
-        bus.on(Events.AuthError, this.#showErrors.bind(this));
+        bus.on(Events.UserLogin, () => this.#redirect.bind(this));
+        bus.on(Events.AuthError, this.#showServerErrors.bind(this));
+        bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
     }
 
     render() {
@@ -47,43 +48,39 @@ export default class LoginView {
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML += template();
 
-        this.#form = document.getElementById('authForm') as HTMLFormElement;
-        this.#emailInput = document.getElementById('emailInput') as HTMLInputElement;
-        this.#passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+        const form = document.getElementById('authForm') as HTMLFormElement;
 
-        this.#addListeners();
+        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        this.#inputs.set('email', emailInput);
+        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+        this.#inputs.set('password', passwordInput);
+
+        this.#addListeners(form);
     }
 
-    #addListeners() {
-        this.#form.addEventListener('submit', this.#authorize.bind(this));
+    #addListeners(form: HTMLFormElement) {
+        form.addEventListener('submit', this.#authorize.bind(this));
     }
 
     #authorize(event: Event) {
         event.preventDefault();
-        this.inputs.set('email', {
-            input: this.#emailInput,
-            errors: [],
-            value: this.#emailInput.value.trim()
-        });
-        this.inputs.set('password', {
-            input: this.#passwordInput,
-            errors: [],
-            value: this.#passwordInput.value.trim()
-        });
-        bus.emit(Events.SubmitLogin, this.inputs);
+        this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
+        this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
+
+        bus.emit(Events.SubmitLogin, this.#inputsData);
     }
 
-    #redirect = (args: { inputs: Map<string, InputErrors> }): void => {
+    #redirect = (): void => {
         void route(UrlPathnames.Main);
     };
 
-    #showErrors(inputs: Map<string, InputErrors>) {
-        inputs.forEach((item) => {
-            const par = item.input.parentElement as HTMLElement;
+    #showValidationErrors(inputsData: Map<string, { errors: string[], value: string }>) {
+        inputsData.forEach((item, key) => {
+            const par = this.#inputs.get(key)?.parentElement as HTMLElement;
 
             item.errors.forEach(error => {
                 if (error) {
-                    item.input.classList.add('form-input_error');
+                    this.#inputs.get(key)?.classList.add('form-input_error');
                     par.classList.add('input-block_error');
                     if (par.innerHTML.indexOf(error) === -1) {
                         const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
@@ -96,12 +93,17 @@ export default class LoginView {
 
             if (!item.errors.length) {
                 par.classList.remove('input-block_error');
-                item.input.classList.remove('form-input_error');
-                item.input.classList.add('form-input_correct');
+                this.#inputs.get(key)?.classList.remove('form-input_error');
+                this.#inputs.get(key)?.classList.add('form-input_correct');
                 while (par.children.length !== 2) {
                     par.removeChild(par.lastChild as ChildNode);
                 }
             }
         });
+    }
+
+    #showServerErrors(error: string) {
+        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        errorsBlock.textContent = error;
     }
 }

@@ -1,6 +1,5 @@
 import {UrlPathnames} from '../types.js';
 import MainPageComponent from '../components/MainPage/MainPage.js';
-import LoginPageComponent from '../components/Authorization/LoginPage.js';
 import SignupPageComponent from '../components/Authorization/SignupPage.js';
 import {getEvents, getUser} from './request/request.js';
 import LoginController from '../components/Authorization/Login/LoginController.js';

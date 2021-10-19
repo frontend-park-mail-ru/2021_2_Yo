@@ -1,35 +1,33 @@
-import {InputErrors} from '../types.js';
-
-export function authValidateFields(inputs: Map<string, InputErrors>) {
-    const email = inputs.get('email') as InputErrors;
+export function authValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+    const email = inputsData.get('email') as { errors: string[], value: string };
     email.errors.push(checkEmail(email.value));
 
-    const password = inputs.get('password') as InputErrors;
+    const password = inputsData.get('password') as { errors: string[], value: string };
     password.errors.push(checkPasswordLength(password.value));
 }
 
-export function signupValidateFields(inputs: Map<string, InputErrors>) {
-    const name = inputs.get('name') as InputErrors;
-    const surname = inputs.get('surname') as InputErrors;
-    const email = inputs.get('email') as InputErrors;
-    const password1 = inputs.get('password1') as InputErrors;
-    const password2 = inputs.get('password2') as InputErrors;
-
-    name.errors.push(checkEmpty(name.value));
-    name.errors.push(checkForbiddenSymbols(name.value));
-
-    surname.errors.push(checkEmpty(surname.value));
-    surname.errors.push(checkForbiddenSymbols(surname.value));
-
-    email.errors.push(checkEmail(email.value));
-
-    password1.errors.push(checkPasswordLength(password1.value));
-    password2.errors.push(checkPasswordLength(password2.value));
-    if (checkPasswordsEqual(password1.value, password2.value)) {
-        password1.errors.push('Пароли не совпадают');
-        password2.errors.push('Пароли не совпадают');
-    }
-}
+// export function signupValidateFields(inputs: Map<string, InputErrors>) {
+//     const name = inputs.get('name') as InputErrors;
+//     const surname = inputs.get('surname') as InputErrors;
+//     const email = inputs.get('email') as InputErrors;
+//     const password1 = inputs.get('password1') as InputErrors;
+//     const password2 = inputs.get('password2') as InputErrors;
+//
+//     name.errors.push(checkEmpty(name.value));
+//     name.errors.push(checkForbiddenSymbols(name.value));
+//
+//     surname.errors.push(checkEmpty(surname.value));
+//     surname.errors.push(checkForbiddenSymbols(surname.value));
+//
+//     email.errors.push(checkEmail(email.value));
+//
+//     password1.errors.push(checkPasswordLength(password1.value));
+//     password2.errors.push(checkPasswordLength(password2.value));
+//     if (checkPasswordsEqual(password1.value, password2.value)) {
+//         password1.errors.push('Пароли не совпадают');
+//         password2.errors.push('Пароли не совпадают');
+//     }
+// }
 
 function checkEmpty(value: string): string {
     if (!value) {

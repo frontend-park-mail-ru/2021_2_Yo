@@ -1,7 +1,6 @@
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 import {authValidateFields} from '../../../modules/validation.js';
-import {InputErrors} from '../../../types.js';
 import LoginView from './LoginView.js';
 import LoginModel from './LoginModel.js';
 
@@ -16,11 +15,12 @@ export default class LoginController {
         this.#model = new LoginModel();
     }
 
-    #makeValidation = (inputs: Map<string, InputErrors>): void => {
-        authValidateFields(inputs);
+    #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
+        authValidateFields(inputsData);
 
         let valid = true;
-        inputs.forEach((item) => {
+
+        inputsData.forEach((item) => {
             item.errors.forEach(error => {
                 if (error) {
                     valid = false;
@@ -29,9 +29,9 @@ export default class LoginController {
         });
 
         if (valid) {
-            void this.#model.login(inputs);
+            void this.#model.login(inputsData);
         } else {
-            bus.emit(Events.AuthError, inputs);
+            bus.emit(Events.ValidationError, inputsData);
         }
     };
 }

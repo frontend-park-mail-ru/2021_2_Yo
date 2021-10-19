@@ -1,5 +1,4 @@
-import {signupValidateFields} from '../../modules/validation.js';
-import {InputErrors} from '../../types';
+// import {signupValidateFields} from '../../modules/validation.js';
 import {postSignup} from '../../modules/request/request.js';
 import route from '../../modules/routing.js';
 import {ApiPostSignupData, UrlPathnames} from '../../types.js';
@@ -54,7 +53,7 @@ export default class SignupPageComponent {
         form.addEventListener('submit', () => this.registration.bind(this));
     }
 
-    async registration(event: Event) {
+    registration(event: Event) {
         event.preventDefault();
 
         const nameInput = document.getElementById('nameInput') as HTMLInputElement;
@@ -91,56 +90,56 @@ export default class SignupPageComponent {
             }],
         ]);
 
-        signupValidateFields(inputs);
+        // signupValidateFields(inputs);
 
-        const valid = this.showErrors(inputs);
-        if (valid) {
-            const postData: ApiPostSignupData = {
-                name: inputs.get('name')?.value as string,
-                surname: inputs.get('surname')?.value as string,
-                email: inputs.get('email')?.value as string,
-                password: inputs.get('password1')?.value as string
-            };
-            const error = await postSignup(postData);
-            if (error) {
-                const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
-                errorsBlock.textContent = error;
-            } else {
-                void route(UrlPathnames.Main);
-            }
-        }
+        // const valid = this.showErrors(inputs);
+        // if (valid) {
+        //     const postData: ApiPostSignupData = {
+        //         name: inputs.get('name')?.value as string,
+        //         surname: inputs.get('surname')?.value as string,
+        //         email: inputs.get('email')?.value as string,
+        //         password: inputs.get('password1')?.value as string
+        //     };
+        //     const error = await postSignup(postData);
+        //     if (error) {
+        //         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        //         errorsBlock.textContent = error;
+        //     } else {
+        //         void route(UrlPathnames.Main);
+        //     }
+        // }
     }
 
-    showErrors(inputs: Map<string, InputErrors>): boolean {
-        let valid = true;
-
-        inputs.forEach((item) => {
-            const par = item.input.parentElement as HTMLElement;
-
-            item.errors.forEach(error => {
-                if (error) {
-                    item.input.classList.add('form-input_error');
-                    par.classList.add('input-block_error');
-                    valid = false;
-                    if (par.innerHTML.indexOf(error) === -1) {
-                        const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
-                        par.innerHTML += temp({error});
-                    }
-                } else {
-                    item.errors = item.errors.slice(1);
-                }
-            });
-
-            if (!item.errors.length) {
-                par.classList.remove('input-block_error');
-                item.input.classList.remove('form-input_error');
-                item.input.classList.add('form-input_correct');
-                while (par.children.length !== 2) {
-                    par.removeChild(par.lastChild as ChildNode);
-                }
-            }
-        });
-
-        return valid;
-    }
+    // showErrors(inputs: Map<string, InputErrors>): boolean {
+    //     let valid = true;
+    //
+    //     inputs.forEach((item) => {
+    //         const par = item.input.parentElement as HTMLElement;
+    //
+    //         item.errors.forEach(error => {
+    //             if (error) {
+    //                 item.input.classList.add('form-input_error');
+    //                 par.classList.add('input-block_error');
+    //                 valid = false;
+    //                 if (par.innerHTML.indexOf(error) === -1) {
+    //                     const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
+    //                     par.innerHTML += temp({error});
+    //                 }
+    //             } else {
+    //                 item.errors = item.errors.slice(1);
+    //             }
+    //         });
+    //
+    //         if (!item.errors.length) {
+    //             par.classList.remove('input-block_error');
+    //             item.input.classList.remove('form-input_error');
+    //             item.input.classList.add('form-input_correct');
+    //             while (par.children.length !== 2) {
+    //                 par.removeChild(par.lastChild as ChildNode);
+    //             }
+    //         }
+    //     });
+    //
+    //     return valid;
+    // }
 }
