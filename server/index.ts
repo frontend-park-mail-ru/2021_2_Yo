@@ -15,7 +15,7 @@ app.use(express.static('dist/public'));
 app.use(express.static('public/server'));
 app.use(cookie());
 
-app.use((req, res) => {
+app.use((_, res) => {
     const __dirname = dirname(fileURLToPath(import.meta.url));
     res.sendFile(path.join(__dirname, '../../public/index.html'));
 });

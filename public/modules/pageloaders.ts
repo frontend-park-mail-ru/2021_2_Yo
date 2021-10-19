@@ -2,7 +2,7 @@ import { UrlPathnames } from '../types.js';
 import MainPageComponent from '../components/MainPage/MainPage.js';
 import LoginPageComponent from '../components/LoginPage&SignupPage/LoginPage.js';
 import SignupPageComponent from '../components/LoginPage&SignupPage/SignupPage.js';
-import {getEvents, getUser} from './request.js';
+import {getEvents, getUser} from './request/request.js';
 import route from './routing.js';
 
 const clickHandler = (e: MouseEvent) => {

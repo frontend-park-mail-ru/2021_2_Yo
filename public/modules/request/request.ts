@@ -1,6 +1,7 @@
 import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, 
     ApiUrls, EventCardData, FetchResponseData, UserData } from '../types.js';
-import bus, {Events} from './eventbus.js';
+import Bus from './eventbus/eventbus.js';
+import Events from './eventbus/events.js';
 
 const METHODS = {
     POST: 'POST',
@@ -83,7 +84,7 @@ export async function getEvents() {
     if (status === 200) {
         if (json.status === 200) {
             const data = json.body.events as EventCardData[];
-            bus.emit(Events.EventsGet, data);
+            Bus.emit(Events.EventsGet, data);
         }
     }
 }
