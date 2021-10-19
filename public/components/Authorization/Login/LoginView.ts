@@ -14,8 +14,8 @@ export default class LoginView {
         this.#form = document.getElementById('authForm') as HTMLFormElement;
         this.#emailInput = document.getElementById('emailInput') as HTMLInputElement
         this.#passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
-        bus.on(Events.UserLogin, this.#redirect)
-        bus.on(Events.AuthError, this.#showErrors)
+        bus.on(Events.UserLogin, this.#redirect.bind(this))
+        bus.on(Events.AuthError, this.#showErrors.bind(this))
     }
 
     render() {
