@@ -91,7 +91,7 @@ export default class LoginView {
                     //     const temp = window.Handlebars.compile('<p class="input-block__error error">{{error}}</p>');
                     //     par.innerHTML += temp({error});
                     // }
-                    console.log(error)
+                    console.log(error);
                 } else {
                     item.errors = item.errors.slice(1);
                 }
