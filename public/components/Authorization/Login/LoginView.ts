@@ -65,7 +65,6 @@ export default class LoginView {
         errorsBlock.innerHTML = '';
 
         this.inputsData.clear();
-        console.log(this.inputs.get('email')?.value.trim(), this.inputs.get('password')?.value.trim());
         this.inputsData.set('email', {errors: [], value: this.inputs.get('email')?.value.trim() as string});
         this.inputsData.set('password', {errors: [], value: this.inputs.get('password')?.value.trim() as string});
 
