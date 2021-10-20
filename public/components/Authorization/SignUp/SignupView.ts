@@ -3,7 +3,7 @@ import route from '../../../modules/routing.js';
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
-export default class LoginView {
+export default class SignupView {
     #parent: HTMLElement;
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string }>();
@@ -18,22 +18,34 @@ export default class LoginView {
 
     render() {
         const source = `
-            <div class="background">
+            <div class = "background">
                 <img class="background__logo" src="./img/logo.png">
-                <div class="authform" id="authFormBackground">
-                    <p class="authform__label label">Авторизация</p>
-                    <form id="authForm">
+                <div class = "authform">
+                    <p class="authform__label label">Регистрация</p>
+                    <form id="regForm">
+                        <div class="authform__input-block input-block">
+                            <p class="input-block__input-label input-label">Имя</p>
+                            <input class ="input-block__input form-input" id="nameInput">
+                        </div>
+                        <div class="authform__input-block input-block">
+                            <p class="input-block__input-label input-label">Фамилия</p>
+                            <input class ="input-block__input form-input" id="surnameInput">
+                        </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
                             <input class ="input-block__input form-input" id="emailInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input type="password" class ="input-block__input form-input" id="passwordInput">
+                            <input class ="input-block__input form-input" type="password" id="passwordInput1">
+                        </div>
+                        <div class="authform__input-block input-block">
+                            <p class="input-block__input-label input-label">Пароль еще раз</p>
+                            <input class ="input-block__input form-input" type="password" id="passwordInput2">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
-                            <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
+                            <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
                             <a class="buttons__button-back button-back">НАЗАД</a>
                         </div>
                     </form>
@@ -44,33 +56,42 @@ export default class LoginView {
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML += template();
 
+        const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+        this.#inputs.set('name', nameInput);
+        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
+        this.#inputs.set('surname', surnameInput);
         const emailInput = document.getElementById('emailInput') as HTMLInputElement;
         this.#inputs.set('email', emailInput);
-        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
-        this.#inputs.set('password', passwordInput);
+        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
+        this.#inputs.set('password1', passwordInput1);
+        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
+        this.#inputs.set('password2', passwordInput2);
 
         this.#addListeners.bind(this);
     }
 
     #addListeners() {
         const form = document.getElementById('authForm') as HTMLFormElement;
-        form.addEventListener('submit', this.#authorize.bind(this));
+        form.addEventListener('submit', this.#signup.bind(this));
     }
 
     #removeListeners() {
         const form = document.getElementById('authForm') as HTMLFormElement;
-        form.removeEventListener('submit', this.#authorize.bind(this));
+        form.removeEventListener('submit', this.#signup.bind(this));
     }
 
-    #authorize(event: Event) {
+    #signup(event: Event) {
         event.preventDefault();
 
         const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
+        this.#inputsData.set('name', {errors: [], value: this.#inputs.get('name')?.value.trim() as string});
+        this.#inputsData.set('surname', {errors: [], value: this.#inputs.get('surname')?.value.trim() as string});
         this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
-        this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
+        this.#inputsData.set('password1', {errors: [], value: this.#inputs.get('password1')?.value.trim() as string});
+        this.#inputsData.set('password2', {errors: [], value: this.#inputs.get('password2')?.value.trim() as string});
 
         bus.emit(Events.SubmitLogin, this.#inputsData);
     }

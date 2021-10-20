@@ -15,7 +15,7 @@ export default class LoginModel {
         if (error) {
             bus.emit(Events.AuthError, error);
         } else {
-            bus.emit(Events.UserLogin, null);
+            bus.emit(Events.UserAuthorized, null);
         }
     }
 }

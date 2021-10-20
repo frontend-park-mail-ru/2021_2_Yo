@@ -1,6 +1,6 @@
 enum Events {
     UserSignup = 'user:signup',
-    UserLogin = 'user:login',
+    UserAuthorized = 'user:authorized',
     EventsGet = 'events:get',
     AuthError = 'auth:error',
     ValidationError = 'validation:error',
