@@ -42,7 +42,7 @@ export default class EventBoardComponent {
             </div>
         `;
         const template: any = window.Handlebars.compile(source);
-        this.#parent.innerHTML += template(data);
+        this.#parent.innerHTML = template(data);
     }
 
     render() {
