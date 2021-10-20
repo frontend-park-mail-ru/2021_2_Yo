@@ -7,11 +7,13 @@ import LoginModel from './LoginModel.js';
 export default class LoginController {
     #view: LoginView;
     #model: LoginModel;
+    #parent = document.getElementById('App') as HTMLElement;
 
     constructor() {
         this.#model = new LoginModel();
-        this.#view = new LoginView(document.getElementById('App') as HTMLElement);
+        this.#view = new LoginView(this.#parent);
         this.#view.render();
+
         bus.on(Events.SubmitLogin, this.#makeValidation.bind(this));
     }
 
