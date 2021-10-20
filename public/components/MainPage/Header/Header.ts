@@ -8,8 +8,10 @@ export default class HeaderComponent {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
+        console.log(parent);
         Bus.emit(Events.UserReq, undefined);
         Bus.on(Events.UserReq, this.#userHandle);
+        console.log(parent);
     }
 
     #userHandle = ((user: UserData) => {
@@ -44,6 +46,7 @@ export default class HeaderComponent {
     }
 
     render() {
+        console.log('started rendering header');
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">

@@ -2,7 +2,7 @@ import HeaderComponent from './Header/Header.js';
 import SearchStatusComponent from './SearchStatus/SearchStatus.js';
 import EventBoardComponent from './EventBoard/EventBoard.js';
 
-import { UserData } from '../../types.js';
+// import { UserData } from '../../types.js';
 
 
 export default class MainPageView {
@@ -25,6 +25,8 @@ export default class MainPageView {
         const ebWrapper = document.getElementById('event-board-wrapper') as HTMLElement;
 
         this.#header = new HeaderComponent(hWrapper);
+        console.log(hWrapper);
+        console.log(this.#header);
         this.#status = new SearchStatusComponent(ssWrapper);
         this.#board = new EventBoardComponent(ebWrapper);
         // this.#events = events;
