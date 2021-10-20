@@ -125,7 +125,7 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
     return;
 }
 
-export function fetchGet(url: ApiUrls, callback: (args?: any) => void) {
+export function fetchGet(url: ApiUrls, callback: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
     return fetch( API + url, {
@@ -147,5 +147,7 @@ export function fetchGet(url: ApiUrls, callback: (args?: any) => void) {
         //     Bus.
         //     json,
         // };
+    }).catch(() => {
+        if (error) error();
     });
 }

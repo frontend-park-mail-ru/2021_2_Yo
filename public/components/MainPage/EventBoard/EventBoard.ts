@@ -8,12 +8,37 @@ export default class EventBoardComponent {
     constructor(parent: HTMLElement) {
         Bus.emit(Events.EventsReq, undefined);
         Bus.on(Events.EventsRes, this.#eventsHandle);
+        Bus.on(Events.EventsError, this.#eventsError);
         this.#parent = parent;
     }
 
     #eventsHandle = ((data: EventCardData[]) => {
         this.rerender(data);
     }).bind(this);
+
+    #eventsError = ((data: EventCardData[]) => {
+        this.error();
+        // this.render();
+    }).bind(this);
+
+    error() {
+        const source = `
+            <div id="events-error">
+                <p>Чтобы восстановить пароль, подготовьте номер<br>
+                public static java.lang.Object ru.tinkoffabsense.AEF(<br>
+                java.lang.Boolean,<br>
+                java.lang.Object,<br>
+                java.lang.Object);<br>
+                0 == 1 кредитного договора банковской карты. Под рукой ли он у вас?</p>
+                <br>
+                <p>
+                Кароче апи отъехало.
+                </p>
+            </div>
+        `;
+        const template = window.Handlebars.compile(source);
+        this.#parent.innerHTML = template();
+    }
 
     rerender(data: EventCardData[]) {
         while (data.length < 13) {
@@ -47,7 +72,7 @@ export default class EventBoardComponent {
 
     render() {
         this.#parent.innerHTML = `
-            <div id="loader"><div>
+            <div id="events-loader"><div>
         `;
     }
 

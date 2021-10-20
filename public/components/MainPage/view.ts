@@ -25,11 +25,8 @@ export default class MainPageView {
         const ebWrapper = document.getElementById('event-board-wrapper') as HTMLElement;
 
         this.#header = new HeaderComponent(hWrapper);
-        console.log(hWrapper);
-        console.log(this.#header);
         this.#status = new SearchStatusComponent(ssWrapper);
         this.#board = new EventBoardComponent(ebWrapper);
-        // this.#events = events;
     }
 
     render() {

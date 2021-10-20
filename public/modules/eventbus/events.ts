@@ -4,7 +4,8 @@ enum Events {
     UserSignup = 'user:signup',
     UserLogin = 'user:login',
     EventsReq = 'events:request',
-    EventsRes = 'events:response'
+    EventsRes = 'events:response',
+    EventsError = 'events:error',
 }
 
 export default Events;

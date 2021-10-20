@@ -20,7 +20,11 @@ export default class MainPageModel {
                         Bus.emit(Events.UserRes, user);
                     }
                 } 
-            });
+            },
+            () => {
+                Bus.emit(Events.EventsError);
+            }
+        );
     });
 
     #eventsHandle = (() => {
@@ -32,9 +36,12 @@ export default class MainPageModel {
                     if (json.status) {
                         const events = json.body.events as EventCardData[];
                         Bus.emit(Events.EventsRes, events); 
+                        return;
                     }
                 }
-            });
+                Bus.emit(Events.EventsError);
+            }
+        );
     });
 
     disable() {
