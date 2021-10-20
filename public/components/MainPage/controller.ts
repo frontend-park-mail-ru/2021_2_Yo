@@ -9,5 +9,6 @@ export default class MainPageController {
         this.#model = new MainPageModel();
         const app = document.getElementById('App') as HTMLElement;
         this.#view = new MainPageView(app);
+        this.#view.render();
     }
 }
