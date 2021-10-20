@@ -28,6 +28,11 @@ export default class SearchStatusComponent {
         console.log(template);
         this.#parent.innerHTML = template(status);
     }
+
+    disable() {
+        // Скоро тут будет код...
+        // Когда апи подправим под рисовку...
+    }
 }
 
 

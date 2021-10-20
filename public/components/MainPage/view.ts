@@ -37,4 +37,10 @@ export default class MainPageView {
         this.#status.render();
         this.#board.render();
     }
+
+    disable() {
+        this.#header.disable();
+        this.#board.disable();
+        this.#status.disable();
+    }
 }

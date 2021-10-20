@@ -50,4 +50,8 @@ export default class EventBoardComponent {
             <div id="loader"><div>
         `;
     }
+
+    disable() {
+        Bus.off(Events.EventsRes, this.#eventsHandle);
+    }
 }

@@ -7,11 +7,9 @@ export default class HeaderComponent {
     #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
-        this.#parent = parent;
-        console.log(parent);
         Bus.emit(Events.UserReq, undefined);
         Bus.on(Events.UserReq, this.#userHandle);
-        console.log(parent);
+        this.#parent = parent;
     }
 
     #userHandle = ((user: UserData) => {
@@ -46,7 +44,6 @@ export default class HeaderComponent {
     }
 
     render() {
-        console.log('started rendering header');
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
@@ -71,8 +68,11 @@ export default class HeaderComponent {
             </header>
         `;
         const template = window.Handlebars.compile(source);
-        console.log(template);
         const authAnchors = anchorsConfig.authAnchors;
         this.#parent.innerHTML = template({authAnchors});
+    }
+
+    disable() {
+        Bus.off(Events.UserReq, this.#userHandle);
     }
 }

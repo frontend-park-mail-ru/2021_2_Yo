@@ -36,4 +36,9 @@ export default class MainPageModel {
                 }
             });
     });
+
+    disable() {
+        Bus.off(Events.EventsReq, this.#eventsHandle);
+        Bus.off(Events.UserReq, this.#userHandle);
+    }
 }
