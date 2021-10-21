@@ -14,17 +14,18 @@ import MainPageController from '../components/MainPage/controller.js';
 //     }
 // };
 
-// export function mainPage() {
-//     // const app = document.getElementById('App') as HTMLElement;
-//     // app.innerHTML = '';
+export function mainPage() {
+    // const app = document.getElementById('App') as HTMLElement;
+    // app.innerHTML = '';
 
-//     // const user = await getUser();
-//     // const main = new MainPageComponent(app, user);
-//     // main.render();
-//     // void getEvents();
-//     // app.addEventListener('click', clickHandler);
-//     const controller = new MainPageController();
-// }
+    // const user = await getUser();
+    // const main = new MainPageComponent(app, user);
+    // main.render();
+    // void getEvents();
+    // app.addEventListener('click', clickHandler);
+    const app = document.getElementById('App') as HTMLElement;
+    const controller = new MainPageController(app);
+}
 
 export function loginPage() {
     const app = document.getElementById('App') as HTMLElement;

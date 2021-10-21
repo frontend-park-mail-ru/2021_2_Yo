@@ -1,8 +1,11 @@
-import Router from './modules/routing.js';
+import route from './modules/routing.js';
 
 const app = document.createElement('div') as HTMLElement;
 app.id = 'App';
-
 document.body.innerHTML = app.outerHTML;
 
-Router.route();
+window.onpopstate = () => {
+    route();
+};
+
+route();

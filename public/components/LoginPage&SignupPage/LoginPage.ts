@@ -1,7 +1,7 @@
 import {authValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
 import {postLogin} from '../../modules/request/request.js';
-import Router from '../../modules/routing.js';
+import route from '../../modules/routing.js';
 import {ApiPostLoginData, UrlPathnames} from '../../types.js';
 
 export default class LoginPageComponent {
@@ -74,7 +74,7 @@ export default class LoginPageComponent {
                 const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
                 errorsBlock.textContent = error;
             } else {
-                void Router.route(UrlPathnames.Main);
+                void route(UrlPathnames.Main);
             }
         }
     }
