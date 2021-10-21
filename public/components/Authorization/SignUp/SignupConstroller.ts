@@ -1,6 +1,6 @@
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
-import {authValidateFields} from '../../../modules/validation.js';
+import {signupValidateFields} from '../../../modules/validation.js';
 import SignupView from './SignupView.js';
 import SignupModel from './SignupModel.js';
 
@@ -18,7 +18,7 @@ export default class LoginController {
     }
 
     #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
-        authValidateFields(inputsData);
+        signupValidateFields(inputsData);
 
         let valid = true;
 
