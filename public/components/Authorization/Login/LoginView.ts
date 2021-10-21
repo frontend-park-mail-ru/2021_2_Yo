@@ -138,6 +138,8 @@ export default class LoginView {
     disable() {
         this.#removeListeners();
 
+        this.#parent.innerHTML = '';
+
         bus.off(Events.UserAuthorized, this.#redirect.bind(this));
         bus.off(Events.AuthError, this.#validationHandle);
         bus.off(Events.ValidationError, this.#validationHandle);

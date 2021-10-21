@@ -1,5 +1,5 @@
 import {ApiPostLoginData, ApiUrls, FetchResponseData} from '../../../types.js';
-import {fetchPost} from '../../../modules/request/request.js';
+import {fetchPost, postLogin} from '../../../modules/request/request.js';
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 

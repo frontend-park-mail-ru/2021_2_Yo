@@ -159,6 +159,8 @@ export default class SignupView {
     disable() {
         this.#removeListeners();
 
+        this.#parent.innerHTML = '';
+
         bus.off(Events.UserAuthorized, this.#routingHandle);
         bus.off(Events.AuthError, this.#validationHandle);
         bus.off(Events.ValidationError, this.#validationHandle);

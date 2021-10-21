@@ -19,6 +19,10 @@ export default class LoginController {
         this.#view.render();
     }
 
+    disable() {
+        this.#view.disable();
+    }
+
     #validationHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
         this.#makeValidation(inputsData);
     }).bind(this);
@@ -39,7 +43,7 @@ export default class LoginController {
 
         if (valid) {
             bus.emit(Events.ValidationOk, null);
-            void this.#model.login(inputsData);
+            this.#model.login(inputsData);
         } else {
             bus.emit(Events.ValidationError, null);
         }

@@ -19,6 +19,10 @@ export default class SignupController {
         this.#view.render();
     }
 
+    disable() {
+        this.#view.disable();
+    }
+
     #validationHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
         this.#makeValidation(inputsData);
     }).bind(this);
@@ -38,7 +42,7 @@ export default class SignupController {
 
         if (valid) {
             bus.emit(Events.ValidationOk, null);
-            void this.#model.signup(inputsData);
+            this.#model.signup(inputsData);
         } else {
             bus.emit(Events.ValidationError, null);
         }
