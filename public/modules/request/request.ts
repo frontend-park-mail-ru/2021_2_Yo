@@ -141,12 +141,6 @@ export function fetchGet(url: ApiUrls, callback: (args?: any) => void, error?: (
             status: HTTPStatus,
             json: json,
         });
-        // Bus.emit(event, json.body);
-        // return {
-        //     // status: HTTPStatus,
-        //     Bus.
-        //     json,
-        // };
     }).catch(() => {
         if (error) error();
     });

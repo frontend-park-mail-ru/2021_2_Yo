@@ -12,7 +12,6 @@ export default class MainPageModel {
     #userHandle = (() => {
         void fetchGet(ApiUrls.User, 
             (data: FetchResponseData) => {
-                console.log(data);
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
@@ -30,7 +29,6 @@ export default class MainPageModel {
     #eventsHandle = (() => {
         void fetchGet(ApiUrls.Events, 
             (data: FetchResponseData) => {
-                console.log(data);
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status) {
