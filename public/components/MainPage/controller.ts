@@ -11,6 +11,10 @@ export default class MainPageController {
         this.#view.render();
     }
 
+    enable() {
+        this.#view.render();
+    }
+
     disable() {
         this.#view.disable();
         this.#model.disable();

@@ -29,10 +29,10 @@ export type InputErrors = {
 }
 
 export enum UrlPathnames {
+    Error = '/error',
     Main = '/',
     Login = '/login',
     Signup = '/signup',
-    Back = '/back',
 }
 
 export enum ApiUrls {
