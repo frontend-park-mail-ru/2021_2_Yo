@@ -32,7 +32,7 @@ export default class HeaderComponent {
                         </div>
                     {{/if}}
                     <div class="flex header__search">
-                        <input class="header__search-input" type="text" placeholder="Найдем тусу, под ваши вкусы...">
+                        <input class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
                         <img class="header-button" src="./img/filter2.0.png">
                     </div>
                     <div class="flex header__calendar">
