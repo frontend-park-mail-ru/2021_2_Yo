@@ -10,7 +10,17 @@ export default class HeaderComponent {
         Bus.emit(Events.UserReq, undefined);
         Bus.on(Events.UserReq, this.#userHandle);
         this.#parent = parent;
+        this.#parent.addEventListener('click', this.#clickHandler);
     }
+
+    #clickHandler = (e: MouseEvent) => {
+        const target = e.target as EventTarget;
+        if (target instanceof HTMLAnchorElement) {
+            e.preventDefault();
+            Bus.emit(Events.RouteUrl, target.href);
+        }
+    };
+
 
     #userHandle = ((user: UserData) => {
         this.render(user);
@@ -62,6 +72,7 @@ export default class HeaderComponent {
     }
 
     disable() {
+        this.#parent.removeEventListener('click', this.#clickHandler);
         Bus.off(Events.UserReq, this.#userHandle);
     }
 }

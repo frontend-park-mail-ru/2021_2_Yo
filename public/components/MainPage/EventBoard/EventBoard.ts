@@ -39,42 +39,6 @@ export default class EventBoardComponent {
         this.#parent.innerHTML = template();
     }
 
-    // rerender(data: EventCardData[]) {
-    //     while (data.length < 13) {
-    //         data.push(data[0]);
-    //     }
-    //     data = data.map(e => {
-    //         e.description = 'Маскарат. Не советуем.';
-    //         return e;
-    //     });
-    //     const source = `
-    //         <div class="board">
-    //             <div class="events">
-    //                 {{#each this}}
-    //                     <div class="events__e{{@index}} events__e-wrapper">
-    //                         <img class="events__image" src="{{imgUrl}}">
-    //                         <div class="events__content">
-    //                             <span class="events__description">{{description}}</span>
-    //                             <div class="events__viewed">
-    //                                 <img src="./img/viewed2.0.png">
-    //                                 <span class="events__viewed-score">{{viewed}}</span>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                 {{/each}}
-    //             </div>
-    //         </div>
-    //     `;
-    //     const template: any = window.Handlebars.compile(source);
-    //     this.#parent.innerHTML = template(data);
-    // }
-
-    // render() {
-    //     this.#parent.innerHTML = `
-    //         <div id="events-loader"><div>
-    //     `;
-    // }
-
     render(data?: EventCardData[]) {
         // Временные меры (пока не хотим контактировать с беком)
         if (data) {

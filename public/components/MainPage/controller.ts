@@ -8,10 +8,10 @@ export default class MainPageController {
     constructor(parent: HTMLElement) {
         this.#model = new MainPageModel();
         this.#view = new MainPageView(parent);
-        this.#view.render();
     }
 
     enable() {
+        this.#model.enable();
         this.#view.render();
     }
 

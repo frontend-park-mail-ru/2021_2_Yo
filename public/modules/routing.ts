@@ -1,24 +1,6 @@
-import MainPageController from '../components/MainPage/controller.js';
 import { UrlPathnames } from '../types.js';
-
-// export default function route(path?: undefined | UrlPathnames) {
-//     if (path) {
-//         window.history.pushState({}, '', path);
-//     }
-//     switch (window.location.pathname) {
-//     case UrlPathnames.Main:
-//         mainPage();
-//         break;
-//     case UrlPathnames.Login:
-//         loginPage();
-//         break;
-//     case UrlPathnames.Signup:
-//         signupPage();
-//         break;
-//     default:
-//         errorPage();
-//     }
-// }
+import Bus from './eventbus/eventbus.js';
+import Events from './eventbus/events.js';
 
 // Комменты для перехода на другую ветку, все выпилю обещаю
 interface Controller {
@@ -26,21 +8,27 @@ interface Controller {
     enable(): void;
 }
 
-// const app = <HTMLElement>document.getElementById('App');
-// const m: Controller = new MainPageController(app);
-
 class Router {
-    #path: UrlPathnames;
     #controllers: Map<UrlPathnames, Controller>;
+    #path?: UrlPathnames;
 
     constructor() {
-        this.#path = UrlPathnames.Main;
         this.#controllers = new Map<UrlPathnames, Controller>();
 
         window.onpopstate = () => {
             this.route();
         };
+        Bus.on(Events.RouteBack, this.#handleBack);
+        Bus.on(Events.RouteUrl, this.#handleUrl);
     }
+
+    #handleUrl = ((url: string) => {
+        this.route(<UrlPathnames>url);
+    }).bind(this);
+
+    #handleBack = (() => {
+        this.back();
+    }).bind(this);
 
     add(path: UrlPathnames, controller: Controller) {
         this.#controllers.set(path, controller);
@@ -57,27 +45,13 @@ class Router {
 
         if (window.location.pathname == this.#path) return;
 
-        this.#controllers.get(this.#path)?.disable();
+        if (this.#path) this.#controllers.get(this.#path)?.disable();
+        
         this.#path = <UrlPathnames>window.location.pathname;
         if (!Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
             this.#path = UrlPathnames.Error;
         }
         this.#controllers.get(this.#path)?.enable();
-        // switch (window.location.pathname) {
-        // case UrlPathnames.Main:
-        //     this.#controller?.disable();
-        //     this.#controller = new MainPageController(this.#app);
-        //     // mainPage();
-        //     break;
-        // case UrlPathnames.Login:
-        //     loginPage();
-        //     break;
-        // case UrlPathnames.Signup:
-        //     signupPage();
-        //     break;
-        // default:
-        //     errorPage();
-        // }
     }
 }
 

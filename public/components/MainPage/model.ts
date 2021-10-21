@@ -4,7 +4,7 @@ import Events from '../../modules/eventbus/events.js';
 import { fetchGet } from '../../modules/request/request.js';
 
 export default class MainPageModel {
-    constructor() {
+    enable() {
         Bus.on(Events.EventsReq, this.#eventsHandle);
         Bus.on(Events.UserReq, this.#userHandle);
     }
@@ -19,9 +19,6 @@ export default class MainPageModel {
                         Bus.emit(Events.UserRes, user);
                     }
                 } 
-            },
-            () => {
-                Bus.emit(Events.EventsError);
             }
         );
     });
@@ -32,11 +29,14 @@ export default class MainPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status) {
-                        const events = json.body.events as EventCardData[];
+                        const events = <EventCardData[]>json.body.events;
                         Bus.emit(Events.EventsRes, events); 
                         return;
                     }
                 }
+                Bus.emit(Events.EventsError);
+            },
+            () => {
                 Bus.emit(Events.EventsError);
             }
         );
