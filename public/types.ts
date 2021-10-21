@@ -32,6 +32,7 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
+    Back = '/back',
 }
 
 export enum ApiUrls {
