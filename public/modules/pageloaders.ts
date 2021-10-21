@@ -1,6 +1,6 @@
 import {UrlPathnames} from '../types.js';
 import MainPageComponent from '../components/MainPage/MainPage.js';
-import SignupConstroller from '../components/Authorization/SignUp/SignupConstroller.js';
+import SignupController from '../components/Authorization/SignUp/SignupController.js';
 import {getEvents, getUser} from './request/request.js';
 import LoginController from '../components/Authorization/Login/LoginController.js';
 import route from './routing.js';
@@ -30,14 +30,16 @@ export function loginPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
-    const loginController = new LoginController();
+    const loginController = new LoginController(app);
+    loginController.enable();
 }
 
 export function signupPage() {
     const app = document.getElementById('App') as HTMLElement;
     app.removeEventListener('click', clickHandler);
     app.innerHTML = '';
-    const signupController = new SignupConstroller();
+    const signupController = new SignupController(app);
+    signupController.enable();
 }
 
 export function errorPage() {

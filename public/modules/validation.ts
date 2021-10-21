@@ -24,7 +24,7 @@ export function signupValidateFields(inputsData: Map<string, { errors: string[],
     password1.errors.push(checkPasswordLength(password1.value));
     password2.errors.push(checkPasswordLength(password2.value));
     if (checkPasswordsEqual(password1.value, password2.value)) {
-        password1.errors.push('Пароли не совпадают');
+        password2.errors.push('Пароли не совпадают');
     }
 }
 

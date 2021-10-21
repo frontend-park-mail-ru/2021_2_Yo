@@ -7,17 +7,24 @@ import LoginModel from './LoginModel.js';
 export default class LoginController {
     #view: LoginView;
     #model: LoginModel;
-    #parent = document.getElementById('App') as HTMLElement;
 
-    constructor() {
+    constructor(parent: HTMLElement) {
         this.#model = new LoginModel();
-        this.#view = new LoginView(this.#parent);
-        this.#view.render();
+        this.#view = new LoginView(parent);
 
-        bus.on(Events.SubmitLogin, this.#makeValidation.bind(this));
+        bus.on(Events.SubmitLogin, this.#validationHandle);
     }
 
-    #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
+    enable() {
+        this.#view.render();
+    }
+
+    #validationHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
+        this.#makeValidation(inputsData);
+    }).bind(this);
+
+
+    #makeValidation(inputsData: Map<string, { errors: string[], value: string }>) {
         authValidateFields(inputsData);
 
         let valid = true;
@@ -31,10 +38,10 @@ export default class LoginController {
         });
 
         if (valid) {
-            bus.emit(Events.ValidationOk, inputsData);
+            bus.emit(Events.ValidationOk, null);
             void this.#model.login(inputsData);
         } else {
-            bus.emit(Events.ValidationError, inputsData);
+            bus.emit(Events.ValidationError, null);
         }
-    };
+    }
 }

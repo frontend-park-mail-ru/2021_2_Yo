@@ -4,20 +4,26 @@ import {signupValidateFields} from '../../../modules/validation.js';
 import SignupView from './SignupView.js';
 import SignupModel from './SignupModel.js';
 
-export default class LoginController {
+export default class SignupController {
     #view: SignupView;
     #model: SignupModel;
-    #parent = document.getElementById('App') as HTMLElement;
 
-    constructor() {
+    constructor(parent: HTMLElement) {
         this.#model = new SignupModel();
-        this.#view = new SignupView(this.#parent);
-        this.#view.render();
+        this.#view = new SignupView(parent);
 
-        bus.on(Events.SubmitLogin, this.#makeValidation.bind(this));
+        bus.on(Events.SubmitLogin, this.#validationHandle);
     }
 
-    #makeValidation = (inputsData: Map<string, { errors: string[], value: string }>): void => {
+    enable() {
+        this.#view.render();
+    }
+
+    #validationHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
+        this.#makeValidation(inputsData);
+    }).bind(this);
+
+    #makeValidation(inputsData: Map<string, { errors: string[], value: string }>) {
         signupValidateFields(inputsData);
 
         let valid = true;
@@ -31,10 +37,10 @@ export default class LoginController {
         });
 
         if (valid) {
-            bus.emit(Events.ValidationOk, inputsData);
+            bus.emit(Events.ValidationOk, null);
             void this.#model.signup(inputsData);
         } else {
-            bus.emit(Events.ValidationError, inputsData);
+            bus.emit(Events.ValidationError, null);
         }
-    };
+    }
 }

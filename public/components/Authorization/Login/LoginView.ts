@@ -3,6 +3,8 @@ import route from '../../../modules/routing.js';
 import bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
+const CHILD_NUM = 2;
+
 export default class LoginView {
     #parent: HTMLElement;
     #inputs = new Map<string, HTMLInputElement>();
@@ -10,11 +12,24 @@ export default class LoginView {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        bus.on(Events.UserAuthorized, this.#redirect.bind(this));
-        bus.on(Events.AuthError, this.#showServerErrors.bind(this));
-        bus.on(Events.ValidationError, this.#showValidationErrors.bind(this));
-        bus.on(Events.ValidationOk, this.#showCorrectInputs.bind(this));
+
+        bus.on(Events.UserAuthorized, this.#routingHandle);
+        bus.on(Events.AuthError, this.#validationHandle);
+        bus.on(Events.ValidationError, this.#validationHandle);
+        bus.on(Events.ValidationOk, this.#validationHandle);
     }
+
+    #validationHandle = ((error: string) => {
+        this.#showValidationErrors();
+        this.#showCorrectInputs();
+        if (error) {
+            this.#showServerErrors(error);
+        }
+    }).bind(this);
+
+    #routingHandle = (() => {
+        this.#redirect();
+    }).bind(this);
 
     render() {
         const source = `
@@ -49,7 +64,7 @@ export default class LoginView {
         const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
         this.#inputs.set('password', passwordInput);
 
-        this.#addListeners.bind(this);
+        this.#addListeners();
     }
 
     #addListeners() {
@@ -98,15 +113,6 @@ export default class LoginView {
                     item.errors = item.errors.slice(1);
                 }
             });
-
-            if (!item.errors.length) {
-                par.classList.remove('input-block_error');
-                input.classList.remove('form-input_error');
-                input.classList.add('form-input_correct');
-                while (par.children.length !== 2) {
-                    par.removeChild(par.lastChild as ChildNode);
-                }
-            }
         });
     }
 
@@ -116,14 +122,25 @@ export default class LoginView {
     }
 
     #showCorrectInputs() {
-        this.#inputs.forEach(input => {
-            const par = input.parentElement as HTMLElement;
-            par.classList.remove('input-block_error');
-            input.classList.remove('form-input_error');
-            input.classList.add('form-input_correct');
-            while (par.children.length !== 2) {
-                par.removeChild(par.lastChild as ChildNode);
+        this.#inputs.forEach((input, key) => {
+            if (!this.#inputsData.get(key)?.errors.length) {
+                const par = input.parentElement as HTMLElement;
+                par.classList.remove('input-block_error');
+                input.classList.remove('form-input_error');
+                input.classList.add('form-input_correct');
+                while (par.children.length !== CHILD_NUM) {
+                    par.removeChild(par.lastChild as ChildNode);
+                }
             }
         });
+    }
+
+    disable() {
+        this.#removeListeners();
+
+        bus.off(Events.UserAuthorized, this.#redirect.bind(this));
+        bus.off(Events.AuthError, this.#validationHandle);
+        bus.off(Events.ValidationError, this.#validationHandle);
+        bus.off(Events.ValidationOk, this.#validationHandle);
     }
 }

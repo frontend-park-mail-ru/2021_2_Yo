@@ -1,5 +1,7 @@
-import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, 
-    ApiUrls, EventCardData, FetchResponseData, UserData } from '../../types.js';
+import {
+    ApiPostLoginData, ApiPostSignupData, ApiResponseJson,
+    ApiUrls, EventCardData, FetchResponseData, UserData
+} from '../../types.js';
 import bus from '../eventbus/eventbus.js';
 import Events from '../eventbus/events.js';
 
@@ -10,7 +12,7 @@ const METHODS = {
 
 const API = 'https://bmstusasa.herokuapp.com';
 
-async function handleFetch (responsePromise: Promise<Response>): Promise<FetchResponseData> {
+async function handleFetch(responsePromise: Promise<Response>): Promise<FetchResponseData> {
     let HTTPStatus: number;
     return responsePromise.then((response) => {
         HTTPStatus = response.status;
@@ -123,4 +125,50 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
         }
     }
     return;
+}
+
+export function fetchGet(url: ApiUrls, callback: (args?: any) => void, error?: (args?: any) => void) {
+    let HTTPStatus: number;
+
+    return fetch(API + url, {
+        method: METHODS.GET,
+        mode: 'cors',
+        credentials: 'include'
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        const json = data as ApiResponseJson;
+        callback({
+            status: HTTPStatus,
+            json: json,
+        });
+    }).catch(() => {
+        if (error) error();
+    });
+}
+
+export function fetchPost(url: ApiUrls, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
+    let HTTPStatus: number;
+
+    return fetch(API + url, {
+        method: METHODS.POST,
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(body)
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        const json = data as ApiResponseJson;
+        callback({
+            status: HTTPStatus,
+            json: json,
+        });
+    }).catch(() => {
+        if (error) error();
+    });
 }
