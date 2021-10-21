@@ -18,9 +18,19 @@ class Router {
         window.onpopstate = () => {
             this.route();
         };
+        window.addEventListener('click', this.#clickHandler);
+
         Bus.on(Events.RouteBack, this.#handleBack);
         Bus.on(Events.RouteUrl, this.#handleUrl);
     }
+
+    #clickHandler = (e: MouseEvent) => {
+        const target = e.target as EventTarget;
+        if (target instanceof HTMLAnchorElement) {
+            e.preventDefault();
+            Bus.emit(Events.RouteUrl, target.href);
+        }
+    };
 
     #handleUrl = ((url: string) => {
         this.route(<UrlPathnames>url);

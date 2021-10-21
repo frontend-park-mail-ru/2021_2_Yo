@@ -80,5 +80,7 @@ export default class EventBoardComponent {
     disable() {
         Bus.off(Events.EventsRes, this.#eventsHandle);
         Bus.off(Events.EventsError, this.#eventsError);
+
+        this.#parent.innerHTML = '';
     }
 }

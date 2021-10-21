@@ -31,6 +31,8 @@ export default class SearchStatusComponent {
     disable() {
         // Скоро тут будет код...
         // Когда апи подправим под рисовку...
+
+        this.#parent.innerHTML = '';
     }
 }
 

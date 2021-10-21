@@ -35,5 +35,6 @@ export default class MainPageView {
         this.#header?.disable();
         this.#board?.disable();
         this.#status?.disable();
+        this.#parent.innerHTML = '';
     }
 }
