@@ -1,7 +1,5 @@
 import { ApiPostLoginData, ApiPostSignupData, ApiResponseJson, 
-    ApiUrls, EventCardData, FetchResponseData, UserData } from '../../types.js';
-import bus from '../eventbus/eventbus.js';
-import Events from '../eventbus/events.js';
+    ApiUrls, FetchResponseData } from '../../types.js';
 
 const METHODS = {
     POST: 'POST',
@@ -51,45 +49,6 @@ async function getFetch(url: string) {
 }
 
 /**
- * GET запрос пользователя
- *
- * @returns {UserData | undefined}
- */
-export async function getUser(): Promise<UserData | undefined> {
-    const {status, json} = await getFetch(API + ApiUrls.User);
-    if (status === 200) {
-        if (json.status === 200) {
-            return {id: 1, name: json.body.name, geo: 'Мытищи'};
-        }
-    }
-    return;
-}
-
-/**
- * GET запрос событий
- *
- * @returns {EventCardData[] | undefined}
- */
-// export async function getEvents(): Promise<EventCardData[]> {
-//     const {status, json} = await getFetch(API + ApiUrls.Events);
-//     if (status === 200) {
-//         if (json.status === 200) {
-//             return json.body.events as EventCardData[];
-//         }
-//     }
-//     return [];
-// }
-export async function getEvents() {
-    const {status, json} = await getFetch(API + ApiUrls.Events);
-    if (status === 200) {
-        if (json.status === 200) {
-            const data = json.body.events as EventCardData[];
-            bus.emit(Events.EventsGet, data);
-        }
-    }
-}
-
-/**
  * POST запрос отправки данных авторизации
  *
  * @param {ApiPostLoginData} postData - почта, пароль
@@ -123,4 +82,25 @@ export async function postSignup(postData: ApiPostSignupData): Promise<undefined
         }
     }
     return;
+}
+
+export function fetchGet(url: ApiUrls, callback: (args?: any) => void, error?: (args?: any) => void) {
+    let HTTPStatus: number;
+
+    return fetch( API + url, {
+        method: METHODS.GET,
+        mode: 'cors',
+        credentials: 'include'
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        const json = data as ApiResponseJson;
+        callback({
+            status: HTTPStatus,
+            json: json,
+        });
+    }).catch(() => {
+        if (error) error();
+    });
 }

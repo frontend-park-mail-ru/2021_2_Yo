@@ -1,7 +1,7 @@
 import {signupValidateFields} from '../../modules/validation.js';
 import {InputErrors} from '../../types';
 import {postSignup} from '../../modules/request/request.js';
-import route from '../../modules/routing.js';
+import Router from '../../modules/routing.js';
 import {ApiPostSignupData, UrlPathnames} from '../../types.js';
 
 export default class SignupPageComponent {
@@ -106,7 +106,7 @@ export default class SignupPageComponent {
                 const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
                 errorsBlock.textContent = error;
             } else {
-                void route(UrlPathnames.Main);
+                Router.route(UrlPathnames.Main);
             }
         }
     }
