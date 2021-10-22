@@ -13,13 +13,17 @@ export default class HeaderComponent {
     }
 
     #addListeners() {
-        const logout = <HTMLElement>document.getElementById('logout');
-        logout.addEventListener('click', this.#logoutHandler);
+        const logout = document.getElementById('logout');
+        if (logout) {
+            logout.addEventListener('click', this.#logoutHandler);
+        }
     }
 
     #removeListeners() {
         const logout = <HTMLElement>document.getElementById('logout');
-        logout.removeEventListener('click', this.#logoutHandler);
+        if (logout) {
+            logout.removeEventListener('click', this.#logoutHandler);
+        }
     }
 
     #logoutHandler = (() => {
