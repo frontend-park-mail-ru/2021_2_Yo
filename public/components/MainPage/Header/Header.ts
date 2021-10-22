@@ -8,7 +8,7 @@ export default class HeaderComponent {
 
     constructor(parent: HTMLElement) {
         Bus.emit(Events.UserReq, undefined);
-        Bus.on(Events.UserReq, this.#userHandle);
+        Bus.on(Events.UserRes, this.#userHandle);
         this.#parent = parent;
     }
 
@@ -63,7 +63,7 @@ export default class HeaderComponent {
     }
 
     disable() {
-        Bus.off(Events.UserReq, this.#userHandle);
+        Bus.off(Events.UserRes, this.#userHandle);
         this.#parent.innerHTML = '';
     }
 }
