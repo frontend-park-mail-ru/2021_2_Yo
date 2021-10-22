@@ -7,7 +7,7 @@ export default class HeaderComponent {
     #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
-        Bus.emit(Events.UserReq, undefined);
+        Bus.emit(Events.UserReq);
         Bus.on(Events.UserRes, this.#userHandle);
         this.#parent = parent;
     }
@@ -18,17 +18,15 @@ export default class HeaderComponent {
     }).bind(this);
 
 
-    render(data?: UserData) {
+    render(user?: UserData) {
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
                     <img class="header__logo" src="./img/logo2.0.png">
                     {{#if user}}
-                        <div id="geo-block">
-                            <div class="flex">
-                                <img id="geoimg" src="./img/geo2.0.png">
-                                <span class="header-text_decoration_underline">{{user.geo}}</span>
-                            </div>
+                        <div class="flex">
+                            <img id="geoimg" src="./img/geo2.0.png">
+                            <span class="header-text_decoration_underline">{{user.geo}}</span>
                         </div>
                     {{/if}}
                     <div class="flex header__search">
@@ -39,27 +37,25 @@ export default class HeaderComponent {
                         <img class="header-button" src="./img/calendar2.0.png">
                         <span class="header-text_decoration_underline">Календарь событий</span>
                     </div>
-                    <div id="user-block">
-                        {{#if user}}
-                            <div class="flex">
-                                <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
-                                <span>{{user.name}}</span>
-                            </div>
-                            <img class="header-button" src="./img/logout2.0.png">
-                        {{else}}
-                            <div>
-                                {{#each authAnchors}}
-                                    <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
-                                {{/each}}
-                            </div>
-                        {{/if}}
-                    </div>
+                    {{#if user}}
+                        <div class="flex">
+                            <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
+                            <span>{{user.name}}</span>
+                        </div>
+                        <img class="header-button" src="./img/logout2.0.png">
+                    {{else}}
+                        <div>
+                            {{#each authAnchors}}
+                                <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </div>
             </header>
         `;
         const template = window.Handlebars.compile(source);
         const authAnchors = anchorsConfig.authAnchors;
-        this.#parent.innerHTML = template({authAnchors, data});
+        this.#parent.innerHTML = template({authAnchors, user});
     }
 
     disable() {
