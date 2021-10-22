@@ -13,7 +13,6 @@ export default class SignupView {
     }
 
     subscribe() {
-        // Bus.on(Events.UserAuthorized, this.#routingHandle);
         Bus.on(Events.AuthError, this.#validationHandle);
         Bus.on(Events.ValidationError, this.#validationHandle);
         Bus.on(Events.ValidationOk, this.#validationHandle);
@@ -26,10 +25,6 @@ export default class SignupView {
             this.#showServerErrors(error);
         }
     }).bind(this);
-
-    // #routingHandle = (() => {
-    //     this.#redirect();
-    // }).bind(this);
 
     render() {
         const source = `
@@ -61,7 +56,7 @@ export default class SignupView {
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="buttons__button-submit button-submit">
-                            <a class="buttons__button-back button-back">НАЗАД</a>
+                            <a id="back" class="buttons__button-back button-back">НАЗАД</a>
                         </div>
                     </form>
                 </div>
@@ -88,12 +83,24 @@ export default class SignupView {
     #addListeners() {
         const form = document.getElementById('regForm') as HTMLFormElement;
         form.addEventListener('submit', this.#signup.bind(this));
+
+        const back = <HTMLElement>document.getElementById('back');
+        back.addEventListener('click', this.#back);
     }
 
     #removeListeners() {
         const form = document.getElementById('regForm') as HTMLFormElement;
         form.removeEventListener('submit', this.#signup.bind(this));
+
+        const back = <HTMLElement>document.getElementById('back');
+        back.addEventListener('click', this.#back);
     }
+
+    #back = (event: MouseEvent) => {
+        event.preventDefault();
+        Bus.emit(Events.RouteBack);
+        event.stopPropagation();
+    };
 
     #signup(event: Event) {
         event.preventDefault();
@@ -110,10 +117,6 @@ export default class SignupView {
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }
-
-    // #redirect() {
-    //     void route(UrlPathnames.Main);
-    // }
 
     #showValidationErrors() {
         this.#inputsData.forEach((item, key) => {
@@ -161,7 +164,6 @@ export default class SignupView {
 
         this.#parent.innerHTML = '';
 
-        // Bus.off(Events.UserAuthorized, this.#routingHandle);
         Bus.off(Events.AuthError, this.#validationHandle);
         Bus.off(Events.ValidationError, this.#validationHandle);
         Bus.off(Events.ValidationOk, this.#validationHandle);

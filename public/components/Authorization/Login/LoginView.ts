@@ -1,5 +1,3 @@
-import {UrlPathnames} from '../../../types.js';
-import route from '../../../modules/routing.js';
 import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
@@ -15,7 +13,6 @@ export default class LoginView {
     }
 
     subscribe() {
-        // Bus.on(Events.UserAuthorized, this.#routingHandle);
         Bus.on(Events.AuthError, this.#validationHandle);
         Bus.on(Events.ValidationError, this.#validationHandle);
         Bus.on(Events.ValidationOk, this.#validationHandle);
@@ -28,10 +25,6 @@ export default class LoginView {
             this.#showServerErrors(error);
         }
     }).bind(this);
-
-    // #routingHandle = (() => {
-    //     this.#redirect();
-    // }).bind(this);
 
     render() {
         const source = `
@@ -104,10 +97,6 @@ export default class LoginView {
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }
 
-    // #redirect() {
-    //     void route(UrlPathnames.Main);
-    // }
-
     #showValidationErrors() {
         this.#inputsData.forEach((item, key) => {
             const input = this.#inputs.get(key) as HTMLElement;
@@ -154,7 +143,6 @@ export default class LoginView {
 
         this.#parent.innerHTML = '';
 
-        // Bus.off(Events.UserAuthorized, this.#redirect.bind(this));
         Bus.off(Events.AuthError, this.#validationHandle);
         Bus.off(Events.ValidationError, this.#validationHandle);
         Bus.off(Events.ValidationOk, this.#validationHandle);
