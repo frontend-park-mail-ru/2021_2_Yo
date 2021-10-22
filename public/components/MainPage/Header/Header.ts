@@ -12,6 +12,20 @@ export default class HeaderComponent {
         this.#parent = parent;
     }
 
+    #addListeners() {
+        const logout = <HTMLElement>document.getElementById('logout');
+        logout.addEventListener('click', this.#logoutHandler);
+    }
+
+    #removeListeners() {
+        const logout = <HTMLElement>document.getElementById('logout');
+        logout.removeEventListener('click', this.#logoutHandler);
+    }
+
+    #logoutHandler = (() => {
+        Bus.emit(Events.UserLogout);
+        this.render();
+    }).bind(this);
 
     #userHandle = ((user: UserData) => {
         this.render(user);
@@ -42,12 +56,12 @@ export default class HeaderComponent {
                             <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
                         </div>
-                        <img class="header-button" src="./img/logout2.0.png">
+                        <img id="logout" class="header-button" src="./img/logout2.0.png">
                     {{else}}
                         <div>
-                            {{#each authAnchors}}
-                                <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
-                            {{/each}}
+                        {{#each authAnchors}}
+                            <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
+                        {{/each}}
                         </div>
                     {{/if}}
                 </div>
@@ -56,9 +70,11 @@ export default class HeaderComponent {
         const template = window.Handlebars.compile(source);
         const authAnchors = anchorsConfig.authAnchors;
         this.#parent.innerHTML = template({authAnchors, user});
+        this.#addListeners();
     }
 
     disable() {
+        this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
         this.#parent.innerHTML = '';
     }

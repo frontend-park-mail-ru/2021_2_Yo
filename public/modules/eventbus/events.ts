@@ -13,6 +13,7 @@ enum Events {
     EventsError = 'events:error',
 
     // Authorization
+    UserLogout = 'user:logout',
     UserSignup = 'user:signup',
     UserAuthorized = 'user:authorized',
     AuthError = 'auth:error',

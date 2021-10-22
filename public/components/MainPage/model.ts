@@ -7,7 +7,12 @@ export default class MainPageModel {
     enable() {
         Bus.on(Events.EventsReq, this.#eventsHandle);
         Bus.on(Events.UserReq, this.#userHandle);
+        Bus.on(Events.UserLogout, this.#logoutHandle);
     }
+
+    #logoutHandle = () => {
+        void fetchGet(ApiUrls.Logout);
+    };
 
     #userHandle = (() => {
         void fetchGet(ApiUrls.User, 
@@ -45,5 +50,6 @@ export default class MainPageModel {
     disable() {
         Bus.off(Events.EventsReq, this.#eventsHandle);
         Bus.off(Events.UserReq, this.#userHandle);
+        Bus.off(Events.UserLogout, this.#logoutHandle);
     }
 }

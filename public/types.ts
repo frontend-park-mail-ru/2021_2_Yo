@@ -33,6 +33,7 @@ export enum ApiUrls {
     Events = '/events',
     Login = '/login',
     Signup = '/signup',
+    Logout = '/logout',
 }
 
 export type FetchResponseData = {
@@ -43,7 +44,8 @@ export type FetchResponseData = {
 export type ApiResponseJson = {
     status: number;
     message: string;
-    body: any;
+    body?: any;
+    // error?: string;
 }
 
 export type ApiPostLoginData = {

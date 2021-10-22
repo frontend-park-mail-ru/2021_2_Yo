@@ -7,7 +7,7 @@ const METHODS = {
 
 const API = 'https://bmstusasa.herokuapp.com';
 
-export function fetchGet(url: ApiUrls, callback: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
     return fetch(API + url, {
@@ -19,10 +19,12 @@ export function fetchGet(url: ApiUrls, callback: (args?: any) => void, error?: (
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
-        callback({
-            status: HTTPStatus,
-            json: json,
-        });
+        if (callback) {
+            callback({
+                status: HTTPStatus,
+                json: json,
+            });
+        }
     }).catch(() => {
         if (error) error();
     });
