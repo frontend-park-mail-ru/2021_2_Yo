@@ -45,7 +45,11 @@ class Router {
     }
 
     back() {
-        window.history.back();
+        if (window.history.length > 1) { 
+            window.history.back();
+        } else {
+            this.route(UrlPathnames.Main);
+        }
     }
 
     route(path?: UrlPathnames) {

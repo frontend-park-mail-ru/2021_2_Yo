@@ -51,7 +51,7 @@ export default class LoginView {
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
-                            <a class="buttons__button-back button-back">НАЗАД</a>
+                            <a class="id="back" buttons__button-back button-back">НАЗАД</a>
                         </div>
                     </form>
                 </div>
@@ -70,14 +70,26 @@ export default class LoginView {
     }
 
     #addListeners() {
-        const form = document.getElementById('authForm') as HTMLFormElement;
+        const form = <HTMLElement>document.getElementById('authForm');
         form.addEventListener('submit', this.#authorize.bind(this));
+
+        const back = <HTMLElement>document.getElementById('back');
+        back.addEventListener('click', this.#back);
     }
 
     #removeListeners() {
         const form = document.getElementById('authForm') as HTMLFormElement;
         form.removeEventListener('submit', this.#authorize.bind(this));
+
+        const back = <HTMLElement>document.getElementById('back');
+        back.removeEventListener('click', this.#back);
     }
+
+    #back = (event: MouseEvent) => {
+        event.preventDefault();
+        Bus.emit(Events.RouteBack);
+        event.stopPropagation();
+    };
 
     #authorize(event: Event) {
         event.preventDefault();
