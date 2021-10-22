@@ -51,7 +51,7 @@ export default class LoginView {
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
                             <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
-                            <a class="id="back" buttons__button-back button-back">НАЗАД</a>
+                            <a id="back" class="buttons__button-back button-back">НАЗАД</a>
                         </div>
                     </form>
                 </div>
