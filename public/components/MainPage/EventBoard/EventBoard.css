@@ -140,7 +140,8 @@
 .events__viewed {
     position: absolute;
     top: 11px;
-    right: 22px;
+    right: 11px;
+    /* right: 22px; */
     display: flex;
     align-items: center;
     font-size: 2vh;
