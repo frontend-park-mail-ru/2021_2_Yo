@@ -6,13 +6,19 @@ enum Events {
     // User
     UserRes = 'user:response',
     UserReq = 'user:request',
-    UserSignup = 'user:signup',
-    UserLogin = 'user:login',
 
-    //Events
+    // Events
     EventsReq = 'events:request',
     EventsRes = 'events:response',
     EventsError = 'events:error',
+
+    // Authorization
+    UserSignup = 'user:signup',
+    UserAuthorized = 'user:authorized',
+    AuthError = 'auth:error',
+    ValidationError = 'validation:error',
+    ValidationOk = 'validation:ok',
+    SubmitLogin = 'submit:login'
 }
 
 export default Events;

@@ -1,19 +1,19 @@
-import LoginPageComponent from '../components/LoginPage&SignupPage/LoginPage.js';
-import SignupPageComponent from '../components/LoginPage&SignupPage/SignupPage.js';
+// import LoginPageComponent from '../components/LoginPage&SignupPage/LoginPage.js';
+// import SignupPageComponent from '../components/LoginPage&SignupPage/SignupPage.js';
 
-export function loginPage() {
-    const app = document.getElementById('App') as HTMLElement;
-    app.innerHTML = '';
-    const login = new LoginPageComponent(app);
-    login.render();
-}
+// export function loginPage() {
+//     const app = document.getElementById('App') as HTMLElement;
+//     app.innerHTML = '';
+//     const loginController = new LoginController(app);
+//     loginController.enable();
+// }
 
-export function signupPage() {
-    const app = document.getElementById('App') as HTMLElement;
-    app.innerHTML = '';
-    const signup = new SignupPageComponent(app);
-    signup.render();
-}
+// export function signupPage() {
+//     const app = document.getElementById('App') as HTMLElement;
+//     app.innerHTML = '';
+//     const signupController = new SignupController(app);
+//     signupController.enable();
+// }
 
 export function errorPage() {
     const app = document.getElementById('App') as HTMLElement;
