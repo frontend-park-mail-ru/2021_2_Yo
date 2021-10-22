@@ -5,7 +5,7 @@ const METHODS = {
     GET: 'GET',
 };
 
-const API = 'https://bmstusasa.herokuapp.com';
+const API = 'https://95.163.212.36:8080';
 
 export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
