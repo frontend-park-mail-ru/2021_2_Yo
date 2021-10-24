@@ -1,3 +1,7 @@
+:root {
+    --header-bg: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
+}
+
 .header-button:hover {
     cursor: pointer;
 }
@@ -19,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
+    background: var(--header-bg);
 }
 
 .header__content {
@@ -51,6 +55,7 @@
 
 .header__user-avatar {
     width: 32px;
+    height: 32px;
     margin-right: 6px;
 }
 
