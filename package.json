@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf dist/*",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx public server",
+    "lint": "eslint --ext .js,.ts public server",
     "tsc": "tsc",
     "build": "npm-run-all clean lint tsc",
     "prestart": "npm run build",

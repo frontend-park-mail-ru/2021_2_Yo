@@ -12,7 +12,6 @@ export type EventCardData = {
 }
 
 export type UserData = {
-    id: number;
     name: string;
     geo: string;
 }
@@ -22,14 +21,8 @@ export enum PageKeys {
     Signup = 'signup',
 }
 
-export type InputErrors = {
-    errors: string[],
-    input: HTMLInputElement
-    value: string
-
-}
-
 export enum UrlPathnames {
+    Error = '/error',
     Main = '/',
     Login = '/login',
     Signup = '/signup',
@@ -40,6 +33,7 @@ export enum ApiUrls {
     Events = '/events',
     Login = '/login',
     Signup = '/signup',
+    Logout = '/logout',
 }
 
 export type FetchResponseData = {
@@ -50,7 +44,8 @@ export type FetchResponseData = {
 export type ApiResponseJson = {
     status: number;
     message: string;
-    body: any;
+    body?: any;
+    // error?: string;
 }
 
 export type ApiPostLoginData = {
