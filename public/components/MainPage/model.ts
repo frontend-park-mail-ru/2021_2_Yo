@@ -1,4 +1,4 @@
-import { ApiUrls, EventCardData, FetchResponseData, UserData } from '../../types.js';
+import { ApiUrls, EventCardData, FetchResponseData } from '../../types.js';
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 import { fetchGet } from '../../modules/request/request.js';
