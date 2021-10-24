@@ -26,6 +26,8 @@
 }
 
 .background__logo {
+    height: 166px;
+    width: 426px;
     margin-bottom: -83px;
     z-index: 1;
 }
