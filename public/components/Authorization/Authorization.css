@@ -26,38 +26,38 @@
 }
 
 .background__logo {
-    height: 166px;
-    width: 426px;
-    margin-bottom: -83px;
+    height: 15.4vh;
+    width: 22.2vw;
+    margin-bottom: -7.7vh;
     z-index: 1;
 }
 
 .authform__label {
-    margin-left: 35px;
-    margin-top: 103px;
-    margin-bottom: 32px;
+    margin-left: 1.8vw;
+    margin-top: 9.5vh;
+    margin-bottom: 2.96vh;
 }
 
 .label {
     font-style: normal;
     font-weight: 500;
-    font-size: 38px;
-    line-height: 45px;
+    font-size: 3.5vh;
+    line-height: 4.17vh;
 }
 
 .input-label {
     font-style: normal;
     font-weight: normal;
-    font-size: 28px;
-    line-height: 33px;
+    font-size: 2.6vh;
+    line-height: 3.05vh;
 }
 
 .form-input {
     border: 1px solid black;
     box-sizing: border-box;
     border-radius: 2px;
-    width: 515px;
-    height: 32px;
+    width: 26.8vw;
+    height: 2.96vh;
 }
 
 .form-input_correct {
@@ -69,12 +69,12 @@
 }
 
 .authform__input-block {
-    margin-left: 35px;
-    margin-right: 35px;
+    margin-left: 1.8vw;
+    margin-right: 1.8vw;
 }
 
 .input-block {
-    padding-bottom: 21px;
+    padding-bottom: 1.94vh;
 }
 
 .input-block__input-label {
@@ -82,8 +82,8 @@
 }
 
 .input-block__error {
-    margin-top: 1px;
-    margin-bottom: 5px;
+    margin-top: 0.09vh;
+    margin-bottom: 0.46vh;
 }
 
 .input-block_error {
@@ -91,20 +91,20 @@
 }
 
 .authform__error {
-    margin-left: 35px;
+    margin-left: 1.8vw;
 }
 
 .error {
     font-style: normal;
     font-weight: bold;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 1.296vh;
+    line-height: 1.48vh;
 
     color: var(--error);
 }
 
 .buttons__button-submit {
-    margin: 0 35px;
+    margin: 0 1.8vw;
 }
 
 .button-submit {
@@ -115,13 +115,13 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 2px;
 
-    height: 40px;
-    padding: 6px 50px;
+    height: 3.7vh;
+    padding: 0.56vh 2.6vw;
 
     font-style: normal;
     font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 2.22vh;
+    line-height: 2.59vh;
     text-decoration-line: underline;
 
     color: white;
@@ -134,14 +134,14 @@
 .button-back {
     font-style: normal;
     font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 2.22vh;
+    line-height: 2.59vh;
     text-decoration-line: underline;
     color: var(--back-btn);
 }
 
 .buttons__button-back {
-    margin: 0 35px;
+    margin: 0 1.8vw;
 }
 
 .button-back:hover {
@@ -149,8 +149,8 @@
 }
 
 .authform__buttons {
-    margin-bottom: 30px;
-    margin-top: 30px;
+    margin-bottom: 2.78vh;
+    margin-top: 2.78vh;
 }
 
 .buttons {
