@@ -30,6 +30,7 @@ class UserStore {
                 }
             );
         }
+        console.log('user handle pick');
     }).bind(this);
 
     #logoutHandle = (() => {
