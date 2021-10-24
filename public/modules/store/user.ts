@@ -35,3 +35,5 @@ class UserStore {
         void fetchGet(ApiUrls.Logout);
     }).bind(this);
 }
+
+const uStore = new UserStore();
