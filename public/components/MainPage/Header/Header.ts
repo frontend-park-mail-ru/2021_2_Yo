@@ -32,6 +32,7 @@ export default class HeaderComponent {
     }).bind(this);
 
     #userHandle = ((user: UserData) => {
+        console.log('rendering:', user);
         this.render(user);
     }).bind(this);
 
