@@ -7,7 +7,6 @@ class UserStore {
     #user?: UserData;
 
     constructor() {
-        console.log('constructor');
         Bus.on(Events.UserReq, this.#userHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
         Bus.emit(Events.UserReq);
@@ -16,6 +15,7 @@ class UserStore {
     #userHandle = (() => {
         if (this.#user) {
             Bus.emit(Events.UserRes, this.#user);
+            console.log('stored:', this.#user);
         } else {
             void fetchGet(ApiUrls.User, 
                 (data: FetchResponseData) => {
@@ -24,6 +24,7 @@ class UserStore {
                         if (json.status === 200) {
                             this.#user = {name: json.body.name, geo: 'Мытищи'};
                             Bus.emit(Events.UserRes, this.#user);
+                            console.log('loaded:', this.#user);
                         }
                     } 
                 }
