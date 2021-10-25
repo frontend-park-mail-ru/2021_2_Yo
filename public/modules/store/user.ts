@@ -7,9 +7,10 @@ class UserStore {
     #user?: UserData;
 
     constructor() {
+        this.#userHandle();
         Bus.on(Events.UserReq, this.#userHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
-        Bus.emit(Events.UserReq);
+        // Bus.emit(Events.UserReq);
     }
 
     #userHandle = (() => {
