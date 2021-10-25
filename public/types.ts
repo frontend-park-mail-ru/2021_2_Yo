@@ -17,10 +17,10 @@ export type UserData = {
 }
 
 export type EventData = {
-    id: number;
+    id?: number;
     city: string;
     category: string;
-    viewed: number;
+    viewed?: number;
     title: string;
     description: string;
     tag: string[];
@@ -40,6 +40,7 @@ export enum UrlPathnames {
     Login = '/login',
     Signup = '/signup',
     Event = '/events',
+    Create = '/create'
 }
 
 export enum ApiUrls {
