@@ -5,7 +5,7 @@ import Events from '../../modules/eventbus/events.js';
 
 export default class EventPageModel {
     getEvent(id: string) {
-        void fetchGet(ApiUrls.Events,
+        void fetchGet(ApiUrls.Events + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

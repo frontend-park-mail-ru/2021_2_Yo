@@ -44,7 +44,7 @@ export enum UrlPathnames {
 
 export enum ApiUrls {
     User = '/user',
-    Events = '/events/${id}',
+    Events = '/events/',
     Login = '/login',
     Signup = '/signup',
     Logout = '/logout',

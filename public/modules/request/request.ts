@@ -1,4 +1,4 @@
-import { ApiResponseJson, ApiUrls } from '../../types.js';
+import {ApiResponseJson, ApiUrls} from '../../types.js';
 
 const METHODS = {
     POST: 'POST',
@@ -7,7 +7,7 @@ const METHODS = {
 
 const API = 'https://bmstusasa.herokuapp.com';
 
-export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
     return fetch(API + url, {
