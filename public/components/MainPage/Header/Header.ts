@@ -7,8 +7,8 @@ export default class HeaderComponent {
     #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
-        Bus.emit(Events.UserReq);
         Bus.on(Events.UserRes, this.#userHandle);
+        Bus.emit(Events.UserReq);
         this.#parent = parent;
     }
 
