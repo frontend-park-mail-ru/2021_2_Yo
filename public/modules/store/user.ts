@@ -7,12 +7,14 @@ class UserStore {
     #user?: UserData;
 
     constructor() {
+        console.log('constructor');
         Bus.on(Events.UserReq, this.#userHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
         Bus.emit(Events.UserReq);
     }
 
     #userHandle = (() => {
+        console.log('handler');
         if (this.#user) {
             Bus.emit(Events.UserRes, this.#user);
             console.log('sent user', this.#user);
