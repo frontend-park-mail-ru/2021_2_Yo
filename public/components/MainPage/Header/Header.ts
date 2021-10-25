@@ -32,12 +32,13 @@ export default class HeaderComponent {
     }).bind(this);
 
     #userHandle = ((user: UserData) => {
-        console.log('rendering:', user);
+        console.log('handle render:', user);
         this.render(user);
     }).bind(this);
 
 
     render(user?: UserData) {
+        console.log('render:', user);
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
