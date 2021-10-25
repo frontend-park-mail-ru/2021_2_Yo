@@ -14,10 +14,8 @@ class UserStore {
     }
 
     #userHandle = (() => {
-        console.log('handler');
         if (this.#user) {
             Bus.emit(Events.UserRes, this.#user);
-            console.log('sent user', this.#user);
         } else {
             void fetchGet(ApiUrls.User, 
                 (data: FetchResponseData) => {
@@ -26,13 +24,11 @@ class UserStore {
                         if (json.status === 200) {
                             this.#user = {name: json.body.name, geo: 'Мытищи'};
                             Bus.emit(Events.UserRes, this.#user);
-                            console.log('got user:', this.#user);
                         }
                     } 
                 }
             );
         }
-        console.log('user handle pick');
     }).bind(this);
 
     #logoutHandle = (() => {
@@ -41,4 +37,4 @@ class UserStore {
     }).bind(this);
 }
 
-const uStore = new UserStore();
+export default UserStore;

@@ -5,6 +5,12 @@ import MainPageController from './components/MainPage/controller.js';
 import LoginController from './components/Authorization/Login/LoginController.js';
 import SignupController from './components/Authorization/SignUp/SignupController.js';
 
+// Нужно исопльзовать, но я не знаю зачем)
+import UserStore from './modules/store/user.js';
+
+const uStore = new UserStore();
+
+
 let app = document.createElement('div') as HTMLElement;
 app.id = 'App';
 document.body.innerHTML = app.outerHTML;
