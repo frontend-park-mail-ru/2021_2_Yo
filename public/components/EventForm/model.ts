@@ -8,6 +8,7 @@ export default class EventFormModel {
         console.log(event);
         void fetchPost(ApiUrls.Events, event, (data: FetchResponseData) => {
             const {status, json} = data;
+            console.log(data);
             if (status === 200) {
                 if (json.status === 200) {
                     // bus.emit(Events.UserAuthorized, null);
