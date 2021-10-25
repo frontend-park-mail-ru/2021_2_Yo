@@ -28,7 +28,7 @@ export default class SignupView {
 
     render() {
         const source = `
-            <div class = "background">
+            <div class = "auth-background">
                 <img class="background__logo" src="./img/logo.png">
                 <div class = "authform">
                     <p class="authform__label label">Регистрация</p>

@@ -1,16 +1,18 @@
-import { UrlPathnames } from '../types.js';
+import {UrlPathnames} from '../types.js';
 import Bus from './eventbus/eventbus.js';
 import Events from './eventbus/events.js';
 
 // Комменты для перехода на другую ветку, все выпилю обещаю
 interface Controller {
     disable(): void;
-    enable(): void;
+
+    enable(params?: any): void;
 }
 
 class Router {
     #controllers: Map<UrlPathnames, Controller>;
     #path?: UrlPathnames;
+    #params?: URLSearchParams;
 
     constructor() {
         this.#controllers = new Map<UrlPathnames, Controller>();
@@ -45,7 +47,7 @@ class Router {
     }
 
     back() {
-        if (window.history.length > 1) { 
+        if (window.history.length > 1) {
             window.history.back();
         } else {
             this.route(UrlPathnames.Main);
@@ -59,13 +61,15 @@ class Router {
 
         if (window.location.pathname == this.#path) return;
 
+        this.#params = new URL(window.location.href).searchParams;
+
         if (this.#path) this.#controllers.get(this.#path)?.disable();
-        
+
         this.#path = <UrlPathnames>window.location.pathname;
         if (!Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
             this.#path = UrlPathnames.Error;
         }
-        this.#controllers.get(this.#path)?.enable();
+        this.#controllers.get(this.#path)?.enable(this.#params);
     }
 }
 

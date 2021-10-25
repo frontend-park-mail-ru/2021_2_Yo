@@ -28,7 +28,7 @@ export default class LoginView {
 
     render() {
         const source = `
-            <div class="background">
+            <div class="auth-background">
                 <img class="background__logo" src="./img/logo.png">
                 <div class="authform" id="authFormBackground">
                     <p class="authform__label label">Авторизация</p>

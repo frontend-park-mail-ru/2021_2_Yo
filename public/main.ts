@@ -1,9 +1,10 @@
-import { UrlPathnames } from './types.js';
-import { errorPage } from './modules/pageloaders.js';
+import {UrlPathnames} from './types.js';
+import {errorPage} from './modules/pageloaders.js';
 import Router from './modules/routing.js';
 import MainPageController from './components/MainPage/controller.js';
-import LoginController from './components/Authorization/Login/LoginController.js';
-import SignupController from './components/Authorization/SignUp/SignupController.js';
+import LoginController from './components/Authorization/Login/controller.js';
+import SignupController from './components/Authorization/SignUp/controller.js';
+import EventPageController from './components/EventPage/controller.js';
 
 let app = document.createElement('div') as HTMLElement;
 app.id = 'App';
@@ -42,10 +43,12 @@ const mController = new MainPageController(app);
 const lController = new LoginController(app);
 const sController = new SignupController(app);
 const eController = new ErrorController();
+const evController = new EventPageController(app);
 
 Router.add(UrlPathnames.Main, mController);
 Router.add(UrlPathnames.Login, lController);
 Router.add(UrlPathnames.Signup, sController);
 Router.add(UrlPathnames.Error, eController);
+Router.add(UrlPathnames.Event, evController);
 
 Router.route();
