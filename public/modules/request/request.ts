@@ -5,8 +5,8 @@ const METHODS = {
     GET: 'GET',
 };
 
-// const API = 'https://bmstusasa.herokuapp.com';
-const API = 'https://yobmstu.herokuapp.com';
+const API = 'https://bmstusasa.herokuapp.com';
+// const API = 'https://yobmstu.herokuapp.com';
 
 export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;

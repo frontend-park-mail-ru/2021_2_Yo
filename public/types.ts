@@ -40,7 +40,8 @@ export enum UrlPathnames {
     Login = '/login',
     Signup = '/signup',
     Event = '/events',
-    Create = '/create'
+    Create = '/create',
+    Edit = '/edit'
 }
 
 export enum ApiUrls {
