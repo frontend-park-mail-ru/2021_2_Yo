@@ -16,20 +16,6 @@ document.body.innerHTML = window.Handlebars.compile(source)();
 const header = <HTMLElement>document.getElementById('mvc-header');
 const content = <HTMLElement>document.getElementById('mvc-content');
 
-// Заглушка для роутера
-// class ErrorController {
-//     #parent: HTMLElement;
-//     constructor(parent: HTMLElement) {
-//         this.#parent = parent;
-//     }
-//     enable() {
-//         errorPage(this.#parent);
-//     }
-//     disable() {
-
-//     }
-// }
-
 const hController = new HeaderController(header);
 const mController = new MainPageController(content);
 const lController = new LoginController(content);
