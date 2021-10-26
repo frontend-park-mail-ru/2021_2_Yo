@@ -61,10 +61,10 @@ export default class EventPageView {
                 </div>
                 <div class="background__event-block event-block">
                     <div class="buttons">
-                        <a class="buttons__event-button event-button event-button_blue" id="editButton">
+                        <button class="buttons__event-button event-button event-button_blue" id="editButton">
                             Редактировать мероприятие
-                        </a>
-                        <a class="buttons__event-button event-button event-button_red">Удалить мероприятие</a>
+                        </button>
+                        <button class="buttons__event-button event-button event-button_red">Удалить мероприятие</button>
                     </div>
                 </div>
             </div>
