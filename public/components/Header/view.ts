@@ -102,5 +102,6 @@ export default class HeaderView {
         Bus.off(Events.UserRes, this.#userHandle);
         Bus.off(Events.UserLogout, this.#logoutHandle);
         Bus.off(Events.UserError, this.#logoutHandle);
+        this.#parent.innerHTML = '';
     }
 }
