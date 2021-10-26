@@ -8,6 +8,9 @@ const METHODS = {
 const API = 'https://bmstusasa.herokuapp.com';
 
 export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void) {
+    if (url === ApiUrls.User) {
+        console.log('requesting for user');
+    }
     let HTTPStatus: number;
 
     return fetch(API + url, {
