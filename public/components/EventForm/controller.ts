@@ -11,6 +11,7 @@ export default class EventFormController {
     constructor(parent: HTMLElement) {
         this.#view = new EventFormView(parent);
         this.#model = new EventFormModel();
+        Bus.on(Events.EventEditReq, this.#eventEditHandle);
     }
 
     enable() {

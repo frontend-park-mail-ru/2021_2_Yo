@@ -72,10 +72,10 @@ export default class EventPageView {
 
         const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(event);
-        this.#addEventListeners();
+        this.#addListeners();
     }
 
-    #addEventListeners() {
+    #addListeners() {
         const editButton = document.getElementById('editButton') as HTMLAnchorElement;
         editButton.addEventListener('click', this.#editHandle);
     }
