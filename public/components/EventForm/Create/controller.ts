@@ -1,7 +1,7 @@
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
+import Bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 import EventFormView from './view.js';
-import {EventData} from '../../types.js';
+import {EventData} from '../../../types.js';
 import EventFormModel from './model.js';
 
 export default class EventFormController {
@@ -11,12 +11,10 @@ export default class EventFormController {
     constructor(parent: HTMLElement) {
         this.#view = new EventFormView(parent);
         this.#model = new EventFormModel();
-        Bus.on(Events.EventEditReq, this.#eventEditHandle);
     }
 
     enable() {
         Bus.on(Events.EventCreate, this.#eventHandle);
-        Bus.on(Events.EventEditReq, this.#eventEditHandle);
         this.#view.render();
     }
 
@@ -27,9 +25,5 @@ export default class EventFormController {
 
     #eventHandle = ((event: EventData) => {
         this.#model.createEvent(event);
-    });
-
-    #eventEditHandle = ((event: EventData) => {
-        this.#view.render(event);
     });
 }

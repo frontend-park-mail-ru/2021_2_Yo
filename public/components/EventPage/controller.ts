@@ -14,8 +14,8 @@ export default class EventPageController {
     }
 
     enable(params?: URLSearchParams) {
+        Bus.on(Events.EventRes, this.#eventHandle);
         this.#model.getEvent(params?.get('id') as string);
-        Bus.on(Events.EventPageRes, this.#eventHandle);
     }
 
     #eventHandle = ((event: EventData) => {
@@ -23,6 +23,7 @@ export default class EventPageController {
     });
 
     disable() {
+        Bus.off(Events.EventRes, this.#eventHandle);
         this.#view.disable();
     }
 }

@@ -1,6 +1,6 @@
-import {EventData} from '../../types.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
+import {EventData} from '../../../types.js';
+import Bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 
 export default class EventFormView {
     #parent: HTMLElement;

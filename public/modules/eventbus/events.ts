@@ -11,7 +11,7 @@ enum Events {
     EventsReq = 'events:request',
     EventsRes = 'events:response',
     EventsError = 'events:error',
-    EventPageRes = 'event-page:response',
+    EventRes = 'event:response',
     EventCreate = 'event:create',
     EventCreated = 'event:created',
     EventEditReq = 'event:edit-request',

@@ -1,4 +1,4 @@
-import {EventData} from '../../types.js';
+import {EventData, UrlPathnames} from '../../types.js';
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 
@@ -61,10 +61,11 @@ export default class EventPageView {
                 </div>
                 <div class="background__event-block event-block">
                     <div class="buttons">
-                        <button class="buttons__event-button event-button event-button_blue" id="editButton">
+                        <button
+                         class="buttons__event-button event-button event-button_blue" id="editButton"">
                             Редактировать мероприятие
                         </button>
-                        <button class="buttons__event-button event-button event-button_red">Удалить мероприятие</button>
+                        <a class="buttons__event-button event-button event-button_red">Удалить мероприятие</a>
                     </div>
                 </div>
             </div>
@@ -72,21 +73,28 @@ export default class EventPageView {
 
         const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(event);
+
         this.#addListeners();
     }
 
     #addListeners() {
-        const editButton = document.getElementById('editButton') as HTMLAnchorElement;
-        editButton.addEventListener('click', this.#editHandle);
+        const editButton = document.getElementById('editButton');
+        editButton?.addEventListener('click', this.#editHandle);
+    }
+
+    #removeListeners() {
+        const editButton = document.getElementById('editButton');
+        editButton?.removeEventListener('click', this.#editHandle);
     }
 
     #editHandle = ((e: Event) => {
         e.preventDefault();
 
-        Bus.emit(Events.EventEditReq, this.#event);
-    });
+        Bus.emit(Events.RouteUrl, UrlPathnames.Edit + '?id=' + this.#event?.id);
+    }).bind(this);
 
     disable() {
+        this.#removeListeners();
         this.#parent.innerHTML = '';
     }
 }

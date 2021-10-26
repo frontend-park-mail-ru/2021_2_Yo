@@ -5,7 +5,8 @@ import MainPageController from './components/MainPage/controller.js';
 import LoginController from './components/Authorization/Login/controller.js';
 import SignupController from './components/Authorization/SignUp/controller.js';
 import EventPageController from './components/EventPage/controller.js';
-import EventFormController from './components/EventForm/controller.js';
+import EventFormController from './components/EventForm/Create/controller.js';
+import EventEditFormController from './components/EventForm/Edit/controller.js';
 
 let app = document.createElement('div') as HTMLElement;
 app.id = 'App';
@@ -46,13 +47,15 @@ const lController = new LoginController(app);
 const sController = new SignupController(app);
 const eController = new ErrorController();
 const evController = new EventPageController(app);
-const evfController = new EventFormController(app);
+const evFController = new EventFormController(app);
+const evEdController = new EventEditFormController(app);
 
 Router.add(UrlPathnames.Main, mController);
 Router.add(UrlPathnames.Login, lController);
 Router.add(UrlPathnames.Signup, sController);
 Router.add(UrlPathnames.Error, eController);
 Router.add(UrlPathnames.Event, evController);
-Router.add(UrlPathnames.Create, evfController);
+Router.add(UrlPathnames.Create, evFController);
+Router.add(UrlPathnames.Edit, evEdController);
 
 Router.route();
