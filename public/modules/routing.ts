@@ -83,7 +83,7 @@ class Router {
 
         const prevControllers = <Controllers>this.#controllers.get(this.#path);
         this.#path = nextPath;
-        if (nextControllers.header) {
+        if (!nextControllers.header) {
             prevControllers.header?.disable();
         }
         prevControllers.content.disable();
