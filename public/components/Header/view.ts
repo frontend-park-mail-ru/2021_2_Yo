@@ -12,6 +12,7 @@ export default class HeaderView {
 
     subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
+        Bus.on(Events.UserError, this.#logoutHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
         Bus.emit(Events.UserReq);
     }
@@ -45,15 +46,16 @@ export default class HeaderView {
     }).bind(this);
 
     #logoutHandle = (() => {
-        this.render();
+        this.#render();
     }).bind(this);
 
     #userHandle = ((user: UserData) => {
         console.log('handle render:', user);
-        this.render(user);
+        this.#render(user);
     }).bind(this);
 
-    render(user?: UserData) {
+    #render(user?: UserData) {
+        console.log('render header: ', user);
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
@@ -99,5 +101,6 @@ export default class HeaderView {
         this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
         Bus.off(Events.UserLogout, this.#logoutHandle);
+        Bus.off(Events.UserError, this.#logoutHandle);
     }
 }
