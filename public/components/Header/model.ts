@@ -12,6 +12,7 @@ export default class HeaderModel {
 
     #userHandle = (() => {
         const stored = UserStore.get();
+        console.log(stored);
         if (stored) {
             Bus.emit(Events.UserRes, stored);
         } else {

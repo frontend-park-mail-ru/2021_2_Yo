@@ -44,7 +44,7 @@ class ErrorController {
     }
 }
 
-const hController = new MainPageController(header);
+const hController = new HeaderController(header);
 const mController = new MainPageController(content);
 const lController = new LoginController(content);
 const sController = new SignupController(content);
