@@ -36,8 +36,12 @@ const content = <HTMLElement>document.getElementById('mvc-content');
 // }
 
 class ErrorController {
+    #parent: HTMLElement;
+    constructor(parent: HTMLElement) {
+        this.#parent = parent;
+    }
     enable() {
-        errorPage();
+        errorPage(this.#parent);
     }
     disable() {
 
@@ -48,7 +52,7 @@ const hController = new HeaderController(header);
 const mController = new MainPageController(content);
 const lController = new LoginController(content);
 const sController = new SignupController(content);
-const eController = new ErrorController();
+const eController = new ErrorController(content);
 
 Router.add(UrlPathnames.Main, {header: hController, content: mController});
 Router.add(UrlPathnames.Login, {content: lController});
