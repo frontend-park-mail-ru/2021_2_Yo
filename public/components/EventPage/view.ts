@@ -1,5 +1,4 @@
 import {EventData, UrlPathnames} from '../../types.js';
-import {anchorsConfig} from '../../config.js';
 
 export default class EventPageView {
     #parent: HTMLElement;
@@ -32,8 +31,8 @@ export default class EventPageView {
                     <p class="event-block__event-text_header event-text_header">{{event.description}}</p>
         
                     <span class="event-block__event-tags-block event-tags-block">
-                        {{#each tag}}
-                            <a class="event-tags-block__event-tag event-tag">{{event.this}}</a>
+                        {{#each event.tag}}
+                            <a class="event-tags-block__event-tag event-tag">{{this}}</a>
                         {{/each}}
                     </span>
                 </div>
