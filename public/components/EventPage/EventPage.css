@@ -189,7 +189,7 @@
     height: 100%;
 }
 
-.event-block__buttons {
-    padding-right: 1.04vw;
-    padding-left: 1.04vw;
+.buttons__event-button {
+    margin-right: 1.04vw;
+    margin-left: 1.04vw;
 }
