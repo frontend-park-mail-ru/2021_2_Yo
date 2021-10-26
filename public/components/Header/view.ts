@@ -1,32 +1,47 @@
-import { UserData } from '../../../types.js';
-import { anchorsConfig } from '../../../config.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import Bus from '../../modules/eventbus/eventbus.js';
+import Events from '../../modules/eventbus/events.js';
+import { anchorsConfig } from '../../config.js';
+import { UserData, UrlPathnames } from '../../types.js';
 
-export default class HeaderComponent {
+export default class HeaderView {
     #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         Bus.on(Events.UserRes, this.#userHandle);
+        Bus.on(Events.UserLogout, this.#logoutHandle);
         Bus.emit(Events.UserReq);
     }
 
     #addListeners() {
-        const logout = document.getElementById('logout');
+        const logout = document.getElementById('header-logout');
         if (logout) {
-            logout.addEventListener('click', this.#logoutHandler);
+            logout.addEventListener('click', this.#logoutHandle);
+        }
+
+        const logo = document.getElementById('header-logo');
+        if (logo) {
+            logo.addEventListener('click', this.#logoHandle);
         }
     }
 
     #removeListeners() {
-        const logout = <HTMLElement>document.getElementById('logout');
+        const logout = <HTMLElement>document.getElementById('header-logout');
         if (logout) {
-            logout.removeEventListener('click', this.#logoutHandler);
+            logout.removeEventListener('click', this.#logoutHandle);
+        }
+
+        const logo = document.getElementById('header-logo');
+        if (logo) {
+            logo.removeEventListener('click', this.#logoHandle);
         }
     }
 
-    #logoutHandler = (() => {
+    #logoHandle = (() => {
+        Bus.emit(Events.RouteUrl, UrlPathnames.Main);
+    }).bind(this);
+
+    #logoutHandle = (() => {
         Bus.emit(Events.UserLogout);
         this.render();
     }).bind(this);
@@ -36,13 +51,11 @@ export default class HeaderComponent {
         this.render(user);
     }).bind(this);
 
-
     render(user?: UserData) {
-        console.log('render:', user);
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
-                    <img class="header__logo header-button" src="./img/logo2.0.png">
+                    <img id="header-logo" class="header__logo header-button" src="./img/logo2.0.png">
                     {{#if user}}
                         <div class="flex">
                             <img id="geoimg" src="./img/geo2.0.png">
@@ -62,7 +75,7 @@ export default class HeaderComponent {
                             <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
                         </div>
-                        <img id="logout" class="header-button" src="./img/logout2.0.png">
+                        <img id="header-logout" class="header-button" src="./img/logout2.0.png">
                     {{else}}
                         <div>
                         {{#each authAnchors}}
@@ -76,12 +89,13 @@ export default class HeaderComponent {
         const template = window.Handlebars.compile(source);
         const authAnchors = anchorsConfig.authAnchors;
         this.#parent.innerHTML = template({authAnchors, user});
+
         this.#addListeners();
     }
 
     disable() {
         this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
-        this.#parent.innerHTML = '';
+        Bus.off(Events.UserLogout, this.#logoutHandle);
     }
 }

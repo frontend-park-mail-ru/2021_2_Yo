@@ -7,13 +7,18 @@ interface Controller {
     disable(): void;
     enable(): void;
 }
+type Controllers = {
+    header?: Controller,
+    content: Controller,
+}
 
 class Router {
-    #controllers: Map<UrlPathnames, Controller>;
+    // #controllers: Map<UrlPathnames, Controller[]>;
+    #controllers: Map<UrlPathnames, Controllers>;
     #path?: UrlPathnames;
 
     constructor() {
-        this.#controllers = new Map<UrlPathnames, Controller>();
+        this.#controllers = new Map<UrlPathnames, Controllers>();
 
         window.onpopstate = () => {
             this.route();
@@ -40,8 +45,8 @@ class Router {
         this.back();
     }).bind(this);
 
-    add(path: UrlPathnames, controller: Controller) {
-        this.#controllers.set(path, controller);
+    add(path: UrlPathnames, controllers: Controllers) {
+        this.#controllers.set(path, controllers);
     }
 
     back() {
@@ -52,6 +57,13 @@ class Router {
         }
     }
 
+    #getValidPath(): UrlPathnames {
+        if (Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
+            return <UrlPathnames>window.location.pathname;
+        }
+        return UrlPathnames.Error;
+    }
+
     route(path?: UrlPathnames) {
         if (path) {
             window.history.pushState({}, '', path);
@@ -59,13 +71,50 @@ class Router {
 
         if (window.location.pathname == this.#path) return;
 
-        if (this.#path) this.#controllers.get(this.#path)?.disable();
-        
-        this.#path = <UrlPathnames>window.location.pathname;
-        if (!Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
-            this.#path = UrlPathnames.Error;
+        const nextPath = this.#getValidPath();
+        const nextControllers = <Controllers>this.#controllers.get(<UrlPathnames>window.location.pathname);
+
+        if (!this.#path) {
+            this.#path = nextPath;
+            nextControllers.header?.enable();
+            nextControllers.content.enable();
+            return;
         }
-        this.#controllers.get(this.#path)?.enable();
+
+        const prevControllers = <Controllers>this.#controllers.get(this.#path);
+        this.#path = nextPath;
+        if (nextControllers.header) {
+            prevControllers.header?.disable();
+        }
+        prevControllers.content.disable();
+        nextControllers.content.enable();
+
+        // if (this.#path) {
+        //     const prev = <Controller[]>this.#controllers.get(this.#path);
+        //     if (pageExists) {
+        //         if (prev.length > next.length) {
+        //             prev[1].disable();
+        //         }
+        //     } else {
+        //         this.
+        //     }
+        // }
+
+        // if (this.#path) this.#controllers.get(this.#path)?.map(
+        //     (controller) => {
+        //         controller.disable();
+        //     }
+        // );
+        
+        // this.#path = <UrlPathnames>window.location.pathname;
+        // if (!Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
+        //     this.#path = UrlPathnames.Error;
+        // }
+        // this.#controllers.get(this.#path)?.map(
+        //     (controller) => {
+        //         controller.enable();
+        //     }
+        // );
     }
 }
 
