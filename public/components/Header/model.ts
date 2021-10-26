@@ -22,8 +22,10 @@ export default class HeaderModel {
                         if (json.status === 200) {
                             const user = {name: json.body.name, geo: 'Мытищи'};
                             Bus.emit(Events.UserRes, user);
+                            return;
                         }
                     } 
+                    Bus.emit(Events.UserError);
                 },
                 () => {
                     Bus.emit(Events.UserError);
