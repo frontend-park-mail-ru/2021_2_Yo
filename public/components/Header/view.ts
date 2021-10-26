@@ -50,7 +50,6 @@ export default class HeaderView {
     }).bind(this);
 
     #userHandle = ((user: UserData) => {
-        console.log('handle render:', user);
         this.#render(user);
     }).bind(this);
 
