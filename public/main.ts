@@ -17,24 +17,6 @@ const header = <HTMLElement>document.getElementById('mvc-header');
 const content = <HTMLElement>document.getElementById('mvc-content');
 
 // Заглушка для роутера
-// class LoginController {
-//     enable() {
-//         loginPage();
-//     }
-//     disable() {
-
-//     }
-// }
-
-// class SignupController {
-//     enable() {
-//         signupPage();
-//     }
-//     disable() {
-
-//     }
-// }
-
 class ErrorController {
     #parent: HTMLElement;
     constructor(parent: HTMLElement) {

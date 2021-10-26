@@ -87,42 +87,8 @@ class Router {
             prevControllers.header?.disable();
             nextControllers.header?.enable();
         }
-        // if (!nextControllers.header) {
-        //     prevControllers.header?.disable();
-        // } else {
-        //     if (prevControllers.header !== nextControllers.header) {
-
-        //     }
-        // }
         prevControllers.content.disable();
         nextControllers.content.enable();
-
-        // if (this.#path) {
-        //     const prev = <Controller[]>this.#controllers.get(this.#path);
-        //     if (pageExists) {
-        //         if (prev.length > next.length) {
-        //             prev[1].disable();
-        //         }
-        //     } else {
-        //         this.
-        //     }
-        // }
-
-        // if (this.#path) this.#controllers.get(this.#path)?.map(
-        //     (controller) => {
-        //         controller.disable();
-        //     }
-        // );
-        
-        // this.#path = <UrlPathnames>window.location.pathname;
-        // if (!Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
-        //     this.#path = UrlPathnames.Error;
-        // }
-        // this.#controllers.get(this.#path)?.map(
-        //     (controller) => {
-        //         controller.enable();
-        //     }
-        // );
     }
 }
 

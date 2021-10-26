@@ -54,7 +54,6 @@ export default class HeaderView {
     }).bind(this);
 
     #render(user?: UserData) {
-        console.log('render header: ', user);
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
