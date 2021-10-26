@@ -12,6 +12,7 @@ export default class HeaderController {
 
     enable() {
         this.#model.enable();
+        this.#view.subscribe();
         this.#view.render();
     }
 

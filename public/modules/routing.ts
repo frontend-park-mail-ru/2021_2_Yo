@@ -72,17 +72,17 @@ class Router {
         if (window.location.pathname == this.#path) return;
 
         const nextPath = this.#getValidPath();
-        const nextControllers = <Controllers>this.#controllers.get(<UrlPathnames>window.location.pathname);
+        const nextControllers = <Controllers>this.#controllers.get(nextPath);
 
         if (!this.#path) {
-            this.#path = nextPath;
+            this.#path = <UrlPathnames>window.location.pathname;
             nextControllers.header?.enable();
             nextControllers.content.enable();
             return;
         }
 
         const prevControllers = <Controllers>this.#controllers.get(this.#path);
-        this.#path = nextPath;
+        this.#path = <UrlPathnames>window.location.pathname;
         if (nextControllers.header) {
             prevControllers.header?.disable();
         }

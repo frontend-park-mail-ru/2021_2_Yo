@@ -8,6 +8,9 @@ export default class HeaderView {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
+    }
+
+    subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
         Bus.emit(Events.UserReq);
