@@ -14,6 +14,7 @@ enum Events {
     EventPageRes = 'event-page:response',
     EventCreate = 'event:create',
     EventCreated = 'event:created',
+    EventEditReq = 'event:edit-request',
 
     // Authorization
     UserLogout = 'user:logout',

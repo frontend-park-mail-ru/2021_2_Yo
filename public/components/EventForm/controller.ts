@@ -15,6 +15,7 @@ export default class EventFormController {
 
     enable() {
         Bus.on(Events.EventCreate, this.#eventHandle);
+        Bus.on(Events.EventEditReq, this.#eventEditHandle);
         this.#view.render();
     }
 
@@ -25,5 +26,9 @@ export default class EventFormController {
 
     #eventHandle = ((event: EventData) => {
         this.#model.createEvent(event);
+    });
+
+    #eventEditHandle = ((event: EventData) => {
+        this.#view.render(event);
     });
 }

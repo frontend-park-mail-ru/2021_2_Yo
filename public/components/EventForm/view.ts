@@ -15,7 +15,7 @@ export default class EventFormView {
                 <form id="eventform">
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label input-label">Название</p>
-                        <input class ="input-block__input form-input" id="titleInput">
+                        <input class ="input-block__input form-input" id="titleInput" value="{{title}}">
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label input-label">Краткое описание</p>

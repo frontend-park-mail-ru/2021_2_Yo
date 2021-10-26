@@ -1,7 +1,10 @@
-import {EventData, UrlPathnames} from '../../types.js';
+import {EventData} from '../../types.js';
+import Bus from '../../modules/eventbus/eventbus.js';
+import Events from '../../modules/eventbus/events.js';
 
 export default class EventPageView {
     #parent: HTMLElement;
+    #event?: EventData;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -9,29 +12,30 @@ export default class EventPageView {
 
     render(event: EventData) {
         console.log(event);
+        this.#event = event;
         const source = `  
             <div class ="event-background">
                 <div class="background__event-block event-block">
                     <div class="event-block__event-header event-header">
                         <span>
                             <span class="event-header__event-header-text event-header-text event-header-text_place">
-                                {{event.city}}
+                                {{city}}
                             </span>
                             <span class ="event-header-text"> > </span>
-                            <span class="event-header-text event-header-text_category">{{event.category}}</span>
+                            <span class="event-header-text event-header-text_category">{{category}}</span>
                         </span>
                         <div class="event-block__event-header-views event-header-views">
                             <img class="event-views-img" src="../../server/img/viewedgrey.png">
-                            <span class="event-header-viewed-text">{{event.viewed}}</span>
+                            <span class="event-header-viewed-text">{{viewed}}</span>
                         </div>
                     </div>
         
-                    <p class="event-block__event-title event-title">{{event.title}}</p>
+                    <p class="event-block__event-title event-title">{{title}}</p>
         
-                    <p class="event-block__event-text_header event-text_header">{{event.description}}</p>
+                    <p class="event-block__event-text_header event-text_header">{{description}}</p>
         
                     <span class="event-block__event-tags-block event-tags-block">
-                        {{#each event.tag}}
+                        {{#each tag}}
                             <a class="event-tags-block__event-tag event-tag">{{this}}</a>
                         {{/each}}
                     </span>
@@ -42,22 +46,22 @@ export default class EventPageView {
                 </div>
         
                 <div class="background__event-block event-block">
-                    <p class="event-block__event-text event-text">{{event.text}}</p>
+                    <p class="event-block__event-text event-text">{{text}}</p>
                 </div>
         
                 <div class="background__event-block event-block">
                     <div class="event-block__event-when">
                         <span class="event-text">Когда: </span>
-                        <span class="event-button event-button_orange">{{event.date}}</span>
+                        <span class="event-button event-button_orange">{{date}}</span>
                     </div>
                     <div class="event-block__event-where">
                         <span class="event-text">Где: </span>
-                        <span class="event-button event-button_blue">{{event.geo}}</span>
+                        <span class="event-button event-button_blue">{{geo}}</span>
                     </div>
                 </div>
                 <div class="background__event-block event-block">
                     <div class="buttons">
-                        <a class="buttons__event-button event-button event-button_blue" href="{{editUrl}}">
+                        <a class="buttons__event-button event-button event-button_blue" id="editButton">
                             Редактировать мероприятие
                         </a>
                         <a class="buttons__event-button event-button event-button_red">Удалить мероприятие</a>
@@ -67,9 +71,19 @@ export default class EventPageView {
         `;
 
         const template: any = window.Handlebars.compile(source);
-        const editUrl = UrlPathnames.Edit;
-        this.#parent.innerHTML = template({editUrl, event});
+        this.#parent.innerHTML = template(event);
     }
+
+    #addEventListeners() {
+        const editButton = document.getElementById('editButton') as HTMLAnchorElement;
+        editButton.addEventListener('click', this.#editHandle);
+    }
+
+    #editHandle = ((e: Event) => {
+        e.preventDefault();
+
+        Bus.emit(Events.EventEditReq, this.#event);
+    });
 
     disable() {
         this.#parent.innerHTML = '';
