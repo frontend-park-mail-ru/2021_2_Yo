@@ -190,6 +190,5 @@
 }
 
 .buttons__event-button {
-    margin-right: 1.04vw;
-    margin-left: 1.04vw;
+    margin: 1.85vh 1.04vw;
 }
