@@ -6,7 +6,7 @@ import Events from '../../modules/eventbus/events.js';
 export default class EventFormModel {
     createEvent(event: EventData) {
         console.log(event);
-        void fetchPost(ApiUrls.Events, event, (data: FetchResponseData) => {
+        void fetchPost(ApiUrls.Events + '/' + event.id, event, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
             if (status === 200) {

@@ -31,7 +31,7 @@ export function fetchGet(url: string, callback?: (args?: any) => void, error?: (
     });
 }
 
-export function fetchPost(url: ApiUrls, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchPost(url: string, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
     return fetch(API + url, {
