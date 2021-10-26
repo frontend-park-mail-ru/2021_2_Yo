@@ -45,7 +45,6 @@ export default class HeaderView {
     }).bind(this);
 
     #logoutHandle = (() => {
-        Bus.emit(Events.UserLogout);
         this.render();
     }).bind(this);
 
