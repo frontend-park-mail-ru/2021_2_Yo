@@ -48,11 +48,17 @@ export default class EventPageView {
                 <div class="background__event-block event-block">
                     <div class="event-block__event-when">
                         <span class="event-text">Когда: </span>
-                        <span class="event-when-text">{{date}}</span>
+                        <span class="event-button event-button_orange">{{date}}</span>
                     </div>
                     <div class="event-block__event-where">
                         <span class="event-text">Где: </span>
-                        <span class="event-where-text">{{geo}}</span>
+                        <span class="event-button event-button_blue">{{geo}}</span>
+                    </div>
+                </div>
+                <div class="background__event-block event-block">
+                    <div class="event-block__buttons buttons">
+                        <a class="event-button event-button_blue">Редактировать мероприятие</a>
+                        <a class="event-button event-button_red">Удалить мероприятие</a>
                     </div>
                 </div>
             </div>
