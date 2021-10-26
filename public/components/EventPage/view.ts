@@ -72,6 +72,7 @@ export default class EventPageView {
 
         const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(event);
+        this.#addEventListeners();
     }
 
     #addEventListeners() {
