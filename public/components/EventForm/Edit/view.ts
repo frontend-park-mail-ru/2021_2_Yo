@@ -27,7 +27,8 @@ export default class EventEditFormView {
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Описание</p>
-                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12" placeholder="{{event.text}}"></textarea>
+                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12" 
+                        placeholder="{{event.text}}"></textarea>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Дата проведения</p>
