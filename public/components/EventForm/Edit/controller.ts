@@ -15,7 +15,7 @@ export default class EventEditFormController {
 
     enable(params?: URLSearchParams) {
         Bus.on(Events.EventEditReq, this.#editHandle);
-        Bus.on(Events.EventRes, this.#eventHandle)
+        Bus.on(Events.EventRes, this.#eventHandle);
         this.#model.getEvent(params?.get('id') as string);
     }
 
@@ -25,7 +25,7 @@ export default class EventEditFormController {
 
     #eventHandle = (event: EventData) => {
         this.#view.render(event);
-    }
+    };
 
     disable() {
         Bus.off(Events.EventEditReq, this.#editHandle);
