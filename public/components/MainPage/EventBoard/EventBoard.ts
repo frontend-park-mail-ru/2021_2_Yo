@@ -53,11 +53,11 @@ export default class EventBoardComponent {
         
         const source = `
             {{#if this}}
-            <div class="board">
+            <div class="wrapper-center">
                 <div class="events">
                     {{#each this}}
-                    <div class="events__e{{@index}} events__e-wrapper">
-                        <img class="events__image" src="{{imgUrl}}">
+                    <div class="events__e{{@index}} events__e-wrapper bg-img-wrapper">
+                        <img class="bg-img" src="{{imgUrl}}">
                         <div class="events__content">
                             <span class="events__description">{{description}}</span>
                             <div class="events__viewed">

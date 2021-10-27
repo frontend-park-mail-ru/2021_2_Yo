@@ -5,6 +5,7 @@ import MainPageController from './components/MainPage/controller.js';
 import LoginController from './components/Authorization/Login/LoginController.js';
 import SignupController from './components/Authorization/SignUp/SignupController.js';
 import HeaderController from './components/Header/controller.js';
+import SearchPageController from './components/SearchPage/controller.js';
 
 const source = `
     <div id="App">
@@ -16,15 +17,17 @@ document.body.innerHTML = window.Handlebars.compile(source)();
 const header = <HTMLElement>document.getElementById('mvc-header');
 const content = <HTMLElement>document.getElementById('mvc-content');
 
-const hController = new HeaderController(header);
-const mController = new MainPageController(content);
-const lController = new LoginController(content);
-const sController = new SignupController(content);
-const eController = new ErrorPageController(content);
+const headerController = new HeaderController(header);
+const mainController = new MainPageController(content);
+const loginController = new LoginController(content);
+const signupController = new SignupController(content);
+const searchController = new SearchPageController(content);
+const errorController = new ErrorPageController(content);
 
-Router.add(UrlPathnames.Main, {header: hController, content: mController});
-Router.add(UrlPathnames.Login, {content: lController});
-Router.add(UrlPathnames.Signup, {content: sController});
-Router.add(UrlPathnames.Error, {header: hController, content: eController});
+Router.add(UrlPathnames.Main, {header: headerController, content: mainController});
+Router.add(UrlPathnames.Login, {content: loginController});
+Router.add(UrlPathnames.Signup, {content: signupController});
+Router.add(UrlPathnames.Search, {header: headerController, content: searchController});
+Router.add(UrlPathnames.Error, {header: headerController, content: errorController });
 
 Router.route();

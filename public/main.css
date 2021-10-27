@@ -1,14 +1,66 @@
+:root {
+    --background: #F7F7F7;
+    --grayy: #AAAAAA;
+    --date-orange: #FF630B;
+    --geo-turquoise: #08BBBB;
+}
+
 body {
     margin: 0;
     font-family: Roboto;
 }
 
 #App {
-    background-color: #F7F7F7;
+    background-color: var(--background);
+    min-height: 100vh;
 }
 
 .flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.wrapper-center {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--background-gray);
+}
+
+.wrapper__top_forty {
+    padding-top: 40px;
+}
+
+.content {
+    width: 67vw;
+}
+
+.text_date {
+    color: var(--date-orange);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.text_geo {
+    color: var(--geo-turquoise);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: all .5s;
+}
+
+.bg-img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-img-wrapper:hover .bg-img {
+    transform: scale(1.2);
 }
