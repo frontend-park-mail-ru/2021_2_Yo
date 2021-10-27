@@ -11,7 +11,7 @@ export default class EventFormModel {
             text: inputsData.get('text')?.value as string,
             city: inputsData.get('city')?.value as string,
             date: inputsData.get('date')?.value as string,
-            category: inputsData.get('text')?.value as string,
+            category: inputsData.get('category')?.value as string,
             tag: inputsData.get('tag')?.value as string[],
             geo: inputsData.get('geo')?.value as string
         };
