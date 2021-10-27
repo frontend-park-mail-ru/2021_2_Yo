@@ -27,7 +27,7 @@ export default class EventFormView {
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Дата проведения</p>
-                            <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date"/>
+                            <input class ="input-block__input form-input form-input_thin" id="dateInput"/>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Город</p>

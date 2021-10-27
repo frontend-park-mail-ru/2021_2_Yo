@@ -32,7 +32,7 @@ export default class EventEditFormView {
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Дата проведения</p>
-                        <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date" 
+                        <input class ="input-block__input form-input form-input_thin" id="dateInput"
                         value="{{date}}"/>
                     </div>
                     <div class="eventform__input-block input-block">
@@ -56,7 +56,7 @@ export default class EventEditFormView {
                     </div>
                     <div class="eventform__buttons buttons">
                         <input value="Отмена" class="button-cancel">
-                        <input type="submit" value="СОЗДАТЬ" class="button-save">
+                        <input type="submit" value="ИЗМЕНИТЬ" class="button-save">
                     </div>
                 </div>
             </div>
