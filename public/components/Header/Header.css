@@ -3,7 +3,6 @@
 }
 
 .header-text {
-    /* font-size: 20px; */
     font-size: 1vw;
     color: white;
     text-align: center;
@@ -19,7 +18,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
+    background: var(--header-bg);
 }
 
 .header__content {
@@ -27,6 +26,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header__logo {
+    width: 140px;
+    height: 56px;
 }
 
 .header__search {
@@ -51,6 +55,7 @@
 
 .header__user-avatar {
     width: 32px;
+    height: 32px;
     margin-right: 6px;
 }
 

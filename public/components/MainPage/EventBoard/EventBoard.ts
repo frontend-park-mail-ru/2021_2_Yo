@@ -6,9 +6,9 @@ export default class EventBoardComponent {
     #parent: HTMLElement;
 
     constructor(parent: HTMLElement) {
-        Bus.emit(Events.EventsReq);
         Bus.on(Events.EventsRes, this.#eventsHandle);
         Bus.on(Events.EventsError, this.#eventsError);
+        Bus.emit(Events.EventsReq);
         this.#parent = parent;
     }
 
@@ -16,7 +16,7 @@ export default class EventBoardComponent {
         this.render(data);
     }).bind(this);
 
-    #eventsError = ((data: EventCardData[]) => {
+    #eventsError = (() => {
         this.error();
     }).bind(this);
 
@@ -53,24 +53,24 @@ export default class EventBoardComponent {
         
         const source = `
             {{#if this}}
-                <div class="board">
-                    <div class="events">
-                        {{#each this}}
-                            <div class="events__e{{@index}} events__e-wrapper">
-                                <img class="events__image" src="{{imgUrl}}">
-                                <div class="events__content">
-                                    <span class="events__description">{{description}}</span>
-                                    <div class="events__viewed">
-                                        <img src="./img/viewed2.0.png">
-                                        <span class="events__viewed-score">{{viewed}}</span>
-                                    </div>
-                                </div>
+            <div class="board">
+                <div class="events">
+                    {{#each this}}
+                    <div class="events__e{{@index}} events__e-wrapper">
+                        <img class="events__image" src="{{imgUrl}}">
+                        <div class="events__content">
+                            <span class="events__description">{{description}}</span>
+                            <div class="events__viewed">
+                                <img src="./img/viewed2.0.png">
+                                <span class="events__viewed-score">{{viewed}}</span>
                             </div>
-                        {{/each}}
+                        </div>
                     </div>
-                </div>                   
+                    {{/each}}
+                </div>
+            </div>                   
             {{else}}
-                <div id="events-loader"><div>
+            <div id="events-loader"><div>
             {{/if}}
         `;
         const template: any = window.Handlebars.compile(source);
