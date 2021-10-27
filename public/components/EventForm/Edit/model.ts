@@ -4,7 +4,7 @@ import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
 export default class EventEditFormModel {
-    editEvent(inputsData: Map<string, { errors: string[], value: string | string[] }>) {
+    editEvent(inputsData: Map<string, { errors: string[]; value: string | string[] }>, eventId: string) {
         const event: EventData = {
             title: inputsData.get('title')?.value as string,
             description: inputsData.get('description')?.value as string,
@@ -16,7 +16,7 @@ export default class EventEditFormModel {
             geo: inputsData.get('geo')?.value as string
         };
 
-        void fetchPost(ApiUrls.Events + '/' + event.id, event, (data: FetchResponseData) => {
+        void fetchPost(ApiUrls.Events + '/' + eventId, event, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
             if (status === 200) {

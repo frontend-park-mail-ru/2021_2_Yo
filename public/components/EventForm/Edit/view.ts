@@ -38,13 +38,15 @@ export default class EventEditFormView {
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Краткое описание</p>
-                        <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4" 
-                        placeholder="{{description}}"></textarea>
+                        <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4">
+                            {{description}}
+                        </textarea>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Описание</p>
-                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12" 
-                        placeholder="{{text}}"></textarea>
+                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12">
+                            {{text}}
+                        </textarea>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Дата проведения</p>
@@ -69,7 +71,7 @@ export default class EventEditFormView {
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Теги</p>
                         <input class ="input-block__input form-input form-input_thin" id="tagInput"/>
-                        <input value="Добавить" id="tagButton" class="input-block__input button-cancel"/>
+                        <input type="button" value="Добавить" id="tagButton" class="input-block__input button-cancel"/>
                         <div class="event-tags-block" id="tagBlock">
                         {{#if tag}}
                             {{#each tag}}
@@ -79,7 +81,7 @@ export default class EventEditFormView {
                         </div>
                     </div>
                     <div class="eventform__buttons buttons">
-                        <input value="Отмена" class="button-cancel">
+                        <input type="button" value="Отмена" class="button-cancel">
                         <input type="submit" value="ИЗМЕНИТЬ" class="button-save">
                     </div>
                 </form>
