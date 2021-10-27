@@ -18,7 +18,6 @@ export default class EventEditFormModel {
 
         void fetchPost(ApiUrls.Events + '/' + eventId, event, (data: FetchResponseData) => {
             const {status, json} = data;
-            console.log(data);
             if (status === 200) {
                 if (json.status === 200) {
                     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + event.id);

@@ -8,7 +8,7 @@ import {eventValidateFields} from '../../../modules/validation.js';
 export default class EventEditFormController {
     #view: EventEditFormView;
     #model: EventEditFormModel;
-    #eventId?: string;
+    #eventId = '';
 
     constructor(parent: HTMLElement) {
         this.#view = new EventEditFormView(parent);
