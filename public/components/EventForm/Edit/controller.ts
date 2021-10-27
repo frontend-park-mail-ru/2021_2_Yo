@@ -38,7 +38,7 @@ export default class EventEditFormController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk, null);
-            this.#model.editEvent(inputsData, this.#eventId as string);
+            this.#model.editEvent(inputsData, this.#eventId);
         } else {
             Bus.emit(Events.ValidationError, null);
         }
