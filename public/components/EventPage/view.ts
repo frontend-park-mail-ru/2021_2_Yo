@@ -11,7 +11,6 @@ export default class EventPageView {
     }
 
     render(event: EventData) {
-        console.log(event);
         this.#event = event;
         const source = `  
             <div class ="event-background">

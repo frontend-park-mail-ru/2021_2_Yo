@@ -102,6 +102,7 @@
 }
 
 .event-block__event-text_header {
+    box-sizing: border-box;
     margin: 1.85vh 1.04vw;
 }
 

@@ -69,16 +69,18 @@ export default class EventEditFormView {
                         value="{{category}}">
                     </div>
                     <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Теги</p>
-                        <input class ="input-block__input form-input form-input_thin" id="tagInput"/>
-                        <input type="button" value="Добавить" id="tagButton" class="input-block__input button-cancel"/>
-                        <div class="event-tags-block" id="tagBlock">
-                        {{#if tag}}
-                            {{#each tag}}
-                                <a class="event-tag">{{this}}</a>
-                            {{/each}}
-                        {{/if}}
-                        </div>
+                            <p class="input-block__input-label event-text">Теги</p>
+                            <input class ="input-block__input form-input form-input_thin" id="tagInput">
+                            <input value="Добавить" id="tagButton" class="input-block__input button-cancel" 
+                            type="button">
+                            <div id="tagBlockError"></div>
+                            <div class="event-tags-block" id="tagBlock">
+                            {{#if tag}}
+                                {{#each tag}}
+                                    <a class="event-tag">{{this}}</a>
+                                {{/each}}
+                            {{/if}}                            
+                            </div>
                     </div>
                     <div class="eventform__buttons buttons">
                         <input type="button" value="Отмена" class="button-cancel">

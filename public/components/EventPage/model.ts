@@ -3,33 +3,6 @@ import {ApiUrls, EventData, FetchResponseData} from '../../types.js';
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 
-// const event = {
-//     id: 1,
-//     city: 'Москва',
-//     category: 'Тусовка',
-//     viewed: 1094,
-//     title: 'Невероятная тусовка в Кремле',
-//     description: 'Небольшое описание мероприятия. Да, реально крутая тусовка. Да, говорю. Круто будет, говорю, весело.\n' +
-//         '         Всем ясно? Тусовка. Тусовка. Тусовка. Тусовка. Тусовка. Тусовка. Этот прямоугольник должен\n' +
-//         '         сжиматься/расширяться в зависимости от длины текста (количества строк).',
-//     tag: ['Вечеринка', 'Тусовка', 'Party', 'Alcohol'],
-//     text: 'But I must explain to you how all this mistaken idea of denouncing\n' +
-//         '                pleasure and praising pain was born and I will give you a complete account of the system, ' +
-//         'and expound the actual\n' +
-//         '                teachings of the great explorer of the truth, the master-builder of human happiness. ' +
-//         'No one rejects, dislikes,\n' +
-//         '               or avoids pleasure itself, because it is pleasure, but because those who do not know ' +
-//         'how to pursue pleasure\n' +
-//         '                rationally encounter consequences that are extremely painful. Nor again is ' +
-//         'there anyone who loves or pursues or\n' +
-//         '               desires to obtain pain of itself, because it is pain, but because occasionally ' +
-//         'circumstances occur in which\n' +
-//         '                toil and pain can procure him some great pleasure.',
-//     date: '28.10.2021',
-//     geo: 'Измайлово',
-//
-// };
-
 export default class EventPageModel {
     getEvent(id: string) {
         void fetchGet(ApiUrls.Events + '/' + id,
