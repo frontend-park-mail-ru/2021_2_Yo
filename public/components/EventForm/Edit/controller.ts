@@ -19,7 +19,7 @@ export default class EventEditFormController {
         Bus.on(Events.EventEditReq, this.#editHandle);
         Bus.on(Events.EventRes, this.#eventHandle);
         this.#view.subscribe();
-        this.#eventId = params?.get('id') as string
+        this.#eventId = params?.get('id') as string;
         this.#model.getEvent(this.#eventId);
     }
 
