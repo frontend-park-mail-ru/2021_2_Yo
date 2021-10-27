@@ -22,7 +22,7 @@ export default class EventEditFormModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + event.id);
+                    Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id);
                     return;
                 }
             }
