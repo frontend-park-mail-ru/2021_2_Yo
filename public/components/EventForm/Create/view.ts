@@ -11,45 +11,46 @@ export default class EventFormView {
 
     render(event?: EventData) {
         const source = `  
-            <div class="eventform-background">
-                <form id="eventform">
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Название</p>
-                        <input class ="input-block__input form-input" id="titleInput" value="{{title}}">
+                <div class="eventform-background">
+                    <div class="eventform">
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Название</p>
+                            <input class ="input-block__input form-input form-input_wide" id="titleInput"/>
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Краткое описание</p>
+                            <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4"></textarea>
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Описание</p>
+                            <textarea class ="input-block__input form-textarea" id="textInput" rows="12"></textarea>
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Дата проведения</p>
+                            <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date"/>
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Город</p>
+                            <input class ="input-block__input form-input form-input_thin" id="cityInput"/>
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Адрес</p>
+                            <input class ="input-block__input form-input form-input_thin" id="geoInput">
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Категория</p>
+                            <input class ="input-block__input form-input form-input_thin" id="categoryInput">
+                        </div>
+                        <div class="eventform__input-block input-block">
+                            <p class="input-block__input-label event-text">Теги</p>
+                            <input class ="input-block__input form-input form-input_thin" id="tagInput">
+                        </div>
+                        <div class="eventform__buttons buttons">
+                            <input value="Отмена" class="button-cancel">
+                            <input type="submit" value="СОЗДАТЬ" class="button-save">
+                        </div>
                     </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Краткое описание</p>
-                        <input class ="input-block__input form-input" id="descriptionInput">
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Описание</p>
-                        <input class ="input-block__input form-input" id="textInput">
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Дата проведения</p>
-                        <input class ="input-block__input form-input" id="dateInput">
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Город</p>
-                        <input class ="input-block__input form-input" id="cityInput">
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Адрес</p>
-                        <input class ="input-block__input form-input" id="geoInput">
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Категория</p>
-                        <input class ="input-block__input form-input" id="categoryInput">
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label input-label">Теги</p>
-                        <input class ="input-block__input form-input" id="tagInput">
-                    </div>
-                    <div class="eventform__buttons buttons">
-                        <input type="submit" value="СОЗДАТЬ" class="buttons__button-submit button-submit">
-                    </div>
-                </form>
-            </div>
+                </div>
         `;
 
         const template: any = window.Handlebars.compile(source);
