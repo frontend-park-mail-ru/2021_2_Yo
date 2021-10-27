@@ -12,7 +12,7 @@ export default class EventFormView {
     render(event?: EventData) {
         const source = `  
                 <div class="eventform-background">
-                    <div class="eventform">
+                    <div class="eventform" id="eventform">
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Название</p>
                             <input class ="input-block__input form-input form-input_wide" id="titleInput"/>
