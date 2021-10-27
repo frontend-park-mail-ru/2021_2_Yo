@@ -1,3 +1,7 @@
+:root {
+    --header-bg: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
+}
+
 body {
     margin: 0;
     font-family: Roboto;

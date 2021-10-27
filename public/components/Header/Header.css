@@ -1,7 +1,3 @@
-:root {
-    --header-bg: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
-}
-
 .header-button:hover {
     cursor: pointer;
 }
