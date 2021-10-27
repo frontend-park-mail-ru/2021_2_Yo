@@ -4,12 +4,14 @@ import Events from '../../../modules/eventbus/events.js';
 
 export default class EventEditFormView {
     #parent: HTMLElement;
+    #eventId?: number;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
     }
 
     render(event?: EventData) {
+        this.#eventId = event?.id;
         const source = `  
             <div class="eventform-background">
                 <form id="eventform">
@@ -89,7 +91,7 @@ export default class EventEditFormView {
         const tag: string[] = [];
         tag.push(tagInput.value);
 
-        const event: EventData = {title, description, text, date, city, geo, category, tag};
+        const event: EventData = {id: this.#eventId, title, description, text, date, city, geo, category, tag};
 
         Bus.emit(Events.EventEditReq, event);
     }
