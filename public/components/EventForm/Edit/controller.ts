@@ -8,20 +8,17 @@ import {eventValidateFields} from '../../../modules/validation.js';
 export default class EventEditFormController {
     #view: EventEditFormView;
     #model: EventEditFormModel;
-    #eventId: string;
 
     constructor(parent: HTMLElement) {
         this.#view = new EventEditFormView(parent);
         this.#model = new EventEditFormModel();
-        this.#eventId = '';
     }
 
     enable(params?: URLSearchParams) {
         Bus.on(Events.EventEditReq, this.#editHandle);
         Bus.on(Events.EventRes, this.#eventHandle);
         this.#view.subscribe();
-        this.#eventId = params?.get('id') as string;
-        this.#model.getEvent(this.#eventId);
+        this.#model.getEvent(params?.get('id') as string);
     }
 
     #editHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
@@ -39,7 +36,7 @@ export default class EventEditFormController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk, null);
-            this.#model.editEvent(inputsData, this.#eventId);
+            this.#model.editEvent(inputsData);
         } else {
             Bus.emit(Events.ValidationError, null);
         }
