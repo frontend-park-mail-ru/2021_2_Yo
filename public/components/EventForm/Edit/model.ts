@@ -38,7 +38,7 @@ export default class EventEditFormModel {
             console.log(data);
             if (status === 200) {
                 if (json.status === 200) {
-                    Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + json.body.id);
+                    Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + event.id);
                     return;
                 }
             }
