@@ -18,37 +18,37 @@ export default class EventEditFormView {
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Название</p>
                         <input class ="input-block__input form-input form-input_wide" id="titleInput" 
-                        value="{{event.title}}"/>
+                        value="{{title}}"/>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Краткое описание</p>
                         <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4" 
-                        placeholder="{{event.description}}"></textarea>
+                        placeholder="{{description}}"></textarea>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Описание</p>
                         <textarea class ="input-block__input form-textarea" id="textInput" rows="12" 
-                        placeholder="{{event.text}}"></textarea>
+                        placeholder="{{text}}"></textarea>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Дата проведения</p>
                         <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date" 
-                        value="{{event.date}}"/>
+                        value="{{date}}"/>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Город</p>
                         <input class ="input-block__input form-input form-input_thin" id="cityInput" 
-                        value="{{event.city}}"/>
+                        value="{{city}}"/>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Адрес</p>
                         <input class ="input-block__input form-input form-input_thin" id="geoInput" 
-                        value="{{event.geo}}"/>
+                        value="{{geo}}"/>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Категория</p>
                         <input class ="input-block__input form-input form-input_thin" id="categoryInput" 
-                        value="{{event.category}}">
+                        value="{{category}}">
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Теги</p>
