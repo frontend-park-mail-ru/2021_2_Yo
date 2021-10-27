@@ -28,16 +28,38 @@ export function signupValidateFields(inputsData: Map<string, { errors: string[],
     }
 }
 
+export function eventValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+    const title = inputsData.get('title') as { errors: string[], value: string };
+    const description = inputsData.get('description') as { errors: string[], value: string };
+    const text = inputsData.get('text') as { errors: string[], value: string };
+    const date = inputsData.get('date') as { errors: string[], value: string };
+    const city = inputsData.get('city') as { errors: string[], value: string };
+    const geo = inputsData.get('geo') as { errors: string[], value: string };
+    const category = inputsData.get('category') as { errors: string[], value: string };
+
+    title.errors.push(checkEmpty(title.value));
+    description.errors.push(checkEmpty(description.value));
+    text.errors.push(checkEmpty(text.value));
+    date.errors.push(checkEmpty(date.value));
+    geo.errors.push(checkEmpty(geo.value));
+
+    city.errors.push(checkEmpty(city.value));
+    city.errors.push(checkForbiddenSymbols(city.value));
+
+    category.errors.push(checkEmpty(category.value));
+    category.errors.push(checkForbiddenSymbols(category.value));
+}
+
 function checkEmpty(value: string): string {
     if (!value) {
-        return 'Заполните все поля';
+        return 'Заполните поле';
     }
     return '';
 }
 
 function checkForbiddenSymbols(value: string): string {
     if (!value.match('^[a-zA-Zа-яА-Я]+$') && value) {
-        return 'Поля "Имя" и "Фамилия" могут содержать только буквы';
+        return 'Поле может содержать только буквы';
     }
     return '';
 }

@@ -33,12 +33,14 @@ export default class EventPageView {
                     <p class="event-block__event-title event-title">{{title}}</p>
         
                     <p class="event-block__event-text_header event-text_header">{{description}}</p>
-        
+                    
+                    {{#if tag}}
                     <span class="event-block__event-tags-block event-tags-block">
                         {{#each tag}}
                             <a class="event-tags-block__event-tag event-tag">{{this}}</a>
                         {{/each}}
                     </span>
+                    {{/if}}
                 </div>
         
                 <div class="background__event-block event-block">

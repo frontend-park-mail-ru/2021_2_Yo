@@ -12,7 +12,7 @@ enum Events {
     EventsRes = 'events:response',
     EventsError = 'events:error',
     EventRes = 'event:response',
-    EventCreate = 'event:create',
+    EventCreateReq = 'event:create',
     EventCreated = 'event:created',
     EventEditReq = 'event:edit-request',
 

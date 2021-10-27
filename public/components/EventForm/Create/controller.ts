@@ -3,6 +3,7 @@ import Events from '../../../modules/eventbus/events.js';
 import EventFormView from './view.js';
 import {EventData} from '../../../types.js';
 import EventFormModel from './model.js';
+import {eventValidateFields} from '../../../modules/validation.js';
 
 export default class EventFormController {
     #view: EventFormView;
@@ -14,16 +15,35 @@ export default class EventFormController {
     }
 
     enable() {
-        Bus.on(Events.EventCreate, this.#eventHandle);
+        Bus.on(Events.EventCreateReq, this.#validationHandle);
         this.#view.render();
+        this.#view.subscribe();
     }
 
     disable() {
-        Bus.off(Events.EventCreate, this.#eventHandle);
+        Bus.off(Events.EventCreateReq, this.#validationHandle);
         this.#view.disable();
     }
 
-    #eventHandle = ((event: EventData) => {
-        this.#model.createEvent(event);
-    });
+    #validationHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
+        eventValidateFields(inputsData);
+
+        let valid = true;
+
+        inputsData.forEach((item) => {
+            item.errors.forEach(error => {
+                if (error) {
+                    valid = false;
+                }
+            });
+        });
+
+        if (valid) {
+            Bus.emit(Events.ValidationOk, null);
+            this.#model.createEvent(inputsData);
+        } else {
+            Bus.emit(Events.ValidationError, null);
+        }
+    };
+
 }
