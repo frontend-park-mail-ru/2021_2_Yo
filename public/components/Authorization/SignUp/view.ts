@@ -35,23 +35,25 @@ export default class SignupView {
                     <form id="regForm">
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Имя</p>
-                            <input class ="input-block__input form-input" id="nameInput">
+                            <input class ="input-block__input form-input form-input_auth" id="nameInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Фамилия</p>
-                            <input class ="input-block__input form-input" id="surnameInput">
+                            <input class ="input-block__input form-input form-input_auth" id="surnameInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input form-input" id="emailInput">
+                            <input class ="input-block__input form-input form-input_auth" id="emailInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input class ="input-block__input form-input" type="password" id="passwordInput1">
+                            <input class ="input-block__input form-input form-input_auth" type="password" 
+                            id="passwordInput1">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
-                            <input class ="input-block__input form-input" type="password" id="passwordInput2">
+                            <input class ="input-block__input form-input form-input_auth" type="password" 
+                            id="passwordInput2">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">

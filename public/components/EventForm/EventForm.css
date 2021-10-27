@@ -1,0 +1,21 @@
+:root {
+    --bg: #D2D2D3;
+}
+
+.eventform-background {
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+.eventform {
+    width: 55.9vw;
+    box-sizing: border-box;
+    padding: 0.93vh 2.08vw 1.76vh;
+    background: white;
+}

@@ -61,10 +61,9 @@ export default class EventPageView {
                 </div>
                 <div class="background__event-block event-block">
                     <div class="buttons">
-                        <button
-                         class="buttons__event-button event-button event-button_blue" id="editButton"">
+                        <a class="buttons__event-button event-button event-button_blue" id="editButton"">
                             Редактировать мероприятие
-                        </button>
+                        </a>
                         <a class="buttons__event-button event-button event-button_red">Удалить мероприятие</a>
                     </div>
                 </div>
@@ -72,7 +71,7 @@ export default class EventPageView {
         `;
 
         const template: any = window.Handlebars.compile(source);
-        this.#parent.innerHTML = template(event);
+        this.#parent.innerHTML = template(this.#event);
 
         this.#addListeners();
     }

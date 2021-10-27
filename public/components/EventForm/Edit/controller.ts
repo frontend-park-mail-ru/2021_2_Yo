@@ -28,6 +28,8 @@ export default class EventEditFormController {
     }
 
     disable() {
+        Bus.off(Events.EventEditReq, this.#editHandle);
+        Bus.off(Events.EventRes, this.#eventHandle);
         this.#view.disable();
     }
 }

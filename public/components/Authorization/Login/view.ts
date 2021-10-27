@@ -35,11 +35,12 @@ export default class LoginView {
                     <form id="authForm">
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input form-input" id="emailInput">
+                            <input class ="input-block__input form-input form-input_auth" id="emailInput">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
-                            <input type="password" class ="input-block__input form-input" id="passwordInput">
+                            <input type="password" class ="input-block__input form-input form-input_auth"
+                             id="passwordInput">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
