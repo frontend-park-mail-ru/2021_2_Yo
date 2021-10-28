@@ -99,6 +99,8 @@ function checkEmail(value: string): string {
 function checkDate(value: string): string {
     if (value.length && !value.match('^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$')) {
         return 'Неверный формат. Дата должна соответствовать формату гггг-мм-дд';
+    } else if (Number(new Date(value))< Date.now()) {
+        return 'Нельзя создать мероприятие в прошлом';
     }
     return '';
 }
