@@ -18,6 +18,8 @@ export default class EventEditFormModel {
 
         const id = new URL(window.location.href).searchParams.get('id');
 
+        console.log(event);
+
         void fetchPost(ApiUrls.Events + '/' + id, event, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
