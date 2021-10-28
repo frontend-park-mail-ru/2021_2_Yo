@@ -33,6 +33,10 @@
     text-decoration-line: underline;
 }
 
+.event-button:hover{
+    cursor: pointer;
+}
+
 .event-button_red {
     color: red;
 }
