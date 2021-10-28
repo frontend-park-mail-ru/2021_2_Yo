@@ -13,7 +13,7 @@ export default class SearchPageModel {
             (data: FetchResponseData) => {
                 if (data.status === 200) {
                     if (data.json.status === 200) {
-                        Bus.emit(Events.EventsRes, data.json.body);
+                        Bus.emit(Events.EventsRes, data.json.body?.events);
                     }
                 }
             });
