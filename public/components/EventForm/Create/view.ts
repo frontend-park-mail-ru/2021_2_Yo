@@ -2,7 +2,10 @@ import {EventData} from '../../../types.js';
 import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
-const CHILD_NUM = 2;
+const MAX_NUM_OF_TAGS = 6;
+const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
+const ONE_WORD_TAG_STR = 'Тег должен состоять из одного слова';
+const NO_EMPTY_TAG_STR = 'Невозможно добавить пустой тег';
 
 export default class EventFormView {
     #parent: HTMLElement;
@@ -30,38 +33,49 @@ export default class EventFormView {
                     <form class="eventform" id="eventform">
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Название</p>
-                            <input class ="input-block__input form-input form-input_wide" id="titleInput"/>
+                            <input class ="input-block__input form-input form-input_wide" id="titleInput" maxlength="255"/>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Краткое описание</p>
-                            <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4"></textarea>
+                            <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4" maxlength="500">
+                            </textarea>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Описание</p>
-                            <textarea class ="input-block__input form-textarea" id="textInput" rows="12"></textarea>
+                            <textarea class ="input-block__input form-textarea" id="textInput" rows="12" maxlength="2200">
+                            </textarea>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Дата проведения</p>
                             <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date"/>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Город</p>
-                            <input class ="input-block__input form-input form-input_thin" id="cityInput"/>
+                            <input class ="input-block__input form-input form-input_thin" id="cityInput" maxlength="30"/>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Адрес</p>
-                            <input class ="input-block__input form-input form-input_thin" id="geoInput"/>
+                            <input class ="input-block__input form-input form-input_thin" id="geoInput" maxlength="255"/>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Категория</p>
-                            <input class ="input-block__input form-input form-input_thin" id="categoryInput"/>
+                            <input class ="input-block__input form-input form-input_thin" id="categoryInput" maxlength="30"/>
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="eventform__input-block input-block">
                             <p class="input-block__input-label event-text">Теги</p>
-                            <input class ="input-block__input form-input form-input_thin" id="tagInput">
+                            <input class ="input-block__input form-input form-input_thin" id="tagInput" maxlength="30">
                             <input value="Добавить" id="tagButton" class="input-block__input button-cancel" 
                             type="button">
-                            <div id="tagBlockError"></div>
+                            <div id="tagBlockError">
+                                <p class="input-block__error error error_none"></p>
+                            </div>
                             <div class="event-tags-block" id="tagBlock"></div>
                         </div>
                         <div class="eventform__buttons buttons">
@@ -116,38 +130,30 @@ export default class EventFormView {
         ev.preventDefault();
 
         const tagBlock = document.getElementById('tagBlock') as HTMLElement;
-        const tagBlockError = document.getElementById('tagBlockError') as HTMLElement;
         const tagInput = document.getElementById('tagInput') as HTMLInputElement;
+        const tagBlockError = document.getElementById('tagBlockError') as HTMLElement;
+        const errorP = tagBlockError.firstElementChild as HTMLElement;
+        errorP.classList.remove('error_none');
 
-        while (tagBlockError.children.length) {
-            tagBlockError.removeChild(tagBlockError.lastChild as ChildNode);
-        }
-
-        const errorP = document.createElement('p');
-        errorP.classList.add('input-block__error');
-        errorP.classList.add('error');
-
-        if (tagBlock.children.length == 6) {
-            errorP.textContent = 'К одному мероприятию можно добавить не больше шести тегов';
-            tagBlockError.appendChild(errorP);
+        if (tagBlock.children.length === MAX_NUM_OF_TAGS) {
+            errorP.textContent = TAGS_LIMIT_STR;
             return;
         }
 
         if (tagInput.value.trim()) {
             if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я]+$')) {
-                errorP.textContent = 'Тег должен состоять из одного слова';
-                tagBlockError.appendChild(errorP);
+                errorP.textContent = ONE_WORD_TAG_STR;
             } else if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
                 const tag = document.createElement('a');
                 tag.classList.add('event-tag');
                 tag.textContent = tagInput.value.trim();
                 tagBlock.appendChild(tag);
-
                 this.#eventTags.push(tagInput.value.trim());
+
+                errorP.classList.add('error_none');
             }
         } else {
-            errorP.textContent = 'Невозможно добавить пустой тег';
-            tagBlockError.appendChild(errorP);
+            errorP.textContent = NO_EMPTY_TAG_STR;
         }
 
         tagInput.value = '';
@@ -173,21 +179,20 @@ export default class EventFormView {
 
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {
-            const par = input.parentElement as HTMLElement;
+            const inputBlock = input.parentElement as HTMLElement;
+            const errorP = inputBlock.lastElementChild as HTMLElement;
+            const inputData = this.#inputsData.get(key) as { errors: string[], value: string };
 
-            this.#inputsData.get(key)?.errors.forEach(error => {
+            inputData.errors.forEach(error => {
                 if (error) {
-                    par.classList.add('input-block_error');
+                    inputBlock.classList.add('input-block_error');
 
-                    if (par.innerHTML.indexOf(error) === -1) {
-                        const p = document.createElement('p');
-                        p.classList.add('input-block__error');
-                        p.classList.add('error');
-                        p.textContent = error;
-                        par.appendChild(p);
+                    if (inputBlock.innerHTML.indexOf(error) === -1) {
+                        errorP.classList.remove('error_none');
+                        errorP.textContent = error;
                     }
                 } else {
-                    this.#inputsData.get(key)!.errors = this.#inputsData.get(key)?.errors.slice(1) as string[];
+                    inputData.errors = inputData.errors.slice(1);
                 }
             });
         });
@@ -196,12 +201,12 @@ export default class EventFormView {
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                const par = input.parentElement as HTMLElement;
-                par.classList.remove('input-block_error');
+                const inputBlock = input.parentElement as HTMLElement;
+                inputBlock.classList.remove('input-block_error');
 
-                while (par.children.length !== CHILD_NUM) {
-                    par.removeChild(par.lastChild as ChildNode);
-                }
+                const errorP = inputBlock.lastElementChild as HTMLElement;
+                errorP.textContent = '';
+                errorP.classList.add('error_none');
             }
         });
     }

@@ -35,18 +35,7 @@ export default class EventEditFormModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        const event: EventData = {
-                            id: json.body.id,
-                            city: json.body.city,
-                            category: json.body.category,
-                            title: json.body.title,
-                            viewed: json.body.viewed,
-                            description: json.body.description,
-                            tag: json.body.tag,
-                            text: json.body.text,
-                            date: json.body.date,
-                            geo: json.body.geo
-                        };
+                        const event = json.body as EventData;
                         Bus.emit(Events.EventRes, event);
                     }
                 }

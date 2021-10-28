@@ -5,7 +5,7 @@ import Events from './eventbus/events.js';
 interface Controller {
     disable(): void;
 
-    enable(params?: any): void;
+    enable(): void;
 }
 type Controllers = {
     header?: Controller,
@@ -15,7 +15,6 @@ type Controllers = {
 class Router {
     #controllers: Map<UrlPathnames, Controllers>;
     #path?: UrlPathnames;
-    #params?: URLSearchParams;
 
     constructor() {
         this.#controllers = new Map<UrlPathnames, Controllers>();
@@ -71,15 +70,13 @@ class Router {
 
         if (window.location.pathname == this.#path) return;
 
-        this.#params = new URL(window.location.href).searchParams;
-
         const nextPath = this.#getValidPath();
         const nextControllers = <Controllers>this.#controllers.get(nextPath);
 
         if (!this.#path) {
             this.#path = nextPath;
             nextControllers.header?.enable();
-            nextControllers.content.enable(this.#params);
+            nextControllers.content.enable();
             return;
         }
 
@@ -90,7 +87,7 @@ class Router {
             nextControllers.header?.enable();
         }
         prevControllers.content.disable();
-        nextControllers.content.enable(this.#params);
+        nextControllers.content.enable();
     }
 }
 

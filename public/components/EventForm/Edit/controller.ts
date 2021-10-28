@@ -14,11 +14,14 @@ export default class EventEditFormController {
         this.#model = new EventEditFormModel();
     }
 
-    enable(params?: URLSearchParams) {
+    enable() {
         Bus.on(Events.EventEditReq, this.#editHandle);
         Bus.on(Events.EventRes, this.#eventHandle);
+
         this.#view.subscribe();
-        this.#model.getEvent(params?.get('id') as string);
+
+        const id = new URL(window.location.href).searchParams?.get('id') as string;
+        this.#model.getEvent(id);
     }
 
     #editHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {

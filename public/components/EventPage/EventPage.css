@@ -1,6 +1,5 @@
 :root {
     --evbg: #D2D2D3;
-    --place: #08BBBB;
     --black-text: #505050;
     --views-num: #AAAAAA;
     --blue: #4FBDC5;
@@ -42,7 +41,7 @@
 }
 
 .event-header-text_place {
-    color: var(--place);
+    color: var(--blue);
     text-decoration: underline;
 }
 

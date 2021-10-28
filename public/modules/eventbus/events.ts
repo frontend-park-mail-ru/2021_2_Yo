@@ -16,6 +16,7 @@ enum Events {
     EventCreateReq = 'event:create',
     EventCreated = 'event:created',
     EventEditReq = 'event:edit-request',
+    EventDelete = 'event:delete',
 
     // Authorization
     UserLogout = 'user:logout',

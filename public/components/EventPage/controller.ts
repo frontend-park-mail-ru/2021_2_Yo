@@ -13,13 +13,20 @@ export default class EventPageController {
         this.#model = new EventPageModel();
     }
 
-    enable(params?: URLSearchParams) {
+    enable() {
         Bus.on(Events.EventRes, this.#eventHandle);
-        this.#model.getEvent(params?.get('id') as string);
+        Bus.on(Events.EventDelete, this.#eventDeleteHandle);
+
+        const id = new URL(window.location.href).searchParams?.get('id') as string;
+        this.#model.getEvent(id);
     }
 
     #eventHandle = ((event: EventData) => {
         this.#view.render(event);
+    });
+
+    #eventDeleteHandle = ((eventId: string) => {
+        this.#model.deleteEvent(eventId);
     });
 
     disable() {

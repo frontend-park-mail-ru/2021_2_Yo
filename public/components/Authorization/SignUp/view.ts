@@ -35,25 +35,30 @@ export default class SignupView {
                     <form id="regForm">
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Имя</p>
-                            <input class ="input-block__input form-input form-input_auth" id="nameInput">
+                            <input class ="input-block__input form-input form-input_auth" id="nameInput" maxlength="50">
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Фамилия</p>
-                            <input class ="input-block__input form-input form-input_auth" id="surnameInput">
+                            <input class ="input-block__input form-input form-input_auth" id="surnameInput" maxlength="50">
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input form-input form-input_auth" id="emailInput">
+                            <input class ="input-block__input form-input form-input_auth" id="emailInput" maxlength="150">
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input class ="input-block__input form-input form-input_auth" type="password" 
-                            id="passwordInput1">
+                            id="passwordInput1" maxlength="255">
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
                             <input class ="input-block__input form-input form-input_auth" type="password" 
-                            id="passwordInput2">
+                            id="passwordInput2" maxlength="255">
+                            <p class="error error_none input-block__error"></p>
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
@@ -121,22 +126,21 @@ export default class SignupView {
     }
 
     #showValidationErrors() {
-        this.#inputsData.forEach((item, key) => {
-            const input = this.#inputs.get(key) as HTMLElement;
-            const par = input.parentElement as HTMLElement;
-            item.errors.forEach(error => {
+        this.#inputs.forEach((input, key) => {
+            const inputBlock = input.parentElement as HTMLElement;
+            const errorP = inputBlock.lastElementChild as HTMLElement;
+            const inputData = this.#inputsData.get(key) as { errors: string[], value: string };
+
+            inputData.errors.forEach(error => {
                 if (error) {
-                    input.classList.add('form-input_error');
-                    par.classList.add('input-block_error');
-                    if (par.innerHTML.indexOf(error) === -1) {
-                        const p = document.createElement('p');
-                        p.classList.add('input-block__error');
-                        p.classList.add('error');
-                        p.textContent = error;
-                        par.appendChild(p);
+                    inputBlock.classList.add('input-block_error');
+
+                    if (inputBlock.innerHTML.indexOf(error) === -1) {
+                        errorP.classList.remove('error_none');
+                        errorP.textContent = error;
                     }
                 } else {
-                    item.errors = item.errors.slice(1);
+                    inputData.errors = inputData.errors.slice(1);
                 }
             });
         });
@@ -150,13 +154,12 @@ export default class SignupView {
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                const par = input.parentElement as HTMLElement;
-                par.classList.remove('input-block_error');
-                input.classList.remove('form-input_error');
-                input.classList.add('form-input_correct');
-                while (par.children.length !== CHILD_NUM) {
-                    par.removeChild(par.lastChild as ChildNode);
-                }
+                const inputBlock = input.parentElement as HTMLElement;
+                inputBlock.classList.remove('input-block_error');
+
+                const errorP = inputBlock.lastElementChild as HTMLElement;
+                errorP.textContent = '';
+                errorP.classList.add('error_none');
             }
         });
     }

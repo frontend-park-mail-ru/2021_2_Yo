@@ -3,6 +3,7 @@ import {ApiResponseJson, ApiUrls} from '../../types.js';
 const METHODS = {
     POST: 'POST',
     GET: 'GET',
+    DELETE: 'DELETE',
 };
 
 // const API = 'https://bmstusasa.herokuapp.com';
@@ -14,6 +15,29 @@ export function fetchGet(url: string, callback?: (args?: any) => void, error?: (
 
     return fetch(API + url, {
         method: METHODS.GET,
+        mode: 'cors',
+        credentials: 'include'
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        const json = data as ApiResponseJson;
+        if (callback) {
+            callback({
+                status: HTTPStatus,
+                json: json,
+            });
+        }
+    }).catch(() => {
+        if (error) error();
+    });
+}
+
+export function fetchDelete(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
+    let HTTPStatus: number;
+
+    return fetch(API + url, {
+        method: METHODS.DELETE,
         mode: 'cors',
         credentials: 'include'
     }).then((response) => {

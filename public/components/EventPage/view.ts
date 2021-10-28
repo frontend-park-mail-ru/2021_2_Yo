@@ -65,13 +65,17 @@ export default class EventPageView {
                         <a class="buttons__event-button event-button event-button_blue" id="editButton"">
                             Редактировать мероприятие
                         </a>
-                        <a class="buttons__event-button event-button event-button_red">Удалить мероприятие</a>
+                        <a class="buttons__event-button event-button event-button_red" id="deleteButton">
+                            Удалить мероприятие
+                        </a>
                     </div>
                 </div>
             </div>
         `;
 
-        const template: any = window.Handlebars.compile(source);
+        console.log(this.#event);
+
+        const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(this.#event);
 
         this.#addListeners();
@@ -80,17 +84,26 @@ export default class EventPageView {
     #addListeners() {
         const editButton = document.getElementById('editButton');
         editButton?.addEventListener('click', this.#editHandle);
+
+        const deleteButton = document.getElementById('deleteButton');
+        deleteButton?.addEventListener('click', this.#editHandle);
     }
 
     #removeListeners() {
         const editButton = document.getElementById('editButton');
-        editButton?.removeEventListener('click', this.#editHandle);
+        editButton?.removeEventListener('click', this.#deleteHandle);
     }
 
     #editHandle = ((e: Event) => {
         e.preventDefault();
 
         Bus.emit(Events.RouteUrl, UrlPathnames.Edit + '?id=' + this.#event?.id);
+    }).bind(this);
+
+    #deleteHandle = ((e: Event) => {
+        e.preventDefault();
+
+        Bus.emit(Events.EventDelete, this.#event?.id);
     }).bind(this);
 
     disable() {

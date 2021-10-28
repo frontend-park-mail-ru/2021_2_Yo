@@ -22,6 +22,10 @@
     color: var(--error);
 }
 
+.error_none {
+    display: none;
+}
+
 .event-button {
     font-weight: 500;
     font-size: 2.22vh;
