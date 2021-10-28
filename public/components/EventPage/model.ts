@@ -19,7 +19,6 @@ export default class EventPageModel {
     }
 
     deleteEvent(id: string) {
-        console.log('delete');
         void fetchDelete(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
