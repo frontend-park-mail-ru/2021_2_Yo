@@ -82,7 +82,7 @@ export default class SearchBoard {
                 {{/each}}
             </div>
         `;
-        this.#parent.innerHTML = window.Handlebars.compile(source)({events: [1, 1, 1, 1, 1, 1]});
+        this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
 
         const list = <HTMLElement>document.getElementById('events-list');
         this.#list = list;
