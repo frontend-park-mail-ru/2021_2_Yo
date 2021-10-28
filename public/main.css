@@ -34,6 +34,7 @@ body {
 
 .content {
     width: 67vw;
+    display: flex;
 }
 
 .text_date {

@@ -1,0 +1,122 @@
+:root {
+    --categories-color: #505050;
+    --categories-shadow: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.25));
+    --categories-border: 1.6px solid var(--categories-color);
+    --category-check: #E4E4E4;
+}
+
+#side-bar-wrapper {
+    margin-left: 10px;
+    width: 100%;
+    color: var(--categories-color);
+}
+
+.categories {
+    filter: var(--categories-shadow);
+    background: white;
+    width: 100%;
+    height: max-content;
+    transition: 0.7s;
+    margin-bottom: 10px;
+}
+
+.categories__li {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px 20px;
+}
+
+.categories__header {
+    font-size: 2.96vh;
+    font-weight: 400;
+    margin-right: 7px;
+}
+
+#categories-img {
+    transition: 0.7s;
+    height: 1.48vh;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.categories__li-type {
+    border-top: var(--categories-border);
+    font-size: 2.59vh;
+    font-weight: bold;
+}
+
+.categories__li-type:hover {
+    background: var(--category-check);
+}
+
+.categories__li-type:first-child {
+    border-top: none;
+}
+
+#categories-list {
+    max-height: 0;
+    height: max-content;
+    overflow: hidden;
+    transition: max-height 0.7s;
+}
+
+.tags {
+    width: 100%;
+    background: white;
+    filter: var(--categories-shadow);
+    box-sizing: border-box;
+    padding: 10px 20px 0px 20px;
+}
+
+.tags__li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#tags-input {
+    /* height: 3.7vh; */
+    font-size: 2.04vh;
+    box-sizing: border-box;
+    padding: 7px 10px;
+    font-weight: 300;
+    border-radius: 2px;
+    border: 1px solid var(--categories-color);;
+}
+
+#tags-button {
+    background-color: transparent;
+    padding: 5px 0px;
+    height: max-content;
+    font-size: 1.8vh;
+    font-weight: 500;
+    border: var(--categories-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#tags-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tags__tag {
+    background-color: var(--geo-turquoise);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.8vh;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 6px;
+    transition: background-color 1s;
+    animation-direction: alternate-reverse;
+}

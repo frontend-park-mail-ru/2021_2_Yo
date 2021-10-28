@@ -1,6 +1,6 @@
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
-import { anchorsConfig } from '../../config.js';
+import config from '../../config.js';
 import { UserData, UrlPathnames } from '../../types.js';
 
 export default class HeaderView {
@@ -14,7 +14,6 @@ export default class HeaderView {
         Bus.on(Events.UserRes, this.#userHandle);
         Bus.on(Events.UserError, this.#logoutHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
-        Bus.emit(Events.UserReq);
     }
 
     #addListeners() {
@@ -46,14 +45,15 @@ export default class HeaderView {
     }).bind(this);
 
     #logoutHandle = (() => {
-        this.#render();
+        this.render();
     }).bind(this);
 
     #userHandle = ((user: UserData) => {
-        this.#render(user);
+        this.render(user);
     }).bind(this);
 
-    #render(user?: UserData) {
+    render(user?: UserData) {
+        this.#removeListeners();
         const source = `
             <header class="header">
                 <div class="flex header__content header-text">
@@ -89,7 +89,7 @@ export default class HeaderView {
             </header>
         `;
         const template = window.Handlebars.compile(source);
-        const authAnchors = anchorsConfig.authAnchors;
+        const authAnchors = config.authAnchors;
         this.#parent.innerHTML = template({authAnchors, user});
 
         this.#addListeners();

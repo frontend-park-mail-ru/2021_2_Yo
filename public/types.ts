@@ -4,6 +4,19 @@ declare global {
     }
 }
 
+export type EventData = {
+    id?: number;
+    city: string;
+    category: string;
+    viewed?: number;
+    title: string;
+    description: string;
+    tag: string[];
+    text: string;
+    date: string;
+    geo: string;
+}
+
 export type EventCardData = {
     imgUrl: string;
     viewed: number;

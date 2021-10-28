@@ -1,17 +1,20 @@
 import { UrlPathnames } from './types.js';
 
-export const anchorsConfig = {
-    eventAnchors: [
+const config = {
+    categories: [
+        { href: '/#', name: 'Тусовки' },
         { href: '/#', name: 'Выставки' },
-        { href: '/#', name: 'Концерты' },
-        { href: '/#', name: 'Вечеринки' },
         { href: '/#', name: 'Театр' },
         { href: '/#', name: 'Кино' },
-        { href: '/#', name: 'Экскурсии' },
         { href: '/#', name: 'Фестивали' },
+        { href: '/#', name: 'Экскурсии' },
+        { href: '/#', name: 'Концерты' },
+        { href: '/#', name: 'Обучение' },
     ],
     authAnchors: [
         { href: UrlPathnames.Login, name: 'Войти' },
         { href: UrlPathnames.Signup, name: 'Регистрация' },
     ],
 };
+
+export default config;
