@@ -19,12 +19,12 @@ export default class EventPageModel {
     }
 
     deleteEvent(id: string) {
+        console.log('delete');
         void fetchDelete(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        const event = json.body as EventData;
                         Bus.emit(Events.RouteUrl, UrlPathnames.Main);
                     }
                 }
