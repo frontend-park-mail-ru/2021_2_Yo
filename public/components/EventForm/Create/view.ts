@@ -143,7 +143,7 @@ export default class EventFormView {
         }
 
         if (tagInput.value.trim()) {
-            if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я]+$')) {
+            if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я0-9]+$')) {
                 errorP.textContent = ONE_WORD_TAG_STR;
                 return;
             }

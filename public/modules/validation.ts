@@ -48,6 +48,8 @@ export function eventValidateFields(inputsData: Map<string, { errors: string[], 
     text.errors.push(checkEmpty(text.value));
 
     date.errors.push(checkEmpty(date.value));
+    date.errors.push(checkDate(date.value));
+
     geo.errors.push(checkEmpty(geo.value));
 
     city.errors.push(checkEmpty(city.value));
@@ -94,48 +96,55 @@ function checkEmail(value: string): string {
     return '';
 }
 
+function checkDate(value: string): string {
+    if (value.length && !value.match('^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$')) {
+        return 'Неверный формат. Дата должна соответствовать формату гггг-мм-дд';
+    }
+    return '';
+}
+
 function checkInputLength(inputsData: Map<string, { errors: string[], value: string }>) {
     inputsData.forEach((item, key) => {
         switch (key) {
-        case 'name':
-        case 'surname':
-            if (item.value.length > 50) {
-                item.errors.push('Слишком много символов. Максимальная длина 50 символов.');
-            }
-            break;
+            case 'name':
+            case 'surname':
+                if (item.value.length > 50) {
+                    item.errors.push('Слишком много символов. Максимальная длина 50 символов.');
+                }
+                break;
 
-        case 'password':
-        case 'password1':
-        case 'password2':
-        case 'title':
-        case 'geo':
-            if (item.value.length > 255) {
-                item.errors.push('Слишком много символов. Максимальная длина 255 символов.');
-            }
-            break;
-        case 'city':
-        case 'category':
-        case 'date':
-            if (item.value.length > 30) {
-                item.errors.push('Слишком много символов. Максимальная длина 30 символов.');
-            }
-            break;
+            case 'password':
+            case 'password1':
+            case 'password2':
+            case 'title':
+            case 'geo':
+                if (item.value.length > 255) {
+                    item.errors.push('Слишком много символов. Максимальная длина 255 символов.');
+                }
+                break;
+            case 'city':
+            case 'category':
+            case 'date':
+                if (item.value.length > 30) {
+                    item.errors.push('Слишком много символов. Максимальная длина 30 символов.');
+                }
+                break;
 
-        case 'description':
-            if (item.value.length > 500) {
-                item.errors.push('Слишком много символов. Максимальная длина 500 символов.');
-            }
-            break;
-        case 'text':
-            if (item.value.length > 2200) {
-                item.errors.push('Слишком много символов. Максимальная длина 2200 символов.');
-            }
-            break;
-        case 'mail':
-            if (item.value.length > 150) {
-                item.errors.push('Слишком много символов. Максимальная длина 150 символов.');
-            }
-            break;
+            case 'description':
+                if (item.value.length > 500) {
+                    item.errors.push('Слишком много символов. Максимальная длина 500 символов.');
+                }
+                break;
+            case 'text':
+                if (item.value.length > 2200) {
+                    item.errors.push('Слишком много символов. Максимальная длина 2200 символов.');
+                }
+                break;
+            case 'mail':
+                if (item.value.length > 150) {
+                    item.errors.push('Слишком много символов. Максимальная длина 150 символов.');
+                }
+                break;
         }
     });
 }
