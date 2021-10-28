@@ -71,16 +71,8 @@
     margin: 0 1.8vw;
 }
 
-.button-submit:hover {
-    cursor: pointer;
-}
-
 .buttons__button-back {
     margin: 0 1.8vw;
-}
-
-.button-back:hover {
-    cursor: pointer;
 }
 
 .authform__buttons {

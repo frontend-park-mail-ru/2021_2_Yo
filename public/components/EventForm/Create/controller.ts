@@ -16,8 +16,8 @@ export default class EventFormController {
 
     enable() {
         Bus.on(Events.EventCreateReq, this.#validationHandle);
-        this.#view.render();
         this.#view.subscribe();
+        this.#view.render();
     }
 
     disable() {
