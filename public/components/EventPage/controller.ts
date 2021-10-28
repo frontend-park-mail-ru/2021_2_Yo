@@ -17,8 +17,8 @@ export default class EventPageController {
         Bus.on(Events.EventRes, this.#eventHandle);
         Bus.on(Events.EventDelete, this.#eventDeleteHandle);
 
-        const id = new URL(window.location.href).searchParams?.get('id') as string;
-        this.#model.getEvent(id);
+        const eventId = new URL(window.location.href).searchParams?.get('id') as string;
+        this.#model.getEvent(eventId);
     }
 
     #eventHandle = ((event: EventData) => {

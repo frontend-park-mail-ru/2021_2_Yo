@@ -86,12 +86,15 @@ export default class EventPageView {
         editButton?.addEventListener('click', this.#editHandle);
 
         const deleteButton = document.getElementById('deleteButton');
-        deleteButton?.addEventListener('click', this.#editHandle);
+        deleteButton?.addEventListener('click', this.#deleteHandle);
     }
 
     #removeListeners() {
         const editButton = document.getElementById('editButton');
-        editButton?.removeEventListener('click', this.#deleteHandle);
+        editButton?.removeEventListener('click', this.#editHandle);
+
+        const deleteButton = document.getElementById('deleteButton');
+        deleteButton?.addEventListener('click', this.#deleteHandle);
     }
 
     #editHandle = ((e: Event) => {
