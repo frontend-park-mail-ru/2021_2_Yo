@@ -1,4 +1,4 @@
-import { fetchGet } from '../../modules/request/request';
+import { fetchGet } from '../../modules/request/request.js';
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 import { ApiUrls, FetchResponseData } from '../../types.js';
