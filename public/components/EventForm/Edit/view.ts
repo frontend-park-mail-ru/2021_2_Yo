@@ -7,7 +7,7 @@ const TAGS_LIMIT_STR = 'К одному мероприятию можно доб
 const ONE_WORD_TAG_STR = 'Тег должен состоять из одного слова';
 const NO_EMPTY_TAG_STR = 'Невозможно добавить пустой тег';
 const TAG_EXISTS_STR = 'Тег уже добавлен';
-
+const TAG_LENGTH_STR = 'Слишком много символов. Максимальная длина 30 символов';
 
 export default class EventEditFormView {
     #parent: HTMLElement;
@@ -159,7 +159,14 @@ export default class EventEditFormView {
         if (tagInput.value.trim()) {
             if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я]+$')) {
                 errorP.textContent = ONE_WORD_TAG_STR;
-            } else if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
+                return;
+            }
+
+            if (tagInput.value.trim().length > 30) {
+                errorP.textContent = TAG_LENGTH_STR;
+                return;
+            }
+            if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
                 const tag = document.createElement('a');
                 tag.classList.add('event-tag');
                 tag.textContent = tagInput.value.trim();
