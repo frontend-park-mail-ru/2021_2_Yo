@@ -71,13 +71,15 @@ class Router {
 
         if (window.location.pathname == this.#path) return;
 
+        this.#params = new URL(window.location.href).searchParams;
+
         const nextPath = this.#getValidPath();
         const nextControllers = <Controllers>this.#controllers.get(nextPath);
 
         if (!this.#path) {
             this.#path = nextPath;
             nextControllers.header?.enable();
-            nextControllers.content.enable();
+            nextControllers.content.enable(this.#params);
             return;
         }
 
@@ -88,7 +90,7 @@ class Router {
             nextControllers.header?.enable();
         }
         prevControllers.content.disable();
-        nextControllers.content.enable();
+        nextControllers.content.enable(this.#params);
     }
 }
 
