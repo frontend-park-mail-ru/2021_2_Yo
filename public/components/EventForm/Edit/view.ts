@@ -6,6 +6,7 @@ const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
 const ONE_WORD_TAG_STR = 'Тег должен состоять из одного слова';
 const NO_EMPTY_TAG_STR = 'Невозможно добавить пустой тег';
+const TAG_EXISTS_STR = 'Тег уже добавлен';
 
 
 export default class EventEditFormView {
@@ -43,22 +44,20 @@ export default class EventEditFormView {
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Краткое описание</p>
-                        <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4" maxlength="500">
-                            {{description}}
-                        </textarea>
+                        <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4" 
+                        maxlength="500">{{description}}</textarea>
                         <p class="error error_none input-block__error"></p>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Описание</p>
-                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12" maxlength="2200">
-                            {{text}}
+                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12" maxlength="2200">{{text}}
                         </textarea>
                         <p class="error error_none input-block__error"></p>
                     </div>
                     <div class="eventform__input-block input-block">
                         <p class="input-block__input-label event-text">Дата проведения</p>
                         <input class ="input-block__input form-input form-input_thin" id="dateInput"
-                        value="{{date}}"/>
+                        value="{{date}}" type="date"/>
                         <p class="error error_none input-block__error"></p>
                     </div>
                     <div class="eventform__input-block input-block">
@@ -168,6 +167,8 @@ export default class EventEditFormView {
                 this.#eventTags.push(tagInput.value.trim());
 
                 errorP.classList.add('error_none');
+            } else {
+                errorP.textContent = TAG_EXISTS_STR;
             }
         } else {
             errorP.textContent = NO_EMPTY_TAG_STR;

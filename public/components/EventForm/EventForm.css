@@ -32,6 +32,8 @@
     border: 1px solid black;
     box-sizing: border-box;
     border-radius: 2px;
+
+    resize: none;
 }
 
 .form-input_thin{

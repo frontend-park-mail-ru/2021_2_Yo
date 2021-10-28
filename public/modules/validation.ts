@@ -4,6 +4,8 @@ export function authValidateFields(inputsData: Map<string, { errors: string[], v
 
     const password = inputsData.get('password') as { errors: string[], value: string };
     password.errors.push(checkPasswordLength(password.value));
+
+    checkInputLength(inputsData);
 }
 
 export function signupValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
@@ -26,6 +28,8 @@ export function signupValidateFields(inputsData: Map<string, { errors: string[],
     if (checkPasswordsEqual(password1.value, password2.value)) {
         password2.errors.push('Пароли не совпадают');
     }
+
+    checkInputLength(inputsData);
 }
 
 export function eventValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
@@ -38,8 +42,11 @@ export function eventValidateFields(inputsData: Map<string, { errors: string[], 
     const category = inputsData.get('category') as { errors: string[], value: string };
 
     title.errors.push(checkEmpty(title.value));
+
     description.errors.push(checkEmpty(description.value));
+
     text.errors.push(checkEmpty(text.value));
+
     date.errors.push(checkEmpty(date.value));
     geo.errors.push(checkEmpty(geo.value));
 
@@ -48,6 +55,8 @@ export function eventValidateFields(inputsData: Map<string, { errors: string[], 
 
     category.errors.push(checkEmpty(category.value));
     category.errors.push(checkForbiddenSymbols(category.value));
+
+    checkInputLength(inputsData);
 }
 
 function checkEmpty(value: string): string {
@@ -83,4 +92,50 @@ function checkEmail(value: string): string {
         return 'Неправильный формат Email. Пример правильного формата: mail@mail.ru';
     }
     return '';
+}
+
+function checkInputLength(inputsData: Map<string, { errors: string[], value: string }>) {
+    inputsData.forEach((item, key) => {
+        switch (key) {
+        case 'name':
+        case 'surname':
+            if (item.value.length > 50) {
+                item.errors.push('Слишком много символов. Максимальная длина 50 символов.');
+            }
+            break;
+
+        case 'password':
+        case 'password1':
+        case 'password2':
+        case 'title':
+        case 'geo':
+            if (item.value.length > 255) {
+                item.errors.push('Слишком много символов. Максимальная длина 255 символов.');
+            }
+            break;
+        case 'city':
+        case 'category':
+        case 'date':
+            if (item.value.length > 30) {
+                item.errors.push('Слишком много символов. Максимальная длина 30 символов.');
+            }
+            break;
+
+        case 'description':
+            if (item.value.length > 500) {
+                item.errors.push('Слишком много символов. Максимальная длина 500 символов.');
+            }
+            break;
+        case 'text':
+            if (item.value.length > 2200) {
+                item.errors.push('Слишком много символов. Максимальная длина 2200 символов.');
+            }
+            break;
+        case 'mail':
+            if (item.value.length > 150) {
+                item.errors.push('Слишком много символов. Максимальная длина 150 символов.');
+            }
+            break;
+        }
+    });
 }
