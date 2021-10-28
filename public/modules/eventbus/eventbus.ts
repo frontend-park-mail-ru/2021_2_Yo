@@ -17,7 +17,7 @@ class EventBus {
     }
 
     emit(event: Events, args?: any) {
-        this.#listeners[event].forEach(
+        this.#listeners[event]?.forEach(
             (listener) => {
                 listener(args);
             }

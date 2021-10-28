@@ -5,6 +5,7 @@ enum Events {
 
     // User
     UserRes = 'user:response',
+    UserError = 'user:error',
     UserReq = 'user:request',
 
     // Events
