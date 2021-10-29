@@ -45,14 +45,14 @@
     line-height: 4.17vh;
 }
 
-.input-label {
+.profile-input-label {
     font-style: normal;
     font-weight: normal;
     font-size: 2.6vh;
     line-height: 3.05vh;
 }
 
-.form-input {
+.profile-form-input {
     border: 1px solid black;
     box-sizing: border-box;
     border-radius: 2px;

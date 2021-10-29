@@ -34,24 +34,24 @@ export default class SignupView {
                     <p class="authform__label label">Регистрация</p>
                     <form id="regForm">
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Имя</p>
-                            <input class ="input-block__input form-input" id="nameInput">
+                            <p class="input-block__input-label profile-input-label">Имя</p>
+                            <input class ="input-block__input profile-form-input" id="nameInput">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Фамилия</p>
-                            <input class ="input-block__input form-input" id="surnameInput">
+                            <p class="input-block__input-label profile-input-label">Фамилия</p>
+                            <input class ="input-block__input profile-form-input" id="surnameInput">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input form-input" id="emailInput">
+                            <p class="input-block__input-label profile-input-label">Email</p>
+                            <input class ="input-block__input profile-form-input" id="emailInput">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Пароль</p>
-                            <input class ="input-block__input form-input" type="password" id="passwordInput1">
+                            <p class="input-block__input-label profile-input-label">Пароль</p>
+                            <input class ="input-block__input profile-form-input" type="password" id="passwordInput1">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Пароль еще раз</p>
-                            <input class ="input-block__input form-input" type="password" id="passwordInput2">
+                            <p class="input-block__input-label profile-input-label">Пароль еще раз</p>
+                            <input class ="input-block__input profile-form-input" type="password" id="passwordInput2">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">

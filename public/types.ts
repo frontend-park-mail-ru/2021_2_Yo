@@ -12,7 +12,11 @@ export type EventCardData = {
 }
 
 export type UserData = {
+    id: string;
     name: string;
+    surname: string;
+    description: string;
+    email: string;
     geo: string;
 }
 
@@ -26,6 +30,7 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
+    Profile = '/id',
 }
 
 export enum ApiUrls {
