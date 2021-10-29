@@ -13,6 +13,7 @@ export default class SearchPageController {
     }
 
     enable() {
+        this.#model.enable();
         this.#view.render();
         Bus.emit(Events.EventsReq);
     }

@@ -9,8 +9,9 @@ interface FilterData {
 }
 
 export default class SearchPageModel {
-    constructor() {
+    enable() {
         Bus.on(Events.EventsReq, this.#handleEvents);
+
     }
 
     #filterToUrl (data: FilterData) {
