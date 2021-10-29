@@ -106,7 +106,7 @@ export default class SearchBoard {
                         {{> event this}}
                     {{/each}}
                 {{else}}
-                <div id="loader"></div>
+                <img id="load" src="/img/logo.png">
                 {{/if}}
             </div>
         `;
