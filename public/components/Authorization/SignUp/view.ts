@@ -48,12 +48,12 @@ export default class SignupView {
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input class ="input-block__input form-input form-input_auth" type="password" 
-                            id="passwordInput1" maxlength="255">
+                            id="passwordInput1" maxlength="50">
                         </div>
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль еще раз</p>
                             <input class ="input-block__input form-input form-input_auth" type="password" 
-                            id="passwordInput2" maxlength="255">
+                            id="passwordInput2" maxlength="50">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">

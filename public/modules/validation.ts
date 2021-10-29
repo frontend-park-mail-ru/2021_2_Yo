@@ -1,3 +1,19 @@
+const inputLength = new Map([
+    ['email', 150],
+    ['name', 50],
+    ['surname', 50],
+    ['password1', 50],
+    ['password2', 50],
+    ['password', 50],
+    ['title', 255],
+    ['geo', 255],
+    ['city', 30],
+    ['category', 30],
+    ['date', 10],
+    ['description', 500],
+    ['text', 2200],
+]);
+
 export function authValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
     const email = inputsData.get('email') as { errors: string[], value: string };
     email.errors.push(checkEmail(email.value));
@@ -99,7 +115,7 @@ function checkEmail(value: string): string {
 function checkDate(value: string): string {
     if (value.length && !value.match('^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$')) {
         return 'Неверный формат. Дата должна соответствовать формату гггг-мм-дд';
-    } else if (Number(new Date(value))< Date.now()) {
+    } else if (Number(new Date(value)) < Date.now()) {
         return 'Нельзя создать мероприятие в прошлом';
     }
     return '';
@@ -107,46 +123,8 @@ function checkDate(value: string): string {
 
 function checkInputLength(inputsData: Map<string, { errors: string[], value: string }>) {
     inputsData.forEach((item, key) => {
-        switch (key) {
-        case 'name':
-        case 'surname':
-            if (item.value.length > 50) {
-                item.errors.push('Слишком много символов. Максимальная длина 50 символов.');
-            }
-            break;
-
-        case 'password':
-        case 'password1':
-        case 'password2':
-        case 'title':
-        case 'geo':
-            if (item.value.length > 255) {
-                item.errors.push('Слишком много символов. Максимальная длина 255 символов.');
-            }
-            break;
-        case 'city':
-        case 'category':
-        case 'date':
-            if (item.value.length > 30) {
-                item.errors.push('Слишком много символов. Максимальная длина 30 символов.');
-            }
-            break;
-
-        case 'description':
-            if (item.value.length > 500) {
-                item.errors.push('Слишком много символов. Максимальная длина 500 символов.');
-            }
-            break;
-        case 'text':
-            if (item.value.length > 2200) {
-                item.errors.push('Слишком много символов. Максимальная длина 2200 символов.');
-            }
-            break;
-        case 'mail':
-            if (item.value.length > 150) {
-                item.errors.push('Слишком много символов. Максимальная длина 150 символов.');
-            }
-            break;
+        if (item.value.length > (inputLength.get(key) as number)) {
+            item.errors.push(`Слишком много символов. Максимальная длина ${inputLength.get(key) as number}`);
         }
     });
 }

@@ -40,7 +40,7 @@ export default class LoginView {
                         <div class="authform__input-block input-block">
                             <p class="input-block__input-label input-label">Пароль</p>
                             <input type="password" class ="input-block__input form-input form-input_auth"
-                             id="passwordInput" maxlength="255">
+                             id="passwordInput" maxlength="50">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">
