@@ -4,6 +4,18 @@ declare global {
     }
 }
 
+export type EventCardData = {
+    imgUrl: string;
+    viewed: number;
+    name: string;
+    description: string;
+}
+
+export type UserData = {
+    name: string;
+    geo: string;
+}
+
 export type EventData = {
     id?: number;
     city: string;
@@ -14,18 +26,6 @@ export type EventData = {
     tag: string[];
     text: string;
     date: string;
-    geo: string;
-}
-
-export type EventCardData = {
-    imgUrl: string;
-    viewed: number;
-    name: string;
-    description: string;
-}
-
-export type UserData = {
-    name: string;
     geo: string;
 }
 
@@ -40,6 +40,9 @@ export enum UrlPathnames {
     Login = '/login',
     Signup = '/signup',
     Search = '/search',
+    Event = '/events',
+    Create = '/create',
+    Edit = '/edit'
 }
 
 export enum ApiUrls {

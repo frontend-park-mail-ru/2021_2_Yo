@@ -4,7 +4,7 @@ import Events from '../../modules/eventbus/events.js';
 import { ApiUrls, FetchResponseData } from '../../types.js';
 
 interface FilterData {
-    categories: Array<boolean>,
+    categories?: number,
     tags: Array<string>,
 }
 
@@ -14,16 +14,9 @@ export default class SearchPageModel {
     }
 
     #filterToUrl (data: FilterData) {
-        let res = '?c=';
-        data.categories.map((c, i) => {
-            if (c) {
-                res += i.toString() + '|';
-            }
-        });
-        if (res.length > 3) {
-            res = res.slice(0, -1);
-        } else {
-            res = '?';
+        let res = '?';
+        if (data.categories) {
+            res += 'c=' + data.categories;
         }
         if (data.tags.length > 0) {
             res += '&t=';

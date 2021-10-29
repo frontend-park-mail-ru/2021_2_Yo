@@ -3,6 +3,7 @@
     --grayy: #AAAAAA;
     --date-orange: #FF630B;
     --geo-turquoise: #08BBBB;
+    --header-bg: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
 }
 
 body {

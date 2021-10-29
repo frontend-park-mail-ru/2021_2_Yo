@@ -1,10 +1,10 @@
-import { UrlPathnames } from '../types.js';
+import {UrlPathnames} from '../types.js';
 import Bus from './eventbus/eventbus.js';
 import Events from './eventbus/events.js';
 
-// Комменты для перехода на другую ветку, все выпилю обещаю
 interface Controller {
     disable(): void;
+
     enable(): void;
 }
 type Controllers = {
@@ -13,7 +13,6 @@ type Controllers = {
 }
 
 class Router {
-    // #controllers: Map<UrlPathnames, Controller[]>;
     #controllers: Map<UrlPathnames, Controllers>;
     #path?: UrlPathnames;
 
@@ -50,7 +49,7 @@ class Router {
     }
 
     back() {
-        if (window.history.length > 1) { 
+        if (window.history.length > 1) {
             window.history.back();
         } else {
             this.route(UrlPathnames.Main);

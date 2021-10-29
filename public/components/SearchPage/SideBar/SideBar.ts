@@ -5,13 +5,12 @@ import Events from '../../../modules/eventbus/events.js';
 export default class SideBar {
     #parent: HTMLElement;
     #categoriesOpened: boolean;
-    #categories: Array<boolean>;
+    #category?: number;
     #tags: Array<string> = [];
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#categoriesOpened = false;
-        this.#categories = new Array<boolean>(config.categories.length);
         const tag = `
             <label id="tag-{{this}}" class="tags__tag">
                 {{this}}
@@ -47,13 +46,18 @@ export default class SideBar {
     #handleCategory = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
         const index = +<string>target.dataset?.num;
-        if (this.#categories[index]) {
-            target.style.background = '';
+        if (index === this.#category) {
+            target.style.backgroundColor = '';
+            this.#category = undefined;
         } else {
-            target.style.background = 'var(--category-check)';
+            if (this.#category !== undefined) {
+                const cat = <HTMLElement>document.getElementById('category-' + this.#category);
+                cat.style.backgroundColor = '';
+            }
+            target.style.backgroundColor = 'var(--category-check)';
+            this.#category = index;
         }
-        this.#categories[index] = !this.#categories[index];
-        this.#handleFilter(this.#categories, this.#tags);
+        this.#handleFilter(this.#category, this.#tags);
     };
 
     #handleCategoryList = (e: MouseEvent) => {
@@ -77,7 +81,7 @@ export default class SideBar {
         this.#tags = this.#tags.filter(tag => tag !== target.innerText);
         target.removeEventListener('click', this.#handleTagDelete);
         target.outerHTML = '';
-        this.#handleFilter(this.#categories, this.#tags);
+        this.#handleFilter(this.#category, this.#tags);
     };
 
     #tagAdd(input: HTMLInputElement) {
@@ -116,7 +120,7 @@ export default class SideBar {
         });
 
         input.value = '';
-        this.#handleFilter(this.#categories, this.#tags);
+        this.#handleFilter(this.#category, this.#tags);
     }
 
     #handleTagAddClick = () => {
@@ -131,9 +135,9 @@ export default class SideBar {
         this.#tagAdd(<HTMLInputElement>e.target);
     };
 
-    #handleFilter = (categories: Array<boolean>, tags: Array<string>) => {
-        if (categories === this.#categories && tags === this.#tags) {
-            Bus.emit(Events.EventsReq, {categories: categories, tags: tags});
+    #handleFilter = (category: number | undefined, tags: Array<string>) => {
+        if (category === this.#category && tags === this.#tags) {
+            Bus.emit(Events.EventsReq, {categories: category, tags: tags});
         }
     };
 

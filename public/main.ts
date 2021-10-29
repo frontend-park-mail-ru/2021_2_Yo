@@ -1,11 +1,14 @@
-import { UrlPathnames } from './types.js';
+import {UrlPathnames} from './types.js';
 import Router from './modules/routing.js';
 import ErrorPageController from './components/ErrorPage/controller.js';
 import MainPageController from './components/MainPage/controller.js';
-import LoginController from './components/Authorization/Login/LoginController.js';
-import SignupController from './components/Authorization/SignUp/SignupController.js';
+import LoginController from './components/Authorization/Login/controller.js';
+import SignupController from './components/Authorization/SignUp/controller.js';
 import HeaderController from './components/Header/controller.js';
 import SearchPageController from './components/SearchPage/controller.js';
+import EventPageController from './components/EventPage/controller.js';
+import EventFormController from './components/EventForm/Create/controller.js';
+import EventEditFormController from './components/EventForm/Edit/controller.js';
 
 const source = `
     <div id="App">
@@ -17,17 +20,23 @@ document.body.innerHTML = window.Handlebars.compile(source)();
 const header = <HTMLElement>document.getElementById('mvc-header');
 const content = <HTMLElement>document.getElementById('mvc-content');
 
-const headerController = new HeaderController(header);
-const mainController = new MainPageController(content);
-const loginController = new LoginController(content);
-const signupController = new SignupController(content);
+const hController = new HeaderController(header);
+const mController = new MainPageController(content);
+const lController = new LoginController(content);
+const sController = new SignupController(content);
 const searchController = new SearchPageController(content);
-const errorController = new ErrorPageController(content);
+const eController = new ErrorPageController(content);
+const evController = new EventPageController(content);
+const evCreateController = new EventFormController(content);
+const evEditController = new EventEditFormController(content);
 
-Router.add(UrlPathnames.Main, {header: headerController, content: mainController});
-Router.add(UrlPathnames.Login, {content: loginController});
-Router.add(UrlPathnames.Signup, {content: signupController});
-Router.add(UrlPathnames.Search, {header: headerController, content: searchController});
-Router.add(UrlPathnames.Error, {header: headerController, content: errorController });
+Router.add(UrlPathnames.Main, {header: hController, content: mController});
+Router.add(UrlPathnames.Login, {content: lController});
+Router.add(UrlPathnames.Signup, {content: sController});
+Router.add(UrlPathnames.Search, {header: hController, content: searchController});
+Router.add(UrlPathnames.Error, {header: hController, content: eController});
+Router.add(UrlPathnames.Event, {header: hController, content: evController});
+Router.add(UrlPathnames.Create, {header: hController, content: evCreateController});
+Router.add(UrlPathnames.Edit, {header: hController, content: evEditController});
 
 Router.route();
