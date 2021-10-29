@@ -110,6 +110,15 @@ export default class SearchBoard {
                 {{/if}}
             </div>
         `;
+        // const source = `
+        //     <div class="search-bar">
+        //         <input class="search-bar__input border-box_color_gray" placeholder="Например: отвисная и отвязная..."></input>
+        //         <div class="search-bar__geo border-box_color_gray text_geo">Москва</div>
+        //     </div>
+        //     <div id="events-list">
+        //         <img id="load" src="/img/logo.png">
+        //     </div>
+        // `;
         this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
     }
 
