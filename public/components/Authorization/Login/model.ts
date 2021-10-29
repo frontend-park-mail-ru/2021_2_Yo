@@ -12,6 +12,7 @@ export default class LoginModel {
 
         void fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
             const {status, json} = data;
+
             if (status === 200) {
                 if (json.status === 200) {
                     // bus.emit(Events.UserAuthorized, null);

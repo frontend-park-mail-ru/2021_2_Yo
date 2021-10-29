@@ -16,6 +16,19 @@ export type UserData = {
     geo: string;
 }
 
+export type EventData = {
+    id?: number;
+    city: string;
+    category: string;
+    viewed?: number;
+    title: string;
+    description: string;
+    tag: string[];
+    text: string;
+    date: string;
+    geo: string;
+}
+
 export enum PageKeys {
     Login = 'login',
     Signup = 'signup',
@@ -26,6 +39,9 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
+    Event = '/events',
+    Create = '/create',
+    Edit = '/edit'
 }
 
 export enum ApiUrls {
