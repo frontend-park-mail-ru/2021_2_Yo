@@ -4,7 +4,7 @@ import Events from '../../modules/eventbus/events.js';
 import { ApiUrls, FetchResponseData } from '../../types.js';
 
 interface FilterData {
-    categories?: number,
+    category?: number,
     tags: Array<string>,
 }
 
@@ -16,8 +16,8 @@ export default class SearchPageModel {
 
     #filterToUrl (data: FilterData) {
         let res = '?';
-        if (data.categories) {
-            res += 'c=' + data.categories;
+        if (data.category !== undefined) {
+            res += 'c=' + data.category;
         }
         if (data.tags.length > 0) {
             res += '&t=';
@@ -36,6 +36,7 @@ export default class SearchPageModel {
         if (data) {
             filter = this.#filterToUrl(data);
         }
+        Bus.emit(Events.RouteUpdate, filter);
         void fetchGet(ApiUrls.Events + filter, 
             (data: FetchResponseData) => {
                 if (data.status === 200) {

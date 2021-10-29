@@ -14,8 +14,22 @@ export default class SearchPageController {
 
     enable() {
         this.#model.enable();
+        const c = new URL(window.location.href).searchParams?.get('c');
+        let category: undefined | number = undefined;
+        if (c) {
+            category = +c;
+        }
+        const t = new URL(window.location.href).searchParams?.get('t');
+        let tags: undefined | Array<string> = undefined;
+        if (t) {
+            tags = t.split('|');
+        } else {
+            tags = new Array<string>();
+        }
         this.#view.render();
-        Bus.emit(Events.EventsReq);
+        const data = {category: category, tags: tags};
+        this.#view.filter(data);
+        Bus.emit(Events.EventsReq, data);
     }
 
     disable() {

@@ -26,15 +26,22 @@ class Router {
 
         Bus.on(Events.RouteBack, this.#handleBack);
         Bus.on(Events.RouteUrl, this.#handleUrl);
+        Bus.on(Events.RouteUpdate, this.#handleUpdate);
     }
 
     #clickHandler = (e: MouseEvent) => {
-        const target = e.target as EventTarget;
+        const target = <EventTarget>e.target;
         if (target instanceof HTMLAnchorElement) {
             e.preventDefault();
             Bus.emit(Events.RouteUrl, target.href);
         }
     };
+
+    #handleUpdate = ((params: string) => {
+        if (this.#path && (window.location.search !== params)) {
+            window.history.pushState({}, '', this.#path + params);
+        }
+    }).bind(this);
 
     #handleUrl = ((url: string) => {
         this.route(<UrlPathnames>url);
@@ -64,11 +71,11 @@ class Router {
     }
 
     route(path?: UrlPathnames) {
+        if (window.location.pathname == this.#path) return;
+
         if (path) {
             window.history.pushState({}, '', path);
         }
-
-        if (window.location.pathname == this.#path) return;
 
         const nextPath = this.#getValidPath();
         const nextControllers = <Controllers>this.#controllers.get(nextPath);

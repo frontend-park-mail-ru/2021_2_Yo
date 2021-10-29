@@ -2,6 +2,7 @@ enum Events {
     // Route
     RouteBack = 'route:back',
     RouteUrl = 'route:url',
+    RouteUpdate = 'route:update',
 
     // User
     UserRes = 'user:response',
@@ -25,7 +26,10 @@ enum Events {
     AuthError = 'auth:error',
     ValidationError = 'validation:error',
     ValidationOk = 'validation:ok',
-    SubmitLogin = 'submit:login'
+    SubmitLogin = 'submit:login',
+
+    // Search
+    FilterChange = 'filter:change',
 }
 
 export default Events;

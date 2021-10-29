@@ -8,7 +8,7 @@ export default class SideBar {
     #category?: number;
     #tags: Array<string> = [];
 
-    constructor(parent: HTMLElement) {
+    constructor(parent: HTMLElement, category?: number, tags?: Array<string>) {
         this.#parent = parent;
         this.#categoriesOpened = false;
         const tag = `
@@ -84,28 +84,11 @@ export default class SideBar {
         this.#handleFilter(this.#category, this.#tags);
     };
 
-    #tagAdd(input: HTMLInputElement) {
-        if (this.#tags.indexOf(input.value) !== -1) {
-            const repeated = <HTMLLabelElement>document.getElementById('tag-' + input.value);
-            if (repeated) {
-                repeated.style.backgroundColor = 'red';
-                setTimeout(() => repeated.style.backgroundColor = '', 500);
-            }
-            return;
-        }
-
+    #renderTags() {
         const list = <HTMLElement>document.getElementById('tags-list');
-        if (!(list)) return;
-
-        this.#tags.map((t) => {
-            const categ = <HTMLElement>document.getElementById('tag-' + t);
-            if (categ) {
-                categ.removeEventListener('click', this.#handleTagDelete);
-            }
-        });
+        if (!list) return;
 
         list.innerHTML = '';
-        this.#tags.push(input.value);
         this.#tags.map((t) => {
             const tag = `
                 {{> tag this}}
@@ -118,26 +101,57 @@ export default class SideBar {
                 label.addEventListener('click', this.#handleTagDelete);
             }
         });
+    }
 
-        input.value = '';
-        this.#handleFilter(this.#category, this.#tags);
+    #tagAdd(tag: string) {
+        if (this.#tags.indexOf(tag) !== -1) {
+            const repeated = <HTMLLabelElement>document.getElementById('tag-' + tag);
+            if (repeated) {
+                repeated.style.backgroundColor = 'red';
+                setTimeout(() => repeated.style.backgroundColor = '', 500);
+            }
+            return false;
+        }
+
+        const list = <HTMLElement>document.getElementById('tags-list');
+        if (!(list)) return false;
+
+        this.#tags.map((t) => {
+            const categ = <HTMLElement>document.getElementById('tag-' + t);
+            if (categ) {
+                categ.removeEventListener('click', this.#handleTagDelete);
+            }
+        });
+
+        this.#tags.push(tag);
+        this.#renderTags();
+        return true;
     }
 
     #handleTagAddClick = () => {
         const input = <HTMLInputElement>document.getElementById('tags-input');
         if (!input) return;
-        this.#tagAdd(input);
+        const added = this.#tagAdd(input.value);
+        if (added) {
+            input.value = '';
+            this.#handleFilter(this.#category, this.#tags);
+        }
     };
 
     #handleTagAddEnter = (e: KeyboardEvent) => {
         if (e.code !== 'Enter') return;
 
-        this.#tagAdd(<HTMLInputElement>e.target);
+        const input = <HTMLInputElement>e.target;
+        const added = this.#tagAdd(input.value);
+        if (added) {
+            input.value = '';
+            this.#handleFilter(this.#category, this.#tags);
+        }
     };
 
     #handleFilter = (category: number | undefined, tags: Array<string>) => {
         if (category === this.#category && tags === this.#tags) {
-            Bus.emit(Events.EventsReq, {categories: category, tags: tags});
+            Bus.emit(Events.EventsReq, {category: category, tags: tags});
         }
     };
 
@@ -169,6 +183,19 @@ export default class SideBar {
         const input = <HTMLInputElement>document.getElementById('tags-input');
         if (input) {
             input.removeEventListener('keydown', this.#handleTagAddEnter);
+        }
+    }
+
+    renderFilter(category?: number, tags?: Array<string>) {
+        if (category) {
+            const c = <HTMLElement>document.getElementById('category-' + category);
+            c.style.backgroundColor = 'var(--category-check)';
+            this.#category = category;
+        }
+
+        if (tags && tags.length > 0) {
+            this.#tags = [...new Set(tags)];
+            this.#renderTags();
         }
     }
 
