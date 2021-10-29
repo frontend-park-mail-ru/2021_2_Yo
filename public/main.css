@@ -11,6 +11,10 @@ body {
     font-family: Roboto;
 }
 
+a {
+    text-decoration: none;
+}
+
 #App {
     background-color: var(--background);
     min-height: 100vh;

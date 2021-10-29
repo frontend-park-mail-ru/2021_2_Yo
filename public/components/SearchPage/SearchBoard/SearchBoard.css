@@ -19,14 +19,6 @@
     margin-bottom: 10px;
 }
 
-#events-list {
-    min-height: 300px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-}
-
 .border-box_color_gray {
     border: var(--grayy-border);
     box-sizing: border-box;

@@ -10,6 +10,7 @@ export default class SearchBoard {
         Bus.on(Events.EventsRes, this.#handleEvents);
         Bus.on(Events.EventsError, this.#handleEventsError);
 
+        // <span id="event-{{@index}}" class="event-li__title" data-id="{{id}}">{{title}}</span>
         const list = `
             <div id="events-list">
             {{#each events}}
@@ -18,7 +19,7 @@ export default class SearchBoard {
                         <img class="bg-img" src="{{imgUrl}}">
                     </div>
                     <div class ="event-li__content">
-                        <span id="event-{{@index}}" class="event-li__title" data-id="{{id}}">{{title}}</span>
+                        <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
                         <div class="event-li__description">{{description}}</div>
                         <div class="event-li__info event-li__description">
                             <div class="event-li__description">
@@ -69,20 +70,20 @@ export default class SearchBoard {
         content.innerHTML = window.Handlebars.compile(source)();
     }
 
-    #addListeners() {
-        for (let i = 0;; i++) {
-            const event = <HTMLElement>document.getElementById('event-' + i.toString());
-            if (!event) break;
+    // #addListeners() {
+    //     for (let i = 0;; i++) {
+    //         const event = <HTMLElement>document.getElementById('event-' + i.toString());
+    //         if (!event) break;
 
-            event.addEventListener('click', this.#handleEventClick);
-        }
-    }
+    //         event.addEventListener('click', this.#handleEventClick);
+    //     }
+    // }
 
-    #handleEventClick = (e: MouseEvent) => {
-        const target = <HTMLElement>e.target;
-        const id = <string>target.dataset['id'];
-        Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id.toString());
-    };
+    // #handleEventClick = (e: MouseEvent) => {
+    //     const target = <HTMLElement>e.target;
+    //     const id = <string>target.dataset['id'];
+    //     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id.toString());
+    // };
 
     render(events?: EventData[]) {
         const source = `
@@ -101,20 +102,18 @@ export default class SearchBoard {
             </div>
         `;
         this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
-        this.#addListeners();
     }
 
-    #removeListeners() {
-        for (let i = 0;; i++) {
-            const event = <HTMLElement>document.getElementById('event-' + i.toString());
-            if (!event) break;
+    // #removeListeners() {
+    //     for (let i = 0;; i++) {
+    //         const event = <HTMLElement>document.getElementById('event-' + i.toString());
+    //         if (!event) break;
 
-            event.removeEventListener('click', this.#handleEventClick);
-        }
-    }
+    //         event.removeEventListener('click', this.#handleEventClick);
+    //     }
+    // }
 
     disable() {
-        this.#removeListeners();
         Bus.off(Events.EventsRes, this.#handleEvents);
         Bus.off(Events.EventsError, this.#handleEventsError);
         this.#parent.innerHTML = '';

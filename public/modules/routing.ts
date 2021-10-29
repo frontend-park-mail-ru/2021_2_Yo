@@ -71,7 +71,7 @@ class Router {
     }
 
     route(path?: UrlPathnames) {
-        if (window.location.pathname == this.#path) return;
+        if (window.location.pathname === path) return;
 
         if (path) {
             window.history.pushState({}, '', path);
