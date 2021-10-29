@@ -28,9 +28,7 @@
 }
 
 .border-box_color_gray {
-    /* border: 2px solid var(--grayy); */
     border: var(--grayy-border);
-    /* border-radius: 2px; */
     box-sizing: border-box;
 }
 

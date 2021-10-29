@@ -70,7 +70,9 @@ export default class EventBoardComponent {
                 </div>
             </div>                   
             {{else}}
-            <div class="loader loader-background"></div>
+            <div class="loader-wrapper">
+            <img class="loader" src="/img/logo.png">
+            </div>
             {{/if}}
         `;
         const template: any = window.Handlebars.compile(source);

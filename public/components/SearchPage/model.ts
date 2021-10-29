@@ -35,7 +35,7 @@ export default class SearchPageModel {
         if (data) {
             filter = this.#filterToUrl(data);
         }
-        void fetchGet(ApiUrls.Events, 
+        void fetchGet(ApiUrls.Events + filter, 
             (data: FetchResponseData) => {
                 if (data.status === 200) {
                     if (data.json.status === 200) {
@@ -46,7 +46,7 @@ export default class SearchPageModel {
                 Bus.emit(Events.EventsError);
             }, () => {
                 Bus.emit(Events.EventsError);
-            }, filter);
+            });
     }).bind(this);
 
     disable() {

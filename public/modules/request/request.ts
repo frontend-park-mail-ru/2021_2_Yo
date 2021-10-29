@@ -10,13 +10,10 @@ const API = 'https://bmstusasa.herokuapp.com';
 // const API = 'https://yobmstu.herokuapp.com';
 // const API = 'https://95.163.212.36:8081';
 
-export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void, params?: string) {
+export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
-    if (!params) {
-        params = '';
-    }
 
-    return fetch(API + url + params, {
+    return fetch(API + url, {
         method: METHODS.GET,
         mode: 'cors',
         credentials: 'include'

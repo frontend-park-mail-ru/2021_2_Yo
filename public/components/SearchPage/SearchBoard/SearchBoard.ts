@@ -54,16 +54,20 @@ export default class SearchBoard {
         const source = `
             <h2>Бекендеры решили ПОТУСИТЬ => API отъехало.</h2>
         `;
-        const list = <HTMLElement>document.getElementById('events-list');
+        const list = <HTMLElement>document.getElementById('search-content');
         list.innerHTML = window.Handlebars.compile(source)();
     }
 
     #renderEmpty() {
         const source = `
-            <h2>Прости бро, нет таких, ивентосов</h2>
+            <h2>Прости бро, нет таких ивентосов</h2>
         `;
-        const list = <HTMLElement>document.getElementById('events-list');
+        const list = <HTMLElement>document.getElementById('search-content');
         list.innerHTML = window.Handlebars.compile(source)();
+    }
+
+    #addListeners() {
+        
     }
 
     render(events?: EventData[]) {
@@ -72,17 +76,25 @@ export default class SearchBoard {
                 <input class="search-bar__input border-box_color_gray" placeholder="Например: отвисная и отвязная..."></input>
                 <div class="search-bar__geo border-box_color_gray text_geo">Москва</div>
             </div>
-            <div id="events-list">
+            <div id="search-content">
                 {{#if events}}
-                    {{#each events}}
-                        {{> event this}}
-                    {{/each}}
+                <div id="events-list">
+                        {{#each events}}
+                            {{> event this}}
+                        {{/each}}
+                </div>
                 {{else}}
-                <img class="loader loader_size_s" src="/img/logo.png">
+                <div class="loader-wrapper">
+                    <img class="loader loader_size_s" src="/img/logo.png">
+                </div>
                 {{/if}}
             </div>
         `;
         this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
+    }
+
+    #removeListeners() {
+
     }
 
     disable() {
