@@ -3,17 +3,6 @@
     --dark-grayy: #505050;
 }
 
-#load {
-    width: 50%;
-    height: 50%;
-    animation: spin 3.5s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 #search-board-wrapper {
     width: 44.6vw;
     padding: 10px 20px;
