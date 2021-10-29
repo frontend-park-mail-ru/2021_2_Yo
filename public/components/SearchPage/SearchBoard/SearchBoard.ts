@@ -4,11 +4,11 @@ import Events from '../../../modules/eventbus/events.js';
 
 export default class SearchBoard {
     #parent: HTMLElement;
-    #list?: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         Bus.on(Events.EventsRes, this.#handleEvents);
+        Bus.on(Events.EventsError, this.#handleEventsError);
         Bus.emit(Events.EventsReq);
 
         // const event = `
@@ -67,8 +67,32 @@ export default class SearchBoard {
     }
 
     #handleEvents = ((events: EventData[]) => {
-        this.render(events);
+        if (events.length > 0) {
+            this.render(events);
+        } else {
+            this.#renderEmpty();
+        }
     }).bind(this);
+
+    #handleEventsError = (() => {
+        this.#renderError();
+    }).bind(this);
+
+    #renderError() {
+        const source = `
+            <h2>Бекендеры решили ПОТУСИТЬ => API отъехало.</h2>
+        `;
+        const list = <HTMLElement>document.getElementById('events-list');
+        list.innerHTML = window.Handlebars.compile(source)();
+    }
+
+    #renderEmpty() {
+        const source = `
+            <h2>Прости бро, нет таких, ивентосов</h2>
+        `;
+        const list = <HTMLElement>document.getElementById('events-list');
+        list.innerHTML = window.Handlebars.compile(source)();
+    }
 
     render(events?: EventData[]) {
         const source = `
@@ -77,19 +101,21 @@ export default class SearchBoard {
                 <div class="search-bar__geo border-box_color_gray text_geo">Москва</div>
             </div>
             <div id="events-list">
-                {{#each events}}
-                    {{> event this}}
-                {{/each}}
+                {{#if events}}
+                    {{#each events}}
+                        {{> event this}}
+                    {{/each}}
+                {{else}}
+                <div id="loader"></div>
+                {{/if}}
             </div>
         `;
         this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
-
-        const list = <HTMLElement>document.getElementById('events-list');
-        this.#list = list;
     }
 
     disable() {
         Bus.off(Events.EventsRes, this.#handleEvents);
+        Bus.off(Events.EventsError, this.#handleEventsError);
         this.#parent.innerHTML = '';
     }
 }

@@ -14,8 +14,12 @@ export default class SearchPageModel {
                 if (data.status === 200) {
                     if (data.json.status === 200) {
                         Bus.emit(Events.EventsRes, data.json.body?.events);
+                        return;
                     }
                 }
+                Bus.emit(Events.EventsError);
+            }, () => {
+                Bus.emit(Events.EventsError);
             });
     }).bind(this);
 

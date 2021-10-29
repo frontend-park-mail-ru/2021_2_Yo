@@ -70,7 +70,7 @@ export default class EventBoardComponent {
                 </div>
             </div>                   
             {{else}}
-            <div id="events-loader"><div>
+            <div id="loader"><div>
             {{/if}}
         `;
         const template: any = window.Handlebars.compile(source);
