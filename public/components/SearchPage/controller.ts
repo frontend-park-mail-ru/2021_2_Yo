@@ -1,3 +1,5 @@
+import Bus from '../../modules/eventbus/eventbus.js';
+import Events from '../../modules/eventbus/events.js';
 import SearchPageModel from './model.js';
 import SearchPageView from './view.js';
 
@@ -12,6 +14,7 @@ export default class SearchPageController {
 
     enable() {
         this.#view.render();
+        Bus.emit(Events.EventsReq);
     }
 
     disable() {

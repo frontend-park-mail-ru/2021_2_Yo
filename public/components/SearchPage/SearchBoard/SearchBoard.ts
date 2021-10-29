@@ -9,7 +9,6 @@ export default class SearchBoard {
         this.#parent = parent;
         Bus.on(Events.EventsRes, this.#handleEvents);
         Bus.on(Events.EventsError, this.#handleEventsError);
-        Bus.emit(Events.EventsReq);
 
         const list = `
             <div id="events-list">
