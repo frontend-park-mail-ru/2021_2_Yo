@@ -7,10 +7,13 @@ const METHODS = {
 
 const API = 'https://bmstusasa.herokuapp.com';
 
-export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void, params?: string) {
     let HTTPStatus: number;
+    if (!params) {
+        params = '';
+    }
 
-    return fetch(API + url, {
+    return fetch(API + url + params, {
         method: METHODS.GET,
         mode: 'cors',
         credentials: 'include'

@@ -1,4 +1,6 @@
 import config from '../../../config.js';
+import Bus from '../../../modules/eventbus/eventbus.js';
+import Events from '../../../modules/eventbus/events.js';
 
 export default class SideBar {
     #parent: HTMLElement;
@@ -51,6 +53,7 @@ export default class SideBar {
             target.style.background = 'var(--category-check)';
         }
         this.#categories[index] = !this.#categories[index];
+        this.#handleFilter(this.#categories, this.#tags);
     };
 
     #handleCategoryList = (e: MouseEvent) => {
@@ -74,6 +77,7 @@ export default class SideBar {
         this.#tags = this.#tags.filter(tag => tag !== target.innerText);
         target.removeEventListener('click', this.#handleTagDelete);
         target.outerHTML = '';
+        this.#handleFilter(this.#categories, this.#tags);
     };
 
     #tagAdd(input: HTMLInputElement) {
@@ -112,6 +116,7 @@ export default class SideBar {
         });
 
         input.value = '';
+        this.#handleFilter(this.#categories, this.#tags);
     }
 
     #handleTagAddClick = () => {
@@ -124,6 +129,12 @@ export default class SideBar {
         if (e.code !== 'Enter') return;
 
         this.#tagAdd(<HTMLInputElement>e.target);
+    };
+
+    #handleFilter = (categories: Array<boolean>, tags: Array<string>) => {
+        if (categories === this.#categories && tags === this.#tags) {
+            Bus.emit(Events.EventsReq, {categories: categories, tags: tags});
+        }
     };
 
     #removeListeners() {
