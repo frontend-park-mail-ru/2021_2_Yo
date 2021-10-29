@@ -78,6 +78,7 @@
     font-size: 2.22vh;
     font-weight: bold;
     margin-bottom: 5px;
+    cursor: pointer;
 }
 
 .event-li__description {

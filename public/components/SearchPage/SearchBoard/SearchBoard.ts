@@ -82,7 +82,7 @@ export default class SearchBoard {
     #handleEventClick = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
         const id = <string>target.dataset['id'];
-        Bus.emit(Events.RouteUrl, UrlPathnames.Event + '/' + id);
+        Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id.toString());
     };
 
     render(events?: EventData[]) {
