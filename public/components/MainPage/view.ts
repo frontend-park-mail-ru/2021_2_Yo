@@ -15,7 +15,6 @@ export default class MainPageView {
             <div id="search-status-wrapper"></div>
             <div id="event-board-wrapper"></div>
         `;    
-        const hWrapper = document.getElementById('header-wrapper') as HTMLElement;
         const ssWrapper = document.getElementById('search-status-wrapper') as HTMLElement;
         const ebWrapper = document.getElementById('event-board-wrapper') as HTMLElement;
 

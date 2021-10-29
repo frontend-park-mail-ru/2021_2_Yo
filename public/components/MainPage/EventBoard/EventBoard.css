@@ -1,6 +1,6 @@
-#loader {
+/* #loader {
     /* position: fixed; */
-    width: 100%;
+    /* width: 100%;
     height: 100%;
     background: url('../../../server/img/logo.png') no-repeat center;
     animation: spin 3.5s linear infinite;
@@ -9,6 +9,11 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+} */ 
+#event-board-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #events-error {

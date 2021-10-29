@@ -51,6 +51,28 @@ export default class EventBoardComponent {
             });
         }
         
+        // const source = `
+        //     {{#if this}}
+        //     <div class="wrapper-center">
+        //         <div class="events">
+        //             {{#each this}}
+        //             <div class="events__e{{@index}} events__e-wrapper bg-img-wrapper">
+        //                 <img class="bg-img" src="{{imgUrl}}">
+        //                 <div class="events__content">
+        //                     <span class="events__description">{{description}}</span>
+        //                     <div class="events__viewed">
+        //                         <img src="./img/viewed2.0.png">
+        //                         <span class="events__viewed-score">{{viewed}}</span>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //             {{/each}}
+        //         </div>
+        //     </div>                   
+        //     {{else}}
+        //     <div id="loader"><div>
+        //     {{/if}}
+        // `;
         const source = `
             {{#if this}}
             <div class="wrapper-center">
@@ -70,7 +92,7 @@ export default class EventBoardComponent {
                 </div>
             </div>                   
             {{else}}
-            <div id="loader"><div>
+            <img id="load" src="/img/logo.png">
             {{/if}}
         `;
         const template: any = window.Handlebars.compile(source);
