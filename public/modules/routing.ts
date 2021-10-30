@@ -1,19 +1,23 @@
-import { UrlPathnames } from '../types.js';
+import {UrlPathnames} from '../types.js';
 import Bus from './eventbus/eventbus.js';
 import Events from './eventbus/events.js';
 
-// Комменты для перехода на другую ветку, все выпилю обещаю
 interface Controller {
     disable(): void;
+
     enable(): void;
+}
+type Controllers = {
+    header?: Controller,
+    content: Controller,
 }
 
 class Router {
-    #controllers: Map<UrlPathnames, Controller>;
+    #controllers: Map<UrlPathnames, Controllers>;
     #path?: UrlPathnames;
 
     constructor() {
-        this.#controllers = new Map<UrlPathnames, Controller>();
+        this.#controllers = new Map<UrlPathnames, Controllers>();
 
         window.onpopstate = () => {
             this.route();
@@ -40,16 +44,23 @@ class Router {
         this.back();
     }).bind(this);
 
-    add(path: UrlPathnames, controller: Controller) {
-        this.#controllers.set(path, controller);
+    add(path: UrlPathnames, controllers: Controllers) {
+        this.#controllers.set(path, controllers);
     }
 
     back() {
-        if (window.history.length > 1) { 
+        if (window.history.length > 1) {
             window.history.back();
         } else {
             this.route(UrlPathnames.Main);
         }
+    }
+
+    #getValidPath(): UrlPathnames {
+        if (Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
+            return <UrlPathnames>window.location.pathname;
+        }
+        return UrlPathnames.Error;
     }
 
     route(path?: UrlPathnames) {
@@ -59,13 +70,24 @@ class Router {
 
         if (window.location.pathname == this.#path) return;
 
-        if (this.#path) this.#controllers.get(this.#path)?.disable();
-        
-        this.#path = <UrlPathnames>window.location.pathname;
-        if (!Object.values(UrlPathnames).includes(<UrlPathnames>window.location.pathname)) {
-            this.#path = UrlPathnames.Error;
+        const nextPath = this.#getValidPath();
+        const nextControllers = <Controllers>this.#controllers.get(nextPath);
+
+        if (!this.#path) {
+            this.#path = nextPath;
+            nextControllers.header?.enable();
+            nextControllers.content.enable();
+            return;
         }
-        this.#controllers.get(this.#path)?.enable();
+
+        const prevControllers = <Controllers>this.#controllers.get(this.#path);
+        this.#path = nextPath;
+        if (nextControllers.header !== prevControllers.header) {
+            prevControllers.header?.disable();
+            nextControllers.header?.enable();
+        }
+        prevControllers.content.disable();
+        nextControllers.content.enable();
     }
 }
 
