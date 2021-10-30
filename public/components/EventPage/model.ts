@@ -1,7 +1,7 @@
-import {fetchDelete, fetchGet} from '../../modules/request/request.js';
-import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '../../types.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
+import {fetchDelete, fetchGet} from '../../modules/request/request';
+import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '../../types';
+import Bus from '../../modules/eventbus/eventbus';
+import Events from '../../modules/eventbus/events';
 
 export default class EventPageModel {
     getEvent(id: string) {

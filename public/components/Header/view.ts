@@ -1,7 +1,7 @@
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import { anchorsConfig } from '../../config.js';
-import { UserData, UrlPathnames } from '../../types.js';
+import Bus from '../../modules/eventbus/eventbus';
+import Events from '../../modules/eventbus/events';
+import { anchorsConfig } from '../../config';
+import { UserData, UrlPathnames } from '../../types';
 
 export default class HeaderView {
     #parent: HTMLElement;

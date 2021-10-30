@@ -1,7 +1,7 @@
-import { ApiUrls, EventCardData, FetchResponseData } from '../../types.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import { fetchGet } from '../../modules/request/request.js';
+import { ApiUrls, EventCardData, FetchResponseData } from '../../types';
+import Bus from '../../modules/eventbus/eventbus';
+import Events from '../../modules/eventbus/events';
+import { fetchGet } from '../../modules/request/request';
 
 export default class MainPageModel {
     enable() {

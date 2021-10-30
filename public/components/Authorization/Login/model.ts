@@ -1,7 +1,7 @@
-import { ApiPostLoginData, ApiUrls, FetchResponseData, UrlPathnames } from '../../../types.js';
-import { fetchPost } from '../../../modules/request/request.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import { ApiPostLoginData, ApiUrls, FetchResponseData, UrlPathnames } from '../../../types';
+import { fetchPost } from '../../../modules/request/request';
+import Bus from '../../../modules/eventbus/eventbus';
+import Events from '../../../modules/eventbus/events';
 
 export default class LoginModel {
     login(inputsData: Map<string, { errors: string[], value: string }>) {

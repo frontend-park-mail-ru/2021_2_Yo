@@ -1,4 +1,4 @@
-import Events from './events.js';
+import Events from './events';
 
 class EventBus {
     #listeners: Record<string, ((args?: any) => void)[]>;

@@ -1,6 +1,6 @@
-import { EventCardData } from '../../../types.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import { EventCardData } from '../../../types';
+import Bus from '../../../modules/eventbus/eventbus';
+import Events from '../../../modules/eventbus/events';
 
 export default class EventBoardComponent {
     #parent: HTMLElement;

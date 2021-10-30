@@ -1,8 +1,8 @@
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import UserStore from '../../modules/userstore.js';
-import { fetchGet } from '../../modules/request/request.js';
-import { FetchResponseData, ApiUrls } from '../../types.js';
+import Bus from '../../modules/eventbus/eventbus';
+import Events from '../../modules/eventbus/events';
+import UserStore from '../../modules/userstore';
+import { fetchGet } from '../../modules/request/request';
+import { FetchResponseData, ApiUrls } from '../../types';
 
 export default class HeaderModel {
     enable() {

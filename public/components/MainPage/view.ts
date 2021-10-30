@@ -1,5 +1,5 @@
-import SearchStatusComponent from './SearchStatus/SearchStatus.js';
-import EventBoardComponent from './EventBoard/EventBoard.js';
+import SearchStatusComponent from './SearchStatus/SearchStatus';
+import EventBoardComponent from './EventBoard/EventBoard';
 
 export default class MainPageView {
     #parent: HTMLElement;

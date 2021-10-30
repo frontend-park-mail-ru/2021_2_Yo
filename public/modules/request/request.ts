@@ -1,4 +1,4 @@
-import {ApiResponseJson, ApiUrls} from '../../types.js';
+import {ApiResponseJson, ApiUrls} from '../../types';
 
 const METHODS = {
     POST: 'POST',

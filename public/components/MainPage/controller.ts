@@ -1,5 +1,5 @@
-import MainPageModel from './model.js';
-import MainPageView from './view.js';
+import MainPageModel from './model';
+import MainPageView from './view';
 
 export default class MainPageController {
     #model: MainPageModel;
