@@ -1,16 +1,17 @@
 import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
-import {signupValidateFields} from '../../../modules/validation.js';
-import SignupView from './SignupView.js';
-import SignupModel from './SignupModel.js';
+import {authValidateFields} from '../../../modules/validation.js';
+import LoginView from './view.js';
+import LoginModel from './model.js';
 
-export default class SignupController {
-    #view: SignupView;
-    #model: SignupModel;
+export default class LoginController {
+    #view: LoginView;
+    #model: LoginModel;
 
     constructor(parent: HTMLElement) {
-        this.#model = new SignupModel();
-        this.#view = new SignupView(parent);
+        this.#model = new LoginModel();
+        this.#view = new LoginView(parent);
+
     }
 
     enable() {
@@ -28,8 +29,9 @@ export default class SignupController {
         this.#makeValidation(inputsData);
     }).bind(this);
 
+
     #makeValidation(inputsData: Map<string, { errors: string[], value: string }>) {
-        signupValidateFields(inputsData);
+        authValidateFields(inputsData);
 
         let valid = true;
 
@@ -43,7 +45,7 @@ export default class SignupController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk, null);
-            this.#model.signup(inputsData);
+            this.#model.login(inputsData);
         } else {
             Bus.emit(Events.ValidationError, null);
         }

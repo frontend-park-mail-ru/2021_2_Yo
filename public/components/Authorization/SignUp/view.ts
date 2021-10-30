@@ -28,30 +28,32 @@ export default class SignupView {
 
     render() {
         const source = `
-            <div class = "background">
+            <div class = "auth-background">
                 <img class="background__logo" src="./img/logo.png">
                 <div class = "authform">
                     <p class="authform__label label">Регистрация</p>
                     <form id="regForm">
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label profile-input-label">Имя</p>
-                            <input class ="input-block__input profile-form-input" id="nameInput">
+                            <p class="input-block__input-label input-label">Имя</p>
+                            <input class ="input-block__input form-input form-input_auth" id="nameInput" maxlength="50">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label profile-input-label">Фамилия</p>
-                            <input class ="input-block__input profile-form-input" id="surnameInput">
+                            <p class="input-block__input-label input-label">Фамилия</p>
+                            <input class ="input-block__input form-input form-input_auth" id="surnameInput" maxlength="50">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label profile-input-label">Email</p>
-                            <input class ="input-block__input profile-form-input" id="emailInput">
+                            <p class="input-block__input-label input-label">Email</p>
+                            <input class ="input-block__input form-input form-input_auth" id="emailInput" maxlength="150">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label profile-input-label">Пароль</p>
-                            <input class ="input-block__input profile-form-input" type="password" id="passwordInput1">
+                            <p class="input-block__input-label input-label">Пароль</p>
+                            <input class ="input-block__input form-input form-input_auth" type="password" 
+                            id="passwordInput1" maxlength="50">
                         </div>
                         <div class="authform__input-block input-block">
-                            <p class="input-block__input-label profile-input-label">Пароль еще раз</p>
-                            <input class ="input-block__input profile-form-input" type="password" id="passwordInput2">
+                            <p class="input-block__input-label input-label">Пароль еще раз</p>
+                            <input class ="input-block__input form-input form-input_auth" type="password" 
+                            id="passwordInput2" maxlength="50">
                         </div>
                         <p class="authform__error error" id="errors"></p>
                         <div class="authform__buttons buttons">

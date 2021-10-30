@@ -1,7 +1,8 @@
-import Bus from "../../modules/eventbus/eventbus";
-import Events from "../../modules/eventbus/events";
-import {UrlPathnames, UserData} from "../../types";
+import {UserData} from '../../types.js';
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm.js';
+import Bus from '../../modules/eventbus/eventbus.js';
+import Events from '../../modules/eventbus/events.js';
+import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageView {
     #parent: HTMLElement;
@@ -11,44 +12,45 @@ export default class ProfilePageView {
     }
 
     #addListeners() {
+        Bus.on(Events.UserEditRes, this.#editResHandle);
+
         const editButton = document.getElementById('editButton') as HTMLElement;
-        editButton.addEventListener('click', this.#editHandle)
+        editButton.addEventListener('click', this.#editHandle);
     }
 
+    #editResHandle = (() => {
+        const stored = UserStore.get();
+        // this.#renderProfileBlock(stored);
+    }).bind(this);
+
     #removeListeners() {
+        Bus.off(Events.UserEditRes, this.#editResHandle);
+
         const editButton = document.getElementById('editButton') as HTMLElement;
-        editButton.addEventListener('click', this.#editHandle)
+        editButton.addEventListener('click', this.#editHandle);
     }
 
     #editHandle = ((ev: Event) => {
-        ev.preventDefault()
+        ev.preventDefault();
 
         const bottomBlock = document.getElementById('bottomBlock') as HTMLElement;
         const editForm = new ProfileEditForm(bottomBlock);
-        editForm.render();
+
+        const editButton = document.getElementById('editButton') as HTMLElement;
+        const saveButton = document.getElementById('saveButton') as HTMLElement;
+        const cancelButton = document.getElementById('cancelButton') as HTMLElement;
+        editButton.classList.add('button_none');
+        saveButton.classList.remove('button_none');
+        cancelButton.classList.remove('button_none');
+
+        editForm.subscribe();
+        editForm.render(UserStore.get());
     });
 
     render(user?: UserData) {
         const source = `
           <div class="profile-background">
-                <div class="profile-block">
-                    <div class="border-block">
-                        <div block="profile-block__header">
-                            <div class="border-block__profile-avatar">
-                                <img src="https://source.boringavatars.com/marble/32" class="profile-avatar">
-                            </div>
-                            <div class="border-block__name">
-                                <p class="profile-name">{{name}}</p>
-                                <p class="profile-name">{{surname}}</p>
-                                <p class="profile-email">{{email}}</p>
-                            </div>
-                        </div>
-                        <div class="profile-block__bottom" id="bottomBlock">
-                            <p class="standard-text">О себе</p>
-                            <p class="description-text">{{description}}</p>
-                        </div>
-                    </div>
-                    <a class="button-edit left-block__button-edit" id="editButton">Редактировать профиль</a>
+                <div class="profile-block" id="profileBlock">
                 </div>
                 <div class="list-block">
                     <div class="border-block">
@@ -58,9 +60,48 @@ export default class ProfilePageView {
           </div>
         `;
         const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML = template(user);
+        this.#parent.innerHTML = template();
+
+        this.#renderProfileBlock(user);
 
         this.#addListeners();
+    }
+
+    #renderProfileBlock(user?: UserData) {
+        const source = `
+            <div class="border-block">
+                <div class="profile-block__header">
+                    <div class="border-block__profile-avatar">
+                        <img src="https://source.boringavatars.com/marble/32" class="profile-avatar">
+                    </div>
+                    <div class="border-block__name">
+                        <p class="profile-name">{{user.name}}</p>
+                        <p class="profile-name">{{user.surname}}</p>
+                        <p class="profile-email">{{user.email}}</p>
+                    </div>
+                </div>
+                <div class="profile-block__bottom" id="bottomBlock">
+                {{#if user.description}}
+                    <p class="standard-text">О себе</p>
+                    <p class="description-text">{{user.description}}</p>
+                {{/if}}
+                </div>
+            </div>
+            {{#if permitEdit}}
+            <button class="button-edit profile-block__button-edit" id="editButton">Редактировать профиль</button>
+            <button class="button-save profile-block__button-save button_none" type="submit" form="form" id="saveButton">
+                Подтвердить
+            </button>
+            <button class="button-edit profile-block__button-edit button_none" id="cancelButton">Отмена</button>
+            {{/if}}
+        `;
+
+        const template = window.Handlebars.compile(source);
+        const profileBlock = document.getElementById('profileBlock') as HTMLElement;
+
+        const storedId = UserStore.get()?.id;
+        const permitEdit = (user?.id == storedId);
+        profileBlock.innerHTML = template({user, permitEdit});
     }
 
     disable() {

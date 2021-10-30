@@ -7,11 +7,18 @@ enum Events {
     UserRes = 'user:response',
     UserError = 'user:error',
     UserReq = 'user:request',
+    UserEditReq = 'user-edit:request',
+    UserEditRes = 'user-edit:request',
 
     // Events
     EventsReq = 'events:request',
     EventsRes = 'events:response',
     EventsError = 'events:error',
+    EventRes = 'event:response',
+    EventCreateReq = 'event:create',
+    EventCreated = 'event:created',
+    EventEditReq = 'event:edit-request',
+    EventDelete = 'event:delete',
 
     // Authorization
     UserLogout = 'user:logout',

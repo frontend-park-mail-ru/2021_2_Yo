@@ -1,15 +1,16 @@
-import { ApiResponseJson, ApiUrls } from '../../types.js';
+import {ApiResponseJson, ApiUrls} from '../../types.js';
 
 const METHODS = {
     POST: 'POST',
     GET: 'GET',
+    DELETE: 'DELETE',
 };
 
-// const API = 'https://bmstusasa.herokuapp.com';
-const API = 'https://yobmstu.herokuapp.com';
+const API = 'https://bmstusasa.herokuapp.com';
+// const API = 'https://yobmstu.herokuapp.com';
 // const API = 'https://95.163.212.36:8081';
 
-export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
     return fetch(API + url, {
@@ -32,7 +33,30 @@ export function fetchGet(url: ApiUrls, callback?: (args?: any) => void, error?: 
     });
 }
 
-export function fetchPost(url: ApiUrls, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchDelete(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
+    let HTTPStatus: number;
+
+    return fetch(API + url, {
+        method: METHODS.DELETE,
+        mode: 'cors',
+        credentials: 'include'
+    }).then((response) => {
+        HTTPStatus = response.status;
+        return response.json();
+    }).then(data => {
+        const json = data as ApiResponseJson;
+        if (callback) {
+            callback({
+                status: HTTPStatus,
+                json: json,
+            });
+        }
+    }).catch(() => {
+        if (error) error();
+    });
+}
+
+export function fetchPost(url: string, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
     return fetch(API + url, {
