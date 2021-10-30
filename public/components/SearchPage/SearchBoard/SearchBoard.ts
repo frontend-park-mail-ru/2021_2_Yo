@@ -140,7 +140,6 @@ export default class SearchBoard {
                 <div class="loader-wrapper">
                     <img class="loader loader_size_s" src="/img/logo.png">
                 </div>
-                {{/if}}
             </div>
         `;
         this.#parent.innerHTML = window.Handlebars.compile(source)();
