@@ -92,7 +92,7 @@ export default class SearchBoard {
         `;
 
         const content = <HTMLElement>document.getElementById('search-content');
-        content.innerHTML = window.Handlebars.compile(source)(events);
+        content.innerHTML = window.Handlebars.compile(source)({events: events});
     }
 
     renderQuery(query: string | undefined) {
