@@ -6,36 +6,65 @@ import { ApiUrls, FetchResponseData } from '../../types.js';
 interface FilterData {
     category?: number,
     tags: Array<string>,
+    query?: string,
 }
 
 export default class SearchPageModel {
-    enable() {
-        Bus.on(Events.EventsReq, this.#handleEvents);
+    #data: FilterData;
 
+    constructor() {
+        this.#data = {
+            tags: new Array<string>(),
+        };
+    }
+    
+    enable(data: FilterData) {
+        this.#data = data;
+        Bus.on(Events.EventsReq, this.#handleEvents);
+        Bus.on(Events.FilterChange, this.#handleFilter);
+        Bus.on(Events.QueryChange, this.#handleQuery);
     }
 
     #filterToUrl (data: FilterData) {
         let res = '?';
+
+        if (data.query !== undefined && data.query !== '') {
+            res += 'q=' + data.query;
+        }
+
         if (data.category !== undefined) {
+            if (res.length > 1) res += '&';
             res += 'c=' + data.category;
         }
+
         if (data.tags.length > 0) {
-            res += '&t=';
+            if (res.length > 1) res += '&';
+            res += 't=';
             res += data.tags.reduce((prev, curr) => {
                 return prev + '|' + curr;
             });
         }
+
         if (res.length === 1) {
             res = '';
         }
         return res;
     }
 
-    #handleEvents = ((data?: FilterData) => {
+    #handleFilter = ((data: {category?: number, tags: Array<string>}) => {
+        this.#data.category = data.category;
+        this.#data.tags = data.tags;
+        this.#handleEvents();
+    }).bind(this);
+
+    #handleQuery = ((query: string) => {
+        this.#data.query = query;
+        this.#handleEvents();
+    }).bind(this);
+
+    #handleEvents = (() => {
         let filter = '';
-        if (data) {
-            filter = this.#filterToUrl(data);
-        }
+        filter = this.#filterToUrl(this.#data);
         Bus.emit(Events.RouteUpdate, filter);
         void fetchGet(ApiUrls.Events + filter, 
             (data: FetchResponseData) => {
@@ -53,5 +82,10 @@ export default class SearchPageModel {
 
     disable() {
         Bus.off(Events.EventsReq, this.#handleEvents);
+        this.#data = {
+            category: undefined,
+            tags: new Array<string>(),
+            query: undefined,
+        };
     }
 }

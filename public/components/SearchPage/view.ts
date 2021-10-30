@@ -1,9 +1,10 @@
 import SearchBoard from './SearchBoard/SearchBoard.js';
 import SideBar from './SideBar/SideBar.js';
 
-interface InputData {
+interface FilterData {
     category?: number,
-    tags?: Array<string>,
+    tags: Array<string>,
+    query?: string,
 }
 
 export default class SearchPageView {
@@ -15,8 +16,9 @@ export default class SearchPageView {
         this.#parent = parent;
     }
 
-    filter(data: InputData) {
+    filter(data: FilterData) {
         this.#side?.renderFilter(data.category, data.tags);
+        this.#search?.renderQuery(data.query);
     }
 
     render() {

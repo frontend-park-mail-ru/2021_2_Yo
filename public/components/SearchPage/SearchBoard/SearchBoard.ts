@@ -4,6 +4,7 @@ import Events from '../../../modules/eventbus/events.js';
 
 export default class SearchBoard {
     #parent: HTMLElement;
+    #query?: string;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -85,10 +86,45 @@ export default class SearchBoard {
     //     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id.toString());
     // };
 
+    renderQuery(query: string | undefined) {
+        if (!query) query = '';
+        this.#query = query;
+        const input = <HTMLInputElement>document.getElementById('query-input');
+        if (input) input.value = query;
+    }
+
+    addListeners() {
+        const input = <HTMLInputElement>document.getElementById('query-input');
+        if (!input) return;
+        input.addEventListener('input', this.#handleInput);
+    }
+
+    #handleInput = ((e: Event) => {
+        const input = <HTMLInputElement>e.target;
+        if (!input) return;
+        this.#query = input.value;
+
+        const handle = ((query: string | undefined) => {
+            if (!query) query = '';
+            if (query === this.#query) {
+                Bus.emit(Events.QueryChange, query);
+            }
+        }).bind(this);     
+        setTimeout(handle, 500, this.#query);
+    }).bind(this);
+
+    removeListeners() {
+        const input = <HTMLInputElement>document.getElementById('query-input');
+        if (!input) return;
+        input.addEventListener('input', this.#handleInput);
+    }
+
     render(events?: EventData[]) {
         const source = `
             <div class="search-bar">
-                <input class="search-bar__input border-box_color_gray" placeholder="Например: отвисная и отвязная..."></input>
+                <input id="query-input" class="search-bar__input border-box_color_gray" 
+                                        placeholder="Например: отвисная и отвязная...">
+                </input>
                 <div class="search-bar__geo border-box_color_gray text_geo">Москва</div>
             </div>
             <div id="search-content">
@@ -102,6 +138,7 @@ export default class SearchBoard {
             </div>
         `;
         this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
+        this.addListeners();
     }
 
     // #removeListeners() {
@@ -114,6 +151,7 @@ export default class SearchBoard {
     // }
 
     disable() {
+        this.removeListeners();
         Bus.off(Events.EventsRes, this.#handleEvents);
         Bus.off(Events.EventsError, this.#handleEventsError);
         this.#parent.innerHTML = '';

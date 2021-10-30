@@ -30,6 +30,7 @@ enum Events {
 
     // Search
     FilterChange = 'filter:change',
+    QueryChange = 'query:change',
 }
 
 export default Events;

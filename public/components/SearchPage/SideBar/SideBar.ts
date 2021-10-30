@@ -57,7 +57,7 @@ export default class SideBar {
             target.style.backgroundColor = 'var(--category-check)';
             this.#category = index;
         }
-        this.#handleFilter(this.#category, this.#tags);
+        this.#handleFilter();
     };
 
     #handleCategoryList = (e: MouseEvent) => {
@@ -81,7 +81,7 @@ export default class SideBar {
         this.#tags = this.#tags.filter(tag => tag !== target.innerText);
         target.removeEventListener('click', this.#handleTagDelete);
         target.outerHTML = '';
-        this.#handleFilter(this.#category, this.#tags);
+        this.#handleFilter();
     };
 
     #renderTags() {
@@ -134,7 +134,7 @@ export default class SideBar {
         const added = this.#tagAdd(input.value);
         if (added) {
             input.value = '';
-            this.#handleFilter(this.#category, this.#tags);
+            this.#handleFilter();
         }
     };
 
@@ -145,15 +145,19 @@ export default class SideBar {
         const added = this.#tagAdd(input.value);
         if (added) {
             input.value = '';
-            this.#handleFilter(this.#category, this.#tags);
+            this.#handleFilter();
         }
     };
 
-    #handleFilter = (category: number | undefined, tags: Array<string>) => {
-        if (category === this.#category && tags === this.#tags) {
-            Bus.emit(Events.EventsReq, {category: category, tags: tags});
-        }
-    };
+    #handleFilter() {
+        const handle = ((category: number | undefined, tags: Array<string>) => {
+            if (category === this.#category && tags === this.#tags) {
+                Bus.emit(Events.FilterChange, {category: category, tags: tags});
+            }
+        }).bind(this);
+
+        setTimeout(handle, 500, this.#category, this.#tags);
+    }
 
     #removeListeners() {
         config.categories.map((_, i) => {

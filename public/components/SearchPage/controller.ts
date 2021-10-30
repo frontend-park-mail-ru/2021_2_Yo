@@ -12,24 +12,33 @@ export default class SearchPageController {
         this.#view = new SearchPageView(parent);
     }
 
-    enable() {
-        this.#model.enable();
+    #parseParams() {
+        const q = new URL(window.location.href).searchParams?.get('q');
+        let query: undefined | string = undefined;
+        if (q) {
+            query = q;
+        }
         const c = new URL(window.location.href).searchParams?.get('c');
         let category: undefined | number = undefined;
         if (c) {
             category = +c;
         }
+
         const t = new URL(window.location.href).searchParams?.get('t');
-        let tags: undefined | Array<string> = undefined;
+        let tags = new Array<string>();
         if (t) {
             tags = t.split('|');
-        } else {
-            tags = new Array<string>();
-        }
+        } 
+
+        return {category: category, tags: tags, query: query};
+    }
+
+    enable() {
+        const data = this.#parseParams();
+        this.#model.enable(data);
         this.#view.render();
-        const data = {category: category, tags: tags};
         this.#view.filter(data);
-        Bus.emit(Events.EventsReq, data);
+        Bus.emit(Events.EventsReq);
     }
 
     disable() {
