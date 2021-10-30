@@ -45,7 +45,7 @@ export default class SearchBoard {
 
     #handleEvents = ((events: EventData[]) => {
         if (events.length > 0) {
-            this.render(events);
+            this.#renderEvents(events);
         } else {
             this.#renderEmpty();
         }
@@ -86,6 +86,17 @@ export default class SearchBoard {
     //     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id.toString());
     // };
 
+    #renderEvents(events: EventData[]) {
+        const source = `
+            {{#if this}}
+                {{> events-list this}}
+            {{else}} 
+        `;
+
+        const content = <HTMLElement>document.getElementById('search-content');
+        content.innerHTML = window.Handlebars.compile(source)(events);
+    }
+
     renderQuery(query: string | undefined) {
         if (!query) query = '';
         this.#query = query;
@@ -119,7 +130,7 @@ export default class SearchBoard {
         input.addEventListener('input', this.#handleInput);
     }
 
-    render(events?: EventData[]) {
+    render() {
         const source = `
             <div class="search-bar">
                 <input id="query-input" class="search-bar__input border-box_color_gray" 
@@ -128,16 +139,13 @@ export default class SearchBoard {
                 <div class="search-bar__geo border-box_color_gray text_geo">Москва</div>
             </div>
             <div id="search-content">
-                {{#if events}}
-                {{> events-list this}}
-                {{else}}
                 <div class="loader-wrapper">
                     <img class="loader loader_size_s" src="/img/logo.png">
                 </div>
                 {{/if}}
             </div>
         `;
-        this.#parent.innerHTML = window.Handlebars.compile(source)({events: events});
+        this.#parent.innerHTML = window.Handlebars.compile(source)();
         this.addListeners();
     }
 
