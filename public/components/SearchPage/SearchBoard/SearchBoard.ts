@@ -11,44 +11,43 @@ export default class SearchBoard {
         Bus.on(Events.EventsRes, this.#handleEvents);
         Bus.on(Events.EventsError, this.#handleEventsError);
 
-        // <span id="event-{{@index}}" class="event-li__title" data-id="{{id}}">{{title}}</span>
         const list = `
-            <div id="events-list">
-            {{#each events}}
-                <div class="event-li">
-                    <div class="event-li__img bg-img-wrapper">
-                        <img class="bg-img" src="{{imgUrl}}">
-                    </div>
-                    <div class ="event-li__content">
-                        <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
-                        <div class="event-li__description">{{description}}</div>
-                        <div class="event-li__info event-li__description">
-                            <div class="event-li__description">
-                                <span>Когда:&nbsp;</span>
-                                <span class="text_date">{{date}}</span>
-                                <span>Где:&nbsp;</span>
-                                <span class="text_geo">{{geo}}</span>
-                            </div>
-                            <div class="event-li__viewed">
-                                <img class="event-li__viewed-img" src="/img/viewed2.png">
-                                <span>{{viewed}}</span>
+            {{#if events}}
+                <div id="events-list">
+                {{#each events}}
+                    <div class="event-li">
+                        <div class="event-li__img bg-img-wrapper">
+                            <img class="bg-img" src="{{imgUrl}}">
+                        </div>
+                        <div class ="event-li__content">
+                            <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
+                            <div class="event-li__description">{{description}}</div>
+                            <div class="event-li__info event-li__description">
+                                <div class="event-li__description">
+                                    <span>Когда:&nbsp;</span>
+                                    <span class="text_date">{{date}}</span>
+                                    <span>Где:&nbsp;</span>
+                                    <span class="text_geo">{{geo}}</span>
+                                </div>
+                                <div class="event-li__viewed">
+                                    <img class="event-li__viewed-img" src="/img/viewed2.png">
+                                    <span>{{viewed}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                {{/each}}
                 </div>
-            {{/each}}
-            </div>
+            {{else}}
+                <h2>Прости бро, нет таких ивентосов</h2>
+            {{/if}}
         `;
 
         window.Handlebars.registerPartial('events-list', list);
     }
 
     #handleEvents = ((events: EventData[]) => {
-        if (events.length > 0) {
-            this.#renderEvents(events);
-        } else {
-            this.#renderEmpty();
-        }
+        this.#renderEvents(events);
     }).bind(this);
 
     #handleEventsError = (() => {
@@ -62,29 +61,6 @@ export default class SearchBoard {
         const content = <HTMLElement>document.getElementById('search-content');
         content.innerHTML = window.Handlebars.compile(source)();
     }
-
-    #renderEmpty() {
-        const source = `
-            <h2>Прости бро, нет таких ивентосов</h2>
-        `;
-        const content = <HTMLElement>document.getElementById('search-content');
-        content.innerHTML = window.Handlebars.compile(source)();
-    }
-
-    // #addListeners() {
-    //     for (let i = 0;; i++) {
-    //         const event = <HTMLElement>document.getElementById('event-' + i.toString());
-    //         if (!event) break;
-
-    //         event.addEventListener('click', this.#handleEventClick);
-    //     }
-    // }
-
-    // #handleEventClick = (e: MouseEvent) => {
-    //     const target = <HTMLElement>e.target;
-    //     const id = <string>target.dataset['id'];
-    //     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id.toString());
-    // };
 
     #renderEvents(events: EventData[]) {
         const source = `
@@ -145,15 +121,6 @@ export default class SearchBoard {
         this.#parent.innerHTML = window.Handlebars.compile(source)();
         this.addListeners();
     }
-
-    // #removeListeners() {
-    //     for (let i = 0;; i++) {
-    //         const event = <HTMLElement>document.getElementById('event-' + i.toString());
-    //         if (!event) break;
-
-    //         event.removeEventListener('click', this.#handleEventClick);
-    //     }
-    // }
 
     disable() {
         this.removeListeners();
