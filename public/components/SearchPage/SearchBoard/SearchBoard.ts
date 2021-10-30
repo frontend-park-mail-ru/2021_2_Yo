@@ -88,9 +88,7 @@ export default class SearchBoard {
 
     #renderEvents(events: EventData[]) {
         const source = `
-            {{#if this}}
-                {{> events-list this}}
-            {{else}} 
+            {{> events-list this}}
         `;
 
         const content = <HTMLElement>document.getElementById('search-content');
