@@ -18,6 +18,10 @@ export default class ProfilePageController {
         Bus.on(Events.UserEditReq, this.#userEditHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
+        Bus.on(Events.UserRes, this.#renderHandle);
+    }
+
+    #renderHandle() {
         const userId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userId);
     }
