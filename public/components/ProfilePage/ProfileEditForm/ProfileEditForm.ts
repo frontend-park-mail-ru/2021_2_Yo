@@ -44,7 +44,7 @@ export default class ProfileEditForm {
                     <input class="profile-form-input" id="avatarInput" type="file"/>
                     <p class="error error_none input-block__error"></p>
                 </div>
-                <button class="button-save profile-block__button-save" type="submit" id="saveButton">
+                <button class="button-save profile-block__button-save" type="submit">
                     Подтвердить
                 </button>
             </form>
@@ -59,7 +59,7 @@ export default class ProfileEditForm {
                     <input class="profile-form-input" id="passwordInput2" maxlength="50" type="password"/>
                     <p class="error error_none input-block__error"></p>
                 </div>
-                <button class="button-save profile-block__button-save" type="submit" id="saveButton">
+                <button class="button-save profile-block__button-save" type="submit">
                     Изменить пароль
                 </button>
             </form>

@@ -23,7 +23,7 @@ export default class ProfilePageModel {
         const newUserInfo = {
             name: inputsData.get('name')?.value as string,
             surname: inputsData.get('surname')?.value as string,
-            description: inputsData.get('description')?.value as string,
+            description: inputsData.get('selfDescription')?.value as string,
         };
 
         const stored = UserStore.get() as UserData;
