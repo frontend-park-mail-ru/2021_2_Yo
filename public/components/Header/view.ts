@@ -25,7 +25,7 @@ export default class HeaderView {
 
         const avatar = document.getElementById('avatar');
         if (avatar) {
-            avatar.addEventListener('click', this.#avatarHandle)
+            avatar.addEventListener('click', this.#avatarHandle);
         }
 
         const logo = document.getElementById('header-logo');
@@ -42,7 +42,7 @@ export default class HeaderView {
 
         const avatar = document.getElementById('avatar');
         if (avatar) {
-            avatar.removeEventListener('click', this.#avatarHandle)
+            avatar.removeEventListener('click', this.#avatarHandle);
         }
 
         const logo = document.getElementById('header-logo');
@@ -89,7 +89,8 @@ export default class HeaderView {
                     </div>
                     {{#if user}}
                         <div class="flex">
-                            <img id="avatar" class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
+                            <img id="avatar" class="header__user-avatar" 
+                                 src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
                         </div>
                         <img id="header-logout" class="header-button" src="./img/logout2.0.png">
