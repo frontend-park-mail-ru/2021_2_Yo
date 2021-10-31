@@ -28,7 +28,7 @@ export default class ProfilePageView {
         Bus.off(Events.UserEditRes, this.#editResHandle);
 
         const editButton = document.getElementById('editButton') as HTMLElement;
-        editButton.addEventListener('click', this.#editHandle);
+        editButton.removeEventListener('click', this.#editHandle);
     }
 
     #editHandle = ((ev: Event) => {

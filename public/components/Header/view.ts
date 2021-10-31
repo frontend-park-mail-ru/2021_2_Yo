@@ -1,7 +1,8 @@
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
-import { anchorsConfig } from '../../config.js';
-import { UserData, UrlPathnames } from '../../types.js';
+import UserStore from '../../modules/userstore.js';
+import {anchorsConfig} from '../../config.js';
+import {UserData, UrlPathnames} from '../../types.js';
 
 export default class HeaderView {
     #parent: HTMLElement;
@@ -22,6 +23,11 @@ export default class HeaderView {
             logout.addEventListener('click', this.#logoutHandle);
         }
 
+        const avatar = document.getElementById('avatar');
+        if (avatar) {
+            avatar.addEventListener('click', this.#avatarHandle)
+        }
+
         const logo = document.getElementById('header-logo');
         if (logo) {
             logo.addEventListener('click', this.#logoHandle);
@@ -34,6 +40,11 @@ export default class HeaderView {
             logout.removeEventListener('click', this.#logoutHandle);
         }
 
+        const avatar = document.getElementById('avatar');
+        if (avatar) {
+            avatar.removeEventListener('click', this.#avatarHandle)
+        }
+
         const logo = document.getElementById('header-logo');
         if (logo) {
             logo.removeEventListener('click', this.#logoHandle);
@@ -42,6 +53,11 @@ export default class HeaderView {
 
     #logoHandle = (() => {
         Bus.emit(Events.RouteUrl, UrlPathnames.Main);
+    }).bind(this);
+
+    #avatarHandle = (() => {
+        const id = UserStore.get()?.id;
+        Bus.emit(Events.RouteUrl, UrlPathnames.Profile + '?id=' + id);
     }).bind(this);
 
     #logoutHandle = (() => {
@@ -73,7 +89,7 @@ export default class HeaderView {
                     </div>
                     {{#if user}}
                         <div class="flex">
-                            <img class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
+                            <img id="avatar" class="header__user-avatar" src="https://source.boringavatars.com/marble/32/{{user.name}}">
                             <span>{{user.name}}</span>
                         </div>
                         <img id="header-logout" class="header-button" src="./img/logout2.0.png">
