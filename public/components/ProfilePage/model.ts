@@ -6,9 +6,9 @@ import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageModel {
     getUser(userId: string) {
-        let user = UserStore.get() as UserData;
+        let user = UserStore.get();
         console.log('Сохраненный', user);
-        if (user.id === userId) {
+        if (user?.id === userId) {
             Bus.emit(Events.UserByIdRes, user);
         } else {
             void fetchGet(ApiUrls.User + '/' + userId, (data: FetchResponseData) => {
