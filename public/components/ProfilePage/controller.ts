@@ -21,10 +21,10 @@ export default class ProfilePageController {
         Bus.on(Events.UserRes, this.#renderHandle);
     }
 
-    #renderHandle() {
+    #renderHandle = (() => {
         const userId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userId);
-    }
+    }).bind(this);
 
     #userGetHandle = ((user: UserData) => {
         this.#view.render(user);
