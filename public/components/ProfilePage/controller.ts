@@ -4,6 +4,7 @@ import Events from '../../modules/eventbus/events.js';
 import {passwordEditValidateFields, userEditValidateFields} from '../../modules/validation.js';
 import ProfilePageModel from './model.js';
 import {UserData} from '../../types.js';
+import UserStore from "../../modules/userstore";
 
 export default class ProfilePageController {
     #view: ProfilePageView;
@@ -19,11 +20,20 @@ export default class ProfilePageController {
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserRes, this.#renderHandle);
+        Bus.on(Events.UserError, this.#errorHandle);
     }
+
+    #errorHandle = (() => {
+        const userId = new URL(window.location.href).searchParams?.get('id') as string;
+        this.#model.getUser(userId);
+    }).bind(this);
 
     #renderHandle = (() => {
         const userId = new URL(window.location.href).searchParams?.get('id') as string;
-        this.#model.getUser(userId);
+        const user = UserStore.get();
+        if (user?.id === userId) {
+            Bus.emit(Events.UserByIdRes, user);
+        }
     }).bind(this);
 
     #userGetHandle = ((user: UserData) => {

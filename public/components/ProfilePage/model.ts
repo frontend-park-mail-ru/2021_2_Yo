@@ -6,22 +6,17 @@ import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageModel {
     getUser(userId: string) {
-        let user = UserStore.get();
-        console.log('Сохраненный', user);
-        if (user?.id === userId) {
-            Bus.emit(Events.UserByIdRes, user);
-        } else {
-            void fetchGet(ApiUrls.User + '/' + userId, (data: FetchResponseData) => {
-                const {status, json} = data;
-                if (status === 200) {
-                    if (json.status === 200) {
-                        user = json.body as UserData;
-                        Bus.emit(Events.UserByIdRes, user);
-                        return;
-                    }
+        void fetchGet(ApiUrls.User + '/' + userId, (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    const user = json.body as UserData;
+                    Bus.emit(Events.UserByIdRes, user);
+                    return;
                 }
-            });
-        }
+            }
+        });
+
     }
 
     editUser(inputsData: Map<string, { errors: string[], value: string }>) {
