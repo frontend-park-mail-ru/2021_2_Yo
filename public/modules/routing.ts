@@ -29,13 +29,8 @@ class Router {
     }
 
     #clickHandler = (e: MouseEvent) => {
-        // console.log('handle');
         const target = e.target as EventTarget;
-        // console.log(e);
-        // console.log(e.target);
-        // e.preventDefault();
         if (target instanceof HTMLAnchorElement) {
-            // console.log('anchor');
             e.preventDefault();
             Bus.emit(Events.RouteUrl, target.href);
         }

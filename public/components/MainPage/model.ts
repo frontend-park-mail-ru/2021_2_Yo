@@ -3,20 +3,6 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import { fetchGet } from '@request/request';
 
-// const event: EventData = {
-//     id: 1,
-//     city: '',
-//     category: 'ls',
-//     viewed: 88,
-//     title: 'tusa',
-//     description: 'jusa',
-//     tag: ['lala', 'la'],
-//     text: 'text',
-//     date: 'date',
-//     geo: 'mocow',
-// };
-// const events: EventData[] = [event, event, event];
-
 export default class MainPageModel {
     enable() {
         Bus.on(Events.EventsReq, this.#eventsHandle);
@@ -32,11 +18,9 @@ export default class MainPageModel {
                         return;
                     }
                 }
-                // Bus.emit(Events.EventsRes, events); 
                 Bus.emit(Events.EventsError);
             },
             () => {
-                // Bus.emit(Events.EventsRes, events); 
                 Bus.emit(Events.EventsError);
             }
         );
