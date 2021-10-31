@@ -6,9 +6,10 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-const API = 'https://bmstusasa.herokuapp.com';
+// const API = 'https://bmstusasa.herokuapp.com';
 // const API = 'https://yobmstu.herokuapp.com';
 // const API = 'https://95.163.212.36:8081';
+const API = 'https://bmstusa.ru';
 
 export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
