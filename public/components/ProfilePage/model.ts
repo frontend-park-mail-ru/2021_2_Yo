@@ -29,14 +29,13 @@ export default class ProfilePageModel {
         };
 
         const stored = UserStore.get();
-        console.log('Пара', stored, newUserInfo);
         for (const key of Object.keys(newUserInfo)) {
             if ((newUserInfo as any)[key]) {
                 (stored as any)[key] = (newUserInfo as any)[key];
             }
         }
-        console.log('Исправленный', UserStore.get());
-        void fetchPost(ApiUrls.User + '/' + newUserInfo.id + '/info', newUserInfo, (data: FetchResponseData) => {
+        console.log('Исправленный', stored);
+        void fetchPost(ApiUrls.User + '/' + newUserInfo.id + '/info', stored, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
             if (status === 200) {
