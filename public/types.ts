@@ -1,9 +1,3 @@
-declare global {
-    interface Window {
-        Handlebars: any;
-    }
-}
-
 export type EventCardData = {
     imgUrl: string;
     viewed: number;

@@ -1,5 +1,6 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import * as template from '@login/template.hbs';
 
 const CHILD_NUM = 2;
 
@@ -27,32 +28,6 @@ export default class LoginView {
     }).bind(this);
 
     render() {
-        const source = `
-            <div class="auth-background">
-                <img class="background__logo" src="./img/logo.png">
-                <div class="authform" id="authFormBackground">
-                    <p class="authform__label label">Авторизация</p>
-                    <form id="authForm">
-                        <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Email</p>
-                            <input class ="input-block__input form-input form-input_auth" id="emailInput" maxlength="150">
-                        </div>
-                        <div class="authform__input-block input-block">
-                            <p class="input-block__input-label input-label">Пароль</p>
-                            <input type="password" class ="input-block__input form-input form-input_auth"
-                             id="passwordInput" maxlength="50">
-                        </div>
-                        <p class="authform__error error" id="errors"></p>
-                        <div class="authform__buttons buttons">
-                            <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
-                            <a id="back" class="buttons__button-back button-back">НАЗАД</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        `;
-
-        const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template();
 
         const emailInput = document.getElementById('emailInput') as HTMLInputElement;

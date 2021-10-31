@@ -1,6 +1,8 @@
 import { EventCardData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import * as errorTemplate from '@main-page/EventBoard/error-template.hbs';
+import * as template from '@main-page/EventBoard/template.hbs';
 
 export default class EventBoardComponent {
     #parent: HTMLElement;
@@ -21,22 +23,7 @@ export default class EventBoardComponent {
     }).bind(this);
 
     error() {
-        const source = `
-            <div id="events-error">
-                <p>Чтобы восстановить пароль, подготовьте номер<br>
-                public static java.lang.Object ru.tinkoffabsense.AEF(<br>
-                java.lang.Boolean,<br>
-                java.lang.Object,<br>
-                java.lang.Object);<br>
-                0 == 1 кредитного договора банковской карты. Под рукой ли он у вас?</p>
-                <br>
-                <p>
-                Кароче апи отъехало.
-                </p>
-            </div>
-        `;
-        const template = window.Handlebars.compile(source);
-        this.#parent.innerHTML = template();
+        this.#parent.innerHTML = errorTemplate();
     }
 
     render(data?: EventCardData[]) {
@@ -51,29 +38,6 @@ export default class EventBoardComponent {
             });
         }
         
-        const source = `
-            {{#if this}}
-            <div class="board">
-                <div class="events">
-                    {{#each this}}
-                    <div class="events__e{{@index}} events__e-wrapper">
-                        <img class="events__image" src="{{imgUrl}}">
-                        <div class="events__content">
-                            <span class="events__description">{{description}}</span>
-                            <div class="events__viewed">
-                                <img src="./img/viewed2.0.png">
-                                <span class="events__viewed-score">{{viewed}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-            </div>                   
-            {{else}}
-            <div id="events-loader"><div>
-            {{/if}}
-        `;
-        const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(data);
     }
 

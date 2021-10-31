@@ -1,0 +1,55 @@
+<div class="eventform-background">
+    <form class="eventform" id="eventform">
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Название</p>
+            <input class ="input-block__input form-input form-input_wide" id="titleInput" maxlength="255"/>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Краткое описание</p>
+            <textarea class ="input-block__input form-textarea" id="descriptionInput" 
+            rows="4" maxlength="500"></textarea>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Описание</p>
+            <textarea class ="input-block__input form-textarea" id="textInput" rows="12" 
+            maxlength="2200"></textarea>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Дата проведения</p>
+            <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date"/>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Город</p>
+            <input class ="input-block__input form-input form-input_thin" id="cityInput" maxlength="30"/>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Адрес</p>
+            <input class ="input-block__input form-input form-input_thin" id="geoInput" maxlength="255"/>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Категория</p>
+            <input class ="input-block__input form-input form-input_thin" id="categoryInput" maxlength="30"/>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="eventform__input-block input-block">
+            <p class="input-block__input-label event-text">Теги</p>
+            <input class ="input-block__input form-input form-input_thin" id="tagInput" maxlength="30">
+            <input value="Добавить" id="tagButton" class="input-block__input button-cancel" 
+            type="button">
+            <div id="tagBlockError">
+                <p class="input-block__error error error_none"></p>
+            </div>
+            <div class="event-tags-block" id="tagBlock"></div>
+        </div>
+        <div class="eventform__buttons buttons">
+            <input type="button" value="Отмена" class="button-cancel">
+            <input type="submit" value="СОЗДАТЬ" class="button-save">
+        </div>
+    </form>
+</div>

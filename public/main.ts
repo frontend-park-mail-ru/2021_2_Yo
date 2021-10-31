@@ -8,14 +8,10 @@ import HeaderController from '@header/controller';
 import EventPageController from '@event-page/controller';
 import EventFormController from '@event-create/controller';
 import EventEditFormController from '@event-edit/controller';
+import '@/main.css';
+import * as app from '@/app.hbs';
 
-const source = `
-    <div id="App">
-        <div id="mvc-header"></div>
-        <div id="mvc-content"></div>
-    </div>
-`;
-document.body.innerHTML = window.Handlebars.compile(source)();
+document.body.innerHTML = app();
 const header = <HTMLElement>document.getElementById('mvc-header');
 const content = <HTMLElement>document.getElementById('mvc-content');
 

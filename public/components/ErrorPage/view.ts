@@ -1,3 +1,5 @@
+import * as template from '@error-page/template.hbs';
+
 export default class ErrorPageView {
     #parent: HTMLElement;
 
@@ -6,11 +8,7 @@ export default class ErrorPageView {
     }
 
     render() {
-        const source = `
-            <h1>ERROR</h1>
-            <h2>Котик, ты шото с урлом напутал, давай больше без приколов<3</h2>
-        `;
-        this.#parent.innerHTML = window.Handlebars.compile(source)();
+        this.#parent.innerHTML = template();
     }
 
     disable() {
