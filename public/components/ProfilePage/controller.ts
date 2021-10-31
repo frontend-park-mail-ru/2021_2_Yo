@@ -4,7 +4,7 @@ import Events from '../../modules/eventbus/events.js';
 import {passwordEditValidateFields, userEditValidateFields} from '../../modules/validation.js';
 import ProfilePageModel from './model.js';
 import {UserData} from '../../types.js';
-import UserStore from "../../modules/userstore";
+import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageController {
     #view: ProfilePageView;
