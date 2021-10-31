@@ -13,20 +13,11 @@ export default class ProfilePageView {
     }
 
     #addListeners() {
-        Bus.on(Events.UserEditRes, this.#editResHandle);
-
         const editButton = document.getElementById('editButton') as HTMLElement;
         editButton.addEventListener('click', this.#editHandle);
     }
 
-    #editResHandle = (() => {
-        const stored = UserStore.get();
-        // this.#renderProfileBlock(stored);
-    }).bind(this);
-
     #removeListeners() {
-        Bus.off(Events.UserEditRes, this.#editResHandle);
-
         const editButton = document.getElementById('editButton') as HTMLElement;
         editButton.removeEventListener('click', this.#editHandle);
     }
@@ -59,12 +50,12 @@ export default class ProfilePageView {
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template();
 
-        this.#renderProfileBlock(user);
+        this.renderProfileBlock(user);
 
         this.#addListeners();
     }
 
-    #renderProfileBlock(user?: UserData) {
+    renderProfileBlock(user?: UserData) {
         const source = `
             <div class="border-block">
                 <div class="profile-block__header">
@@ -96,6 +87,10 @@ export default class ProfilePageView {
         console.log(UserStore.get());
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = template({user, permitEdit});
+    }
+
+    disableProfileForm() {
+        this.#editForm?.disable();
     }
 
     disable() {

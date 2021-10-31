@@ -21,7 +21,13 @@ export default class ProfilePageController {
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserRes, this.#renderHandle);
         Bus.on(Events.UserError, this.#errorHandle);
+        Bus.on(Events.UserEditRes, this.#editResHandle);
     }
+
+    #editResHandle = ((user: UserData) => {
+        this.#view.disableProfileForm();
+        this.#view.renderProfileBlock(user);
+    }).bind(this);
 
     #errorHandle = (() => {
         const userId = new URL(window.location.href).searchParams?.get('id') as string;
