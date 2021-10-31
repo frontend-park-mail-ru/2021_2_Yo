@@ -2,7 +2,7 @@ import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 import UserStore from '../../modules/userstore.js';
 import {anchorsConfig} from '../../config.js';
-import {UserData, UrlPathnames} from '../../types.js';
+import {UrlPathnames, UserData} from '../../types.js';
 
 export default class HeaderView {
     #parent: HTMLElement;
@@ -61,6 +61,7 @@ export default class HeaderView {
     }).bind(this);
 
     #logoutHandle = (() => {
+        Bus.emit(Events.UserLogout);
         this.#render();
     }).bind(this);
 
