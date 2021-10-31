@@ -35,7 +35,7 @@ export default class ProfilePageModel {
             }
         }
         console.log('Исправленный', stored);
-        void fetchPost(ApiUrls.User + '/' + newUserInfo.id + '/info', stored, (data: FetchResponseData) => {
+        void fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
             if (status === 200) {
@@ -49,7 +49,7 @@ export default class ProfilePageModel {
 
     editPassword(password: string) {
         const id = new URL(window.location.href).searchParams?.get('id') as string;
-        void fetchPost(ApiUrls.User + '/' + id + '/password', {password}, (data: FetchResponseData) => {
+        void fetchPost(ApiUrls.User + '/password', {password}, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
             if (status === 200) {
