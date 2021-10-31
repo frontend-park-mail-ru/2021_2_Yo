@@ -200,6 +200,8 @@ export default class EventEditFormView {
         this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
 
+        console.log(this.#inputsData);
+
         Bus.emit(Events.EventEditReq, this.#inputsData);
     }
 
