@@ -76,6 +76,7 @@ export function userEditValidateFields(inputsData: Map<string, { errors: string[
 }
 
 export function eventValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+    console.log(inputsData);
     const title = inputsData.get('title') as { errors: string[], value: string };
     const description = inputsData.get('description') as { errors: string[], value: string };
     const text = inputsData.get('text') as { errors: string[], value: string };
