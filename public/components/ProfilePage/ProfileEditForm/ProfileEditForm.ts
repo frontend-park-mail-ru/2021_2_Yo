@@ -39,6 +39,11 @@ export default class ProfileEditForm {
                     <textarea class="form-textarea" rows="4" id="selfDescriptionInput" maxlength="150">{{description}}</textarea>
                     <p class="error error_none input-block__error"></p>
                 </div>
+                <button class="button-save profile-block__button-save" type="submit" id="saveButton">
+                    Подтвердить
+                </button>
+            </form>
+            <form id="passwordForm">
                 <div class="input-block">
                     <p class="profile-input-label">Пароль</p>
                     <input class="profile-form-input" id="passwordInput1" maxlength="50"/>
@@ -49,7 +54,11 @@ export default class ProfileEditForm {
                     <input class="profile-form-input" id="passwordInput2" maxlength="50"/>
                     <p class="error error_none input-block__error"></p>
                 </div>
+                <button class="button-save profile-block__button-save" type="submit" id="saveButton">
+                    Изменить пароль
+                </button>
             </form>
+            <button class="button-edit profile-block__button-edit" id="cancelButton">Отмена</button>
         `;
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(user);
@@ -58,17 +67,27 @@ export default class ProfileEditForm {
     }
 
     disable() {
+        Bus.off(Events.ValidationError, this.#validationHandle);
+        Bus.off(Events.ValidationOk, this.#validationHandle);
+
         this.#removeListeners();
     }
 
     #addListeners() {
         const form = document.getElementById('form') as HTMLFormElement;
-        form.addEventListener('submit', this.#submitHandle);
+        form.addEventListener('submit', this.#mainFormSubmitHandle);
+
+
+        const passwordForm = document.getElementById('passwordForm') as HTMLFormElement;
+        passwordForm.addEventListener('submit', this.#passwordFormSubmitHandle);
     }
 
     #removeListeners() {
         const form = document.getElementById('form') as HTMLFormElement;
-        form.addEventListener('submit', this.#submitHandle);
+        form.removeEventListener('submit', this.#mainFormSubmitHandle);
+
+        const passwordForm = document.getElementById('passwordForm') as HTMLFormElement;
+        passwordForm.removeEventListener('submit', this.#passwordFormSubmitHandle);
     }
 
     #back = (ev: MouseEvent) => {
@@ -77,7 +96,21 @@ export default class ProfileEditForm {
         ev.stopPropagation();
     };
 
-    #submitHandle = ((ev: Event) => {
+    #passwordFormSubmitHandle = ((ev: Event) => {
+        ev.preventDefault();
+
+        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
+        this.#inputs.set('password1', passwordInput1);
+        this.#inputsData.set('password1', {errors: [], value: passwordInput1.value.trim()});
+
+        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
+        this.#inputs.set('password2', passwordInput2);
+        this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
+
+        Bus.emit(Events.UserPasswordEditReq, this.#inputsData);
+    });
+
+    #mainFormSubmitHandle = ((ev: Event) => {
         ev.preventDefault();
 
         const nameInput = document.getElementById('nameInput') as HTMLInputElement;
@@ -92,19 +125,10 @@ export default class ProfileEditForm {
         this.#inputs.set('selfDescription', selfDescriptionInput);
         this.#inputsData.set('selfDescription', {errors: [], value: selfDescriptionInput.value.trim()});
 
-        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
-        this.#inputs.set('password1', passwordInput1);
-        this.#inputsData.set('password1', {errors: [], value: passwordInput1.value.trim()});
-
-        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
-        this.#inputs.set('password2', passwordInput2);
-        this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
-
         Bus.emit(Events.UserEditReq, this.#inputsData);
     });
 
     #showValidationErrors() {
-        console.log(this.#inputsData, this.#inputs);
         this.#inputs.forEach((input, key) => {
             const inputBlock = input.parentElement as HTMLElement;
             const errorP = inputBlock.lastElementChild as HTMLElement;

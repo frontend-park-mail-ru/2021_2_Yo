@@ -6,6 +6,7 @@ import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageView {
     #parent: HTMLElement;
+    #editForm?: ProfileEditForm;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -34,17 +35,13 @@ export default class ProfilePageView {
         ev.preventDefault();
 
         const bottomBlock = document.getElementById('bottomBlock') as HTMLElement;
-        const editForm = new ProfileEditForm(bottomBlock);
+        this.#editForm = new ProfileEditForm(bottomBlock);
 
         const editButton = document.getElementById('editButton') as HTMLElement;
-        const saveButton = document.getElementById('saveButton') as HTMLElement;
-        const cancelButton = document.getElementById('cancelButton') as HTMLElement;
         editButton.classList.add('button_none');
-        saveButton.classList.remove('button_none');
-        cancelButton.classList.remove('button_none');
 
-        editForm.subscribe();
-        editForm.render(UserStore.get());
+        this.#editForm.subscribe();
+        this.#editForm.render(UserStore.get());
     });
 
     render(user?: UserData) {
@@ -89,17 +86,14 @@ export default class ProfilePageView {
             </div>
             {{#if permitEdit}}
             <button class="button-edit profile-block__button-edit" id="editButton">Редактировать профиль</button>
-            <button class="button-save profile-block__button-save button_none" type="submit" form="form" id="saveButton">
-                Подтвердить
-            </button>
-            <button class="button-edit profile-block__button-edit button_none" id="cancelButton">Отмена</button>
             {{/if}}
         `;
 
         const template = window.Handlebars.compile(source);
         const profileBlock = document.getElementById('profileBlock') as HTMLElement;
 
-        const storedId = UserStore.get()?.id;
+        // const storedId = UserStore.get()?.id;
+        const storedId = '1';
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = template({user, permitEdit});
     }

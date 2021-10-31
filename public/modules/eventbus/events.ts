@@ -8,7 +8,10 @@ enum Events {
     UserError = 'user:error',
     UserReq = 'user:request',
     UserEditReq = 'user-edit:request',
-    UserEditRes = 'user-edit:request',
+    UserEditRes = 'user-edit:response',
+    UserPasswordEditReq = 'user-password-edit:request',
+    UserPasswordEditRes = 'user-password-edit:response',
+    UserByIdRes = 'user-by-id:response',
 
     // Events
     EventsReq = 'events:request',

@@ -49,25 +49,28 @@ export function signupValidateFields(inputsData: Map<string, { errors: string[],
     checkInputLength(inputsData);
 }
 
+export function passwordEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+    const password1 = inputsData.get('password1') as { errors: string[], value: string };
+    const password2 = inputsData.get('password2') as { errors: string[], value: string };
+
+    password1.errors.push(checkPasswordLength(password1.value));
+    password2.errors.push(checkPasswordLength(password2.value));
+    if (checkPasswordsEqual(password1.value, password2.value)) {
+        password2.errors.push('Пароли не совпадают');
+    }
+
+    checkInputLength(inputsData);
+}
+
 export function userEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
     const name = inputsData.get('name') as { errors: string[], value: string };
     const surname = inputsData.get('surname') as { errors: string[], value: string };
-    const password1 = inputsData.get('password1') as { errors: string[], value: string };
-    const password2 = inputsData.get('password2') as { errors: string[], value: string };
 
     name.errors.push(checkEmpty(name.value));
     name.errors.push(checkForbiddenSymbols(name.value));
 
     surname.errors.push(checkEmpty(surname.value));
     surname.errors.push(checkForbiddenSymbols(surname.value));
-
-    if (password1.value || password2.value) {
-        password1.errors.push(checkPasswordLength(password1.value));
-        password2.errors.push(checkPasswordLength(password2.value));
-        if (checkPasswordsEqual(password1.value, password2.value)) {
-            password2.errors.push('Пароли не совпадают');
-        }
-    }
 
     checkInputLength(inputsData);
 }

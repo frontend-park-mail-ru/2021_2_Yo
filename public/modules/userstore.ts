@@ -1,4 +1,4 @@
-import { ApiUrls, UserData, FetchResponseData } from '../types.js';
+import {ApiUrls, UserData, FetchResponseData} from '../types.js';
 import Bus from './eventbus/eventbus.js';
 import Events from './eventbus/events.js';
 
@@ -12,6 +12,10 @@ class UserStore {
 
     get() {
         return this.#user;
+    }
+
+    set(user: UserData) {
+        this.#user = user;
     }
 
     #userHandle = ((user: UserData) => {
