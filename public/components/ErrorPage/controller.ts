@@ -1,4 +1,4 @@
-import ErrorPageView from './view';
+import ErrorPageView from '@error-page/view';
 
 export default class ErrorPageController {
     #view: ErrorPageView;

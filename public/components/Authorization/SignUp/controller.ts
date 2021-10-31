@@ -1,8 +1,8 @@
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
-import {signupValidateFields} from '../../../modules/validation';
-import SignupView from './view';
-import SignupModel from './model';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import {signupValidateFields} from '@modules/validation';
+import SignupView from '@signup/view';
+import SignupModel from '@signup/model';
 
 export default class SignupController {
     #view: SignupView;

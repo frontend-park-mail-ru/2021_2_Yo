@@ -1,7 +1,7 @@
-import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '../../../types';
-import {fetchGet, fetchPost} from '../../../modules/request/request';
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
+import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
+import {fetchGet, fetchPost} from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class EventEditFormModel {
     editEvent(inputsData: Map<string, { errors: string[]; value: string | string[] }>) {

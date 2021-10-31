@@ -1,6 +1,6 @@
-import {EventData, UrlPathnames} from '../../types';
-import Bus from '../../modules/eventbus/eventbus';
-import Events from '../../modules/eventbus/events';
+import {EventData, UrlPathnames} from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class EventPageView {
     #parent: HTMLElement;

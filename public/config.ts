@@ -1,4 +1,4 @@
-import { UrlPathnames } from './types';
+import { UrlPathnames } from '@/types';
 
 export const anchorsConfig = {
     eventAnchors: [

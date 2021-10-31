@@ -1,6 +1,6 @@
-import {EventData} from '../../../types';
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
+import {EventData} from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';

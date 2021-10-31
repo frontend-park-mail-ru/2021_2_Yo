@@ -1,6 +1,6 @@
-import { UserData } from '../types';
-import Bus from './eventbus/eventbus';
-import Events from './eventbus/events';
+import { UserData } from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 class UserStore {
     #user?: UserData;

@@ -1,8 +1,8 @@
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
-import {authValidateFields} from '../../../modules/validation';
-import LoginView from './view';
-import LoginModel from './model';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import {authValidateFields} from '@modules/validation';
+import LoginView from '@login/view';
+import LoginModel from '@login/model';
 
 export default class LoginController {
     #view: LoginView;

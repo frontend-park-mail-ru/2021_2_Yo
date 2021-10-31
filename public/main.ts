@@ -1,13 +1,13 @@
-import {UrlPathnames} from './types';
-import Router from './modules/routing';
-import ErrorPageController from './components/ErrorPage/controller';
-import MainPageController from './components/MainPage/controller';
-import LoginController from './components/Authorization/Login/controller';
-import SignupController from './components/Authorization/SignUp/controller';
-import HeaderController from './components/Header/controller';
-import EventPageController from './components/EventPage/controller';
-import EventFormController from './components/EventForm/Create/controller';
-import EventEditFormController from './components/EventForm/Edit/controller';
+import {UrlPathnames} from '@/types';
+import Router from '@modules/routing';
+import ErrorPageController from '@error-page/controller';
+import MainPageController from '@main-page/controller';
+import LoginController from '@login/controller';
+import SignupController from '@signup/controller';
+import HeaderController from '@header/controller';
+import EventPageController from '@event-page/controller';
+import EventFormController from '@event-create/controller';
+import EventEditFormController from '@event-edit/controller';
 
 const source = `
     <div id="App">

@@ -1,7 +1,7 @@
-import {ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames} from '../../../types';
-import {fetchPost} from '../../../modules/request/request';
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
+import {ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
+import {fetchPost} from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class SignupModel {
     signup(inputsData: Map<string, { errors: string[], value: string }>) {

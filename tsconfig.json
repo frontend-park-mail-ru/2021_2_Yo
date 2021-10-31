@@ -11,15 +11,26 @@
         // Other
         "esModuleInterop": true,
         "target": "esnext",
+        "allowJs": true,
         "module": "esnext",
         "moduleResolution": "node",
         "outDir": "dist",
         "sourceMap": true,
-        "baseUrl": "./public",
+        "baseUrl": "./",
         "paths": {
-            "*": [
-                "node_modules/*",
-            ]
+            "*": [ "node_modules/*" ],
+            "@/*": [ "public/*" ],
+            "@modules/*": [ "public/modules/*" ],
+            "@eventbus/*": [ "public/modules/eventbus/*" ],
+            "@request/*": [ "public/modules/request/*" ],
+            "@header/*": [ "public/components/Header/*" ],
+            "@main-page/*": [ "public/components/MainPage/*" ],
+            "@login/*": [ "public/components/Authorization/Login/*" ],
+            "@signup/*": [ "public/components/Authorization/SignUp/*" ],
+            "@event-page/*": [ "public/components/EventPage/*" ],
+            "@event-create/*": [ "public/components/EventForm/Create/*" ],
+            "@event-edit/*": [ "public/components/EventForm/Edit/*" ],
+            "@error-page/*": [ "public/components/ErrorPage/*" ],
         }
     },
     "include": [

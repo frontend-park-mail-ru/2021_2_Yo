@@ -1,7 +1,7 @@
-import {fetchDelete, fetchGet} from '../../modules/request/request';
-import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '../../types';
-import Bus from '../../modules/eventbus/eventbus';
-import Events from '../../modules/eventbus/events';
+import {fetchDelete, fetchGet} from '@request/request';
+import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class EventPageModel {
     getEvent(id: string) {
@@ -10,7 +10,7 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        const event = json.body as EventData;
+                        const event = <EventData>json.body;
                         Bus.emit(Events.EventRes, event);
                     }
                 }

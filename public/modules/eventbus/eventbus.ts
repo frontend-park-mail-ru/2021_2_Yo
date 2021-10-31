@@ -1,4 +1,4 @@
-import Events from './events';
+import Events from '@eventbus/events';
 
 class EventBus {
     #listeners: Record<string, ((args?: any) => void)[]>;

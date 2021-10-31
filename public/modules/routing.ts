@@ -1,6 +1,6 @@
-import {UrlPathnames} from '../types';
-import Bus from './eventbus/eventbus';
-import Events from './eventbus/events';
+import {UrlPathnames} from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 interface Controller {
     disable(): void;

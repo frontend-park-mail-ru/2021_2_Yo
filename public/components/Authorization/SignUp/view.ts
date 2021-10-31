@@ -1,5 +1,5 @@
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 const CHILD_NUM = 2;
 

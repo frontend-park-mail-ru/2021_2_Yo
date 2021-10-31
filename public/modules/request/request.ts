@@ -1,4 +1,4 @@
-import {ApiResponseJson, ApiUrls} from '../../types';
+import { ApiResponseJson } from '@/types';
 
 const METHODS = {
     POST: 'POST',

@@ -1,8 +1,8 @@
-import Bus from '../../../modules/eventbus/eventbus';
-import Events from '../../../modules/eventbus/events';
-import EventFormView from './view';
-import EventFormModel from './model';
-import {eventValidateFields} from '../../../modules/validation';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import EventFormView from '@event-create/view';
+import EventFormModel from '@event-create/model';
+import {eventValidateFields} from '@modules/validation';
 
 export default class EventFormController {
     #view: EventFormView;
