@@ -92,8 +92,7 @@ export default class ProfilePageView {
         const template = window.Handlebars.compile(source);
         const profileBlock = document.getElementById('profileBlock') as HTMLElement;
 
-        // const storedId = UserStore.get()?.id;
-        const storedId = '1';
+        const storedId = UserStore.get()?.id;
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = template({user, permitEdit});
     }

@@ -39,6 +39,11 @@ export default class ProfileEditForm {
                     <textarea class="form-textarea" rows="4" id="selfDescriptionInput" maxlength="150">{{description}}</textarea>
                     <p class="error error_none input-block__error"></p>
                 </div>
+                <div class="input-block">
+                    <p class="profile-input-label">Фото профиля</p>
+                    <input class="profile-form-input" id="avatarInput" type="file"/>
+                    <p class="error error_none input-block__error"></p>
+                </div>
                 <button class="button-save profile-block__button-save" type="submit" id="saveButton">
                     Подтвердить
                 </button>
@@ -46,12 +51,12 @@ export default class ProfileEditForm {
             <form id="passwordForm">
                 <div class="input-block">
                     <p class="profile-input-label">Пароль</p>
-                    <input class="profile-form-input" id="passwordInput1" maxlength="50"/>
+                    <input class="profile-form-input" id="passwordInput1" maxlength="50" type="password"/>
                     <p class="error error_none input-block__error"></p>
                 </div>
                 <div class="input-block">
                     <p class="profile-input-label">Подтвердить пароль</p>
-                    <input class="profile-form-input" id="passwordInput2" maxlength="50"/>
+                    <input class="profile-form-input" id="passwordInput2" maxlength="50" type="password"/>
                     <p class="error error_none input-block__error"></p>
                 </div>
                 <button class="button-save profile-block__button-save" type="submit" id="saveButton">
