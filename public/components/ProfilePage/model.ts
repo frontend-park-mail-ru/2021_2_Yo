@@ -33,13 +33,13 @@ export default class ProfilePageModel {
         };
 
         const stored = UserStore.get();
-        console.log(stored, newUserInfo);
+        console.log('Пара', stored, newUserInfo);
         for (const key of Object.keys(newUserInfo)) {
             if ((newUserInfo as any)[key]) {
                 (stored as any)[key] = (newUserInfo as any)[key];
             }
         }
-        console.log(UserStore.get());
+        console.log('Исправленный', UserStore.get());
         void fetchPost(ApiUrls.User + '/' + newUserInfo.id + '/info', newUserInfo, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
