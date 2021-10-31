@@ -1,4 +1,4 @@
-import { EventCardData } from '@/types';
+import { EventData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as errorTemplate from '@main-page/EventBoard/eventerror.hbs';
@@ -15,7 +15,7 @@ export default class EventBoardComponent {
         this.#parent = parent;
     }
 
-    #eventsHandle = ((data: EventCardData[]) => {
+    #eventsHandle = ((data: EventData[]) => {
         this.render(data);
     }).bind(this);
 
@@ -27,7 +27,7 @@ export default class EventBoardComponent {
         this.#parent.innerHTML = errorTemplate();
     }
 
-    render(data?: EventCardData[]) {
+    render(data?: EventData[]) {
         // Временные меры (пока не хотим контактировать с беком)
         if (data) {
             while (data.length < 13) {
