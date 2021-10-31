@@ -3,16 +3,18 @@
     <div class="events">
         {{#each this}}
         <div class="events__e{{@index}} events__e-wrapper">
-            <a href="/events?id={{id}}">
                 <img class="events__image" src="{{imgUrl}}">
-                <div class="events__content">
+            <a class="events__content" href="events?id={{id}}">
+                {{!-- <div class="events__content"> --}}
+                    {{!-- <a class="events__description" href="events?id={{id}}">{{description}}</a> --}}
                     <span class="events__description">{{description}}</span>
                     <div class="events__viewed">
                         <img src="./img/viewed2.0.png">
                         <span class="events__viewed-score">{{viewed}}</span>
                     </div>
-                </div>
+                {{!-- </div> --}}
             </a>
+            
         </div>
        {{/each}}
     </div>
