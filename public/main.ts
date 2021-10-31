@@ -1,4 +1,4 @@
-import {UrlPathnames} from '@/types';
+import { UrlPathnames } from '@/types';
 import Router from '@modules/routing';
 import ErrorPageController from '@error-page/controller';
 import MainPageController from '@main-page/controller';
@@ -24,8 +24,8 @@ const evController = new EventPageController(content);
 const evCreateController = new EventFormController(content);
 const evEditController = new EventEditFormController(content);
 
-Router.add(UrlPathnames.Main, {header: hController, content: mController});
-Router.add(UrlPathnames.Login, {content: lController});
+Router.add(UrlPathnames.Main, { header: hController, content: mController });
+Router.add(UrlPathnames.Login, { content: lController });
 Router.add(UrlPathnames.Signup, {content: sController});
 Router.add(UrlPathnames.Error, {header: hController, content: eController});
 Router.add(UrlPathnames.Event, {header: hController, content: evController});

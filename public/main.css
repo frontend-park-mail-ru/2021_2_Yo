@@ -1,20 +1,177 @@
-@import url('./server/fonts/fonts.css');
+@import url("./server/fonts/fonts.css");
 
 :root {
-    --header-bg: linear-gradient(90deg, #490063 0%, #08BBBB 100%);
+  --header-bg: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
+  --error: #e61a3d;
+  --black-text: #505050;
+  --views-num: #aaaaaa;
+  --blue: #4fbdc5;
+  --orange: #ff630b;
+  --evbg: #d2d2d3;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto;
+  margin: 0;
+  font-family: Roboto;
 }
 
 #App {
-    background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.error {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.296vh;
+  line-height: 1.48vh;
+
+  color: var(--error);
+}
+
+.error_none {
+  display: none;
+}
+
+.event-button {
+  font-weight: 500;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+  text-decoration-line: underline;
+}
+
+.event-button:hover {
+  cursor: pointer;
+}
+
+.event-button_red {
+  color: red;
+}
+
+.event-button_orange {
+  color: var(--orange);
+}
+
+.event-button_blue {
+  color: var(--blue);
+}
+
+.event-tag {
+  display: inline-block;
+  padding: 1.02vh 0.57vw;
+
+  background: var(--blue);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+
+  font-weight: bold;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+  color: white;
+}
+
+.event-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+  color: var(--black-text);
+}
+
+.input-block {
+  padding-bottom: 1.94vh;
+}
+
+.input-block__input-label {
+  margin: 0;
+}
+
+.input-block__error {
+  margin-top: 0.09vh;
+  margin-bottom: 0.46vh;
+}
+
+.input-block_error {
+  padding-bottom: 0;
+}
+
+.form-input {
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 2px;
+  height: 3.7vh;
+}
+
+.button-back {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+  text-decoration-line: underline;
+  color: var(--back-btn);
+}
+
+.button-cancel {
+  background: #ffffff;
+  border: 1px solid #050505;
+  box-sizing: border-box;
+  border-radius: 2px;
+  width: 10.42vw;
+  height: 3.7vh;
+
+  font-style: normal;
+  font-weight: 300;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+
+  color: var(--black-text);
+}
+
+.button-submit {
+  background: var(--submit-btn);
+  mix-blend-mode: normal;
+  border: 1px solid black;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+
+  height: 3.7vh;
+  padding: 0.56vh 2.6vw;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+  text-decoration-line: underline;
+
+  color: white;
+}
+
+.button-save {
+  background: var(--blue);
+  border: 1px solid #050505;
+  box-sizing: border-box;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  width: 10.42vw;
+  height: 3.7vh;
+
+  font-style: normal;
+  font-weight: 300;
+  font-size: 2.22vh;
+  line-height: 2.59vh;
+
+  color: white;
 }
