@@ -76,7 +76,6 @@ export function userEditValidateFields(inputsData: Map<string, { errors: string[
 }
 
 export function eventValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
-    console.log(inputsData);
     const title = inputsData.get('title') as { errors: string[], value: string };
     const description = inputsData.get('description') as { errors: string[], value: string };
     const text = inputsData.get('text') as { errors: string[], value: string };
@@ -151,8 +150,10 @@ function checkDate(value: string): string {
 
 function checkInputLength(inputsData: Map<string, { errors: string[], value: string }>) {
     inputsData.forEach((item, key) => {
-        if (item.value.length > (inputLength.get(key) as number)) {
-            item.errors.push(`Слишком много символов. Максимальная длина ${inputLength.get(key) as number}`);
+        if (item.value) {
+            if (item.value.length > (inputLength.get(key) as number)) {
+                item.errors.push(`Слишком много символов. Максимальная длина ${inputLength.get(key) as number}`);
+            }
         }
     });
 }
