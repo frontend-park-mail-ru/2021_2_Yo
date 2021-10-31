@@ -15,6 +15,10 @@ body {
   font-family: Roboto;
 }
 
+a {
+  text-decoration: none;
+}
+
 #App {
   background-color: #f7f7f7;
 }
