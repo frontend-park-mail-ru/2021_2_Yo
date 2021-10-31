@@ -13,7 +13,7 @@ export default class HeaderView {
 
     subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
-        Bus.on(Events.UserError, this.#logoutHandle);
+        Bus.on(Events.UserError, this.#userHandle);
     }
 
     #addListeners() {
@@ -64,7 +64,7 @@ export default class HeaderView {
         this.#render();
     }).bind(this);
 
-    #userHandle = ((user: UserData) => {
+    #userHandle = ((user?: UserData) => {
         this.#render(user);
     }).bind(this);
 
