@@ -14,10 +14,6 @@ class UserStore {
         return this.#user;
     }
 
-    set(user: UserData) {
-        this.#user = user;
-    }
-
     #userHandle = ((user: UserData) => {
         this.#user = user;
         console.log('Из юзер стора', this.#user);

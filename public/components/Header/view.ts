@@ -14,7 +14,6 @@ export default class HeaderView {
     subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
         Bus.on(Events.UserError, this.#logoutHandle);
-        Bus.on(Events.UserLogout, this.#logoutHandle);
     }
 
     #addListeners() {
