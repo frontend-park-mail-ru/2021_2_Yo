@@ -24,17 +24,16 @@ export default class ProfilePageModel {
             name: inputsData.get('name')?.value as string,
             surname: inputsData.get('surname')?.value as string,
             description: inputsData.get('description')?.value as string,
-            password: inputsData.get('password1')?.value as string,
             id: new URL(window.location.href).searchParams?.get('id') as string
         };
 
-        const stored = UserStore.get();
-        for (const key of Object.keys(newUserInfo)) {
-            if ((newUserInfo as any)[key]) {
-                (stored as any)[key] = (newUserInfo as any)[key];
-            }
-        }
-        console.log('Исправленный', stored);
+        const stored = UserStore.get() as UserData;
+        stored.id = newUserInfo.id;
+        stored.name = newUserInfo.name;
+        stored.surname = newUserInfo.surname;
+        stored.description = newUserInfo.description;
+
+        console.log(stored, newUserInfo);
         void fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
             const {status, json} = data;
             console.log(data);
