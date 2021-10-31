@@ -1,4 +1,4 @@
-import * as template from '@error-page/template.hbs';
+import * as template from '@error-page/errorpage.hbs';
 
 export default class ErrorPageView {
     #parent: HTMLElement;

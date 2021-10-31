@@ -1,7 +1,8 @@
 import {EventData, UrlPathnames} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as template from '@event-page/template.hbs';
+import * as template from '@event-page/templates/eventpage.hbs';
+import '@event-page/templates/EventPage.css';
 
 export default class EventPageView {
     #parent: HTMLElement;

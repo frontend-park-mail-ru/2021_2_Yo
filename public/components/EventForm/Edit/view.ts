@@ -1,7 +1,8 @@
 import {EventData} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as template from '@event-edit/template.hbs';
+import * as template from '@event-edit/eventedit.hbs';
+import '@event-form/EventForm.css';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';

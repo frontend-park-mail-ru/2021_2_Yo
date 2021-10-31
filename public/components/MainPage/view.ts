@@ -1,4 +1,4 @@
-import * as template from '@main-page/templates/template.hbs';
+import * as template from '@main-page/mainpage.hbs';
 import SearchStatusComponent from '@main-page/SearchStatus/SearchStatus';
 import EventBoardComponent from '@main-page/EventBoard/EventBoard';
 

@@ -2,7 +2,8 @@ import Bus from '../../modules/eventbus/eventbus';
 import Events from '../../modules/eventbus/events';
 import { anchorsConfig } from '../../config';
 import { UserData, UrlPathnames } from '../../types';
-import * as template from '@header/template.hbs';
+import * as template from '@header/templates/header.hbs';
+import '@header/templates/Header.css';
 
 export default class HeaderView {
     #parent: HTMLElement;

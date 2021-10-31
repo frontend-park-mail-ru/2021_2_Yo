@@ -1,4 +1,5 @@
-import * as template from '@main-page/SearchStatus/template.hbs';
+import * as template from '@main-page/SearchStatus/searchstatus.hbs';
+import '@main-page/SearchStatus/SearchStatus.css';
 
 export default class SearchStatusComponent {
     #parent: HTMLElement;

@@ -1,6 +1,7 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as template from '@login/template.hbs';
+import * as template from '@login/login.hbs';
+import '@authorization/Authorization.css';
 
 const CHILD_NUM = 2;
 
