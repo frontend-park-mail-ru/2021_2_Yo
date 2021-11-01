@@ -5,7 +5,7 @@ import { ApiUrls, FetchResponseData } from '../../types.js';
 
 interface FilterData {
     category?: number,
-    tags: Array<string>,
+    tags: string[],
     query?: string,
 }
 
@@ -29,19 +29,19 @@ export default class SearchPageModel {
         let res = '?';
 
         if (data.query !== undefined && data.query !== '') {
-            res += 'q=' + data.query;
+            res += 'query=' + data.query;
         }
 
         if (data.category !== undefined) {
             if (res.length > 1) res += '&';
-            res += 'c=' + data.category;
+            res += 'category=' + data.category;
         }
 
         if (data.tags.length > 0) {
             if (res.length > 1) res += '&';
-            res += 't=';
+            res += 'tags=';
             res += data.tags.reduce((prev, curr) => {
-                return prev + '|' + curr;
+                return prev + '+' + curr;
             });
         }
 
@@ -66,7 +66,7 @@ export default class SearchPageModel {
         let filter = '';
         filter = this.#filterToUrl(this.#data);
         Bus.emit(Events.RouteUpdate, filter);
-        void fetchGet(ApiUrls.Events + filter, 
+        fetchGet(ApiUrls.Events + filter, 
             (data: FetchResponseData) => {
                 if (data.status === 200) {
                     if (data.json.status === 200) {
@@ -83,9 +83,7 @@ export default class SearchPageModel {
     disable() {
         Bus.off(Events.EventsReq, this.#handleEvents);
         this.#data = {
-            category: undefined,
             tags: new Array<string>(),
-            query: undefined,
         };
     }
 }

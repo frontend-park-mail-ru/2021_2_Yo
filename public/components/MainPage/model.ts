@@ -9,7 +9,7 @@ export default class MainPageModel {
     }
 
     #eventsHandle = (() => {
-        void fetchGet(ApiUrls.Events, 
+        fetchGet(ApiUrls.Events, 
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

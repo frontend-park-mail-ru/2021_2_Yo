@@ -12,7 +12,7 @@ export default class SignupModel {
             password: inputsData.get('password1')?.value as string
         };
 
-        void fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {

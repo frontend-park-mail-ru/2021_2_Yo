@@ -13,21 +13,21 @@ export default class SearchPageController {
     }
 
     #parseParams() {
-        const q = new URL(window.location.href).searchParams?.get('q');
+        const queryParam = new URL(window.location.href).searchParams?.get('query');
         let query: undefined | string = undefined;
-        if (q) {
-            query = q;
+        if (queryParam) {
+            query = queryParam;
         }
-        const c = new URL(window.location.href).searchParams?.get('c');
+        const categoryParam = new URL(window.location.href).searchParams?.get('category');
         let category: undefined | number = undefined;
-        if (c) {
-            category = +c;
+        if (categoryParam) {
+            category = +categoryParam;
         }
 
-        const t = new URL(window.location.href).searchParams?.get('t');
+        const tagsParam = new URL(window.location.href).searchParams?.get('tags');
         let tags = new Array<string>();
-        if (t) {
-            tags = t.split('|');
+        if (tagsParam) {
+            tags = tagsParam.split('+');
         } 
 
         return {category: category, tags: tags, query: query};

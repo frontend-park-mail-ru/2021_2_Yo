@@ -18,7 +18,7 @@ export default class EventEditFormModel {
 
         const id = new URL(window.location.href).searchParams.get('id');
 
-        void fetchPost(ApiUrls.Events + '/' + id, event, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Events + '/' + id, event, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
@@ -30,7 +30,7 @@ export default class EventEditFormModel {
     }
 
     getEvent(id: string) {
-        void fetchGet(ApiUrls.Events + '/' + id,
+        fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

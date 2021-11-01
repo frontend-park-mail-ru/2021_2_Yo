@@ -5,7 +5,7 @@ import Events from '../../modules/eventbus/events.js';
 
 export default class EventPageModel {
     getEvent(id: string) {
-        void fetchGet(ApiUrls.Events + '/' + id,
+        fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
@@ -19,7 +19,7 @@ export default class EventPageModel {
     }
 
     deleteEvent(id: string) {
-        void fetchDelete(ApiUrls.Events + '/' + id,
+        fetchDelete(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

@@ -2,13 +2,16 @@ import config from '../../../config.js';
 import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
+const TAG_PING_TIME_MSEC = 500;
+const REQ_WAIT_CHANGE_TIME_MSEC = 500;
+
 export default class SideBar {
     #parent: HTMLElement;
     #categoriesOpened: boolean;
     #category?: number;
     #tags: Array<string> = [];
 
-    constructor(parent: HTMLElement, category?: number, tags?: Array<string>) {
+    constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#categoriesOpened = false;
         const tag = `
@@ -51,8 +54,8 @@ export default class SideBar {
             this.#category = undefined;
         } else {
             if (this.#category !== undefined) {
-                const cat = <HTMLElement>document.getElementById('category-' + this.#category);
-                cat.style.backgroundColor = '';
+                const category = <HTMLElement>document.getElementById('category-' + this.#category);
+                category.style.backgroundColor = '';
             }
             target.style.backgroundColor = 'var(--category-check)';
             this.#category = index;
@@ -108,7 +111,7 @@ export default class SideBar {
             const repeated = <HTMLLabelElement>document.getElementById('tag-' + tag);
             if (repeated) {
                 repeated.style.backgroundColor = 'red';
-                setTimeout(() => repeated.style.backgroundColor = '', 500);
+                setTimeout(() => repeated.style.backgroundColor = '', TAG_PING_TIME_MSEC);
             }
             return false;
         }
@@ -117,9 +120,9 @@ export default class SideBar {
         if (!(list)) return false;
 
         this.#tags.map((t) => {
-            const categ = <HTMLElement>document.getElementById('tag-' + t);
-            if (categ) {
-                categ.removeEventListener('click', this.#handleTagDelete);
+            const category = <HTMLElement>document.getElementById('tag-' + t);
+            if (category) {
+                category.removeEventListener('click', this.#handleTagDelete);
             }
         });
 
@@ -156,15 +159,15 @@ export default class SideBar {
             }
         }).bind(this);
 
-        setTimeout(handle, 500, this.#category, this.#tags);
+        setTimeout(handle, REQ_WAIT_CHANGE_TIME_MSEC, this.#category, this.#tags);
     }
 
     #removeListeners() {
         config.categories.map((_, i) => {
-            const cat = <HTMLElement>document.getElementById('category-' + i);
-            if (!cat) return;
+            const category = <HTMLElement>document.getElementById('category-' + i);
+            if (!category) return;
             
-            cat.removeEventListener('click', this.#handleCategory);
+            category.removeEventListener('click', this.#handleCategory);
         });
 
         const img = <HTMLElement>document.getElementById('categories-img');
@@ -192,8 +195,8 @@ export default class SideBar {
 
     renderFilter(category?: number, tags?: Array<string>) {
         if (category) {
-            const c = <HTMLElement>document.getElementById('category-' + category);
-            c.style.backgroundColor = 'var(--category-check)';
+            const categoryElemnt = <HTMLElement>document.getElementById('category-' + category);
+            categoryElemnt.style.backgroundColor = 'var(--category-check)';
             this.#category = category;
         }
 

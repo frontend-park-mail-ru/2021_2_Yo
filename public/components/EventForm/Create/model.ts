@@ -16,7 +16,7 @@ export default class EventFormModel {
             geo: inputsData.get('geo')?.value as string
         };
 
-        void fetchPost(ApiUrls.Events, event, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Events, event, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
