@@ -1,5 +1,5 @@
-import { ApiPostLoginData, ApiUrls, FetchResponseData, UrlPathnames } from '../../../types.js';
-import { fetchPost } from '../../../modules/request/request.js';
+import {ApiPostLoginData, ApiUrls, FetchResponseData} from '../../../types.js';
+import {fetchPost} from '../../../modules/request/request.js';
 import Bus from '../../../modules/eventbus/eventbus.js';
 import Events from '../../../modules/eventbus/events.js';
 
@@ -11,12 +11,16 @@ export default class LoginModel {
         };
 
         void fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
-            const {status, json} = data;
+            const {status, json, headers} = data;
 
             if (status === 200) {
                 if (json.status === 200) {
-                    Bus.emit(Events.RouteBack);
-                    return;
+                    if (headers?.get('X-CSRF-Token')) {
+                        console.log('headers: ', headers, 'token: ', headers?.get('X-CSRF-Token'));
+                        Bus.emit(Events.CSRFRes, headers?.get('X-CSRF-Token'));
+                        Bus.emit(Events.RouteBack);
+                        return;
+                    }
                 }
             }
             Bus.emit(Events.AuthError, json.message);

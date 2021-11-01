@@ -30,7 +30,11 @@ enum Events {
     AuthError = 'auth:error',
     ValidationError = 'validation:error',
     ValidationOk = 'validation:ok',
-    SubmitLogin = 'submit:login'
+    SubmitLogin = 'submit:login',
+
+    // CSRF
+    CSRFRes = 'csrf:response',
+    CSRFDelete = 'csrf:delete',
 }
 
 export default Events;

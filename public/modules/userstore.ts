@@ -16,7 +16,6 @@ class UserStore {
 
     #userHandle = ((user: UserData) => {
         this.#user = user;
-        console.log('Из юзер стора', this.#user);
     }).bind(this);
 
     #logoutHandle = (() => {

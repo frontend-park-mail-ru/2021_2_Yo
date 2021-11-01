@@ -22,7 +22,7 @@ export default class ProfilePageController {
         Bus.on(Events.UserEditRes, this.#editResHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
-        Bus.on(Events.UserLogout, this.#renderForLogoutUserHandle);
+        Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -36,7 +36,7 @@ export default class ProfilePageController {
         } else {
             this.#userResSubscribe = true;
             Bus.on(Events.UserRes, this.#renderHandle);
-            Bus.on(Events.UserError, this.#renderForLogoutUserHandle);
+            Bus.on(Events.UserError, this.#userErrorRenderHandle);
         }
     }
 
@@ -45,7 +45,7 @@ export default class ProfilePageController {
         this.#view.renderProfileBlock(user);
     }).bind(this);
 
-    #renderForLogoutUserHandle = (() => {
+    #userErrorRenderHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
     }).bind(this);
@@ -115,7 +115,7 @@ export default class ProfilePageController {
 
         if (this.#userResSubscribe) {
             Bus.off(Events.UserRes, this.#renderHandle);
-            Bus.off(Events.UserError, this.#renderForLogoutUserHandle);
+            Bus.off(Events.UserError, this.#userErrorRenderHandle);
         }
         this.#view.disable();
     }

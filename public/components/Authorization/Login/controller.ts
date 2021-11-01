@@ -29,7 +29,6 @@ export default class LoginController {
         this.#makeValidation(inputsData);
     }).bind(this);
 
-
     #makeValidation(inputsData: Map<string, { errors: string[], value: string }>) {
         authValidateFields(inputsData);
 

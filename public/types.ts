@@ -60,6 +60,7 @@ export enum ApiUrls {
 export type FetchResponseData = {
     status: number;
     json: ApiResponseJson;
+    headers?: Headers;
 }
 
 export type ApiResponseJson = {
