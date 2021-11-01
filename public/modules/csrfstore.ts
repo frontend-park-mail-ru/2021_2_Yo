@@ -10,12 +10,12 @@ class CSRFStore {
     }
 
     get() {
+        console.log('token store', this.#token);
         return this.#token;
     }
 
     #csrfGetHandle = ((token: string) => {
         this.#token = token;
-        console.log('token store', this.#token);
     }).bind(this);
 
     #csrfDeleteHandle = (() => {
