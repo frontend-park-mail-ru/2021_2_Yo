@@ -43,6 +43,7 @@ export default class ProfilePageController {
     }
 
     #listHandle = ((events: EventData[]) => {
+        console.log(events);
         this.#view.renderEventList(events);
     }).bind(this);
 
