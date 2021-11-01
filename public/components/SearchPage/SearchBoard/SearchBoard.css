@@ -1,6 +1,9 @@
 :root {
   --gray-border: 2px solid var(--gray);
   --dark-gray: #505050;
+  --event-li-viewed-right: 6px;
+  --event-li-viewed-w: 18px;
+  --event-li-viewed-h: 9px;
 }
 
 #search-board-wrapper {
@@ -94,7 +97,7 @@
 }
 
 .event-li__viewed-img {
-  margin-right: 6px;
-  width: 18px;
-  height: 9px;
+  margin-right: var(--event-li-viewed-right);
+  width: var(--event-li-viewed-w);
+  height: var(--event-li-viewed-h);
 }

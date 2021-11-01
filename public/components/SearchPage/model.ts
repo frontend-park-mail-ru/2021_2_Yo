@@ -2,6 +2,7 @@ import { fetchGet } from '../../modules/request/request.js';
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 import { ApiUrls, FetchResponseData } from '../../types.js';
+import config from '../../config.js';
 
 interface FilterData {
     category?: number,
@@ -34,14 +35,14 @@ export default class SearchPageModel {
 
         if (data.category !== undefined) {
             if (res.length > 1) res += '&';
-            res += 'category=' + data.category;
+            res += 'category=' + config.categories[data.category].name;
         }
 
         if (data.tags.length > 0) {
             if (res.length > 1) res += '&';
             res += 'tags=';
             res += data.tags.reduce((prev, curr) => {
-                return prev + '+' + curr;
+                return prev + '|' + curr;
             });
         }
 

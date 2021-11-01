@@ -2,14 +2,14 @@ import { UrlPathnames } from './types.js';
 
 const config = {
     categories: [
-        { href: '/#', name: 'Тусовки' },
-        { href: '/#', name: 'Выставки' },
-        { href: '/#', name: 'Театр' },
-        { href: '/#', name: 'Кино' },
-        { href: '/#', name: 'Фестивали' },
-        { href: '/#', name: 'Экскурсии' },
-        { href: '/#', name: 'Концерты' },
-        { href: '/#', name: 'Обучение' },
+        { name: 'Тусовки' },
+        { name: 'Выставки' },
+        { name: 'Театр' },
+        { name: 'Кино' },
+        { name: 'Фестивали' },
+        { name: 'Экскурсии' },
+        { name: 'Концерты' },
+        { name: 'Обучение' },
     ],
     authAnchors: [
         { href: UrlPathnames.Login, name: 'Войти' },

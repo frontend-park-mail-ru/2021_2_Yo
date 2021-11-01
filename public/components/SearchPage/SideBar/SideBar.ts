@@ -69,11 +69,12 @@ export default class SideBar {
         if (!list) return;
 
         if (this.#categoriesOpened) {
-            target.style.transform = 'rotate(0deg)';
-            list.style.maxHeight = '0';
+            target.className = 'categories-img_closed';
+            list.className = 'categories-list_closed';
+            
         } else {
-            target.style.transform = 'rotate(90deg)';
-            list.style.maxHeight = '100vh';
+            target.className = 'categories-img_opened';
+            list.className = 'categories-list_opened';
         }
         this.#categoriesOpened = !this.#categoriesOpened;
     };
@@ -110,8 +111,8 @@ export default class SideBar {
         if (this.#tags.indexOf(tag) !== -1) {
             const repeated = <HTMLLabelElement>document.getElementById('tag-' + tag);
             if (repeated) {
-                repeated.style.backgroundColor = 'red';
-                setTimeout(() => repeated.style.backgroundColor = '', TAG_PING_TIME_MSEC);
+                repeated.classList.add('tags__tag_error');
+                setTimeout(() => repeated.classList.remove('tags__tag_error'), TAG_PING_TIME_MSEC);
             }
             return false;
         }
@@ -212,9 +213,9 @@ export default class SideBar {
             <div class="categories">
                 <div class="categories__li">
                     <span class="categories__header">Категории</span>
-                    <img id="categories-img" src="/img/categories.png">
+                    <img id="categories-img" class="categories-img_closed" src="/img/categories.png">
                 </div>
-                <div id="categories-list">
+                <div id="categories-list" class="categories-list_closed">
                 {{#each this}}
                     <div id="category-{{@index}}" class="categories__li categories__li-type" data-num="{{@index}}">{{name}}</div>
                 {{/each}}
