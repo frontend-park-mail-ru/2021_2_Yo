@@ -5,7 +5,7 @@ import Events from '../../../modules/eventbus/events.js';
 
 export default class EventFormModel {
     createEvent(inputsData: Map<string, { errors: string[], value: string | string[] }>) {
-        const event: EventData = {
+        const event= {
             title: inputsData.get('title')?.value as string,
             description: inputsData.get('description')?.value as string,
             text: inputsData.get('text')?.value as string,
