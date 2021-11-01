@@ -1,6 +1,7 @@
 import {EventData, UrlPathnames} from '../../types.js';
 import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
+import Userstore from '../../modules/userstore.js';
 
 export default class EventPageView {
     #parent: HTMLElement;
@@ -74,6 +75,8 @@ export default class EventPageView {
         `;
 
         const template = window.Handlebars.compile(source);
+
+        const permission = (this.#event.authorid === Userstore.get()?.id)
         this.#parent.innerHTML = template(this.#event);
 
         this.#addListeners();

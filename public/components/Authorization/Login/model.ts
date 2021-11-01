@@ -17,8 +17,8 @@ export default class LoginModel {
                 if (json.status === 200) {
                     console.log(headers);
                     if (headers?.get('X-Csrf-Token')) {
-                        console.log('headers: ', headers, 'token: ', headers?.get('X-CSRF-Token'));
-                        Bus.emit(Events.CSRFRes, headers?.get('X-Csrf-Token'));
+                        const token = document.cookie.match('csrf-token')
+                        Bus.emit(Events.CSRFRes, token);
                         Bus.emit(Events.RouteBack);
                         return;
                     }

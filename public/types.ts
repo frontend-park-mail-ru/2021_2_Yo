@@ -31,6 +31,7 @@ export type EventData = {
     text: string;
     date: string;
     geo: string;
+    authorid: string;
 }
 
 export enum PageKeys {
