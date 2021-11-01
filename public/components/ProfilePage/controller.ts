@@ -9,10 +9,12 @@ import UserStore from '../../modules/userstore.js';
 export default class ProfilePageController {
     #view: ProfilePageView;
     #model: ProfilePageModel;
+    #userResSubscribe: boolean;
 
     constructor(parent: HTMLElement) {
         this.#view = new ProfilePageView(parent);
         this.#model = new ProfilePageModel();
+        this.#userResSubscribe = false;
     }
 
     enable() {
@@ -28,9 +30,9 @@ export default class ProfilePageController {
                 this.#view.render(storedUser);
             } else {
                 this.#model.getUser(userURLId);
-                console.log('Запрос пользователя с айди', userURLId);
             }
         } else {
+            this.#userResSubscribe = true;
             Bus.on(Events.UserRes, this.#renderHandle);
             Bus.on(Events.UserError, this.#errorHandle);
         }
@@ -44,7 +46,6 @@ export default class ProfilePageController {
     #errorHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
-        console.log('Запрос пользователя с айди', userURLId);
     }).bind(this);
 
     #renderHandle = (() => {
@@ -54,7 +55,6 @@ export default class ProfilePageController {
             Bus.emit(Events.UserByIdRes, user);
         } else {
             this.#model.getUser(userURLId);
-            console.log('Запрос пользователя с айди', userURLId);
         }
     }).bind(this);
 
@@ -105,6 +105,15 @@ export default class ProfilePageController {
     });
 
     disable() {
+        Bus.off(Events.UserEditReq, this.#editReqHandle);
+        Bus.off(Events.UserEditRes, this.#editResHandle);
+        Bus.off(Events.UserPasswordEditReq, this.#passwordEditHandle);
+        Bus.off(Events.UserByIdRes, this.#userGetHandle);
+
+        if (this.#userResSubscribe) {
+            Bus.off(Events.UserRes, this.#renderHandle);
+            Bus.off(Events.UserError, this.#errorHandle);
+        }
         this.#view.disable();
     }
 }
