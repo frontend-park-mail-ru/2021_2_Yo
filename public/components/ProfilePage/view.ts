@@ -1,4 +1,4 @@
-import {UserData} from '../../types.js';
+import {EventData, UserData} from '../../types.js';
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm.js';
 import UserStore from '../../modules/userstore.js';
 
@@ -42,10 +42,7 @@ export default class ProfilePageView {
           <div class="profile-background">
                 <div class="profile-block" id="profileBlock">
                 </div>
-                <div class="list-block">
-                    <div class="border-block">
-                        <a class="rounded-button standard-text">Созданное</a>
-                    </div>
+                <div class="list-block" id="listBlock">
                 </div>
           </div>
         `;
@@ -87,6 +84,47 @@ export default class ProfilePageView {
         profileBlock.innerHTML = template({user, permitEdit});
 
         this.#addListeners();
+    }
+
+    renderEventList(events?: EventData[]) {
+        const listBlock = <HTMLElement>document.getElementById('listBlock');
+        const list = `
+            <div class="border-block">
+                <a class="rounded-button standard-text">Созданное</a>
+            </div>
+            {{#if events}}
+                <div id="events-list">
+                {{#each events}}
+                    <div class="event-li">
+                        <div class="event-li__img bg-img-wrapper">
+                            <img class="bg-img" src="{{imgUrl}}">
+                        </div>
+                        <div class ="event-li__content">
+                            <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
+                            <div class="event-li__description">{{description}}</div>
+                            <div class="event-li__info event-li__description">
+                                <div class="event-li__description">
+                                    <span>Когда:&nbsp;</span>
+                                    <span class="text_date">{{date}}</span>
+                                    <span>Где:&nbsp;</span>
+                                    <span class="text_geo">{{geo}}</span>
+                                </div>
+                                <div class="event-li__viewed">
+                                    <img class="event-li__viewed-img" src="/img/viewed2.png">
+                                    <span>{{viewed}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+                </div>
+            {{else}}
+                <h2>Прости бро, нет таких ивентосов</h2>
+            {{/if}}
+        `;
+
+        const template = window.Handlebars.compile(list);
+        listBlock.innerHTML = template(events);
     }
 
     disableProfileForm() {

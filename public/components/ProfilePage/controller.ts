@@ -3,7 +3,7 @@ import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 import {passwordEditValidateFields, userEditValidateFields} from '../../modules/validation.js';
 import ProfilePageModel from './model.js';
-import {UserData} from '../../types.js';
+import {EventData, UserData} from '../../types.js';
 import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageController {
@@ -23,6 +23,7 @@ export default class ProfilePageController {
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
+        Bus.on(Events.EventsRes, this.#listHandle);
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -30,7 +31,9 @@ export default class ProfilePageController {
             if (storedUser.id === userURLId) {
                 this.#view.render(storedUser);
                 this.#view.renderProfileBlock(storedUser);
+                this.#model.getUserEvents(storedUser.id);
             } else {
+                this.#model.getUserEvents(userURLId);
                 this.#model.getUser(userURLId);
             }
         } else {
@@ -40,6 +43,10 @@ export default class ProfilePageController {
         }
     }
 
+    #listHandle = ((events: EventData[]) => {
+        this.#view.renderEventList(events);
+    }).bind(this);
+
     #editResHandle = ((user: UserData) => {
         this.#view.disableProfileForm();
         this.#view.renderProfileBlock(user);
@@ -48,6 +55,7 @@ export default class ProfilePageController {
     #userErrorRenderHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
+        this.#model.getUserEvents(userURLId);
     }).bind(this);
 
     #renderHandle = (() => {
@@ -57,6 +65,7 @@ export default class ProfilePageController {
             Bus.emit(Events.UserByIdRes, user);
         } else {
             this.#model.getUser(userURLId);
+            this.#model.getUserEvents(userURLId);
         }
     }).bind(this);
 
@@ -112,6 +121,7 @@ export default class ProfilePageController {
         Bus.off(Events.UserEditRes, this.#editResHandle);
         Bus.off(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.off(Events.UserByIdRes, this.#userGetHandle);
+        Bus.off(Events.EventsRes, this.#listHandle);
 
         if (this.#userResSubscribe) {
             Bus.off(Events.UserRes, this.#renderHandle);

@@ -16,12 +16,8 @@ export default class SignupModel {
             const {status, json, headers} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    console.log(headers);
-                    if (headers?.get('X-Csrf-Token')) {
-                        Bus.emit(Events.CSRFRes, headers?.get('X-Csrf-Token'));
-                        Bus.emit(Events.RouteBack);
-                        return;
-                    }
+                    Bus.emit(Events.RouteBack);
+                    return;
                 }
             }
             Bus.emit(Events.AuthError, json.message);
