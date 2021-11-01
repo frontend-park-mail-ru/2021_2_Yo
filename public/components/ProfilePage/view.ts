@@ -51,8 +51,6 @@ export default class ProfilePageView {
         `;
         const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template();
-
-        this.renderProfileBlock(user);
     }
 
     renderProfileBlock(user?: UserData) {

@@ -22,19 +22,21 @@ export default class ProfilePageController {
         Bus.on(Events.UserEditRes, this.#editResHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
+        Bus.on(Events.UserLogout, this.#renderForLogoutUserHandle);
 
         const storedUser = UserStore.get();
         if (storedUser) {
             const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
             if (storedUser.id === userURLId) {
                 this.#view.render(storedUser);
+                this.#view.renderProfileBlock(storedUser);
             } else {
                 this.#model.getUser(userURLId);
             }
         } else {
             this.#userResSubscribe = true;
             Bus.on(Events.UserRes, this.#renderHandle);
-            Bus.on(Events.UserError, this.#errorHandle);
+            Bus.on(Events.UserError, this.#renderForLogoutUserHandle);
         }
     }
 
@@ -43,7 +45,7 @@ export default class ProfilePageController {
         this.#view.renderProfileBlock(user);
     }).bind(this);
 
-    #errorHandle = (() => {
+    #renderForLogoutUserHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
     }).bind(this);
@@ -60,6 +62,7 @@ export default class ProfilePageController {
 
     #userGetHandle = ((user: UserData) => {
         this.#view.render(user);
+        this.#view.renderProfileBlock(user);
     });
 
     #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
@@ -112,7 +115,7 @@ export default class ProfilePageController {
 
         if (this.#userResSubscribe) {
             Bus.off(Events.UserRes, this.#renderHandle);
-            Bus.off(Events.UserError, this.#errorHandle);
+            Bus.off(Events.UserError, this.#renderForLogoutUserHandle);
         }
         this.#view.disable();
     }
