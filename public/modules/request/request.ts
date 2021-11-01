@@ -74,6 +74,8 @@ export function fetchPost(url: string, body: any, callback: (args?: any) => void
     }).then((response) => {
         HTTPStatus = response.status;
         headers = response.headers;
+        response.headers.forEach(console.log);
+        console.log(response.headers.get('Access-Control-Allow-Credentials'));
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
