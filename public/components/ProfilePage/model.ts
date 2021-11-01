@@ -60,7 +60,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const events = json.body as EventData[];
+                    const events = json.body.events as EventData[];
                     Bus.emit(Events.EventsRes, events);
                     return;
                 }
