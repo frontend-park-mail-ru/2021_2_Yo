@@ -1,6 +1,7 @@
 import {UserData} from '../../../types.js';
 import Events from '../../../modules/eventbus/events.js';
 import Bus from '../../../modules/eventbus/eventbus.js';
+import UserStore from '../../../modules/userstore.js';
 
 export default class ProfileEditForm {
     #parent: HTMLElement;
@@ -82,10 +83,18 @@ export default class ProfileEditForm {
         const form = document.getElementById('form') as HTMLFormElement;
         form.addEventListener('submit', this.#mainFormSubmitHandle);
 
-
         const passwordForm = document.getElementById('passwordForm') as HTMLFormElement;
         passwordForm.addEventListener('submit', this.#passwordFormSubmitHandle);
+
+        const cancelButton = document.getElementById('cancelButton') as HTMLInputElement;
+        cancelButton.addEventListener('click', this.#cancelEdit);
     }
+
+    #cancelEdit = ((ev: Event) => {
+        ev.preventDefault();
+
+        Bus.emit(Events.UserEditRes, UserStore.get());
+    });
 
     #removeListeners() {
         const form = document.getElementById('form') as HTMLFormElement;
@@ -94,12 +103,6 @@ export default class ProfileEditForm {
         const passwordForm = document.getElementById('passwordForm') as HTMLFormElement;
         passwordForm.removeEventListener('submit', this.#passwordFormSubmitHandle);
     }
-
-    #back = (ev: MouseEvent) => {
-        ev.preventDefault();
-        Bus.emit(Events.RouteBack);
-        ev.stopPropagation();
-    };
 
     #passwordFormSubmitHandle = ((ev: Event) => {
         ev.preventDefault();

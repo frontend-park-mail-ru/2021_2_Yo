@@ -51,8 +51,6 @@ export default class ProfilePageView {
         this.#parent.innerHTML = template();
 
         this.renderProfileBlock(user);
-
-        this.#addListeners();
     }
 
     renderProfileBlock(user?: UserData) {
@@ -87,6 +85,8 @@ export default class ProfilePageView {
         console.log(UserStore.get());
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = template({user, permitEdit});
+
+        this.#addListeners();
     }
 
     disableProfileForm() {
