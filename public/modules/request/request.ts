@@ -6,7 +6,8 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-const API = 'https://bmstusasa.herokuapp.com';
+const API = 'https://bmstusa.ru';
+// const API = 'https://bmstusasa.herokuapp.com';
 // const API = 'https://yobmstu.herokuapp.com';
 // const API = 'https://95.163.212.36:8081';
 
