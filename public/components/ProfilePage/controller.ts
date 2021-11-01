@@ -28,7 +28,7 @@ export default class ProfilePageController {
                 this.#view.render(storedUser);
             } else {
                 this.#model.getUser(userURLId);
-                console.log('Запрос пользователя с айди', userURLId)
+                console.log('Запрос пользователя с айди', userURLId);
             }
         } else {
             Bus.on(Events.UserRes, this.#renderHandle);
@@ -44,7 +44,7 @@ export default class ProfilePageController {
     #errorHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
-        console.log('Запрос пользователя с айди', userURLId)
+        console.log('Запрос пользователя с айди', userURLId);
     }).bind(this);
 
     #renderHandle = (() => {
