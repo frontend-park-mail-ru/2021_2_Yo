@@ -16,12 +16,23 @@ export default class ProfilePageController {
     }
 
     enable() {
-        Bus.on(Events.UserEditReq, this.#userEditHandle);
+        Bus.on(Events.UserEditReq, this.#editReqHandle);
+        Bus.on(Events.UserEditRes, this.#editResHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
-        Bus.on(Events.UserRes, this.#renderHandle);
-        Bus.on(Events.UserError, this.#errorHandle);
-        Bus.on(Events.UserEditRes, this.#editResHandle);
+
+        const storedUser = UserStore.get();
+        if (storedUser) {
+            const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+            if (storedUser.id === userURLId) {
+                this.#view.render(storedUser);
+            } else {
+                this.#model.getUser(userURLId);
+            }
+        } else {
+            Bus.on(Events.UserRes, this.#renderHandle);
+            Bus.on(Events.UserError, this.#errorHandle);
+        }
     }
 
     #editResHandle = ((user: UserData) => {
@@ -46,7 +57,7 @@ export default class ProfilePageController {
         this.#view.render(user);
     });
 
-    #userEditHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
+    #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
         userEditValidateFields(inputsData);
 
         let valid = true;
