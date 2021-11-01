@@ -72,6 +72,7 @@ export default class ProfilePageView {
             </div>
             {{#if permitEdit}}
             <button class="button-edit profile-block__button-edit" id="editButton">Редактировать профиль</button>
+            <a class="button-edit profile-block__button-edit" href="/create">Cоздать мероприятие</a>
             {{/if}}
         `;
 
