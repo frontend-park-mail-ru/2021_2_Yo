@@ -56,40 +56,15 @@ export default class ProfilePageModel {
     }
 
     getUserEvents(userId: string) {
-        // void fetchGet(ApiUrls.Events + '?authorid=' + userId, (data: FetchResponseData) => {
-        //     const {status, json} = data;
-        //     if (status === 200) {
-        //         if (json.status === 200) {
-        //             const events = json.body as EventData[];
-        //             Bus.emit(Events.EventsRes, events);
-        //             return;
-        //         }
-        //     }
-        // });
-        const events: EventData[] = [{
-            id: 1,
-            authorid: '2',
-            title: 'title',
-            city: 'Moscow',
-            geo: 'Moscow',
-            category: 'Tusa',
-            description: 'fjoewf',
-            text: 'voejrvfperjv',
-            date: 'f[ef',
-            tag: [],
-        }, {
-            id: 2,
-            authorid: '2',
-            title: 'Title',
-            city: 'Moscow',
-            geo: 'Moscow',
-            category: 'Tusa',
-            description: 'fjoewf',
-            text: 'voejrvfperjv',
-            date: 'f[ef',
-            tag: [],
-        }];
-
-        Bus.emit(Events.EventsRes, events);
+        void fetchGet(ApiUrls.Events + '?authorid=' + userId, (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    const events = json.body as EventData[];
+                    Bus.emit(Events.EventsRes, events);
+                    return;
+                }
+            }
+        });
     }
 }
