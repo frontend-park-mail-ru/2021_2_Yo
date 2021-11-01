@@ -30,6 +30,11 @@ export default class EventEditFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
+    renderError() {
+        const template: any = window.Handlebars.compile(`<p>Ниче нету, ничего нельзя, до свидания</p>`);
+        this.#parent.innerHTML = template();
+    }
+
     render(event?: EventData) {
         this.#eventId = event?.id;
         this.#eventTags = event?.tag as string[];

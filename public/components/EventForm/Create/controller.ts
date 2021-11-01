@@ -4,6 +4,7 @@ import EventFormView from './view.js';
 import {EventData} from '../../../types.js';
 import EventFormModel from './model.js';
 import {eventValidateFields} from '../../../modules/validation.js';
+import UserStore from "../../../modules/userstore.js";
 
 export default class EventFormController {
     #view: EventFormView;
@@ -17,7 +18,11 @@ export default class EventFormController {
     enable() {
         Bus.on(Events.EventCreateReq, this.#validationHandle);
         this.#view.subscribe();
-        this.#view.render();
+        if (UserStore.get()?.id) {
+            this.#view.render();
+        } else {
+            this.#view.renderError();
+        }
     }
 
     disable() {

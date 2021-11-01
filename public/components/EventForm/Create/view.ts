@@ -29,6 +29,11 @@ export default class EventFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
+    renderError() {
+        const template: any = window.Handlebars.compile(`<p>Ниче нету, ничего нельзя, до свидания</p>`);
+        this.#parent.innerHTML = template();
+    }
+
     render() {
         const source = `  
                 <div class="eventform-background">

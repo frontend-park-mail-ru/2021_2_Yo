@@ -4,6 +4,7 @@ import EventEditFormModel from './model.js';
 import EventEditFormView from './view.js';
 import {EventData} from '../../../types.js';
 import {eventValidateFields} from '../../../modules/validation.js';
+import UserStore from '../../../modules/userstore.js'
 
 export default class EventEditFormController {
     #view: EventEditFormView;
@@ -46,7 +47,11 @@ export default class EventEditFormController {
     };
 
     #eventHandle = (event: EventData) => {
-        this.#view.render(event);
+        if (UserStore.get()?.id === event.authorid) {
+            this.#view.render(event);
+        } else {
+            this.#view.renderError();
+        }
     };
 
     disable() {
