@@ -14,12 +14,16 @@ export default class ProfilePageView {
 
     #addListeners() {
         const editButton = document.getElementById('editButton') as HTMLElement;
-        editButton.addEventListener('click', this.#editHandle);
+        if (editButton) {
+            editButton.addEventListener('click', this.#editHandle);
+        }
     }
 
     #removeListeners() {
         const editButton = document.getElementById('editButton') as HTMLElement;
-        editButton.removeEventListener('click', this.#editHandle);
+        if (editButton) {
+            editButton.removeEventListener('click', this.#editHandle);
+        }
     }
 
     #editHandle = ((ev: Event) => {
