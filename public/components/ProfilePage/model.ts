@@ -89,7 +89,7 @@ export default class ProfilePageModel {
             date: 'f[ef',
             tag: [],
         }];
-        console.log(events);
+
         Bus.emit(Events.EventsRes, events);
     }
 }
