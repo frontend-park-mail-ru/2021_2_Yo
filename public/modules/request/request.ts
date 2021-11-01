@@ -21,6 +21,8 @@ export function fetchGet(url: string, callback?: (args?: any) => void, error?: (
         credentials: 'include'
     }).then((response) => {
         HTTPStatus = response.status;
+        response.headers.forEach(console.log);
+        console.log(response.headers.get('Access-Control-Allow-Credentials'));
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
@@ -74,8 +76,6 @@ export function fetchPost(url: string, body: any, callback: (args?: any) => void
     }).then((response) => {
         HTTPStatus = response.status;
         headers = response.headers;
-        response.headers.forEach(console.log);
-        console.log(response.headers.get('Access-Control-Allow-Credentials'));
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
