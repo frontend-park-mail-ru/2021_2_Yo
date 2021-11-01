@@ -123,6 +123,7 @@ export default class ProfilePageView {
             {{/if}}
         `;
 
+        console.log(events);
         const template = window.Handlebars.compile(list);
         listBlock.innerHTML = template(events);
     }
