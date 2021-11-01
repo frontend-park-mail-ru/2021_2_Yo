@@ -68,7 +68,7 @@ export function fetchPost(url: string, body: any, callback: (args?: any) => void
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            'X-CSRF-Token': CSRFStore.get() as string,
+            'X-Csrf-Token': CSRFStore.get() as string,
         },
         body: JSON.stringify(body)
     }).then((response) => {
