@@ -74,7 +74,7 @@ export function fetchPost(url: string, body: any, callback: (args?: any) => void
     }).then((response) => {
         HTTPStatus = response.status;
         headers = response.headers;
-        console.log(response.headers.get('X-CSRF-Token'));
+        console.log(CSRFStore.get());
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
