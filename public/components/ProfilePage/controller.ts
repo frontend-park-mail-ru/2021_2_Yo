@@ -33,7 +33,6 @@ export default class ProfilePageController {
                 this.#view.renderProfileBlock(storedUser);
                 this.#model.getUserEvents(storedUser.id);
             } else {
-                this.#model.getUserEvents(userURLId);
                 this.#model.getUser(userURLId);
             }
         } else {
@@ -55,7 +54,6 @@ export default class ProfilePageController {
     #userErrorRenderHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
-        this.#model.getUserEvents(userURLId);
     }).bind(this);
 
     #renderHandle = (() => {
@@ -65,13 +63,13 @@ export default class ProfilePageController {
             Bus.emit(Events.UserByIdRes, user);
         } else {
             this.#model.getUser(userURLId);
-            this.#model.getUserEvents(userURLId);
         }
     }).bind(this);
 
     #userGetHandle = ((user: UserData) => {
         this.#view.render(user);
         this.#view.renderProfileBlock(user);
+        this.#model.getUserEvents(user.id);
     });
 
     #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
