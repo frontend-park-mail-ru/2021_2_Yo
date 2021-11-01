@@ -8,6 +8,7 @@
   --blue: #4fbdc5;
   --orange: #ff630b;
   --evbg: #d2d2d3;
+  --submit-btn-bg: #490063;
 }
 
 body {
@@ -148,7 +149,7 @@ a:active {
 }
 
 .button-submit {
-  background: var(--submit-btn);
+  background: var(--submit-btn-bg);
   mix-blend-mode: normal;
   border: 1px solid black;
   box-sizing: border-box;

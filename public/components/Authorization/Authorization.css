@@ -1,7 +1,6 @@
 :root {
   --form-bg: linear-gradient(90deg, #f3f2ff 0%, #ffe6fe 100%);
   --auth-bg: linear-gradient(137.34deg, #0e0063 0%, #5e0043 100%);
-  --submit-btn: #490063;
   --back-btn: #005e5e;
 }
 
