@@ -21,6 +21,7 @@ class CSRFStore {
 
     #csrfDeleteHandle = (() => {
         this.#token = undefined;
+        console.log('delete',this.#token);
     }).bind(this);
 }
 
