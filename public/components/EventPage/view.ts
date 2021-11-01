@@ -76,7 +76,7 @@ export default class EventPageView {
 
         const template = window.Handlebars.compile(source);
 
-        const permission = (this.#event.authorid === Userstore.get()?.id)
+        const permission = (this.#event.authorid === Userstore.get()?.id);
         this.#parent.innerHTML = template(this.#event);
 
         this.#addListeners();
