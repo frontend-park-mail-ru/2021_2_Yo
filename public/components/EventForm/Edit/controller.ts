@@ -4,7 +4,7 @@ import EventEditFormModel from './model.js';
 import EventEditFormView from './view.js';
 import {EventData} from '../../../types.js';
 import {eventValidateFields} from '../../../modules/validation.js';
-import UserStore from '../../../modules/userstore.js'
+import UserStore from '../../../modules/userstore.js';
 
 export default class EventEditFormController {
     #view: EventEditFormView;

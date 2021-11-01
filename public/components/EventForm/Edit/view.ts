@@ -31,7 +31,7 @@ export default class EventEditFormView {
     }).bind(this);
 
     renderError() {
-        const template: any = window.Handlebars.compile(`<p>Ниче нету, ничего нельзя, до свидания</p>`);
+        const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, до свидания</p>');
         this.#parent.innerHTML = template();
     }
 
@@ -107,7 +107,7 @@ export default class EventEditFormView {
             </div>
         `;
 
-        const template: any = window.Handlebars.compile(source);
+        const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(event);
 
         this.#setInputs();
