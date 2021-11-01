@@ -48,10 +48,13 @@ export default class ProfilePageController {
     }).bind(this);
 
     #renderHandle = (() => {
-        const userId = new URL(window.location.href).searchParams?.get('id') as string;
+        const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         const user = UserStore.get();
-        if (user?.id === userId) {
+        if (user?.id === userURLId) {
             Bus.emit(Events.UserByIdRes, user);
+        } else {
+            this.#model.getUser(userURLId);
+            console.log('Запрос пользователя с айди', userURLId);
         }
     }).bind(this);
 
