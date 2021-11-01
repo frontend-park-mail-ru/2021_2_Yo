@@ -16,6 +16,7 @@ class CSRFStore {
 
     #csrfGetHandle = ((token: string) => {
         this.#token = token;
+        console.log(this.#token);
     }).bind(this);
 
     #csrfDeleteHandle = (() => {
