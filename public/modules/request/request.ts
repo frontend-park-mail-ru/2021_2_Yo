@@ -74,7 +74,6 @@ export function fetchPost(url: string, body: any, callback: (args?: any) => void
     }).then((response) => {
         HTTPStatus = response.status;
         headers = response.headers;
-        response.headers.forEach(console.log);
         console.log(response.headers.get('X-CSRF-Token'));
         return response.json();
     }).then(data => {

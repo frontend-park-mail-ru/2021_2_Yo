@@ -2,7 +2,7 @@ import Bus from '../../modules/eventbus/eventbus.js';
 import Events from '../../modules/eventbus/events.js';
 import UserStore from '../../modules/userstore.js';
 import {fetchGet} from '../../modules/request/request.js';
-import {FetchResponseData, ApiUrls, UserData} from '../../types.js';
+import {ApiUrls, FetchResponseData, UserData} from '../../types.js';
 
 export default class HeaderModel {
     enable() {
@@ -36,6 +36,7 @@ export default class HeaderModel {
 
     #logoutHandle = (() => {
         void fetchGet(ApiUrls.Logout);
+        Bus.emit(Events.CSRFDelete);
     }).bind(this);
 
     disable() {

@@ -15,6 +15,11 @@ export default class LoginModel {
 
             if (status === 200) {
                 if (json.status === 200) {
+                    const token = headers?.get('X-CSRF-Token');
+                    console.log(token);
+                    if (token) {
+                        Bus.emit(Events.CSRFRes, token);
+                    }
                     Bus.emit(Events.RouteBack);
                     return;
                 }
