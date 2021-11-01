@@ -30,7 +30,7 @@ export default class EventFormView {
     }).bind(this);
 
     renderError() {
-        const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, до свидания</p>');
+        const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, залогинься</p>');
         this.#parent.innerHTML = template();
     }
 
