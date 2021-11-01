@@ -19,6 +19,8 @@ export default class EventFormController {
 
     enable() {
         Bus.on(Events.EventCreateReq, this.#validationHandle);
+        Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
+
         this.#view.subscribe();
 
         const storedUser = UserStore.get();
@@ -41,6 +43,7 @@ export default class EventFormController {
 
     disable() {
         Bus.off(Events.EventCreateReq, this.#validationHandle);
+        Bus.off(Events.UserLogout, this.#userErrorRenderHandle);
 
         if (this.#userResSubscribe) {
             Bus.off(Events.UserRes, this.#renderHandle);
