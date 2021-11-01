@@ -15,13 +15,10 @@ export default class LoginModel {
 
             if (status === 200) {
                 if (json.status === 200) {
-                    console.log(headers);
-                    if (headers?.get('X-Csrf-Token')) {
-                        const token = document.cookie.match('csrf-token')
-                        Bus.emit(Events.CSRFRes, token);
-                        Bus.emit(Events.RouteBack);
-                        return;
-                    }
+                    const token = document.cookie.match('csrf-token')
+                    Bus.emit(Events.CSRFRes, token);
+                    Bus.emit(Events.RouteBack);
+                    return;
                 }
             }
             Bus.emit(Events.AuthError, json.message);
