@@ -26,7 +26,8 @@ export default class EventEditFormController {
 
         const storedUser = UserStore.get();
         if (storedUser) {
-            this.#view.render();
+            const id = new URL(window.location.href).searchParams?.get('id') as string;
+            this.#model.getEvent(id);
         } else {
             this.#userResSubscribe = true;
             Bus.on(Events.UserRes, this.#getEventHandle);
