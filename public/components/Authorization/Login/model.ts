@@ -15,13 +15,22 @@ export default class LoginModel {
 
             if (status === 200) {
                 if (json.status === 200) {
-                    const token = document.cookie.match('csrf-token');
-                    Bus.emit(Events.CSRFRes, token);
+                    const token = this.#parseCookie('csrf-token');
+                    if (token) {
+                        Bus.emit(Events.CSRFRes, token);
+                    }
                     Bus.emit(Events.RouteBack);
                     return;
                 }
             }
             Bus.emit(Events.AuthError, json.message);
         });
+    }
+
+    #parseCookie(cookie: string) {
+        const matches = document.cookie.match(new RegExp(
+            '(?:^|; )' + cookie.replace(/([$?*|{}\]\\^])/g, '\\$1') + '=([^;]*)'
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
     }
 }

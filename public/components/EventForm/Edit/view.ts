@@ -141,10 +141,14 @@ export default class EventEditFormView {
 
     #removeListeners() {
         const form = document.getElementById('eventform') as HTMLFormElement;
-        form.removeEventListener('submit', this.#editEvent.bind(this));
+        if (form) {
+            form.removeEventListener('submit', this.#editEvent.bind(this));
+        }
 
         const tagButton = document.getElementById('tagButton') as HTMLInputElement;
-        tagButton.removeEventListener('click', this.#addTag.bind(this));
+        if (tagButton) {
+            tagButton.removeEventListener('click', this.#addTag.bind(this));
+        }
     }
 
     #addTag(ev: Event) {

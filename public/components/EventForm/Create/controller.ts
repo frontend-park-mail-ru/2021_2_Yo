@@ -9,24 +9,43 @@ import UserStore from '../../../modules/userstore.js';
 export default class EventFormController {
     #view: EventFormView;
     #model: EventFormModel;
+    #userResSubscribe: boolean;
 
     constructor(parent: HTMLElement) {
         this.#view = new EventFormView(parent);
         this.#model = new EventFormModel();
+        this.#userResSubscribe = false;
     }
 
     enable() {
         Bus.on(Events.EventCreateReq, this.#validationHandle);
         this.#view.subscribe();
-        if (UserStore.get()?.id) {
+
+        const storedUser = UserStore.get();
+        if (storedUser) {
             this.#view.render();
         } else {
-            this.#view.renderError();
+            this.#userResSubscribe = true;
+            Bus.on(Events.UserRes, this.#renderHandle);
+            Bus.on(Events.UserError, this.#userErrorRenderHandle);
         }
     }
 
+    #renderHandle = (() => {
+        this.#view.render();
+    });
+
+    #userErrorRenderHandle = (() => {
+        this.#view.renderError();
+    });
+
     disable() {
         Bus.off(Events.EventCreateReq, this.#validationHandle);
+
+        if (this.#userResSubscribe) {
+            Bus.off(Events.UserRes, this.#renderHandle);
+            Bus.off(Events.UserError, this.#userErrorRenderHandle);
+        }
         this.#view.disable();
     }
 
