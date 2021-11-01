@@ -27,19 +27,26 @@ export default class ProfilePageModel {
         };
 
         const stored = UserStore.get() as UserData;
-        stored.name = newUserInfo.name;
-        stored.surname = newUserInfo.surname;
-        stored.description = newUserInfo.description;
 
-        void fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
-            const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
-                    Bus.emit(Events.UserEditRes, stored);
-                    return;
+        if (stored.name === newUserInfo.name &&
+            stored.surname === newUserInfo.surname &&
+            stored.description === newUserInfo.description) {
+            Bus.emit(Events.UserEditRes, stored);
+        } else {
+            stored.name = newUserInfo.name;
+            stored.surname = newUserInfo.surname;
+            stored.description = newUserInfo.description;
+
+            void fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
+                const {status, json} = data;
+                if (status === 200) {
+                    if (json.status === 200) {
+                        Bus.emit(Events.UserEditRes, stored);
+                        return;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     editPassword(password: string) {

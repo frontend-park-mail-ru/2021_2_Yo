@@ -80,7 +80,6 @@ export default class ProfilePageView {
         const profileBlock = document.getElementById('profileBlock') as HTMLElement;
 
         const storedId = UserStore.get()?.id;
-        console.log(UserStore.get());
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = template({user, permitEdit});
 

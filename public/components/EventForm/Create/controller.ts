@@ -23,8 +23,7 @@ export default class EventFormController {
 
         this.#view.subscribe();
 
-        const storedUser = UserStore.get();
-        if (storedUser) {
+        if (UserStore.get()) {
             this.#view.render();
         } else {
             this.#userResSubscribe = true;

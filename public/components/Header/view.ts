@@ -6,6 +6,7 @@ import {UrlPathnames, UserData} from '../../types.js';
 
 export default class HeaderView {
     #parent: HTMLElement;
+    #avatar?: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -22,9 +23,9 @@ export default class HeaderView {
             logout.addEventListener('click', this.#logoutHandle);
         }
 
-        const avatar = document.getElementById('avatar');
-        if (avatar) {
-            avatar.addEventListener('click', this.#avatarHandle);
+        this.#avatar = <HTMLElement>document.getElementById('avatar');
+        if (this.#avatar) {
+            this.#avatar.addEventListener('click', this.#avatarHandle);
         }
 
         const logo = document.getElementById('header-logo');
@@ -39,9 +40,8 @@ export default class HeaderView {
             logout.removeEventListener('click', this.#logoutHandle);
         }
 
-        const avatar = document.getElementById('avatar');
-        if (avatar) {
-            avatar.removeEventListener('click', this.#avatarHandle);
+        if (this.#avatar) {
+            this.#avatar.removeEventListener('click', this.#avatarHandle);
         }
 
         const logo = document.getElementById('header-logo');
