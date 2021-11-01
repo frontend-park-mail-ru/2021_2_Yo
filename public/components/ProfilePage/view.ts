@@ -1,7 +1,5 @@
 import {UserData} from '../../types.js';
 import ProfileEditForm from './ProfileEditForm/ProfileEditForm.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
 import UserStore from '../../modules/userstore.js';
 
 export default class ProfilePageView {

@@ -15,8 +15,7 @@ export default class LoginModel {
 
             if (status === 200) {
                 if (json.status === 200) {
-                    // bus.emit(Events.UserAuthorized, null);
-                    Bus.emit(Events.RouteUrl, UrlPathnames.Main);
+                    Bus.emit(Events.RouteBack);
                     return;
                 }
             }
