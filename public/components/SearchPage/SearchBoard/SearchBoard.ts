@@ -1,6 +1,6 @@
-import { EventData } from '@/types.js';
-import Bus from '@eventbus/eventbus.js';
-import Events from '@eventbus/events.js';
+import { EventData } from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 import * as errorTemplate from '@search-page/SearchBoard/eventerror.hbs';
 import * as listTemplate from '@search-page/SearchBoard/eventlist.hbs';
 import * as template from '@search-page/SearchBoard/searchboard.hbs';

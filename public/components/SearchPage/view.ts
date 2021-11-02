@@ -1,5 +1,5 @@
-import SearchBoard from '@search-page/SearchBoard/SearchBoard.js';
-import SideBar from '@search-page/SideBar/SideBar.js';
+import SearchBoard from '@search-page/SearchBoard/SearchBoard';
+import SideBar from '@search-page/SideBar/SideBar';
 import * as template from '@search-page/searchpage.hbs';
 
 interface FilterData {

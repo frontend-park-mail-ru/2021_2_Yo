@@ -1,8 +1,8 @@
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import SearchPageModel from './model.js';
-import SearchPageView from './view.js';
-import config from '../../config.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import SearchPageModel from '@search-page/model';
+import SearchPageView from '@search-page/view';
+import config from '@/config';
 
 export default class SearchPageController {
     #view: SearchPageView;

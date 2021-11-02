@@ -1,8 +1,8 @@
-import { fetchGet } from '../../modules/request/request.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import { ApiUrls, FetchResponseData } from '../../types.js';
-import config from '../../config.js';
+import { fetchGet } from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import { ApiUrls, FetchResponseData } from '@/types';
+import config from '@/config';
 
 interface FilterData {
     category?: number,

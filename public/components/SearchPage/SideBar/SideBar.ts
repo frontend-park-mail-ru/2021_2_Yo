@@ -1,6 +1,6 @@
-import config from '@/config.js';
-import Bus from '@eventbus/eventbus.js';
-import Events from '@eventbus/events.js';
+import config from '@/config';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 import * as tagTemplate from '@search-page/SideBar/tag.hbs';
 import * as template from '@search-page/SideBar/sidebar.hbs';
 import '@search-page/SideBar/SideBar.css';
