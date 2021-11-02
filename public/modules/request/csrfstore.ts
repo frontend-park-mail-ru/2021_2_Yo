@@ -1,5 +1,5 @@
-import Bus from './eventbus/eventbus.js';
-import Events from './eventbus/events.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 class CSRFStore {
     #token?: string;

@@ -9,7 +9,7 @@ import EventPageController from '@event-page/controller';
 import EventFormController from '@event-create/controller';
 import EventEditFormController from '@event-edit/controller';
 import SearchPageController from '@search-page/controller';
-import ProfilePageController from './components/ProfilePage/controller.js';
+import ProfilePageController from './components/ProfilePage/controller';
 import '@/main.css';
 import * as app from '@/app.hbs';
 

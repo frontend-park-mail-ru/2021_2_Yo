@@ -1,5 +1,5 @@
 import { ApiResponseJson } from '@/types';
-import CSRFStore from '@request/csrfstore.js';
+import CSRFStore from '@request/csrfstore';
 
 const METHODS = {
     POST: 'POST',

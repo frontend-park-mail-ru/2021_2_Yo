@@ -23,7 +23,7 @@
             "@modules/*": [ "public/modules/*" ],
             "@eventbus/*": [ "public/modules/eventbus/*" ],
             "@request/*": [ "public/modules/request/*" ],
-            "@templates/*": [ "public/components/templates*" ],
+            "@templates/*": [ "public/components/templates/*" ],
             "@header/*": [ "public/components/Header/*" ],
             "@main-page/*": [ "public/components/MainPage/*" ],
             "@authorization/*": [ "public/components/Authorization/*" ],
