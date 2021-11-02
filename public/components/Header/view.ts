@@ -7,7 +7,6 @@ import '@header/templates/Header.css';
 
 export default class HeaderView {
     #parent: HTMLElement;
-    #avatar?: HTMLElement;
     #logout?: HTMLElement;
     #logo?: HTMLElement;
 
@@ -21,17 +20,12 @@ export default class HeaderView {
     }
 
     #addListeners() {
-        this.#avatar = <HTMLElement>document.getElementById('avatar');
         this.#logout = <HTMLElement>document.getElementById('header-logout');
         this.#logo = <HTMLElement>document.getElementById('header-logo');
 
         if (this.#logout) {
             this.#logout.addEventListener('click', this.#logoutHandle);
         }
-
-        // if (this.#avatar) {
-        //     this.#avatar.addEventListener('click', this.#avatarHandle);
-        // }
 
         if (this.#logo) {
             this.#logo.addEventListener('click', this.#logoHandle);
@@ -43,10 +37,6 @@ export default class HeaderView {
             this.#logout.removeEventListener('click', this.#logoutHandle);
         }
 
-        // if (this.#avatar) {
-        //     this.#avatar.removeEventListener('click', this.#avatarHandle);
-        // }
-
         if (this.#logo) {
             this.#logo.removeEventListener('click', this.#logoHandle);
         }
@@ -55,11 +45,6 @@ export default class HeaderView {
     #logoHandle = (() => {
         Bus.emit(Events.RouteUrl, UrlPathnames.Main);
     }).bind(this);
-
-    // #avatarHandle = (() => {
-    //     const id = UserStore.get()?.id;
-    //     Bus.emit(Events.RouteUrl, UrlPathnames.Profile + '?id=' + id);
-    // }).bind(this);
 
     #logoutHandle = (() => {
         Bus.emit(Events.UserLogout);

@@ -30,10 +30,13 @@ class Router {
     }
 
     #clickHandler = (e: MouseEvent) => {
-        const target = <EventTarget>e.target;
-        if (target instanceof HTMLAnchorElement) {
-            e.preventDefault();
-            Bus.emit(Events.RouteUrl, target.href);
+        const path = e.composedPath();
+        for (const target of path) {
+            if (target instanceof HTMLAnchorElement) {
+                e.preventDefault();
+                Bus.emit(Events.RouteUrl, target.href);
+                break;
+            }
         }
     };
 
