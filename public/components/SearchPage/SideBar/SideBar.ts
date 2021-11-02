@@ -17,12 +17,6 @@ export default class SideBar {
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#categoriesOpened = false;
-        // const tag = `
-        //     <label id="tag-{{this}}" class="tags__tag">
-        //         {{this}}
-        //     </label>
-        // `;
-        // window.Handlebars.registerPartial('tag', tag);
     }
 
     #addListeners() {
@@ -97,10 +91,6 @@ export default class SideBar {
 
         list.innerHTML = '';
         this.#tags.map((t) => {
-            // const tag = `
-            //     {{> tag this}}
-            // `;
-            // list.innerHTML += window.Handlebars.compile(tag)(t);
             list.innerHTML += tagTemplate(t);
         });
         this.#tags.map((t) => {
@@ -213,29 +203,6 @@ export default class SideBar {
 
     render() {
         this.#removeListeners();
-        // const source = `
-        //     <div class="categories">
-        //         <div class="categories__li">
-        //             <span class="categories__header">Категории</span>
-        //             <img id="categories-img" class="categories-img_closed" src="/img/categories.png">
-        //         </div>
-        //         <div id="categories-list" class="categories-list_closed">
-        //         {{#each this}}
-        //         <div id="category-{{@index}}" class="categories__li categories__li-type" data-num="{{@index}}">{{name}}</div>
-        //         {{/each}}
-        //         </div>
-        //     </div>
-        //     <div class="tags">
-        //         <div class="tags__li">
-        //             <span class="categories__header">Теги</span>
-        //         </div>
-        //         <input id="tags-input" class="tags__li" placeholder="Теги шмеги..."></input>
-        //         <button id="tags-button" class="tags__li">Добавить</button>
-        //         <div id="tags-list" class="tags__li"></div>
-        //     </div>
-        // `;
-        // const template = window.Handlebars.compile(source)(config.categories);
-        // const template = window.Handlebars.compile(source)(config.categories);
         this.#parent.innerHTML = template(config.categories);
         this.#addListeners();
     }
