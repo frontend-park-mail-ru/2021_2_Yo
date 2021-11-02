@@ -1,16 +1,3 @@
-declare global {
-    interface Window {
-        Handlebars: any;
-    }
-}
-
-export type EventCardData = {
-    imgUrl: string;
-    viewed: number;
-    name: string;
-    description: string;
-}
-
 export type UserData = {
     id: string;
     name: string;
@@ -44,6 +31,7 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
+    Search = '/search',
     Profile = '/user',
     Event = '/events',
     Create = '/create',

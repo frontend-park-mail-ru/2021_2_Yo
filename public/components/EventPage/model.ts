@@ -1,16 +1,16 @@
-import {fetchDelete, fetchGet} from '../../modules/request/request.js';
-import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '../../types.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
+import {fetchDelete, fetchGet} from '@request/request';
+import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class EventPageModel {
     getEvent(id: string) {
-        void fetchGet(ApiUrls.Events + '/' + id,
+        fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        const event = json.body as EventData;
+                        const event = <EventData>json.body;
                         Bus.emit(Events.EventRes, event);
                     }
                 }
@@ -19,7 +19,7 @@ export default class EventPageModel {
     }
 
     deleteEvent(id: string) {
-        void fetchDelete(ApiUrls.Events + '/' + id,
+        fetchDelete(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

@@ -1,0 +1,22 @@
+<div class="border-block">
+    <div class="profile-block__header">
+        <div class="border-block__profile-avatar">
+            <img src="https://source.boringavatars.com/marble/32" class="profile-avatar">
+        </div>
+        <div class="border-block__name">
+            <p class="profile-name">{{user.name}}</p>
+            <p class="profile-name">{{user.surname}}</p>
+            <p class="profile-email">{{user.email}}</p>
+        </div>
+    </div>
+    <div class="profile-block__bottom" id="bottomBlock">
+    {{#if user.description}}
+        <p class="standard-text">О себе</p>
+        <p class="description-text">{{user.description}}</p>
+    {{/if}}
+    </div>
+</div>
+{{#if permitEdit}}
+<button class="button-edit profile-block__button-edit" id="editButton">Редактировать профиль</button>
+<a class="button-edit profile-block__button-edit" href="/create">Cоздать мероприятие</a>
+{{/if}}

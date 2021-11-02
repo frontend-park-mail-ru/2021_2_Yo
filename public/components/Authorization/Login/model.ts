@@ -1,7 +1,7 @@
-import {ApiPostLoginData, ApiUrls, FetchResponseData} from '../../../types.js';
-import {fetchPost} from '../../../modules/request/request.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import { ApiPostLoginData, ApiUrls, FetchResponseData } from '@/types';
+import { fetchPost } from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class LoginModel {
     login(inputsData: Map<string, { errors: string[], value: string }>) {
@@ -10,7 +10,7 @@ export default class LoginModel {
             password: inputsData.get('password')?.value as string,
         };
 
-        void fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
             const {status, json, headers} = data;
 
             if (status === 200) {

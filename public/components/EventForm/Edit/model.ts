@@ -1,7 +1,7 @@
-import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '../../../types.js';
-import {fetchGet, fetchPost} from '../../../modules/request/request.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
+import {fetchGet, fetchPost} from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class EventEditFormModel {
     editEvent(inputsData: Map<string, { errors: string[]; value: string | string[] }>) {
@@ -18,7 +18,7 @@ export default class EventEditFormModel {
 
         const id = new URL(window.location.href).searchParams.get('id');
 
-        void fetchPost(ApiUrls.Events + '/' + id, event, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Events + '/' + id, event, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
@@ -30,7 +30,7 @@ export default class EventEditFormModel {
     }
 
     getEvent(id: string) {
-        void fetchGet(ApiUrls.Events + '/' + id,
+        fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

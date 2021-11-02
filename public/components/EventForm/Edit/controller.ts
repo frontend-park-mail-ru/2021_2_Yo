@@ -1,10 +1,10 @@
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
-import EventEditFormModel from './model.js';
-import EventEditFormView from './view.js';
-import {EventData} from '../../../types.js';
-import {eventValidateFields} from '../../../modules/validation.js';
-import UserStore from '../../../modules/userstore.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import EventEditFormModel from '@event-edit/model';
+import EventEditFormView from '@event-edit/view';
+import {EventData} from '@/types';
+import {eventValidateFields} from '@modules/validation';
+import UserStore from '@modules/userstore';
 
 export default class EventEditFormController {
     #view: EventEditFormView;

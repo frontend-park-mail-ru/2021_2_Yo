@@ -1,6 +1,8 @@
-import {EventData} from '../../../types.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import * as errorTemplate from '@event-form/error.hbs';
+import * as template from '@event-create/eventcreate.hbs';
+import '@event-form/EventForm.css';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -30,70 +32,11 @@ export default class EventFormView {
     }).bind(this);
 
     renderError() {
-        const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, залогинься</p>');
-        this.#parent.innerHTML = template();
+        // const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, залогинься</p>');
+        this.#parent.innerHTML = errorTemplate();
     }
 
     render() {
-        const source = `  
-                <div class="eventform-background">
-                    <form class="eventform" id="eventform">
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Название</p>
-                            <input class ="input-block__input form-input form-input_wide" id="titleInput" maxlength="255"/>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Краткое описание</p>
-                            <textarea class ="input-block__input form-textarea" id="descriptionInput" 
-                            rows="4" maxlength="500"></textarea>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Описание</p>
-                            <textarea class ="input-block__input form-textarea" id="textInput" rows="12" 
-                            maxlength="2200"></textarea>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Дата проведения</p>
-                            <input class ="input-block__input form-input form-input_thin" id="dateInput" type="date"/>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Город</p>
-                            <input class ="input-block__input form-input form-input_thin" id="cityInput" maxlength="30"/>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Адрес</p>
-                            <input class ="input-block__input form-input form-input_thin" id="geoInput" maxlength="255"/>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Категория</p>
-                            <input class ="input-block__input form-input form-input_thin" id="categoryInput" maxlength="30"/>
-                            <p class="error error_none input-block__error"></p>
-                        </div>
-                        <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Теги</p>
-                            <input class ="input-block__input form-input form-input_thin" id="tagInput" maxlength="30">
-                            <input value="Добавить" id="tagButton" class="input-block__input button-cancel" 
-                            type="button">
-                            <div id="tagBlockError">
-                                <p class="input-block__error error error_none"></p>
-                            </div>
-                            <div class="event-tags-block" id="tagBlock"></div>
-                        </div>
-                        <div class="eventform__buttons buttons">
-                            <input type="button" value="Отмена" class="button-cancel">
-                            <input type="submit" value="СОЗДАТЬ" class="button-save">
-                        </div>
-                    </form>
-                </div>
-        `;
-
-        const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template();
 
         this.#setInputs();
@@ -101,19 +44,19 @@ export default class EventFormView {
     }
 
     #setInputs() {
-        const titleInput = document.getElementById('titleInput') as HTMLInputElement;
+        const titleInput = <HTMLInputElement>document.getElementById('titleInput');
         this.#inputs.set('title', titleInput);
-        const descriptionInput = document.getElementById('descriptionInput') as HTMLInputElement;
+        const descriptionInput = <HTMLInputElement>document.getElementById('descriptionInput');
         this.#inputs.set('description', descriptionInput);
-        const textInput = document.getElementById('textInput') as HTMLInputElement;
+        const textInput = <HTMLInputElement>document.getElementById('textInput');
         this.#inputs.set('text', textInput);
-        const dateInput = document.getElementById('dateInput') as HTMLInputElement;
+        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
         this.#inputs.set('date', dateInput);
-        const cityInput = document.getElementById('cityInput') as HTMLInputElement;
+        const cityInput = <HTMLInputElement>document.getElementById('cityInput');
         this.#inputs.set('city', cityInput);
-        const geoInput = document.getElementById('geoInput') as HTMLInputElement;
+        const geoInput = <HTMLInputElement>document.getElementById('geoInput');
         this.#inputs.set('geo', geoInput);
-        const categoryInput = document.getElementById('categoryInput') as HTMLInputElement;
+        const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
         this.#inputs.set('category', categoryInput);
     }
 

@@ -1,10 +1,10 @@
-import ProfilePageView from './view.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import {passwordEditValidateFields, userEditValidateFields} from '../../modules/validation.js';
-import ProfilePageModel from './model.js';
-import {EventData, UserData} from '../../types.js';
-import UserStore from '../../modules/userstore.js';
+import ProfilePageView from '@profile-page/view';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import {passwordEditValidateFields, userEditValidateFields} from '@modules/validation';
+import ProfilePageModel from '@profile-page/model';
+import {EventData, UserData} from '@/types';
+import UserStore from '@modules/userstore';
 
 export default class ProfilePageController {
     #view: ProfilePageView;
@@ -29,7 +29,7 @@ export default class ProfilePageController {
         if (storedUser) {
             const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
             if (storedUser.id === userURLId) {
-                this.#view.render(storedUser);
+                this.#view.render();
                 this.#view.renderProfileBlock(storedUser);
                 this.#model.getUserEvents(storedUser.id);
             } else {
@@ -67,7 +67,7 @@ export default class ProfilePageController {
     }).bind(this);
 
     #userGetHandle = ((user: UserData) => {
-        this.#view.render(user);
+        this.#view.render();
         this.#view.renderProfileBlock(user);
         this.#model.getUserEvents(user.id);
     });

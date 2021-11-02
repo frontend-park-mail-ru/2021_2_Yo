@@ -15,22 +15,27 @@ const inputLength = new Map([
     ['selfDescription', 150],
 ]);
 
-export function authValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
-    const email = inputsData.get('email') as { errors: string[], value: string };
+type InputsData = {
+    errors: string[],
+    value: string,
+};
+
+export function authValidateFields(inputsData: Map<string, InputsData>) {
+    const email = <InputsData>inputsData.get('email');
     email.errors.push(checkEmail(email.value));
 
-    const password = inputsData.get('password') as { errors: string[], value: string };
+    const password = <InputsData>inputsData.get('password');
     password.errors.push(checkPasswordLength(password.value));
 
     checkInputLength(inputsData);
 }
 
-export function signupValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
-    const name = inputsData.get('name') as { errors: string[], value: string };
-    const surname = inputsData.get('surname') as { errors: string[], value: string };
-    const email = inputsData.get('email') as { errors: string[], value: string };
-    const password1 = inputsData.get('password1') as { errors: string[], value: string };
-    const password2 = inputsData.get('password2') as { errors: string[], value: string };
+export function signupValidateFields(inputsData: Map<string, InputsData>) {
+    const name = <InputsData>inputsData.get('name');
+    const surname = <InputsData>inputsData.get('surname');
+    const email = <InputsData>inputsData.get('email');
+    const password1 = <InputsData>inputsData.get('password1');
+    const password2 = <InputsData>inputsData.get('password2');
 
     name.errors.push(checkEmpty(name.value));
     name.errors.push(checkForbiddenSymbols(name.value));
@@ -50,8 +55,8 @@ export function signupValidateFields(inputsData: Map<string, { errors: string[],
 }
 
 export function passwordEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
-    const password1 = inputsData.get('password1') as { errors: string[], value: string };
-    const password2 = inputsData.get('password2') as { errors: string[], value: string };
+    const password1 = <InputsData>inputsData.get('password1');
+    const password2 = <InputsData>inputsData.get('password2');
 
     password1.errors.push(checkPasswordLength(password1.value));
     password2.errors.push(checkPasswordLength(password2.value));
@@ -63,8 +68,8 @@ export function passwordEditValidateFields(inputsData: Map<string, { errors: str
 }
 
 export function userEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
-    const name = inputsData.get('name') as { errors: string[], value: string };
-    const surname = inputsData.get('surname') as { errors: string[], value: string };
+    const name = <InputsData>inputsData.get('name');
+    const surname = <InputsData>inputsData.get('surname');
 
     name.errors.push(checkEmpty(name.value));
     name.errors.push(checkForbiddenSymbols(name.value));
@@ -75,14 +80,14 @@ export function userEditValidateFields(inputsData: Map<string, { errors: string[
     checkInputLength(inputsData);
 }
 
-export function eventValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
-    const title = inputsData.get('title') as { errors: string[], value: string };
-    const description = inputsData.get('description') as { errors: string[], value: string };
-    const text = inputsData.get('text') as { errors: string[], value: string };
-    const date = inputsData.get('date') as { errors: string[], value: string };
-    const city = inputsData.get('city') as { errors: string[], value: string };
-    const geo = inputsData.get('geo') as { errors: string[], value: string };
-    const category = inputsData.get('category') as { errors: string[], value: string };
+export function eventValidateFields(inputsData: Map<string, InputsData>) {
+    const title = <InputsData>inputsData.get('title');
+    const description = <InputsData>inputsData.get('description');
+    const text = <InputsData>inputsData.get('text');
+    const date = <InputsData>inputsData.get('date');
+    const city = <InputsData>inputsData.get('city');
+    const geo = <InputsData>inputsData.get('geo');
+    const category = <InputsData>inputsData.get('category');
 
     title.errors.push(checkEmpty(title.value));
 
@@ -142,17 +147,18 @@ function checkEmail(value: string): string {
 function checkDate(value: string): string {
     if (value.length && !value.match('^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$')) {
         return 'Неверный формат. Дата должна соответствовать формату гггг-мм-дд';
-    } else if (Number(new Date(value)) < Date.now()) {
+    }
+    if (Number(new Date(value)) < Date.now()) {
         return 'Нельзя создать мероприятие в прошлом';
     }
     return '';
 }
 
-function checkInputLength(inputsData: Map<string, { errors: string[], value: string }>) {
+function checkInputLength(inputsData: Map<string, InputsData>) {
     inputsData.forEach((item, key) => {
         if (item.value) {
-            if (item.value.length > (inputLength.get(key) as number)) {
-                item.errors.push(`Слишком много символов. Максимальная длина ${inputLength.get(key) as number}`);
+            if (item.value.length > (<number>inputLength.get(key))) {
+                item.errors.push(`Слишком много символов. Максимальная длина ${<number>inputLength.get(key)}`);
             }
         }
     });

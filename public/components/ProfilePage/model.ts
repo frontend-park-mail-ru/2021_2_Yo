@@ -1,12 +1,12 @@
-import {ApiUrls, EventData, FetchResponseData, UserData} from '../../types.js';
-import {fetchGet, fetchPost} from '../../modules/request/request.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import UserStore from '../../modules/userstore.js';
+import {ApiUrls, EventData, FetchResponseData, UserData} from '@/types';
+import {fetchGet, fetchPost} from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import UserStore from '@modules/userstore';
 
 export default class ProfilePageModel {
     getUser(userId: string) {
-        void fetchGet(ApiUrls.User + '/' + userId, (data: FetchResponseData) => {
+        fetchGet(ApiUrls.User + '/' + userId, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
@@ -37,7 +37,7 @@ export default class ProfilePageModel {
             stored.surname = newUserInfo.surname;
             stored.description = newUserInfo.description;
 
-            void fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
+            fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
@@ -50,7 +50,7 @@ export default class ProfilePageModel {
     }
 
     editPassword(password: string) {
-        void fetchPost(ApiUrls.User + '/password', {password}, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.User + '/password', {password}, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
@@ -63,7 +63,7 @@ export default class ProfilePageModel {
     }
 
     getUserEvents(userId: string) {
-        void fetchGet(ApiUrls.Events + '?authorid=' + userId, (data: FetchResponseData) => {
+        fetchGet(ApiUrls.Events + '?authorid=' + userId, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {

@@ -1,6 +1,6 @@
-import {ApiUrls, UserData, FetchResponseData} from '../types.js';
-import Bus from './eventbus/eventbus.js';
-import Events from './eventbus/events.js';
+import { UserData } from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 class UserStore {
     #user?: UserData;

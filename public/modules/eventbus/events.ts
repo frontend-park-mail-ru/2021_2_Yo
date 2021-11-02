@@ -2,6 +2,7 @@ enum Events {
     // Route
     RouteBack = 'route:back',
     RouteUrl = 'route:url',
+    RouteUpdate = 'route:update',
 
     // User
     UserRes = 'user:response',
@@ -31,6 +32,10 @@ enum Events {
     ValidationError = 'validation:error',
     ValidationOk = 'validation:ok',
     SubmitLogin = 'submit:login',
+
+    // Search
+    FilterChange = 'filter:change',
+    QueryChange = 'query:change',
 
     // CSRF
     CSRFRes = 'csrf:response',

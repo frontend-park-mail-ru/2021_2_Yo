@@ -1,7 +1,7 @@
-import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '../../../types.js';
-import {fetchPost} from '../../../modules/request/request.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
+import {fetchPost} from '@request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class EventFormModel {
     createEvent(inputsData: Map<string, { errors: string[], value: string | string[] }>) {
@@ -16,7 +16,7 @@ export default class EventFormModel {
             geo: inputsData.get('geo')?.value as string
         };
 
-        void fetchPost(ApiUrls.Events, event, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Events, event, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {

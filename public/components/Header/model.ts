@@ -1,8 +1,8 @@
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import UserStore from '../../modules/userstore.js';
-import {fetchGet} from '../../modules/request/request.js';
-import {ApiUrls, FetchResponseData, UserData} from '../../types.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import UserStore from '@modules/userstore';
+import {fetchGet} from '@request/request';
+import {ApiUrls, FetchResponseData, UserData} from '@/types';
 
 export default class HeaderModel {
     enable() {
@@ -15,12 +15,12 @@ export default class HeaderModel {
         if (stored) {
             Bus.emit(Events.UserRes, stored);
         } else {
-            void fetchGet(ApiUrls.User,
+            fetchGet(ApiUrls.User, 
                 (data: FetchResponseData) => {
                     const {status, json} = data;
                     if (status === 200) {
                         if (json.status === 200) {
-                            const user = json.body as UserData;
+                            const user = <UserData>json.body;
                             Bus.emit(Events.UserRes, user);
                             return;
                         }
