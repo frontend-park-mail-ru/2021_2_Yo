@@ -31,9 +31,6 @@
     font-size: 2.22vh;
     line-height: 2.59vh;
     text-decoration-line: underline;
-}
-
-.event-button:hover {
     cursor: pointer;
 }
 
@@ -103,9 +100,6 @@
     line-height: 2.59vh;
     text-decoration-line: underline;
     color: var(--back-btn);
-}
-
-.button-back:hover {
     cursor: pointer;
 }
 
@@ -126,6 +120,7 @@
 }
 
 .button-submit {
+    cursor: pointer;
     background: var(--submit-btn);
     mix-blend-mode: normal;
     border: 1px solid black;
@@ -145,11 +140,8 @@
     color: white;
 }
 
-.button-submit:hover {
-    cursor: pointer;
-}
-
 .button-save {
+    cursor: pointer;
     background: var(--blue);
     border: 1px solid #050505;
     box-sizing: border-box;
@@ -163,10 +155,6 @@
     line-height: 2.59vh;
 
     color: white;
-}
-
-.button-save:hover {
-    cursor: pointer;
 }
 
 .form-textarea {

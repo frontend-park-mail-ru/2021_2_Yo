@@ -7,6 +7,8 @@ import {UrlPathnames, UserData} from '../../types.js';
 export default class HeaderView {
     #parent: HTMLElement;
     #avatar?: HTMLElement;
+    #logout?: HTMLElement;
+    #logo?: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -18,35 +20,34 @@ export default class HeaderView {
     }
 
     #addListeners() {
-        const logout = document.getElementById('header-logout');
-        if (logout) {
-            logout.addEventListener('click', this.#logoutHandle);
+        this.#avatar = <HTMLElement>document.getElementById('avatar');
+        this.#logout = <HTMLElement>document.getElementById('header-logout');
+        this.#logo = <HTMLElement>document.getElementById('header-logo');
+
+        if (this.#logout) {
+            this.#logout.addEventListener('click', this.#logoutHandle);
         }
 
-        this.#avatar = <HTMLElement>document.getElementById('avatar');
         if (this.#avatar) {
             this.#avatar.addEventListener('click', this.#avatarHandle);
         }
 
-        const logo = document.getElementById('header-logo');
-        if (logo) {
-            logo.addEventListener('click', this.#logoHandle);
+        if (this.#logo) {
+            this.#logo.addEventListener('click', this.#logoHandle);
         }
     }
 
     #removeListeners() {
-        const logout = <HTMLElement>document.getElementById('header-logout');
-        if (logout) {
-            logout.removeEventListener('click', this.#logoutHandle);
+        if (this.#logout) {
+            this.#logout.removeEventListener('click', this.#logoutHandle);
         }
 
         if (this.#avatar) {
             this.#avatar.removeEventListener('click', this.#avatarHandle);
         }
 
-        const logo = document.getElementById('header-logo');
-        if (logo) {
-            logo.removeEventListener('click', this.#logoHandle);
+        if (this.#logo) {
+            this.#logo.removeEventListener('click', this.#logoHandle);
         }
     }
 
