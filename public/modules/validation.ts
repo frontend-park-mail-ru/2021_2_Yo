@@ -12,6 +12,7 @@ const inputLength = new Map([
     ['date', 10],
     ['description', 500],
     ['text', 2200],
+    ['selfDescription', 150],
 ]);
 
 type InputsData = {
@@ -53,9 +54,33 @@ export function signupValidateFields(inputsData: Map<string, InputsData>) {
     checkInputLength(inputsData);
 }
 
-export function eventValidateFields(
-    inputsData: Map<string, InputsData>
-) {
+export function passwordEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+    const password1 = <InputsData>inputsData.get('password1');
+    const password2 = <InputsData>inputsData.get('password2');
+
+    password1.errors.push(checkPasswordLength(password1.value));
+    password2.errors.push(checkPasswordLength(password2.value));
+    if (checkPasswordsEqual(password1.value, password2.value)) {
+        password2.errors.push('Пароли не совпадают');
+    }
+
+    checkInputLength(inputsData);
+}
+
+export function userEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+    const name = <InputsData>inputsData.get('name');
+    const surname = <InputsData>inputsData.get('surname');
+
+    name.errors.push(checkEmpty(name.value));
+    name.errors.push(checkForbiddenSymbols(name.value));
+
+    surname.errors.push(checkEmpty(surname.value));
+    surname.errors.push(checkForbiddenSymbols(surname.value));
+
+    checkInputLength(inputsData);
+}
+
+export function eventValidateFields(inputsData: Map<string, InputsData>) {
     const title = <InputsData>inputsData.get('title');
     const description = <InputsData>inputsData.get('description');
     const text = <InputsData>inputsData.get('text');
@@ -131,8 +156,10 @@ function checkDate(value: string): string {
 
 function checkInputLength(inputsData: Map<string, InputsData>) {
     inputsData.forEach((item, key) => {
-        if (item.value.length > (<number>inputLength.get(key))) {
-            item.errors.push(`Слишком много символов. Максимальная длина ${<number>inputLength.get(key)}`);
+        if (item.value) {
+            if (item.value.length > (<number>inputLength.get(key))) {
+                item.errors.push(`Слишком много символов. Максимальная длина ${<number>inputLength.get(key)}`);
+            }
         }
     });
 }

@@ -23,15 +23,6 @@
   width: 51.77vw;
 }
 
-.form-textarea {
-  width: 51.77vw;
-  border: 1px solid black;
-  box-sizing: border-box;
-  border-radius: 2px;
-
-  resize: none;
-}
-
 .form-input_thin {
   width: 35.47vw;
 }

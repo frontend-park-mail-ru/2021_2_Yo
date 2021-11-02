@@ -43,6 +43,31 @@ a {
   justify-content: space-between;
 }
 
+.loader-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15%;
+}
+
+.loader {
+  animation: spin 3.5s linear infinite;
+}
+
+.loader_size_s {
+  width: 50%;
+  height: 50%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .buttons {
   display: inline-flex;
   justify-content: space-between;
@@ -68,6 +93,7 @@ a {
   font-size: 2.22vh;
   line-height: 2.59vh;
   text-decoration-line: underline;
+  cursor: pointer;
 }
 
 .event-button:hover {
@@ -139,6 +165,7 @@ a {
   line-height: 2.59vh;
   text-decoration-line: underline;
   color: var(--back-btn);
+  cursor: pointer;
 }
 
 .button-cancel {
@@ -158,6 +185,7 @@ a {
 }
 
 .button-submit {
+  cursor: pointer;
   background: var(--submit-btn-bg);
   mix-blend-mode: normal;
   border: 1px solid black;
@@ -178,6 +206,7 @@ a {
 }
 
 .button-save {
+  cursor: pointer;
   background: var(--blue);
   border: 1px solid #050505;
   box-sizing: border-box;
@@ -239,27 +268,15 @@ a {
   transform: scale(1.2);
 }
 
-.loader-wrapper {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 15%;
+.form-textarea {
+  width: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 2px;
+
+  resize: none;
 }
 
-.loader {
-  animation: spin 3.5s linear infinite;
-}
-
-.loader_size_s {
-  width: 50%;
-  height: 50%;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.button_none {
+  display: none;
 }

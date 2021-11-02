@@ -1,6 +1,7 @@
 import {EventData, UrlPathnames} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import Userstore from '../../modules/userstore';
 import * as template from '@event-page/templates/eventpage.hbs';
 import '@event-page/templates/EventPage.css';
 
@@ -15,7 +16,8 @@ export default class EventPageView {
     render(event: EventData) {
         this.#event = event;
 
-        this.#parent.innerHTML = template(this.#event);
+        const permission = (this.#event.authorid === Userstore.get()?.id);
+        this.#parent.innerHTML = template({event, permission});
 
         this.#addListeners();
     }

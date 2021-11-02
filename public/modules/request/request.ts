@@ -1,4 +1,5 @@
 import { ApiResponseJson } from '@/types';
+import CSRFStore from '@request/csrfstore.js';
 
 const METHODS = {
     POST: 'POST',
@@ -59,23 +60,27 @@ export function fetchDelete(url: string, callback?: (args?: any) => void, error?
 
 export function fetchPost(url: string, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
+    let headers: Headers;
 
     return void fetch(API + url, {
         method: METHODS.POST,
         mode: 'cors',
         credentials: 'include',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8',
+            'X-Csrf-Token': CSRFStore.get() as string,
         },
         body: JSON.stringify(body)
     }).then((response) => {
         HTTPStatus = response.status;
+        headers = response.headers;
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
         callback({
             status: HTTPStatus,
             json: json,
+            headers: headers,
         });
     }).catch(() => {
         if (error) error();

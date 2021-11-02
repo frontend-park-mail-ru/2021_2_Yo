@@ -1,8 +1,8 @@
-import Bus from '../../modules/eventbus/eventbus';
-import Events from '../../modules/eventbus/events';
-import UserStore from '../../modules/userstore';
-import { fetchGet } from '../../modules/request/request';
-import { FetchResponseData, ApiUrls } from '../../types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import UserStore from '@modules/userstore';
+import {fetchGet} from '@request/request';
+import {ApiUrls, FetchResponseData, UserData} from '@/types';
 
 export default class HeaderModel {
     enable() {
@@ -20,11 +20,11 @@ export default class HeaderModel {
                     const {status, json} = data;
                     if (status === 200) {
                         if (json.status === 200) {
-                            const user = {name: json.body.name, geo: 'Мытищи'};
+                            const user = <UserData>json.body;
                             Bus.emit(Events.UserRes, user);
                             return;
                         }
-                    } 
+                    }
                     Bus.emit(Events.UserError);
                 },
                 () => {
@@ -36,6 +36,7 @@ export default class HeaderModel {
 
     #logoutHandle = (() => {
         void fetchGet(ApiUrls.Logout);
+        Bus.emit(Events.CSRFDelete);
     }).bind(this);
 
     disable() {

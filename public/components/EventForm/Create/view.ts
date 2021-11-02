@@ -1,5 +1,6 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-create/eventcreate.hbs';
 import '@event-form/EventForm.css';
 
@@ -30,6 +31,11 @@ export default class EventFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
+    renderError() {
+        // const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, залогинься</p>');
+        this.#parent.innerHTML = errorTemplate();
+    }
+
     render() {
         this.#parent.innerHTML = template();
 
@@ -38,19 +44,19 @@ export default class EventFormView {
     }
 
     #setInputs() {
-        const titleInput = document.getElementById('titleInput') as HTMLInputElement;
+        const titleInput = <HTMLInputElement>document.getElementById('titleInput');
         this.#inputs.set('title', titleInput);
-        const descriptionInput = document.getElementById('descriptionInput') as HTMLInputElement;
+        const descriptionInput = <HTMLInputElement>document.getElementById('descriptionInput');
         this.#inputs.set('description', descriptionInput);
-        const textInput = document.getElementById('textInput') as HTMLInputElement;
+        const textInput = <HTMLInputElement>document.getElementById('textInput');
         this.#inputs.set('text', textInput);
-        const dateInput = document.getElementById('dateInput') as HTMLInputElement;
+        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
         this.#inputs.set('date', dateInput);
-        const cityInput = document.getElementById('cityInput') as HTMLInputElement;
+        const cityInput = <HTMLInputElement>document.getElementById('cityInput');
         this.#inputs.set('city', cityInput);
-        const geoInput = document.getElementById('geoInput') as HTMLInputElement;
+        const geoInput = <HTMLInputElement>document.getElementById('geoInput');
         this.#inputs.set('geo', geoInput);
-        const categoryInput = document.getElementById('categoryInput') as HTMLInputElement;
+        const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
         this.#inputs.set('category', categoryInput);
     }
 
@@ -64,10 +70,14 @@ export default class EventFormView {
 
     #removeListeners() {
         const form = document.getElementById('eventform') as HTMLFormElement;
-        form.removeEventListener('submit', this.#createEvent.bind(this));
+        if (form) {
+            form.removeEventListener('submit', this.#createEvent.bind(this));
+        }
 
         const tagButton = document.getElementById('tagButton') as HTMLInputElement;
-        tagButton.removeEventListener('click', this.#addTag.bind(this));
+        if (tagButton) {
+            tagButton.removeEventListener('click', this.#addTag.bind(this));
+        }
     }
 
     #addTag(ev: Event) {

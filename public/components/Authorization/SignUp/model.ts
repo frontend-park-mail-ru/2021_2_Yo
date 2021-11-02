@@ -13,11 +13,14 @@ export default class SignupModel {
         };
 
         fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {
-            const {status, json} = data;
+            const {status, json, headers} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    // Bus.emit(Events.UserAuthorized, null);
-                    Bus.emit(Events.RouteUrl, UrlPathnames.Main);
+                    const token = headers?.get('X-CSRF-Token');
+                    if (token) {
+                        Bus.emit(Events.CSRFRes, token);
+                    }
+                    Bus.emit(Events.RouteBack);
                     return;
                 }
             }

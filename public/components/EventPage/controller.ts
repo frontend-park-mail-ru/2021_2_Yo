@@ -31,6 +31,7 @@ export default class EventPageController {
 
     disable() {
         Bus.off(Events.EventRes, this.#eventHandle);
+        Bus.off(Events.EventDelete, this.#eventDeleteHandle);
         this.#view.disable();
     }
 }

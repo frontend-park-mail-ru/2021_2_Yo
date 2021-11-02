@@ -1,5 +1,9 @@
 export type UserData = {
+    id: string;
     name: string;
+    surname: string;
+    description: string;
+    email: string;
     geo: string;
 }
 
@@ -14,6 +18,7 @@ export type EventData = {
     text: string;
     date: string;
     geo: string;
+    authorid: string;
 }
 
 export enum PageKeys {
@@ -27,9 +32,10 @@ export enum UrlPathnames {
     Login = '/login',
     Signup = '/signup',
     Search = '/search',
+    Profile = '/user',
     Event = '/events',
     Create = '/create',
-    Edit = '/edit'
+    Edit = '/edit',
 }
 
 export enum ApiUrls {
@@ -43,6 +49,7 @@ export enum ApiUrls {
 export type FetchResponseData = {
     status: number;
     json: ApiResponseJson;
+    headers?: Headers;
 }
 
 export type ApiResponseJson = {

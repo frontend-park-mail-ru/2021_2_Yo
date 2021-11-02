@@ -8,6 +8,11 @@ enum Events {
     UserRes = 'user:response',
     UserError = 'user:error',
     UserReq = 'user:request',
+    UserEditReq = 'user-edit:request',
+    UserEditRes = 'user-edit:response',
+    UserPasswordEditReq = 'user-password-edit:request',
+    UserPasswordEditRes = 'user-password-edit:response',
+    UserByIdRes = 'user-by-id:response',
 
     // Events
     EventsReq = 'events:request',
@@ -31,6 +36,10 @@ enum Events {
     // Search
     FilterChange = 'filter:change',
     QueryChange = 'query:change',
+
+    // CSRF
+    CSRFRes = 'csrf:response',
+    CSRFDelete = 'csrf:delete',
 }
 
 export default Events;

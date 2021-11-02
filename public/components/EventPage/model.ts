@@ -24,7 +24,7 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        Bus.emit(Events.RouteUrl, UrlPathnames.Main);
+                        Bus.emit(Events.RouteBack);
                     }
                 }
             }

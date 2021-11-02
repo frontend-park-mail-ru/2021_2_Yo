@@ -1,6 +1,7 @@
 import {EventData} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-edit/eventedit.hbs';
 import '@event-form/EventForm.css';
 
@@ -32,10 +33,14 @@ export default class EventEditFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
+    renderError() {
+        // const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, залогинься</p>');
+        this.#parent.innerHTML = errorTemplate();
+    }
+
     render(event?: EventData) {
         this.#eventId = event?.id;
         this.#eventTags = event?.tag as string[];
-
         this.#parent.innerHTML = template(event);
 
         this.#setInputs();
@@ -69,10 +74,14 @@ export default class EventEditFormView {
 
     #removeListeners() {
         const form = document.getElementById('eventform') as HTMLFormElement;
-        form.removeEventListener('submit', this.#editEvent.bind(this));
+        if (form) {
+            form.removeEventListener('submit', this.#editEvent.bind(this));
+        }
 
         const tagButton = document.getElementById('tagButton') as HTMLInputElement;
-        tagButton.removeEventListener('click', this.#addTag.bind(this));
+        if (tagButton) {
+            tagButton.removeEventListener('click', this.#addTag.bind(this));
+        }
     }
 
     #addTag(ev: Event) {
@@ -99,6 +108,7 @@ export default class EventEditFormView {
                 errorP.textContent = TAG_LENGTH_STR;
                 return;
             }
+
             if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
                 const tag = document.createElement('a');
                 tag.classList.add('event-tag');
