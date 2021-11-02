@@ -1,3 +1,6 @@
+import * as template from '@main-page/SearchStatus/searchstatus.hbs';
+import '@main-page/SearchStatus/SearchStatus.css';
+
 export default class SearchStatusComponent {
     #parent: HTMLElement;
 
@@ -12,19 +15,6 @@ export default class SearchStatusComponent {
             link: 'в',
             city: 'Москве',
         };
-        const source = `
-            {{#with this}}
-                <div class="status-wrapper">
-                    <div class="status">
-                        <span>{{question}}&nbsp;</span>
-                        <span class="status__when">{{when}}</span>
-                        <span>&nbsp;{{link}}&nbsp;</span>
-                        <span class="status__city">{{city}}</span>
-                    </div>
-                </div>
-            {{/with}}
-        `;
-        const template = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(status);
     }
 

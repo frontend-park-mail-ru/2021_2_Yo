@@ -1,5 +1,6 @@
-import SearchStatusComponent from './SearchStatus/SearchStatus.js';
-import EventBoardComponent from './EventBoard/EventBoard.js';
+import * as template from '@main-page/mainpage.hbs';
+import SearchStatusComponent from '@main-page/SearchStatus/SearchStatus';
+import EventBoardComponent from '@main-page/EventBoard/EventBoard';
 
 export default class MainPageView {
     #parent: HTMLElement;
@@ -11,11 +12,7 @@ export default class MainPageView {
     }
 
     render() {
-        this.#parent.innerHTML = `
-            <div id="search-status-wrapper"></div>
-            <div id="event-board-wrapper"></div>
-        `;    
-        const hWrapper = document.getElementById('header-wrapper') as HTMLElement;
+        this.#parent.innerHTML = template();
         const ssWrapper = document.getElementById('search-status-wrapper') as HTMLElement;
         const ebWrapper = document.getElementById('event-board-wrapper') as HTMLElement;
 

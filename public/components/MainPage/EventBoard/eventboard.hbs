@@ -1,0 +1,21 @@
+{{#if this}}
+<div class="board">
+    <div class="events">
+        {{#each this}}
+        <div class="events__e{{@index}} events__e-wrapper">
+                <img class="events__image" src="{{imgUrl}}">
+            <a class="events__content" href="events?id={{id}}">
+                <span class="events__description">{{description}}</span>
+                <div class="events__viewed">
+                    <img src="./img/viewed2.0.png">
+                    <span class="events__viewed-score">{{viewed}}</span>
+                </div>
+            </a>
+            
+        </div>
+       {{/each}}
+    </div>
+</div>                   
+{{else}}
+<div id="events-loader"><div>
+{{/if}}

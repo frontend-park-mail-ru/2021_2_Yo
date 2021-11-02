@@ -1,8 +1,8 @@
-import EventPageView from './view.js';
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import EventPageModel from './model.js';
-import {EventData} from '../../types.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import EventPageModel from '@event-page/model';
+import EventPageView from '@event-page/view';
+import {EventData} from '@/types';
 
 export default class EventPageController {
     #view: EventPageView;

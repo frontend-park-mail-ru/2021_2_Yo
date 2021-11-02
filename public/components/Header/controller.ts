@@ -1,7 +1,7 @@
-import Bus from '../../modules/eventbus/eventbus.js';
-import Events from '../../modules/eventbus/events.js';
-import HeaderModel from './model.js';
-import HeaderView from './view.js';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import HeaderModel from '@header/model';
+import HeaderView from '@header/view';
 
 export default class HeaderController {
     #model: HeaderModel;

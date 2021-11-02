@@ -1,6 +1,8 @@
-import {EventData} from '../../../types.js';
-import Bus from '../../../modules/eventbus/eventbus.js';
-import Events from '../../../modules/eventbus/events.js';
+import {EventData} from '@/types';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+import * as template from '@event-edit/eventedit.hbs';
+import '@event-form/EventForm.css';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -33,76 +35,7 @@ export default class EventEditFormView {
     render(event?: EventData) {
         this.#eventId = event?.id;
         this.#eventTags = event?.tag as string[];
-        const source = `  
-            <div class="eventform-background">
-                <form class="eventform" id="eventform">
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Название</p>
-                        <input class ="input-block__input form-input form-input_wide" id="titleInput" 
-                        value="{{title}}" maxlength="255"/>
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Краткое описание</p>
-                        <textarea class ="input-block__input form-textarea" id="descriptionInput" rows="4" 
-                        maxlength="500">{{description}}</textarea>
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Описание</p>
-                        <textarea class ="input-block__input form-textarea" id="textInput" rows="12" maxlength="2200">{{text}}
-                        </textarea>
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Дата проведения</p>
-                        <input class ="input-block__input form-input form-input_thin" id="dateInput"
-                        value="{{date}}" type="date"/>
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Город</p>
-                        <input class ="input-block__input form-input form-input_thin" id="cityInput" 
-                        value="{{city}}" maxlength="30"/>
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Адрес</p>
-                        <input class ="input-block__input form-input form-input_thin" id="geoInput" 
-                        value="{{geo}}" maxlength="255"/>
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                        <p class="input-block__input-label event-text">Категория</p>
-                        <input class ="input-block__input form-input form-input_thin" id="categoryInput" 
-                        value="{{category}}" maxlength="30">
-                        <p class="error error_none input-block__error"></p>
-                    </div>
-                    <div class="eventform__input-block input-block">
-                            <p class="input-block__input-label event-text">Теги</p>
-                            <input class ="input-block__input form-input form-input_thin" id="tagInput" maxlength="30">
-                            <input value="Добавить" id="tagButton" class="input-block__input button-cancel" 
-                            type="button">
-                            <div id="tagBlockError">
-                                <p class="error error_none input-block__error"></p>
-                            </div>
-                            <div class="event-tags-block" id="tagBlock">
-                            {{#if tag}}
-                                {{#each tag}}
-                                    <a class="event-tag">{{this}}</a>
-                                {{/each}}
-                            {{/if}}                            
-                            </div>
-                    </div>
-                    <div class="eventform__buttons buttons">
-                        <input type="button" value="Отмена" class="button-cancel">
-                        <input type="submit" value="ИЗМЕНИТЬ" class="button-save">
-                    </div>
-                </form>
-            </div>
-        `;
 
-        const template: any = window.Handlebars.compile(source);
         this.#parent.innerHTML = template(event);
 
         this.#setInputs();
