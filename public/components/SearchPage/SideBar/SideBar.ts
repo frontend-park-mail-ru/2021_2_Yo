@@ -56,7 +56,7 @@ export default class SideBar {
             target.style.backgroundColor = '';
             this.#category = undefined;
         } else {
-            if (this.#category) {
+            if (this.#category !== undefined) {
                 const category = <HTMLElement>document.getElementById('category-' + this.#category);
                 category.style.backgroundColor = '';
             }
