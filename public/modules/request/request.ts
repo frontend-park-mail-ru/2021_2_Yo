@@ -14,6 +14,7 @@ const API = 'https://bmstusa.ru';
 
 export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
+    let headers: Headers;
 
     return void fetch(API + url, {
         method: METHODS.GET,
@@ -21,6 +22,7 @@ export function fetchGet(url: string, callback?: (args?: any) => void, error?: (
         credentials: 'include'
     }).then((response) => {
         HTTPStatus = response.status;
+        headers = response.headers;
         return response.json();
     }).then(data => {
         const json = data as ApiResponseJson;
@@ -28,6 +30,7 @@ export function fetchGet(url: string, callback?: (args?: any) => void, error?: (
             callback({
                 status: HTTPStatus,
                 json: json,
+                headers: headers,
             });
         }
     }).catch(() => {

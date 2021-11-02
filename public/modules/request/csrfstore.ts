@@ -10,15 +10,18 @@ class CSRFStore {
     }
 
     get() {
+        console.log('запрос токена', this.#token);
         return this.#token;
     }
 
     #csrfGetHandle = ((token: string) => {
         this.#token = token;
+        console.log('проставлен токен', this.#token);
     }).bind(this);
 
     #csrfDeleteHandle = (() => {
         this.#token = undefined;
+        console.log('удален токен', this.#token);
     }).bind(this);
 }
 

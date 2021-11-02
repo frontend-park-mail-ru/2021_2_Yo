@@ -24,13 +24,18 @@ export default class HeaderModel {
         if (stored) {
             Bus.emit(Events.UserRes, stored);
         } else {
-            fetchGet(ApiUrls.User, 
+            fetchGet(ApiUrls.User,
                 (data: FetchResponseData) => {
-                    const {status, json} = data;
+                    const {status, json, headers} = data;
                     if (status === 200) {
                         if (json.status === 200) {
                             const user = <UserData>json.body;
                             Bus.emit(Events.UserRes, user);
+
+                            const token = headers?.get('X-CSRF-Token');
+                            if (token) {
+                                Bus.emit(Events.CSRFRes, token);
+                            }
                             return;
                         }
                     }
