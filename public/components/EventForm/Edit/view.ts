@@ -34,7 +34,6 @@ export default class EventEditFormView {
     }).bind(this);
 
     renderError() {
-        // const template = window.Handlebars.compile('<p>Ниче нету, ничего нельзя, залогинься</p>');
         this.#parent.innerHTML = errorTemplate();
     }
 
