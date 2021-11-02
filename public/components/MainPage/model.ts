@@ -8,7 +8,7 @@ export default class MainPageModel {
         Bus.on(Events.EventsReq, this.#eventsHandle);
     }
     #eventsHandle = (() => {
-        void fetchGet(ApiUrls.Events, 
+        fetchGet(ApiUrls.Events, 
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {

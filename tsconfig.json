@@ -33,6 +33,7 @@
             "@event-create/*": [ "public/components/EventForm/Create/*" ],
             "@event-edit/*": [ "public/components/EventForm/Edit/*" ],
             "@error-page/*": [ "public/components/ErrorPage/*" ],
+            "@search-page/*": [ "public/components/SearchPage/*" ],
         }
     },
     "include": [

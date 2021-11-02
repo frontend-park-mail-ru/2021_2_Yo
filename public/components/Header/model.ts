@@ -15,7 +15,7 @@ export default class HeaderModel {
         if (stored) {
             Bus.emit(Events.UserRes, stored);
         } else {
-            void fetchGet(ApiUrls.User, 
+            fetchGet(ApiUrls.User, 
                 (data: FetchResponseData) => {
                     const {status, json} = data;
                     if (status === 200) {

@@ -6,14 +6,15 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-const API = 'https://bmstusasa.herokuapp.com';
+const API = 'https://bmstusa.ru';
+// const API = 'https://bmstusasa.herokuapp.com';
 // const API = 'https://yobmstu.herokuapp.com';
 // const API = 'https://95.163.212.36:8081';
 
 export function fetchGet(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
-    return fetch(API + url, {
+    return void fetch(API + url, {
         method: METHODS.GET,
         mode: 'cors',
         credentials: 'include'
@@ -36,7 +37,7 @@ export function fetchGet(url: string, callback?: (args?: any) => void, error?: (
 export function fetchDelete(url: string, callback?: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
-    return fetch(API + url, {
+    return void fetch(API + url, {
         method: METHODS.DELETE,
         mode: 'cors',
         credentials: 'include'
@@ -59,7 +60,7 @@ export function fetchDelete(url: string, callback?: (args?: any) => void, error?
 export function fetchPost(url: string, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
 
-    return fetch(API + url, {
+    return void fetch(API + url, {
         method: METHODS.POST,
         mode: 'cors',
         credentials: 'include',

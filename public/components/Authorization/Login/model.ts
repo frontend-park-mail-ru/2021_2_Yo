@@ -10,7 +10,7 @@ export default class LoginModel {
             password: inputsData.get('password')?.value as string,
         };
 
-        void fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
             const {status, json} = data;
 
             if (status === 200) {

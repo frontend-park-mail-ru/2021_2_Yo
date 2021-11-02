@@ -1,6 +1,6 @@
 import Bus from '../../modules/eventbus/eventbus';
 import Events from '../../modules/eventbus/events';
-import { anchorsConfig } from '../../config';
+import config from '../../config';
 import { UserData, UrlPathnames } from '../../types';
 import * as template from '@header/templates/header.hbs';
 import '@header/templates/Header.css';
@@ -47,15 +47,15 @@ export default class HeaderView {
     }).bind(this);
 
     #logoutHandle = (() => {
-        this.#render();
+        this.render();
     }).bind(this);
 
     #userHandle = ((user: UserData) => {
-        this.#render(user);
+        this.render(user);
     }).bind(this);
 
-    #render(user?: UserData) {
-        const authAnchors = anchorsConfig.authAnchors;
+    render(user?: UserData) {
+        const authAnchors = config.authAnchors;
         this.#parent.innerHTML = template({authAnchors, user});
 
         this.#addListeners();

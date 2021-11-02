@@ -26,6 +26,7 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
+    Search = '/search',
     Event = '/events',
     Create = '/create',
     Edit = '/edit'
