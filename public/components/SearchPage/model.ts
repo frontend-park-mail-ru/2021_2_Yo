@@ -29,11 +29,11 @@ export default class SearchPageModel {
     #filterToUrl (data: FilterData) {
         let res = '?';
 
-        if (data.query !== undefined && data.query !== '') {
+        if (data.query && data.query !== '') {
             res += 'query=' + data.query;
         }
 
-        if (data.category !== undefined) {
+        if (data.category) {
             if (res.length > 1) res += '&';
             res += 'category=' + config.categories[data.category].name;
         }
