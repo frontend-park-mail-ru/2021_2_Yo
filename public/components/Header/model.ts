@@ -4,15 +4,6 @@ import UserStore from '@modules/userstore';
 import {fetchGet} from '@request/request';
 import {ApiUrls, FetchResponseData, UserData} from '@/types';
 
-const user = {
-    id: '1',
-    name: 'Vasya',
-    surname: 'Vash',
-    description: 'ya',
-    email: 'lala@bebe.ru',
-    geo: 'Moscow',
-};
-
 export default class HeaderModel {
     enable() {
         Bus.on(Events.UserReq, this.#userHandle);
@@ -34,12 +25,10 @@ export default class HeaderModel {
                             return;
                         }
                     }
-                    // Bus.emit(Events.UserError);
-                    Bus.emit(Events.UserRes, user);
+                    Bus.emit(Events.UserError);
                 },
                 () => {
-                    // Bus.emit(Events.UserError);
-                    Bus.emit(Events.UserRes, user);
+                    Bus.emit(Events.UserError);
                 }
             );
         }
