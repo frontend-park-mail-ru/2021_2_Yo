@@ -72,3 +72,9 @@
 .header__auth-anchor:last-child {
   margin-left: 10px;
 }
+
+.header__logout-img {
+  fill: white;
+  width: 32px;
+  height: 32px;
+}
