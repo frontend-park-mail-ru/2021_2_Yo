@@ -62,13 +62,14 @@
   width: 2.13vw;
   height: 1.94vh;
   margin-right: 0.78vw;
+  fill: var(--gray);
 }
 
 .event-header-viewed-text {
   font-weight: 500;
   font-size: 1.67vh;
   line-height: 1.94vh;
-  color: var(--views-num);
+  color: var(--gray);
 }
 
 .event-title {
