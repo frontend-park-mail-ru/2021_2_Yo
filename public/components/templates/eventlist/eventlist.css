@@ -59,4 +59,5 @@
   margin-right: var(--event-li-viewed-right);
   width: var(--event-li-viewed-w);
   height: var(--event-li-viewed-h);
+  fill: var(--gray);
 }
