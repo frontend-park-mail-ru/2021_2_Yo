@@ -49,6 +49,12 @@
   color: white;
 }
 
+.header__search-img {
+  fill: white;
+  width: 20px;
+  height: 20px;
+}
+
 .header__calendar {
   width: 11.8vw;
 }
