@@ -31,6 +31,10 @@ a {
   text-decoration: none;
 }
 
+input:focus {
+  outline: none;
+}
+
 #App {
   background-color: var(--background);
   min-height: 100vh;
