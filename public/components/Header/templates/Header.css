@@ -1,68 +1,74 @@
 .header-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .header-text {
-    font-size: 1vw;
-    color: white;
-    text-align: center;
-    font-weight: 400;
+  font-size: 1vw;
+  color: white;
+  text-align: center;
+  font-weight: 400;
 }
 
 .header-text_decoration_underline {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .header {
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background: var(--header-bg);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--header-bg);
 }
 
 .header__content {
-    width: 67vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 67vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo {
-    width: 140px;
-    height: 56px;
+  width: 140px;
+  height: 56px;
 }
 
 .header__search {
-    width: 22.9vw;
+  width: 22.9vw;
 }
 
 .header__search-input {
-    width: 21vw;
-    height: 32px;
-    background: transparent;
-    border: 1px solid white;
-    border-radius: 2px;
+  width: 21vw;
+  height: 32px;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 2px;
 }
 
 .header__search-input::placeholder {
-    color: white
+  color: white;
 }
 
 .header__calendar {
-    width: 11.8vw;
+  width: 11.8vw;
+}
+
+.header__calendar-img {
+  fill: white;
+  width: 32px;
+  height: 32px;
 }
 
 .header__user-avatar {
-    width: 32px;
-    height: 32px;
-    margin-right: 6px;
+  width: 32px;
+  height: 32px;
+  margin-right: 6px;
 }
 
 .header__auth-anchor {
-    color: white
+  color: white;
 }
 
 .header__auth-anchor:last-child {
-    margin-left: 10px;
+  margin-left: 10px;
 }
