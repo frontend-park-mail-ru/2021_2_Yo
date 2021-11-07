@@ -1,86 +1,42 @@
 :root {
-  --form-bg: linear-gradient(90deg, #f3f2ff 0%, #ffe6fe 100%);
-  --auth-bg: linear-gradient(137.34deg, #0e0063 0%, #5e0043 100%);
-  --back-btn: #005e5e;
+    --form-bg: linear-gradient(90deg, #f3f2ff 0%, #ffe6fe 100%);
+    --auth-bg: linear-gradient(137.34deg, #0e0063 0%, #5e0043 100%);
+    --back-btn: #005e5e;
 }
 
 .auth-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: var(--auth-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--auth-bg);
 }
 
-.authform {
-  background: var(--form-bg);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-}
-
-.background__logo {
-  height: 15.4vh;
-  width: 22.2vw;
-  margin-bottom: -7.7vh;
-  z-index: 1;
-}
-
-.authform__label {
-  margin-left: 1.8vw;
-  margin-top: 9.5vh;
-  margin-bottom: 2.96vh;
-}
-
-.label {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 3.5vh;
-  line-height: 4.17vh;
+.auth-background__logo {
+    margin-bottom: -7.7vh;
+    z-index: 1;
 }
 
 .form-input_auth {
-  width: 26.8vw;
-  height: 2.96vh;
+    width: 26.8vw;
+    height: 2.96vh;
+    border: 1px solid black;
 }
 
-.form-input_correct {
-  border: 1px solid green;
+.button-purple_login {
+    width: 180px;
 }
 
-.form-input_error {
-  border: 1px solid red;
-}
-
-.authform__input-block {
-  margin-left: 1.8vw;
-  margin-right: 1.8vw;
-}
-
-.authform__error {
-  margin-left: 1.8vw;
-}
-
-.buttons__button-submit {
-  margin: 0 1.8vw;
-}
-
-.buttons__button-back {
-  margin: 0 1.8vw;
+.button-purple_signup {
+    width: 300px;
 }
 
 .authform__buttons {
-  margin-bottom: 2.78vh;
-  margin-top: 2.78vh;
+    margin-top: 2.78vh;
 }
 
-.input-label {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 2.6vh;
-  line-height: 3.05vh;
-}

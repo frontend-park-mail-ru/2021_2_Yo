@@ -1,28 +1,47 @@
 .eventform-background {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: var(--evbg);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: var(--evbg);
 }
 
 .eventform {
-  width: 55.9vw;
-  box-sizing: border-box;
-  padding: 0.93vh 2.08vw 1.76vh;
-  background: white;
-  margin-top: 3.7vh;
-  margin-bottom: 3.7vh;
+    width: 55.9vw;
+    box-sizing: border-box;
+    padding: 0.93vh 2.08vw 1.76vh;
+    background: white;
+    margin-top: 3.7vh;
+    margin-bottom: 3.7vh;
 }
 
-.form-input_wide {
-  width: 51.77vw;
+.form-input_event-wide {
+    width: 51.77vw;
+    height: 3.7vh;
+    border: 2px solid var(--gray);
 }
 
-.form-input_thin {
-  width: 35.47vw;
+.form-input_event-thin {
+    width: 35.47vw;
+    height: 3.7vh;
+    border: 2px solid var(--gray);
+}
+
+.form-textarea_event {
+    width: 100%;
+    border: 2px solid var(--gray);
+}
+
+.button-white_event-tag {
+    width: 15.26vw;
+    height: 3.7vh;
+}
+
+.button-white_event-cancel {
+    width: 10.42vw;
+    height: 3.7vh;
 }
