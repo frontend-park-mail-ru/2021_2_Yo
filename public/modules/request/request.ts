@@ -70,10 +70,9 @@ export function fetchPost(url: string, data: PostData | any, callback: (args?: a
     let HTTPStatus: number;
     let headers: Headers;
     let formData = data;
-    let CT: string | undefined = 'application/json;charset=utf-8';
+    let CT = 'application/json;charset=utf-8';
     if (data.json) {
-        // CT = 'multipart/form-data';
-        CT = undefined;
+        CT = 'multipart/form-data';
         formData = new FormData();
         formData.append('json', JSON.stringify(data.json));
         if (data.file) formData.append('file', data.file);
@@ -86,7 +85,7 @@ export function fetchPost(url: string, data: PostData | any, callback: (args?: a
         headers: {
             // 'Content-Type': 'application/json;charset=utf-8',
             // 'Content-Type': 'multipart/form-data',
-            'Content-Type': <string>CT,
+            // 'Content-Type': CT,
             'X-CSRF-Token': CSRFStore.get() as string,
         },
         // body: JSON.stringify(body)
