@@ -1,7 +1,5 @@
 /// <reference lib="WebWorker" />
 
-import {response} from "express";
-
 const CACHE_NAME = 'BMSTUSAcache';
 const cacheUrls = ['/'];
 
@@ -42,14 +40,14 @@ function offlineResponse() {
 
 function putInCache(event: FetchEvent, onlineResponse: Response) {
     if (event.request.method === 'GET' && onlineResponse.status === 200) {
-        caches.open(CACHE_NAME)
+        void caches.open(CACHE_NAME)
             .then((cache) => {
-                cache.put(event.request, onlineResponse);
+                void cache.put(event.request, onlineResponse);
                 return onlineResponse;
             })
             .catch((err) => {
                 throw Error('smth went wrong with caches.open: ' + err);
-            })
+            });
     }
 
     return onlineResponse;
@@ -71,18 +69,18 @@ self.addEventListener('fetch', (event) => {
                 .catch(() => fetch(event.request))
                 .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
                 .catch(() => offlineResponse())
-        )
+        );
     } else {
         event.respondWith(
             fetch(event.request)
                 .then(onlineResponse => putInCache(event, onlineResponse))
                 .catch(() => {
-                    caches.match(event.request)
+                    void caches.match(event.request)
                         .then((cachedResponse) => {
                             return cachedResponse;
-                        })
+                        });
                     return offlineResponse();
                 })
-        )
+        );
     }
 });
