@@ -53,12 +53,12 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
 }
 
 self.addEventListener('fetch', (event) => {
+    console.log(event.request.url);
     if (event.request.url === '/sw.js') {
         return;
     }
 
     const staticReq = event.request.url.match('^https?://\\S+(?:jpg|jpeg|png|ico|woff)$');
-    console.log(staticReq);
 
     if (staticReq) {
         console.log('запрос за статикой', event.request.url);
@@ -68,10 +68,14 @@ self.addEventListener('fetch', (event) => {
                     console.log('достал из кэша', event.request.url);
                     return cachedResponse;
                 })
-                .catch(() => fetch(event.request))
+                .catch(() => {
+                    console.log('ошибка');
+                    void fetch(event.request);
+                })
                 .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
                 .catch(() => offlineResponse())
         );
+        return;
     } else {
         console.log('запрос не за статикой', event.request.url);
         event.respondWith(
