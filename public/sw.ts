@@ -42,9 +42,10 @@ function offlineResponse() {
 function putInCache(event: FetchEvent, onlineResponse: Response) {
     console.log('кладу в кэш', event.request.url);
     if (event.request.method === 'GET' && onlineResponse.status === 200) {
+        const responseClone = onlineResponse.clone();
         void caches.open(CACHE_NAME)
             .then((cache) => {
-                void cache.put(event.request.clone(), onlineResponse.clone());
+                void cache.put(event.request, responseClone);
             });
     }
 
