@@ -37,16 +37,12 @@ export default class ProfilePageModel {
             stored.surname = newUserInfo.surname;
             stored.description = newUserInfo.description;
 
-            const avatarInput = <HTMLInputElement>document.getElementById('avatarInput');
-            let file = undefined;
-            if (avatarInput.files) file = avatarInput.files[0];
-            fetchPost(ApiUrls.User + '/info', {json: stored, file: file}, (data: FetchResponseData) => {
+            fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
                         Bus.emit(Events.UserEditRes, stored);
                         Bus.emit(Events.UserRes, stored);
-                        Bus.emit(Events.UserReq);
                         return;
                     }
                 }
@@ -55,7 +51,7 @@ export default class ProfilePageModel {
     }
 
     editPassword(password: string) {
-        fetchPost(ApiUrls.User + '/password', {json: password}, (data: FetchResponseData) => {
+        fetchPost(ApiUrls.User + '/password', {password}, (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {

@@ -61,35 +61,19 @@ export function fetchDelete(url: string, callback?: (args?: any) => void, error?
     });
 }
 
-interface PostData {
-    json: any,
-    file?: any,
-}
-
-export function fetchPost(url: string, data: PostData | any, callback: (args?: any) => void, error?: (args?: any) => void) {
+export function fetchPost(url: string, body: any, callback: (args?: any) => void, error?: (args?: any) => void) {
     let HTTPStatus: number;
     let headers: Headers;
-    let formData = data;
-    let CT = 'application/json;charset=utf-8';
-    if (data.json) {
-        CT = 'multipart/form-data';
-        formData = new FormData();
-        formData.append('json', JSON.stringify(data.json));
-        if (data.file) formData.append('file', data.file);
-    }
 
     return void fetch(API + url, {
         method: METHODS.POST,
         mode: 'cors',
         credentials: 'include',
         headers: {
-            // 'Content-Type': 'application/json;charset=utf-8',
-            // 'Content-Type': 'multipart/form-data',
-            // 'Content-Type': CT,
+            'Content-Type': 'application/json;charset=utf-8',
             'X-CSRF-Token': CSRFStore.get() as string,
         },
-        // body: JSON.stringify(body)
-        body: formData
+        body: JSON.stringify(body)
     }).then((response) => {
         HTTPStatus = response.status;
         headers = response.headers;

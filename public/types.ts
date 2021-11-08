@@ -1,6 +1,5 @@
 export type UserData = {
     id: string;
-    imgUrl?: string;
     name: string;
     surname: string;
     description: string;
