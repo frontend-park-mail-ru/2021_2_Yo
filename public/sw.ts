@@ -82,12 +82,16 @@ self.addEventListener('fetch', (event) => {
             fetch(event.request)
                 .then(onlineResponse => putInCache(event, onlineResponse))
                 .catch(() => {
-                    void caches.match(event.request)
+                    return caches.match(event.request)
                         .then((cachedResponse) => {
-                            console.log('достал из кэша', event.request.url);
-                            return cachedResponse;
+                            if (cachedResponse) {
+                                console.log('достал из кэша не статику', event.request.url);
+                                return cachedResponse;
+                            } else {
+                                return offlineResponse();
+                            }
                         });
-                    return offlineResponse();
+                    // return offlineResponse();
                 })
         );
     }
