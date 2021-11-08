@@ -40,11 +40,11 @@ function offlineResponse() {
 }
 
 function putInCache(event: FetchEvent, onlineResponse: Response) {
-    console.log('кладу в кэш');
+    console.log('кладу в кэш', event.request.url);
     if (event.request.method === 'GET' && onlineResponse.status === 200) {
         void caches.open(CACHE_NAME)
             .then((cache) => {
-                void cache.put(event.request, onlineResponse);
+                void cache.put(event.request.clone(), onlineResponse);
                 return onlineResponse;
             })
             .catch((err) => {
@@ -63,10 +63,11 @@ self.addEventListener('fetch', (event) => {
     const staticReq = event.request.url.match('/^.*\\.(jpg|png|jpeg|woff|woff2)$/');
 
     if (staticReq) {
-        console.log('запрос за статикой');
+        console.log('запрос за статикой', event.request.url);
         event.respondWith(
             caches.match(event.request)
                 .then((cachedResponse) => {
+                    console.log('достал из кэша', event.request.url);
                     return cachedResponse;
                 })
                 .catch(() => fetch(event.request))
@@ -74,13 +75,14 @@ self.addEventListener('fetch', (event) => {
                 .catch(() => offlineResponse())
         );
     } else {
-        console.log('запрос не за статикой');
+        console.log('запрос не за статикой', event.request.url);
         event.respondWith(
             fetch(event.request)
                 .then(onlineResponse => putInCache(event, onlineResponse))
                 .catch(() => {
                     void caches.match(event.request)
                         .then((cachedResponse) => {
+                            console.log('достал из кэша', event.request.url);
                             return cachedResponse;
                         });
                     return offlineResponse();
