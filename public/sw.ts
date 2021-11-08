@@ -57,7 +57,8 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    const staticReq = event.request.url.match('/^.*\\.(jpg|png|jpeg|woff|woff2)$/');
+    const staticReq = event.request.url.match('^https?://\\S+(?:jpg|jpeg|png|ico|woff)$');
+    console.log(staticReq);
 
     if (staticReq) {
         console.log('запрос за статикой', event.request.url);
