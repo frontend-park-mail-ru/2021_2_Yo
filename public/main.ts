@@ -1,5 +1,6 @@
-import { UrlPathnames } from '@/types';
+import {UrlPathnames} from '@/types';
 import Router from '@modules/routing';
+import SWInstall from '@modules/swinstaller';
 import ErrorPageController from '@error-page/controller';
 import MainPageController from '@main-page/controller';
 import LoginController from '@login/controller';
@@ -12,6 +13,8 @@ import SearchPageController from '@search-page/controller';
 import ProfilePageController from './components/ProfilePage/controller';
 import '@/main.css';
 import * as app from '@/app.hbs';
+
+SWInstall();
 
 document.body.innerHTML = app();
 const header = <HTMLElement>document.getElementById('mvc-header');
@@ -28,8 +31,8 @@ const evController = new EventPageController(content);
 const evCreateController = new EventFormController(content);
 const evEditController = new EventEditFormController(content);
 
-Router.add(UrlPathnames.Main, { header: hController, content: mController });
-Router.add(UrlPathnames.Login, { content: lController });
+Router.add(UrlPathnames.Main, {header: hController, content: mController});
+Router.add(UrlPathnames.Login, {content: lController});
 Router.add(UrlPathnames.Signup, {content: sController});
 Router.add(UrlPathnames.Search, {header: hController, content: searchController});
 Router.add(UrlPathnames.Error, {header: hController, content: eController});

@@ -106,6 +106,7 @@ export default class EventFormView {
             if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
                 const tag = document.createElement('a');
                 tag.classList.add('event-tag');
+                tag.classList.add('event-tags-block__event-tag');
                 tag.textContent = tagInput.value.trim();
                 tagBlock.appendChild(tag);
                 this.#eventTags.push(tagInput.value.trim());

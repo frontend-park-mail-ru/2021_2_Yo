@@ -1,21 +1,21 @@
 <div class="auth-background">
-    <img class="background__logo" src="./img/logo.png">
+    <img class="auth-background__logo logo" src="./img/logo.png">
     <div class="authform" id="authFormBackground">
-        <p class="authform__label label">Авторизация</p>
+        <p class="label">Авторизация</p>
         <form id="authForm">
-            <div class="authform__input-block input-block">
+            <div class="input-block">
                 <p class="input-block__input-label input-label">Email</p>
-                <input class ="input-block__input form-input form-input_auth" id="emailInput" maxlength="150">
+                <input class ="form-input form-input_auth" id="emailInput" maxlength="150">
             </div>
-            <div class="authform__input-block input-block">
+            <div class="input-block">
                 <p class="input-block__input-label input-label">Пароль</p>
-                <input type="password" class ="input-block__input form-input form-input_auth"
-                    id="passwordInput" maxlength="50">
+                <input type="password" class ="form-input form-input_auth"
+                       id="passwordInput" maxlength="50">
             </div>
-            <p class="authform__error error" id="errors"></p>
-            <div class="authform__buttons buttons">
-                <input type="submit" value="ВОЙТИ" class="buttons__button-submit button-submit">
-                <a id="back" class="buttons__button-back button-back">НАЗАД</a>
+            <p class="error" id="errors"></p>
+            <div class="authform__buttons buttons-block">
+                <input type="submit" value="ВОЙТИ" class="button-purple_login button-purple">
+                <a id="back" class="button-darkblue">НАЗАД</a>
             </div>
         </form>
     </div>

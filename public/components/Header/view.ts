@@ -4,11 +4,14 @@ import config from '@/config';
 import { UserData, UrlPathnames } from '@/types';
 import * as template from '@header/templates/header.hbs';
 import '@header/templates/Header.css';
+import { filterToUrl } from '@/modules/filter';
 
 export default class HeaderView {
     #parent: HTMLElement;
-    #logout?: HTMLElement;
     #logo?: HTMLElement;
+    #input?: HTMLInputElement;
+    #search?: HTMLElement;
+    #logout?: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -20,11 +23,21 @@ export default class HeaderView {
     }
 
     #addListeners() {
-        this.#logout = <HTMLElement>document.getElementById('header-logout');
         this.#logo = <HTMLElement>document.getElementById('header-logo');
+        this.#input = <HTMLInputElement>document.getElementById('header-input');
+        this.#search = <HTMLElement>document.getElementById('header-search');
+        this.#logout = <HTMLElement>document.getElementById('header-logout');
 
         if (this.#logout) {
             this.#logout.addEventListener('click', this.#logoutHandle);
+        }
+
+        if (this.#input) {
+            this.#input.addEventListener('keypress', this.#inputHandle);
+        }
+
+        if (this.#search) {
+            this.#search.addEventListener('click', this.#searchHandle);
         }
 
         if (this.#logo) {
@@ -37,6 +50,14 @@ export default class HeaderView {
             this.#logout.removeEventListener('click', this.#logoutHandle);
         }
 
+        if (this.#input) {
+            this.#input.removeEventListener('keypress', this.#inputHandle);
+        }
+
+        if (this.#search) {
+            this.#search.removeEventListener('click', this.#searchHandle);
+        }
+
         if (this.#logo) {
             this.#logo.removeEventListener('click', this.#logoHandle);
         }
@@ -44,6 +65,21 @@ export default class HeaderView {
 
     #logoHandle = (() => {
         Bus.emit(Events.RouteUrl, UrlPathnames.Main);
+    }).bind(this);
+
+    #inputHandle = ((e: KeyboardEvent) => {
+        if (e.code !== 'Enter') return;
+        const value = this.#input?.value;
+        const params = filterToUrl({query: value});
+        Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
+        (<HTMLInputElement>(this.#input)).value = '';
+    }).bind(this);
+
+    #searchHandle = (() => {
+        const value = this.#input?.value;
+        const params = filterToUrl({query: value});
+        Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
+        (<HTMLInputElement>(this.#input)).value = '';
     }).bind(this);
 
     #logoutHandle = (() => {

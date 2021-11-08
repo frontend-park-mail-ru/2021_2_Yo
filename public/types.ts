@@ -56,7 +56,6 @@ export type ApiResponseJson = {
     status: number;
     message: string;
     body?: any;
-    // error?: string;
 }
 
 export type ApiPostLoginData = {
@@ -69,4 +68,10 @@ export type ApiPostSignupData = {
     surname: string;
     email: string;
     password: string;
+}
+
+export type FilterData = {
+    category?: number,
+    tags?: string[],
+    query?: string,
 }
