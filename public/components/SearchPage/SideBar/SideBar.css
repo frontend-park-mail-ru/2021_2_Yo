@@ -32,13 +32,14 @@
 .categories__header {
   font-size: 2.96vh;
   font-weight: normal;
-  margin-right: 7px;
 }
 
 #categories-img {
   transition: 0.7s;
-  height: 1.48vh;
+  height: 1.95vw;
+  width: 1.95vw;
   margin-top: 2px;
+  fill: var(--dark-gray);
   cursor: pointer;
 }
 
@@ -126,11 +127,11 @@
 }
 
 .categories-img_closed {
-  transform: rotate(0deg);
+  transform: rotate(-90deg);
 }
 
 .categories-img_opened {
-  transform: rotate(90deg);
+  transform: rotate(0deg);
 }
 
 .categories-list_closed {

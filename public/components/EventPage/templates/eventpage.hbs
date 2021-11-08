@@ -9,7 +9,9 @@
                 <span class="event-header-text event-header-text_category">{{event.category}}</span>
             </span>
             <div class="event-block__event-header-views event-header-views">
-                <img class="event-views-img" src="../../server/img/viewedgrey.png">
+                <svg class="event-views-img">
+                    <use xlink:href="./server/img/sprite.svg#viewed"></use>
+                </svg>
                 <span class="event-header-viewed-text">{{event.viewed}}</span>
             </div>
         </div>

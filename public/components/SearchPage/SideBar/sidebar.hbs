@@ -1,7 +1,9 @@
 <div class="categories">
     <div class="categories__li">
         <span class="categories__header">Категории</span>
-        <img id="categories-img" class="categories-img_closed" src="/img/categories.png">
+        <svg id="categories-img" class="categories-img_closed">
+            <use xlink:href="./server/img/sprite.svg#categories"></use>
+        </svg>
     </div>
     <div id="categories-list" class="categories-list_closed">
     {{#each this}}

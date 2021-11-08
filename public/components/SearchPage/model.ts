@@ -1,14 +1,8 @@
 import { fetchGet } from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import { ApiUrls, FetchResponseData } from '@/types';
-import config from '@/config';
-
-interface FilterData {
-    category?: number,
-    tags: string[],
-    query?: string,
-}
+import { ApiUrls, FetchResponseData, FilterData } from '@/types';
+import { filterToUrl } from '@/modules/filter';
 
 export default class SearchPageModel {
     #data: FilterData;
@@ -26,32 +20,6 @@ export default class SearchPageModel {
         Bus.on(Events.QueryChange, this.#handleQuery);
     }
 
-    #filterToUrl (data: FilterData) {
-        let res = '?';
-
-        if (data.query && data.query !== '') {
-            res += 'query=' + data.query;
-        }
-
-        if (data.category) {
-            if (res.length > 1) res += '&';
-            res += 'category=' + config.categories[data.category].name;
-        }
-
-        if (data.tags.length > 0) {
-            if (res.length > 1) res += '&';
-            res += 'tags=';
-            res += data.tags.reduce((prev, curr) => {
-                return prev + '|' + curr;
-            });
-        }
-
-        if (res.length === 1) {
-            res = '';
-        }
-        return res;
-    }
-
     #handleFilter = ((data: {category?: number, tags: Array<string>}) => {
         this.#data.category = data.category;
         this.#data.tags = data.tags;
@@ -65,7 +33,7 @@ export default class SearchPageModel {
 
     #handleEvents = (() => {
         let filter = '';
-        filter = this.#filterToUrl(this.#data);
+        filter = filterToUrl(this.#data);
         Bus.emit(Events.RouteUpdate, filter);
         fetchGet(ApiUrls.Events + filter, 
             (data: FetchResponseData) => {
