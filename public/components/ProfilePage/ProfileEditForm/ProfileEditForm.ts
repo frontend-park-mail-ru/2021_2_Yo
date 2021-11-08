@@ -92,7 +92,7 @@ export default class ProfileEditForm {
 
         const avatarInput = <HTMLInputElement>document.getElementById('avatartInput');
         let file: File | undefined = undefined;
-        if (avatarInput.files) file = avatarInput['files'][0];
+        if (avatarInput.files) file = avatarInput.files[0];
 
         Bus.emit(Events.UserEditReq, {json: this.#inputsData, file});
     });
