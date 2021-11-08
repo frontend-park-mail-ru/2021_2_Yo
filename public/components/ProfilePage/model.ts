@@ -34,12 +34,13 @@ export default class ProfilePageModel {
 
         const stored = UserStore.get() as UserData;
 
-        if (!data['file'] &&
+        if (!data.file &&
             stored.name === newUserInfo.name &&
             stored.surname === newUserInfo.surname &&
             stored.description === newUserInfo.description) {
             Bus.emit(Events.UserEditRes, stored);
         } else {
+            console.log('multipart?');
             stored.name = newUserInfo.name;
             stored.surname = newUserInfo.surname;
             stored.description = newUserInfo.description;
@@ -48,6 +49,7 @@ export default class ProfilePageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
+                        Bus.emit(Events.UserReq);
                         Bus.emit(Events.UserEditRes, stored);
                         Bus.emit(Events.UserRes, stored);
                         return;

@@ -100,6 +100,7 @@ type MultipartData = {
 export function fetchPostMultipart(url: string, data: MultipartData, callback: Callback, error?: Callback) {
     let HTTPStatus: number;
     let headers: Headers;
+    console.log('lala');
     const formData = new FormData();
     formData.append('json', data['json']);
     formData.append('file', data['file']);
