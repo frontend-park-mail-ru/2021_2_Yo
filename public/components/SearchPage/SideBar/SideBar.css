@@ -107,7 +107,7 @@
 }
 
 .tags__tag {
-  background-color: var(--geo-turquoise);
+  background-color: var(--geo-turquoise-color);
   border-radius: 5px;
   box-sizing: border-box;
   padding: 5px 20px;
