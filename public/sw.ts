@@ -46,9 +46,6 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
             .then((cache) => {
                 void cache.put(event.request.clone(), onlineResponse.clone());
             })
-            .catch((err) => {
-                throw Error('smth went wrong with caches.open: ' + err);
-            });
     }
 
     return onlineResponse;
