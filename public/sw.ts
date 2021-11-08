@@ -70,7 +70,7 @@ self.addEventListener('fetch', (event) => {
                     }
                     console.log('доставание было неуспешным, иду в сеть');
                     return fetch(event.request)
-                        .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
+                        .then((onlineResponse) => putInCache(event, onlineResponse))
                         .catch(() => offlineResponse());
                 })
             // .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
