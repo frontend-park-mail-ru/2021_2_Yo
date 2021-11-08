@@ -190,6 +190,8 @@ a {
     line-height: 2.59vh;
 
     color: var(--black-text);
+
+    cursor: pointer;
 }
 
 .button-purple {
@@ -213,15 +215,13 @@ a {
     color: white;
 }
 
-.button-save {
+.button-blue {
     cursor: pointer;
     background: var(--blue);
     border: 1px solid #050505;
     box-sizing: border-box;
     box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
     border-radius: 2px;
-    width: 10.42vw;
-    height: 3.7vh;
 
     font-style: normal;
     font-weight: 300;

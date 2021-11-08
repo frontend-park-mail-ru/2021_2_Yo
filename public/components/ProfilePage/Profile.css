@@ -16,64 +16,19 @@
     padding-bottom: 40px;
 }
 
-.profile-background__left-block {
-    margin-right: 10px;
-}
-
 .profile-block {
     width: 423px;
     padding-right: 10px;
 }
 
 .list-block {
-    width: 855px;
+    width: 44.53vw;
 }
 
-.border-block {
-    background: white;
-    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
-    box-sizing: border-box;
-
-    padding: 20px;
-}
-
-.profile-block__header {
+.profile-header {
     display: flex;
     align-items: start;
     justify-content: start;
-}
-
-.button-edit {
-    background: #FFFFFF;
-    border: 1px solid #050505;
-    box-sizing: border-box;
-    border-radius: 2px;
-
-    font-style: normal;
-    font-weight: 300;
-    font-size: 2.22vh;
-    line-height: 2.59vh;
-
-    color: var(--black-text);
-
-    text-align: center;
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-
-.button-edit:hover {
-    cursor: pointer;
-}
-
-.rounded-button {
-    width: 192px;
-    height: 50px;
-
-    border: 1px solid #505050;
-    box-sizing: border-box;
-    border-radius: 5px;
-
-    padding: 11px 34px;
 }
 
 .profile-avatar {
@@ -81,12 +36,12 @@
     height: 100px;
 }
 
-.border-block__profile-avatar {
+.profile-header__avatar {
     display: inline-block;
     margin-right: 10px;
 }
 
-.border-block__name {
+.profile-header__name {
     display: inline-block;
 }
 
@@ -112,7 +67,7 @@
     color: var(--email);
 }
 
-.standard-text {
+.profile-about-text {
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -123,11 +78,11 @@
     margin: 0;
 }
 
-.profile-block__bottom {
+.profile-bottom {
     margin-top: 10px;
 }
 
-.description-text {
+.profile-description-text {
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
@@ -138,31 +93,47 @@
     margin: 5px 0;
 }
 
-.profile-input-label {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 21px;
+.button-white_profile {
+    width: 100%;
+    height: 3.7vh;
+    margin-top: 1.2vh;
 
-    color: var(--black-text);
-
-    margin: 0;
+    display: block;
+    padding-top: 0.56vh;
+    padding-bottom: 0.56vh;
+    text-align: center;
 }
 
-.profile-form-input {
-    border: 1px solid black;
-    box-sizing: border-box;
+.form-input_profile {
+    width: 100%;
+    height: 2.59vh;
+    border: 1px solid var(--black-text);
     border-radius: 2px;
-    width: 100%;
-    height: 28px;
 }
 
-.profile-block__button-save {
+.form-textarea_profile {
     width: 100%;
-    margin-bottom: 26px;
+    border: 1px solid var(--black-text);
+    border-radius: 2px;
 }
 
-.profile-block__button-edit {
+.button-blue_profile {
     width: 100%;
-    margin-top: 13px;
+    height: 3.7vh;
+    margin-bottom: 2.4vh;
+}
+
+.button-white_eventlist {
+    border: 1px solid var(--black-text);
+    border-radius: 5px;
+
+    width: 10vw;
+    height: 4.63vh;
+    padding: 1.02vh 1.77vw;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    text-decoration-line: underline;
 }
