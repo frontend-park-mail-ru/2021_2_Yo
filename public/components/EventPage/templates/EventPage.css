@@ -1,5 +1,5 @@
 .event-background {
-  background: var(--evbg);
+  background: var(--gray-bg-color);
   top: 0;
   left: 0;
   width: 100%;
@@ -30,12 +30,12 @@
 }
 
 .event-header-text_place {
-  color: var(--blue);
+  color: var(--blue-btn-color);
   text-decoration: underline;
 }
 
 .event-header-text_category {
-  color: var(--purple);
+  color: var(--purple-btn-color);
   text-decoration: underline;
 }
 
@@ -55,7 +55,7 @@
   font-weight: 500;
   font-size: 1.67vh;
   line-height: 1.94vh;
-  color: var(--views-num);
+  color: var(--views-num-text-color);
 }
 
 .event-title {
@@ -63,7 +63,7 @@
   font-weight: bold;
   font-size: 4.44vh;
   line-height: 5.19vh;
-  color: var(--black-text);
+  color: var(--black-text-color);
 }
 
 .event-text_header {
@@ -73,16 +73,6 @@
 
 .event-block__event-where {
   margin-top: 1.85vh;
-}
-
-.event-when-text {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 2.22vh;
-  line-height: 2.59vh;
-  text-decoration-line: underline;
-
-  color: var(--orange);
 }
 
 .event-block__photo {

@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: var(--header-bg);
+    background: var(--header-bg-color);
 }
 
 .header__content {

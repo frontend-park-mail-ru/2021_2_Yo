@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: var(--evbg);
+    background: var(--gray-bg-color);
 }
 
 .eventform {
@@ -22,18 +22,18 @@
 .form-input_event-wide {
     width: 51.77vw;
     height: 3.7vh;
-    border: 2px solid var(--gray);
+    border: 2px solid var(--gray-border-color);
 }
 
 .form-input_event-thin {
     width: 35.47vw;
     height: 3.7vh;
-    border: 2px solid var(--gray);
+    border: 2px solid var(--gray-border-color);
 }
 
 .form-textarea_event {
     width: 100%;
-    border: 2px solid var(--gray);
+    border: 2px solid var(--gray-border-color);
 }
 
 .button-white_event-tag {

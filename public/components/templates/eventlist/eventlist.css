@@ -1,5 +1,5 @@
 :root {
-  --gray-border: 2px solid var(--gray);
+  --gray-border-color: 2px solid var(--gray-border-color);
   --dark-gray: #505050;
   --event-li-viewed-right: 6px;
   --event-li-viewed-w: 18px;
@@ -9,7 +9,7 @@
 .event-li {
   width: 42.55vw;
   min-height: 15.28vh;
-  border: var(--gray-border);
+  border: var(--gray-border-color);
   margin-bottom: 10px;
   box-sizing: border-box;
   display: flex;
@@ -49,7 +49,7 @@
 }
 
 .event-li__viewed {
-  color: var(--gray);
+  color: var(--gray-border-color);
   font-weight: bold;
   display: flex;
   align-items: center;

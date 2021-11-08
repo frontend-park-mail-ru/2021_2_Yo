@@ -1,9 +1,3 @@
-:root {
-    --form-bg: linear-gradient(90deg, #f3f2ff 0%, #ffe6fe 100%);
-    --auth-bg: linear-gradient(137.34deg, #0e0063 0%, #5e0043 100%);
-    --back-btn: #005e5e;
-}
-
 .auth-background {
     position: fixed;
     top: 0;
@@ -14,7 +8,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: var(--auth-bg);
+    background: var(--auth-page-bg-color);
 }
 
 .auth-background__logo {

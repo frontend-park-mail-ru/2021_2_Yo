@@ -1,9 +1,3 @@
-:root {
-    --black-text: #505050;
-    --bg: #D2D2D3;
-    --email: #AAAAAA;
-}
-
 .profile-background {
     top: 0;
     left: 0;
@@ -11,7 +5,7 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    background: var(--bg);
+    background: var(--gray-bg-color);
     padding-top: 40px;
     padding-bottom: 40px;
 }
@@ -53,7 +47,7 @@
     font-size: 32px;
     line-height: 37px;
 
-    color: var(--black-text);
+    color: var(--black-text-color);
 }
 
 .profile-email {
@@ -64,7 +58,7 @@
     font-size: 18px;
     line-height: 21px;
 
-    color: var(--email);
+    color: var(--profile-email-text-color);
 }
 
 .profile-about-text {
@@ -73,7 +67,7 @@
     font-size: 24px;
     line-height: 28px;
 
-    color: var(--black-text);
+    color: var(--black-text-color);
 
     margin: 0;
 }
@@ -88,7 +82,7 @@
     font-size: 16px;
     line-height: 19px;
 
-    color: var(--black-text);
+    color: var(--black-text-color);
 
     margin: 5px 0;
 }
@@ -107,13 +101,13 @@
 .form-input_profile {
     width: 100%;
     height: 2.59vh;
-    border: 1px solid var(--black-text);
+    border: 1px solid var(--black-text-color);
     border-radius: 2px;
 }
 
 .form-textarea_profile {
     width: 100%;
-    border: 1px solid var(--black-text);
+    border: 1px solid var(--black-text-color);
     border-radius: 2px;
 }
 
@@ -124,7 +118,7 @@
 }
 
 .button-white_eventlist {
-    border: 1px solid var(--black-text);
+    border: 1px solid var(--black-text-color);
     border-radius: 5px;
 
     width: 10vw;
@@ -136,5 +130,5 @@
     font-size: 24px;
     line-height: 28px;
     text-decoration-line: underline;
-    color: var(--black-text);
+    color: var(--black-text-color);
 }
