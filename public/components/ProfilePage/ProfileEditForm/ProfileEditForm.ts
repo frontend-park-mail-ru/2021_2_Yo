@@ -94,7 +94,7 @@ export default class ProfileEditForm {
         let file: File | undefined = undefined;
         if (avatarInput.files) file = avatarInput.files[0];
 
-        Bus.emit(Events.UserEditReq, {json: this.#inputsData, file});
+        Bus.emit(Events.UserEditReq, {input: this.#inputsData, file});
     });
 
     #showValidationErrors() {

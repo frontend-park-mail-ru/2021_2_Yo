@@ -102,7 +102,7 @@ export function fetchPostMultipart(url: string, data: MultipartData, callback: C
     let headers: Headers;
     console.log('lala');
     const formData = new FormData();
-    formData.append('json', data['json']);
+    formData.append('json', JSON.stringify(data['json']));
     formData.append('file', data['file']);
 
     return void fetch(API + url, {
