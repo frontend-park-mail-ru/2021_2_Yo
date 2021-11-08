@@ -6,6 +6,11 @@ import ProfilePageModel from '@profile-page/model';
 import {EventData, UserData} from '@/types';
 import UserStore from '@modules/userstore';
 
+type MultipartData = {
+    input: Map<string, { errors: string[], value: string }>,
+    file?: File,
+};
+
 export default class ProfilePageController {
     #view: ProfilePageView;
     #model: ProfilePageModel;
@@ -72,12 +77,13 @@ export default class ProfilePageController {
         this.#model.getUserEvents(user.id);
     });
 
-    #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
-        userEditValidateFields(inputsData);
+    // #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
+    #editReqHandle = ((data: MultipartData) => {
+        userEditValidateFields(data['input']);
 
         let valid = true;
 
-        inputsData.forEach((item) => {
+        data['input'].forEach((item) => {
             item.errors.forEach(error => {
                 if (error) {
                     valid = false;
@@ -87,7 +93,7 @@ export default class ProfilePageController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk);
-            this.#model.editUser(inputsData);
+            this.#model.editUser(data);
         } else {
             Bus.emit(Events.ValidationError);
         }
