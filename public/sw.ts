@@ -44,7 +44,7 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
     if (event.request.method === 'GET' && onlineResponse.status === 200) {
         void caches.open(CACHE_NAME)
             .then((cache) => {
-                void cache.put(event.request.clone(), onlineResponse);
+                void cache.put(event.request.clone(), onlineResponse.clone());
                 return onlineResponse;
             })
             .catch((err) => {
