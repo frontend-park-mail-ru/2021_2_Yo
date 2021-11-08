@@ -46,6 +46,7 @@ export default class ProfilePageModel {
                     if (json.status === 200) {
                         Bus.emit(Events.UserEditRes, stored);
                         Bus.emit(Events.UserRes, stored);
+                        Bus.emit(Events.UserReq);
                         return;
                     }
                 }
