@@ -40,7 +40,6 @@ function offlineResponse() {
 }
 
 function putInCache(event: FetchEvent, onlineResponse: Response) {
-    console.log('кладу в кэш', event.request.url);
     if (event.request.method === 'GET' && onlineResponse.status === 200) {
         const responseClone = onlineResponse.clone();
         void caches.open(CACHE_NAME)
@@ -60,24 +59,18 @@ self.addEventListener('fetch', (event) => {
     const staticReq = event.request.url.match('^https?://\\S+(?:jpg|jpeg|png|ico|woff)$');
 
     if (staticReq) {
-        console.log('запрос за статикой', event.request.url);
         event.respondWith(
             caches.match(event.request)
                 .then((cachedResponse) => {
-                    console.log('достал из кэша', event.request.url);
                     if (cachedResponse) {
                         return cachedResponse;
                     }
-                    console.log('доставание было неуспешным, иду в сеть');
                     return fetch(event.request)
                         .then((onlineResponse) => putInCache(event, onlineResponse))
                         .catch(() => offlineResponse());
                 })
-            // .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
-            // .catch(() => offlineResponse())
         );
     } else {
-        console.log('запрос не за статикой', event.request.url);
         event.respondWith(
             fetch(event.request)
                 .then(onlineResponse => putInCache(event, onlineResponse))
@@ -85,13 +78,11 @@ self.addEventListener('fetch', (event) => {
                     return caches.match(event.request)
                         .then((cachedResponse) => {
                             if (cachedResponse) {
-                                console.log('достал из кэша не статику', event.request.url);
                                 return cachedResponse;
                             } else {
                                 return offlineResponse();
                             }
                         });
-                    // return offlineResponse();
                 })
         );
     }
