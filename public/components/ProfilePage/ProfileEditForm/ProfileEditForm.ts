@@ -90,7 +90,7 @@ export default class ProfileEditForm {
         this.#inputs.set('selfDescription', selfDescriptionInput);
         this.#inputsData.set('selfDescription', {errors: [], value: selfDescriptionInput.value.trim()});
 
-        const avatarInput = <HTMLInputElement>document.getElementById('avatartInput');
+        const avatarInput = <HTMLInputElement>document.getElementById('avatarInput');
         let file: File | undefined = undefined;
         if (avatarInput.files) file = avatarInput.files[0];
 
