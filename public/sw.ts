@@ -65,16 +65,17 @@ self.addEventListener('fetch', (event) => {
             caches.match(event.request)
                 .then((cachedResponse) => {
                     console.log('достал из кэша', event.request.url);
-                    return cachedResponse;
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+                    console.log('доставание было неуспешным, иду в сеть');
+                    return fetch(event.request)
+                        .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
+                        .catch(() => offlineResponse());
                 })
-                .catch(() => {
-                    console.log('ошибка');
-                    void fetch(event.request);
-                })
-                .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
-                .catch(() => offlineResponse())
+            // .then((onlineResponse) => putInCache(event, <Response>onlineResponse))
+            // .catch(() => offlineResponse())
         );
-        return;
     } else {
         console.log('запрос не за статикой', event.request.url);
         event.respondWith(
