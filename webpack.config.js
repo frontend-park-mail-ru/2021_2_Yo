@@ -9,39 +9,44 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 module.exports = {
     context: path.resolve(__dirname, 'public'),
     mode: 'development',
-    entry: './main.ts',
+    entry: {
+        bundle: './main.ts',
+        sw: './sw.ts'
+    },
     devtool: 'inline-source-map',
     module: {
         rules: [
-          {
-            test: /\.ts$/,
-            use: 'ts-loader',
-            exclude: /node_modules/,
-          },
-          {
-            test: /\.hbs$/,
-            use: 'handlebars-loader',
-          },
-          {
-            test: /\.css$/i,
-            use: [MiniCssExtractPlugin.loader, "css-loader"],
-          },
+            {
+                test: /\.ts$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.hbs$/,
+                use: 'handlebars-loader',
+            },
+            {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+            },
         ],
     },
     optimization: {
-      splitChunks: {
-        chunks: 'all'
-      },
-      minimizer: [
-        new CssMinimizerPlugin(),
-      ],
+        splitChunks: {
+            chunks: 'all'
+        },
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ],
     },
     resolve: {
-        extensions: [ '.js', '.ts' ],
+        extensions: ['.js', '.ts'],
     },
     output: {
-        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
+        filename: (pathData) => {
+            return pathData.chunk.name === 'bundle' ? '[name].[contenthash].js' : '[name].js';
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -53,7 +58,7 @@ module.exports = {
         new MiniCssExtractPlugin(),
     ],
     resolve: {
-      plugins: [ new TsconfigPathsPlugin() ],
-      extensions: ['.js', '.ts']
+        plugins: [new TsconfigPathsPlugin()],
+        extensions: ['.js', '.ts']
     }
 }

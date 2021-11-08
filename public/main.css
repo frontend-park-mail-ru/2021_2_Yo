@@ -4,7 +4,6 @@
     --header-bg-color: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
     --error-text-color: #e61a3d;
     --black-text-color: #505050;
-    --views-num-text-color: #aaaaaa;
     --blue-btn-color: #4fbdc5;
     --orange-btn-color: #ff630b;
     --gray-bg-color: #d2d2d3;
@@ -34,6 +33,10 @@ a:active {
 
 a {
     text-decoration: none;
+}
+
+input:focus {
+  outline: none;
 }
 
 #App {
@@ -239,7 +242,7 @@ a {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--background-gray);
+    background-color: var(--gray-bg-color);
 }
 
 .wrapper__top_forty {
@@ -284,8 +287,6 @@ a {
     display: none;
 }
 
-/*Авторизация*/
-
 .logo {
     height: 15.4vh;
     width: 22.2vw;
@@ -305,7 +306,6 @@ a {
     line-height: 4.17vh;
 }
 
-/*Events*/
 .event-tags-block {
     display: flex;
     flex-wrap: wrap;
@@ -338,5 +338,3 @@ a {
 
     margin: 0;
 }
-
-/*Профиль*/

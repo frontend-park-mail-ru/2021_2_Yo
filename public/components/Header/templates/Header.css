@@ -1,68 +1,88 @@
 .header-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .header-text {
-    font-size: 1vw;
-    color: white;
-    text-align: center;
-    font-weight: 400;
+  font-size: 1.85vh;
+  color: white;
+  text-align: center;
+  font-weight: normal;
 }
 
 .header-text_decoration_underline {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .header {
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background: var(--header-bg-color);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--header-bg-color);
 }
 
 .header__content {
-    width: 67vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 67vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo {
-    width: 140px;
-    height: 56px;
+  width: 140px;
+  height: var(--header-height);
 }
 
 .header__search {
-    width: 22.9vw;
+  width: 24.48vw;
+  height: 32px;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .header__search-input {
-    width: 21vw;
-    height: 32px;
-    background: transparent;
-    border: 1px solid white;
-    border-radius: 2px;
+  width: 100%;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: white;
 }
 
 .header__search-input::placeholder {
-    color: white
+  color: white;
 }
 
-.header__calendar {
-    width: 11.8vw;
+.header__search-img {
+  fill: white;
+  width: 20px;
+  height: 20px;
+}
+
+.header__calendar-img {
+  fill: white;
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
 }
 
 .header__user-avatar {
-    width: 32px;
-    height: 32px;
-    margin-right: 6px;
+  width: 32px;
+  height: 32px;
+  margin-right: 6px;
 }
 
 .header__auth-anchor {
-    color: white
+  color: white;
 }
 
 .header__auth-anchor:last-child {
-    margin-left: 10px;
+  margin-left: 10px;
+}
+
+.header__logout-img {
+  fill: white;
+  width: 32px;
+  height: 32px;
 }

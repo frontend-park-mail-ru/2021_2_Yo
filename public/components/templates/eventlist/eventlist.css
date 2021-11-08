@@ -1,6 +1,7 @@
 :root {
   --gray-border-color: 2px solid var(--gray-border-color);
   --dark-gray: #505050;
+  --gray-border: 2px solid var(--gray-border-color);
   --event-li-viewed-right: 6px;
   --event-li-viewed-w: 18px;
   --event-li-viewed-h: 9px;
@@ -59,4 +60,5 @@
   margin-right: var(--event-li-viewed-right);
   width: var(--event-li-viewed-w);
   height: var(--event-li-viewed-h);
+  fill: var(--gray-border-color);
 }

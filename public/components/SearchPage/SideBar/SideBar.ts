@@ -61,16 +61,18 @@ export default class SideBar {
     };
 
     #handleCategoryList = (e: MouseEvent) => {
-        const target = <HTMLElement>e.target;
+        const target = <HTMLElement>e.currentTarget;
         const list = <HTMLElement>document.getElementById('categories-list');
         if (!list) return;
 
         if (this.#categoriesOpened) {
-            target.className = 'categories-img_closed';
+            target.classList.add('categories-img_closed');
+            target.classList.remove('categories-img_opened');
             list.className = 'categories-list_closed';
             
         } else {
-            target.className = 'categories-img_opened';
+            target.classList.add('categories-img_opened');
+            target.classList.remove('categories-img_closed');
             list.className = 'categories-list_opened';
         }
         this.#categoriesOpened = !this.#categoriesOpened;
