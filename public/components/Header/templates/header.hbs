@@ -1,23 +1,16 @@
 <header class="header">
     <div class="flex header__content header-text">
         <img id="header-logo" class="header__logo header-button" src="./img/logo.png">
-        {{#if user}}
-            <div class="flex">
-                <img id="geoimg" src="./img/geo2.0.png">
-                <span class="header-text_decoration_underline">Мытищи</span>
+        <div class="flex">
+            <div class="flex header__search">
+                <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
+                <svg id="header-search" class="header-button header__search-img">
+                    <use xlink:href="./server/img/sprite.svg#search"></use>
+                </svg>
             </div>
-        {{/if}}
-        <div class="flex header__search">
-            <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
-            <svg id="header-search" class="header-button header__search-img">
-                <use xlink:href="./server/img/sprite.svg#search"></use>
-            </svg>
-        </div>
-        <div class="flex header__calendar">
             <svg class="header-button header__calendar-img">
                 <use xlink:href="./server/img/sprite.svg#calendar"></use>
             </svg>
-            <span class="header-text_decoration_underline">Календарь событий</span>
         </div>
         {{#if user}}
             <div class="flex">

@@ -2,6 +2,7 @@
 
 :root {
   --header-bg: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
+  --header-height: 56px;
   --error: #e61a3d;
   --dark-gray: #505050;
   --blue: #4fbdc5;

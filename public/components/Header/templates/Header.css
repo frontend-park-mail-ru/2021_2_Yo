@@ -3,10 +3,10 @@
 }
 
 .header-text {
-  font-size: 1vw;
+  font-size: 1.85vh;
   color: white;
   text-align: center;
-  font-weight: 400;
+  font-weight: normal;
 }
 
 .header-text_decoration_underline {
@@ -14,7 +14,7 @@
 }
 
 .header {
-  height: 56px;
+  height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -30,7 +30,7 @@
 
 .header__logo {
   width: 140px;
-  height: 56px;
+  height: var(--header-height);
 }
 
 .header__search {
@@ -60,14 +60,11 @@
   height: 20px;
 }
 
-.header__calendar {
-  width: 11.8vw;
-}
-
 .header__calendar-img {
   fill: white;
   width: 32px;
   height: 32px;
+  margin-left: 10px;
 }
 
 .header__user-avatar {
