@@ -53,8 +53,7 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
 }
 
 self.addEventListener('fetch', (event) => {
-    console.log(event.request.url);
-    if (event.request.url === '/sw.js') {
+    if ((new URL(event.request.url)).pathname === '/sw.js') {
         return;
     }
 
