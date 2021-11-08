@@ -1,7 +1,7 @@
 /// <reference lib="WebWorker" />
 
 const CACHE_NAME = 'BMSTUSAcache';
-const cacheUrls = ['/'];
+const cacheUrls = ['/', '/events', '/user'];
 
 export type {};
 declare const self: ServiceWorkerGlobalScope;
@@ -19,6 +19,7 @@ const fallback = '' +
     '</html>';
 
 self.addEventListener('install', (event) => {
+    void self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
@@ -39,6 +40,7 @@ function offlineResponse() {
 }
 
 function putInCache(event: FetchEvent, onlineResponse: Response) {
+    console.log('кладу в кэш');
     if (event.request.method === 'GET' && onlineResponse.status === 200) {
         void caches.open(CACHE_NAME)
             .then((cache) => {
@@ -61,6 +63,7 @@ self.addEventListener('fetch', (event) => {
     const staticReq = event.request.url.match('/^.*\\.(jpg|png|jpeg|woff|woff2)$/');
 
     if (staticReq) {
+        console.log('запрос за статикой');
         event.respondWith(
             caches.match(event.request)
                 .then((cachedResponse) => {
@@ -71,6 +74,7 @@ self.addEventListener('fetch', (event) => {
                 .catch(() => offlineResponse())
         );
     } else {
+        console.log('запрос не за статикой');
         event.respondWith(
             fetch(event.request)
                 .then(onlineResponse => putInCache(event, onlineResponse))
