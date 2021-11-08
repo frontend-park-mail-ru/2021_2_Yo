@@ -29,15 +29,7 @@ export default class EventBoardComponent {
 
     render(data?: EventData[]) {
         // Временные меры (пока не хотим контактировать с беком)
-        if (data) {
-            while (data.length < 13) {
-                data.push(data[0]);
-            }
-            data = data.map(e => {
-                e.description = 'Маскарат. Не советуем.';
-                return e;
-            });
-        }
+        data = data?.slice(0, 13);
         
         this.#parent.innerHTML = template(data);
     }
