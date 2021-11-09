@@ -25,9 +25,11 @@
                 </a>
                 <span>{{user.name}}</span>
             </div>
-            <svg id="header-logout" class="header-button header__logout-img" src="./img/logout2.0.png">
-                <use xlink:href="./server/img/sprite.svg#logout"></use>
-            </svg>
+            <a href="/">
+                <svg id="header-logout" class="header-button header__logout-img" src="./img/logout2.0.png">
+                    <use xlink:href="./server/img/sprite.svg#logout"></use>
+                </svg>
+            </a>
         {{else}}
             <div>
             {{#each authAnchors}}
