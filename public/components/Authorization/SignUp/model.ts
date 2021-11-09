@@ -20,7 +20,7 @@ export default class SignupModel {
                     if (token) {
                         Bus.emit(Events.CSRFRes, token);
                     }
-                    Bus.emit(Events.RouteBack);
+                    Bus.emit(Events.RouteUrl, UrlPathnames.Main);
                     return;
                 }
             }
