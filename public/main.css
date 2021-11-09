@@ -242,7 +242,7 @@ input:focus {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--gray-bg-color);
+    /* background-color: var(--gray-bg-color); */
 }
 
 .wrapper__top_forty {
