@@ -67,6 +67,9 @@ export default class EventEditFormView {
 
         const tagButton = document.getElementById('tagButton') as HTMLInputElement;
         tagButton.addEventListener('click', this.#addTag.bind(this));
+
+        const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
+        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));    
     }
 
     #removeListeners() {
@@ -79,6 +82,9 @@ export default class EventEditFormView {
         if (tagButton) {
             tagButton.removeEventListener('click', this.#addTag.bind(this));
         }
+
+        const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
+        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));    
     }
 
     #addTag(ev: Event) {
