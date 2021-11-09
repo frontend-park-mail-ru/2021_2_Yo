@@ -9,7 +9,6 @@ type MultipartData = {
 };
 
 export default class EventFormModel {
-    // createEvent(inputsData: Map<string, { errors: string[], value: string | string[] }>) {
     createEvent(data: MultipartData) {
         const event= {
             title: data['input'].get('title')?.value as string,

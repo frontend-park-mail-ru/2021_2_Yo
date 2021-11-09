@@ -14,6 +14,10 @@ class UserStore {
         return this.#user;
     }
 
+    reset() {
+        this.#user = undefined;
+    }
+
     #userHandle = ((user: UserData) => {
         this.#user = user;
     }).bind(this);
