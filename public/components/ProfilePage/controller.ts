@@ -40,11 +40,6 @@ export default class ProfilePageController {
                 this.#model.getUser(userURLId);
             }
         } 
-        // else {
-        //     this.#userResSubscribe = true;
-        //     Bus.on(Events.UserRes, this.#renderHandle);
-        //     Bus.on(Events.UserError, this.#userErrorRenderHandle);
-        // }
     }
 
     #listHandle = ((events: EventData[]) => {

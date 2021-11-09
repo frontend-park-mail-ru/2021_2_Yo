@@ -146,7 +146,7 @@ export default class EventFormView {
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
         this.#inputsData.set('image', {errors: [], value: ''});
 
-        let file: undefined | File = undefined;
+        let file: undefined | File;
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
         if (imageInput.files) file = imageInput.files[0];
         Bus.emit(Events.EventCreateReq, {input: this.#inputsData, file});
