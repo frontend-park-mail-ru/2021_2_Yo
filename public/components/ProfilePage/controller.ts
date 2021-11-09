@@ -14,20 +14,21 @@ type MultipartData = {
 export default class ProfilePageController {
     #view: ProfilePageView;
     #model: ProfilePageModel;
+    #userResSubscribe: boolean;
 
     constructor(parent: HTMLElement) {
         this.#view = new ProfilePageView(parent);
         this.#model = new ProfilePageModel();
+        this.#userResSubscribe = false;
     }
 
     enable() {
         Bus.on(Events.UserEditReq, this.#editReqHandle);
+        Bus.on(Events.UserEditRes, this.#editResHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
         Bus.on(Events.EventsRes, this.#listHandle);
-        Bus.on(Events.UserRes, this.#editResHandle);
-        Bus.on(Events.UserError, this.#userErrorRenderHandle);
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -39,7 +40,11 @@ export default class ProfilePageController {
             } else {
                 this.#model.getUser(userURLId);
             }
-        } 
+        } else {
+            this.#userResSubscribe = true;
+            Bus.on(Events.UserRes, this.#renderHandle);
+            Bus.on(Events.UserError, this.#userErrorRenderHandle);
+        }
     }
 
     #listHandle = ((events: EventData[]) => {
@@ -54,6 +59,16 @@ export default class ProfilePageController {
     #userErrorRenderHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getUser(userURLId);
+    }).bind(this);
+
+    #renderHandle = (() => {
+        const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+        const user = UserStore.get();
+        if (user?.id === userURLId) {
+            Bus.emit(Events.UserByIdRes, user);
+        } else {
+            this.#model.getUser(userURLId);
+        }
     }).bind(this);
 
     #userGetHandle = ((user: UserData) => {
@@ -106,13 +121,15 @@ export default class ProfilePageController {
 
     disable() {
         Bus.off(Events.UserEditReq, this.#editReqHandle);
+        Bus.off(Events.UserEditRes, this.#editResHandle);
         Bus.off(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.off(Events.UserByIdRes, this.#userGetHandle);
-        Bus.off(Events.UserLogout, this.#userErrorRenderHandle);
         Bus.off(Events.EventsRes, this.#listHandle);
-        Bus.off(Events.UserRes, this.#editResHandle);
-        Bus.off(Events.UserError, this.#userErrorRenderHandle);
 
+        if (this.#userResSubscribe) {
+            Bus.off(Events.UserRes, this.#renderHandle);
+            Bus.off(Events.UserError, this.#userErrorRenderHandle);
+        }
         this.#view.disable();
     }
 }
