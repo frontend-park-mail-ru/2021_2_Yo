@@ -78,7 +78,7 @@ export default class ProfilePageController {
     });
 
     #editReqHandle = ((data: MultipartData) => {
-        userEditValidateFields(data['input']);
+        userEditValidateFields(data['input'], data['file']);
 
         let valid = true;
 

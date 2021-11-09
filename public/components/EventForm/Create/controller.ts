@@ -57,7 +57,7 @@ export default class EventFormController {
 
     // #validationHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
     #validationHandle = (data: MultipartData) => {
-        eventValidateFields(data.input);
+        eventValidateFields(data.input, data.file);
 
         let valid = true;
 
@@ -70,10 +70,10 @@ export default class EventFormController {
         });
 
         if (valid) {
-            Bus.emit(Events.ValidationOk, null);
+            Bus.emit(Events.ValidationOk);
             this.#model.createEvent(data);
         } else {
-            Bus.emit(Events.ValidationError, null);
+            Bus.emit(Events.ValidationError);
         }
     };
 

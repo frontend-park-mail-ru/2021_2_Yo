@@ -57,6 +57,8 @@ export default class EventFormView {
         this.#inputs.set('geo', geoInput);
         const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
         this.#inputs.set('category', categoryInput);
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        this.#inputs.set('image', imageInput);
     }
 
     #addListeners() {
@@ -142,6 +144,7 @@ export default class EventFormView {
         this.#inputsData.set('geo', {errors: [], value: this.#inputs.get('geo')?.value.trim() as string});
         this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
+        this.#inputsData.set('image', {errors: [], value: ''});
 
         let file: undefined | File = undefined;
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');

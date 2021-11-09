@@ -49,7 +49,7 @@ export default class EventEditFormController {
     });
 
     #editHandle = (data: MultipartData) => {
-        eventValidateFields(data['input']);
+        eventValidateFields(data['input'], data['file']);
 
         let valid = true;
 

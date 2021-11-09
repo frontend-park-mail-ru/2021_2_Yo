@@ -29,9 +29,11 @@
         {{/if}}
     </div>
 
+    {{#if event.imgUrl}}
     <div class="event-background__primary-border-block primary-border-block">
         <img class="event-block__photo" src="{{event.imgUrl}}">
     </div>
+    {{/if}}
 
     <div class="event-background__primary-border-block primary-border-block">
         <p class="event-primary-text">{{event.text}}</p>
