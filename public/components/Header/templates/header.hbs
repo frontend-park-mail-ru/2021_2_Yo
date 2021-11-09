@@ -14,8 +14,15 @@
         </div>
         {{#if user}}
             <div class="flex">
-                <a href="/user?id={{user.id}}"><img id="avatar" class="header__user-avatar"
-                    src="https://source.boringavatars.com/marble/32/{{user.name}}"></a>
+                <a class="header__avatar-wrapper" href="/user?id={{user.id}}">
+                    <img id="avatar" class="header__avatar"
+                    {{#if user.imgUrl}}
+                        src="{{user.imgUrl}}"
+                    {{else}}
+                        src="https://source.boringavatars.com/marble/32/{{user.name}}"
+                    {{/if}}
+                    >
+                </a>
                 <span>{{user.name}}</span>
             </div>
             <svg id="header-logout" class="header-button header__logout-img" src="./img/logout2.0.png">
