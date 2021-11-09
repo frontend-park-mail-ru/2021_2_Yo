@@ -24,6 +24,7 @@ export default class ProfilePageModel {
 
     }
 
+    // editUser(inputsData: Map<string, { errors: string[], value: string }>) {
     editUser(data: MultipartData) {
         const newUserInfo = {
             name: data['input'].get('name')?.value as string,
@@ -39,6 +40,7 @@ export default class ProfilePageModel {
             stored.description === newUserInfo.description) {
             Bus.emit(Events.UserEditRes, stored);
         } else {
+            console.log('multipart?');
             stored.name = newUserInfo.name;
             stored.surname = newUserInfo.surname;
             stored.description = newUserInfo.description;

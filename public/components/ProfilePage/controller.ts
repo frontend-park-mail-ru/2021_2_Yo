@@ -62,7 +62,9 @@ export default class ProfilePageController {
         this.#model.getUserEvents(user.id);
     });
 
+    // #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
     #editReqHandle = ((data: MultipartData) => {
+        console.log('controller');
         userEditValidateFields(data['input']);
 
         let valid = true;
@@ -77,6 +79,7 @@ export default class ProfilePageController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk);
+            console.log('goin to model');
             this.#model.editUser(data);
         } else {
             Bus.emit(Events.ValidationError);
