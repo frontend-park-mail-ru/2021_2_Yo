@@ -50,7 +50,7 @@ export default class ProfileEditForm {
     #cancelEdit = ((ev: Event) => {
         ev.preventDefault();
 
-        Bus.emit(Events.UserEditRes, UserStore.get());
+        Bus.emit(Events.UserRes, UserStore.get());
     });
 
     #removeListeners() {

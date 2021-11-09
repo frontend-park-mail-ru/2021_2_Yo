@@ -37,7 +37,7 @@ export default class ProfilePageModel {
             stored.name === newUserInfo.name &&
             stored.surname === newUserInfo.surname &&
             stored.description === newUserInfo.description) {
-            Bus.emit(Events.UserEditRes, stored);
+            Bus.emit(Events.UserRes, stored);
         } else {
             stored.name = newUserInfo.name;
             stored.surname = newUserInfo.surname;
@@ -47,9 +47,8 @@ export default class ProfilePageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
+                        UserStore.reset();
                         Bus.emit(Events.UserReq);
-                        Bus.emit(Events.UserEditRes, stored);
-                        Bus.emit(Events.UserRes, stored);
                         return;
                     }
                 }
@@ -63,7 +62,7 @@ export default class ProfilePageModel {
             if (status === 200) {
                 if (json.status === 200) {
                     const stored = UserStore.get() as UserData;
-                    Bus.emit(Events.UserEditRes, stored);
+                    Bus.emit(Events.UserRes, stored);
                     return;
                 }
             }
