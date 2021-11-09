@@ -15,7 +15,6 @@ const TAG_LENGTH_STR = 'Слишком много символов. Максим
 export default class EventEditFormView {
     #parent: HTMLElement;
     #eventTags: string[] = [];
-    #eventId?: number;
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
 
@@ -38,7 +37,6 @@ export default class EventEditFormView {
     }
 
     render(event?: EventData) {
-        this.#eventId = event?.id;
         this.#eventTags = event?.tag as string[];
         this.#parent.innerHTML = template(event);
 
@@ -142,7 +140,10 @@ export default class EventEditFormView {
         this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
 
-        Bus.emit(Events.EventEditReq, this.#inputsData);
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        let file: undefined | File;
+        if (imageInput.files) file = imageInput.files[0];
+        Bus.emit(Events.EventEditReq, {input: this.#inputsData, file});
     }
 
     #showValidationErrors() {

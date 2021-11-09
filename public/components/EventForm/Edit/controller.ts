@@ -6,6 +6,11 @@ import {EventData} from '@/types';
 import {eventValidateFields} from '@modules/validation';
 import UserStore from '@modules/userstore';
 
+type MultipartData = {
+    input: Map<string, { errors: string[], value: string }>;
+    file?: File;
+};
+
 export default class EventEditFormController {
     #view: EventEditFormView;
     #model: EventEditFormModel;
@@ -43,12 +48,12 @@ export default class EventEditFormController {
         this.#view.renderError();
     });
 
-    #editHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
-        eventValidateFields(inputsData);
+    #editHandle = (data: MultipartData) => {
+        eventValidateFields(data['input']);
 
         let valid = true;
 
-        inputsData.forEach((item) => {
+        data['input'].forEach((item) => {
             item.errors.forEach(error => {
                 if (error) {
                     valid = false;
@@ -58,7 +63,7 @@ export default class EventEditFormController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk, null);
-            this.#model.editEvent(inputsData);
+            this.#model.editEvent(data);
         } else {
             Bus.emit(Events.ValidationError, null);
         }

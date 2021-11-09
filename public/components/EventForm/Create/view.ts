@@ -137,7 +137,10 @@ export default class EventFormView {
         this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
 
-        Bus.emit(Events.EventCreateReq, this.#inputsData);
+        let file: undefined | File = undefined;
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput.files) file = imageInput.files[0];
+        Bus.emit(Events.EventCreateReq, {input: this.#inputsData, file});
     }
 
     #showValidationErrors() {

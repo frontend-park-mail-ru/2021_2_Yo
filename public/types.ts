@@ -10,6 +10,7 @@ export type UserData = {
 
 export type EventData = {
     id?: number;
+    imgUrl?: string;
     city: string;
     category: string;
     viewed?: number;
