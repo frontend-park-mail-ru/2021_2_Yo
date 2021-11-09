@@ -43,9 +43,9 @@ export enum UrlPathnames {
 export enum ApiUrls {
     User = '/user',
     Events = '/events',
-    Login = '/login',
-    Signup = '/signup',
-    Logout = '/logout',
+    Login = '/auth/login',
+    Signup = '/auth/signup',
+    Logout = '/auth/logout',
 }
 
 export type FetchResponseData = {

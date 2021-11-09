@@ -34,3 +34,21 @@
     margin-top: 2.78vh;
 }
 
+.authform-bottom {
+    background: var(--auth-form-bg-color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    box-sizing: border-box;
+    width: 30.52vw;
+    height: 3.98vh;
+    text-align: center;
+    font-size: 1.85vh;
+    line-height: 2.13vh;
+    margin-top: 0.65vh;
+    padding: 0.93vh 0;
+}
+
+.purple-text {
+    color: var(--purple-btn-color);
+    text-decoration: underline;
+}

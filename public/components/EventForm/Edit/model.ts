@@ -42,6 +42,8 @@ export default class EventEditFormModel {
                     if (json.status === 200) {
                         const event = json.body as EventData;
                         Bus.emit(Events.EventRes, event);
+                    } else {
+                        Bus.emit(Events.RouteUrl, UrlPathnames.Error);
                     }
                 }
             }
