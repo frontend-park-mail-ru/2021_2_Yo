@@ -8,7 +8,7 @@ export function filterToUrl (data: FilterData) {
         res += 'query=' + data.query;
     }
 
-    if (data.category) {
+    if (data.category !== undefined) {
         if (res.length > 1) res += '&';
         res += 'category=' + config.categories[data.category].name;
     }
