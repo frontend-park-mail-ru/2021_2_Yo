@@ -23,7 +23,7 @@
         {{#if event.tag}}
             <span class="event-tags-block">
                 {{#each event.tag}}
-                    <a class="event-tags-block__event-tag event-tag">{{this}}</a>
+                    <a class="event-tags-block__event-tag event-tag" href="/search?tags={{this}}">{{this}}</a>
                 {{/each}}
             </span>
         {{/if}}
