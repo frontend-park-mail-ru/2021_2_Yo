@@ -50,7 +50,7 @@ export default class ProfileEditForm {
     #cancelEdit = ((ev: Event) => {
         ev.preventDefault();
 
-        Bus.emit(Events.UserEditRes, UserStore.get());
+        Bus.emit(Events.UserRes, UserStore.get());
     });
 
     #removeListeners() {
@@ -90,7 +90,13 @@ export default class ProfileEditForm {
         this.#inputs.set('selfDescription', selfDescriptionInput);
         this.#inputsData.set('selfDescription', {errors: [], value: selfDescriptionInput.value.trim()});
 
-        Bus.emit(Events.UserEditReq, this.#inputsData);
+        const avatarInput = <HTMLInputElement>document.getElementById('avatarInput');
+        this.#inputs.set('avatar', avatarInput);
+        this.#inputsData.set('avatar', {errors: [], value: ''});
+        let file: File | undefined;
+        if (avatarInput.files) file = avatarInput.files[0];
+
+        Bus.emit(Events.UserEditReq, {input: this.#inputsData, file});
     });
 
     #showValidationErrors() {

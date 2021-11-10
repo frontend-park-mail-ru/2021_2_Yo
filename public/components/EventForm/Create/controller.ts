@@ -5,6 +5,11 @@ import EventFormModel from '@event-create/model';
 import {eventValidateFields} from '@modules/validation';
 import UserStore from '@modules/userstore';
 
+type MultipartData = {
+    input: Map<string, { errors: string[], value: string }>;
+    file?: File;
+};
+
 export default class EventFormController {
     #view: EventFormView;
     #model: EventFormModel;
@@ -50,12 +55,12 @@ export default class EventFormController {
         this.#view.disable();
     }
 
-    #validationHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
-        eventValidateFields(inputsData);
+    #validationHandle = (data: MultipartData) => {
+        eventValidateFields(data.input, data.file);
 
         let valid = true;
 
-        inputsData.forEach((item) => {
+        data.input.forEach((item) => {
             item.errors.forEach(error => {
                 if (error) {
                     valid = false;
@@ -64,10 +69,10 @@ export default class EventFormController {
         });
 
         if (valid) {
-            Bus.emit(Events.ValidationOk, null);
-            this.#model.createEvent(inputsData);
+            Bus.emit(Events.ValidationOk);
+            this.#model.createEvent(data);
         } else {
-            Bus.emit(Events.ValidationError, null);
+            Bus.emit(Events.ValidationError);
         }
     };
 

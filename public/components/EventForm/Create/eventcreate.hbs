@@ -1,44 +1,49 @@
 <div class="eventform-background">
     <form class="eventform" id="eventform">
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Название</p>
+            <p class="input-block__input-label primary-text">Название</p>
             <input class ="form-input form-input_event-wide" id="titleInput" maxlength="255"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Краткое описание</p>
+            <p class="input-block__input-label primary-text">Краткое описание</p>
             <textarea class ="form-textarea form-textarea_event" id="descriptionInput"
                       rows="4" maxlength="500"></textarea>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Описание</p>
+            <p class="input-block__input-label primary-text">Описание</p>
             <textarea class ="form-textarea form-textarea_event" id="textInput" rows="12"
                       maxlength="2200"></textarea>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Дата проведения</p>
+            <p class="input-block__input-label primary-text">Фото мероприятия</p>
+            <input class ="form-input form-input_event-thin" id="imageInput" type="file"/>
+            <p class="error error_none input-block__error"></p>
+        </div>
+        <div class="input-block">
+            <p class="input-block__input-label primary-text">Дата проведения</p>
             <input class ="form-input form-input_event-thin" id="dateInput" type="date"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Город</p>
+            <p class="input-block__input-label primary-text">Город</p>
             <input class ="form-input form-input_event-thin" id="cityInput" maxlength="30"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Адрес</p>
+            <p class="input-block__input-label primary-text">Адрес</p>
             <input class ="form-input form-input_event-thin" id="geoInput" maxlength="255"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Категория</p>
+            <p class="input-block__input-label primary-text">Категория</p>
             <input class ="form-input form-input_event-thin" id="categoryInput" maxlength="30"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
-            <p class="input-block__input-label event-primary-text">Теги</p>
+            <p class="input-block__input-label primary-text">Теги</p>
             <div class="buttons-block">
                 <input class ="form-input form-input_event-thin" id="tagInput" maxlength="30">
                 <input value="Добавить" id="tagButton" class="button-white_event-tag button-white"
@@ -50,7 +55,7 @@
             <div class="event-tags-block" id="tagBlock"></div>
         </div>
         <div class="eventform__buttons buttons-block">
-            <input type="button" value="Отмена" class="button-white_event-cancel button-white">
+            <input id="cancel-button" type="button" value="Отмена" class="button-white_event-cancel button-white">
             <input type="submit" value="Создать" class="button-blue_event-save button-blue">
         </div>
     </form>

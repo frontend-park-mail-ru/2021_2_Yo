@@ -27,6 +27,7 @@
   align-items: center;
   box-sizing: border-box;
   padding: 10px 20px;
+  cursor: pointer;
 }
 
 .categories__header {
@@ -40,7 +41,6 @@
   width: 1.95vw;
   margin-top: 2px;
   fill: var(--dark-gray);
-  cursor: pointer;
 }
 
 .categories__li-type {

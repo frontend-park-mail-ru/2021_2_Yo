@@ -2,7 +2,11 @@
     <div class="primary-border-block">
         <div class="profile-header">
             <div class="profile-header__avatar">
-                <img src="https://source.boringavatars.com/marble/32" class="profile-avatar">
+            {{#if user.imgUrl}}
+                <img src="{{user.imgUrl}}" class="profile-avatar">
+            {{else}}
+                <img src="https://source.boringavatars.com/marble/32/{{user.name}}" class="profile-avatar">
+            {{/if}}
             </div>
             <div class="profile-header__name">
                 <p class="profile-name">{{user.name}}</p>

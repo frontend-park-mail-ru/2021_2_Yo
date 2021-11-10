@@ -34,7 +34,7 @@ class Router {
         for (const target of path) {
             if (target instanceof HTMLAnchorElement) {
                 e.preventDefault();
-                Bus.emit(Events.RouteUrl, target.href);
+                this.route(<UrlPathnames>(target.pathname + target.search));
                 break;
             }
         }

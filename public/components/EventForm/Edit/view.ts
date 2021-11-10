@@ -15,7 +15,6 @@ const TAG_LENGTH_STR = 'Слишком много символов. Максим
 export default class EventEditFormView {
     #parent: HTMLElement;
     #eventTags: string[] = [];
-    #eventId?: number;
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
 
@@ -38,7 +37,6 @@ export default class EventEditFormView {
     }
 
     render(event?: EventData) {
-        this.#eventId = event?.id;
         this.#eventTags = event?.tag as string[];
         this.#parent.innerHTML = template(event);
 
@@ -61,6 +59,8 @@ export default class EventEditFormView {
         this.#inputs.set('geo', geoInput);
         const categoryInput = document.getElementById('categoryInput') as HTMLInputElement;
         this.#inputs.set('category', categoryInput);
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        this.#inputs.set('image', imageInput);
     }
 
     #addListeners() {
@@ -69,6 +69,9 @@ export default class EventEditFormView {
 
         const tagButton = document.getElementById('tagButton') as HTMLInputElement;
         tagButton.addEventListener('click', this.#addTag.bind(this));
+
+        const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
+        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));    
     }
 
     #removeListeners() {
@@ -81,6 +84,9 @@ export default class EventEditFormView {
         if (tagButton) {
             tagButton.removeEventListener('click', this.#addTag.bind(this));
         }
+
+        const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
+        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));    
     }
 
     #addTag(ev: Event) {
@@ -141,8 +147,12 @@ export default class EventEditFormView {
         this.#inputsData.set('geo', {errors: [], value: this.#inputs.get('geo')?.value.trim() as string});
         this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
+        this.#inputsData.set('image', {errors: [], value: ''});
 
-        Bus.emit(Events.EventEditReq, this.#inputsData);
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        let file: undefined | File;
+        if (imageInput.files) file = imageInput.files[0];
+        Bus.emit(Events.EventEditReq, {input: this.#inputsData, file});
     }
 
     #showValidationErrors() {

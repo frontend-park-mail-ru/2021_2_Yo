@@ -23,27 +23,29 @@
         {{#if event.tag}}
             <span class="event-tags-block">
                 {{#each event.tag}}
-                    <a class="event-tags-block__event-tag event-tag">{{this}}</a>
+                    <a class="event-tags-block__event-tag event-tag" href="/search?tags={{this}}">{{this}}</a>
                 {{/each}}
             </span>
         {{/if}}
     </div>
 
+    {{#if event.imgUrl}}
     <div class="event-background__primary-border-block primary-border-block">
-        <img class="event-block__photo" src="../../server/img/90s-rave.png">
+        <img class="event-block__photo" src="{{event.imgUrl}}">
     </div>
+    {{/if}}
 
     <div class="event-background__primary-border-block primary-border-block">
-        <p class="event-primary-text">{{event.text}}</p>
+        <p class="primary-text">{{event.text}}</p>
     </div>
 
     <div class="event-background__primary-border-block primary-border-block">
         <div>
-            <span class="event-primary-text">Когда: </span>
+            <span class="primary-text">Когда: </span>
             <span class="event-button event-button_orange">{{event.date}}</span>
         </div>
         <div class="event-block__event-where">
-            <span class="event-primary-text">Где: </span>
+            <span class="primary-text">Где: </span>
             <span class="event-button event-button_blue">{{event.geo}}</span>
         </div>
     </div>

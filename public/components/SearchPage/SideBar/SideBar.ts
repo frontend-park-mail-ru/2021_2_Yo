@@ -20,10 +20,8 @@ export default class SideBar {
     }
 
     #addListeners() {
-        const img = <HTMLElement>document.getElementById('categories-img');
-        if (img) {
-            img.addEventListener('click', this.#handleCategoryList);
-        }
+        const categories = <HTMLElement>document.getElementById('categories-header');
+        if (categories) categories.addEventListener('click', this.#handleCategoryList);
 
         const button = <HTMLElement>document.getElementById('tags-button');
         if (button) {
@@ -61,7 +59,7 @@ export default class SideBar {
     };
 
     #handleCategoryList = (e: MouseEvent) => {
-        const target = <HTMLElement>e.currentTarget;
+        const target = <HTMLElement>document.getElementById('categories-img');
         const list = <HTMLElement>document.getElementById('categories-list');
         if (!list) return;
 

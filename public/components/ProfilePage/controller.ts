@@ -6,24 +6,28 @@ import ProfilePageModel from '@profile-page/model';
 import {EventData, UserData} from '@/types';
 import UserStore from '@modules/userstore';
 
+type MultipartData = {
+    input: Map<string, { errors: string[], value: string }>,
+    file?: File,
+};
+
 export default class ProfilePageController {
     #view: ProfilePageView;
     #model: ProfilePageModel;
-    #userResSubscribe: boolean;
 
     constructor(parent: HTMLElement) {
         this.#view = new ProfilePageView(parent);
         this.#model = new ProfilePageModel();
-        this.#userResSubscribe = false;
     }
 
     enable() {
         Bus.on(Events.UserEditReq, this.#editReqHandle);
-        Bus.on(Events.UserEditRes, this.#editResHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
         Bus.on(Events.EventsRes, this.#listHandle);
+        Bus.on(Events.UserRes, this.#renderHandle);
+        Bus.on(Events.UserError, this.#userErrorRenderHandle);
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -35,20 +39,11 @@ export default class ProfilePageController {
             } else {
                 this.#model.getUser(userURLId);
             }
-        } else {
-            this.#userResSubscribe = true;
-            Bus.on(Events.UserRes, this.#renderHandle);
-            Bus.on(Events.UserError, this.#userErrorRenderHandle);
-        }
+        } 
     }
 
     #listHandle = ((events: EventData[]) => {
         this.#view.renderEventList(events);
-    }).bind(this);
-
-    #editResHandle = ((user: UserData) => {
-        this.#view.disableProfileForm();
-        this.#view.renderProfileBlock(user);
     }).bind(this);
 
     #userErrorRenderHandle = (() => {
@@ -72,12 +67,12 @@ export default class ProfilePageController {
         this.#model.getUserEvents(user.id);
     });
 
-    #editReqHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
-        userEditValidateFields(inputsData);
+    #editReqHandle = ((data: MultipartData) => {
+        userEditValidateFields(data['input'], data['file']);
 
         let valid = true;
 
-        inputsData.forEach((item) => {
+        data['input'].forEach((item) => {
             item.errors.forEach(error => {
                 if (error) {
                     valid = false;
@@ -87,7 +82,7 @@ export default class ProfilePageController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk);
-            this.#model.editUser(inputsData);
+            this.#model.editUser(data);
         } else {
             Bus.emit(Events.ValidationError);
         }
@@ -116,15 +111,12 @@ export default class ProfilePageController {
 
     disable() {
         Bus.off(Events.UserEditReq, this.#editReqHandle);
-        Bus.off(Events.UserEditRes, this.#editResHandle);
         Bus.off(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.off(Events.UserByIdRes, this.#userGetHandle);
         Bus.off(Events.EventsRes, this.#listHandle);
+        Bus.off(Events.UserRes, this.#renderHandle);
+        Bus.off(Events.UserError, this.#userErrorRenderHandle);
 
-        if (this.#userResSubscribe) {
-            Bus.off(Events.UserRes, this.#renderHandle);
-            Bus.off(Events.UserError, this.#userErrorRenderHandle);
-        }
         this.#view.disable();
     }
 }

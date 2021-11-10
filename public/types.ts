@@ -1,5 +1,6 @@
 export type UserData = {
     id: string;
+    imgUrl?: string;
     name: string;
     surname: string;
     description: string;
@@ -9,6 +10,7 @@ export type UserData = {
 
 export type EventData = {
     id?: number;
+    imgUrl?: string;
     city: string;
     category: string;
     viewed?: number;
@@ -41,9 +43,9 @@ export enum UrlPathnames {
 export enum ApiUrls {
     User = '/user',
     Events = '/events',
-    Login = '/login',
-    Signup = '/signup',
-    Logout = '/logout',
+    Login = '/auth/login',
+    Signup = '/auth/signup',
+    Logout = '/auth/logout',
 }
 
 export type FetchResponseData = {

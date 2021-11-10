@@ -40,6 +40,8 @@ export default class EventFormView {
 
         this.#setInputs();
         this.#addListeners();
+
+        this.#eventTags = [];
     }
 
     #setInputs() {
@@ -57,6 +59,8 @@ export default class EventFormView {
         this.#inputs.set('geo', geoInput);
         const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
         this.#inputs.set('category', categoryInput);
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        this.#inputs.set('image', imageInput);
     }
 
     #addListeners() {
@@ -65,6 +69,9 @@ export default class EventFormView {
 
         const tagButton = document.getElementById('tagButton') as HTMLInputElement;
         tagButton.addEventListener('click', this.#addTag.bind(this));
+
+        const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
+        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #removeListeners() {
@@ -77,6 +84,9 @@ export default class EventFormView {
         if (tagButton) {
             tagButton.removeEventListener('click', this.#addTag.bind(this));
         }
+
+        const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
+        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #addTag(ev: Event) {
@@ -125,6 +135,7 @@ export default class EventFormView {
     #createEvent(ev: Event) {
         ev.preventDefault();
 
+        this.#inputsData.clear();
         this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});
         this.#inputsData.set('description', {
             errors: [],
@@ -136,8 +147,12 @@ export default class EventFormView {
         this.#inputsData.set('geo', {errors: [], value: this.#inputs.get('geo')?.value.trim() as string});
         this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
+        this.#inputsData.set('image', {errors: [], value: ''});
 
-        Bus.emit(Events.EventCreateReq, this.#inputsData);
+        let file: undefined | File;
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput.files) file = imageInput.files[0];
+        Bus.emit(Events.EventCreateReq, {input: this.#inputsData, file});
     }
 
     #showValidationErrors() {

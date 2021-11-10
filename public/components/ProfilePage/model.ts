@@ -1,8 +1,13 @@
 import {ApiUrls, EventData, FetchResponseData, UserData} from '@/types';
-import {fetchGet, fetchPost} from '@request/request';
+import {fetchGet, fetchPost, fetchPostMultipart} from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import UserStore from '@modules/userstore';
+
+type MultipartData = {
+    input: Map<string, { errors: string[], value: string }>,
+    file?: File,
+};
 
 export default class ProfilePageModel {
     getUser(userId: string) {
@@ -19,30 +24,31 @@ export default class ProfilePageModel {
 
     }
 
-    editUser(inputsData: Map<string, { errors: string[], value: string }>) {
+    editUser(data: MultipartData) {
         const newUserInfo = {
-            name: inputsData.get('name')?.value as string,
-            surname: inputsData.get('surname')?.value as string,
-            description: inputsData.get('selfDescription')?.value as string,
+            name: data['input'].get('name')?.value as string,
+            surname: data['input'].get('surname')?.value as string,
+            description: data['input'].get('selfDescription')?.value as string,
         };
 
         const stored = UserStore.get() as UserData;
 
-        if (stored.name === newUserInfo.name &&
+        if (!data.file &&
+            stored.name === newUserInfo.name &&
             stored.surname === newUserInfo.surname &&
             stored.description === newUserInfo.description) {
-            Bus.emit(Events.UserEditRes, stored);
+            Bus.emit(Events.UserRes, stored);
         } else {
             stored.name = newUserInfo.name;
             stored.surname = newUserInfo.surname;
             stored.description = newUserInfo.description;
 
-            fetchPost(ApiUrls.User + '/info', stored, (data: FetchResponseData) => {
+            fetchPostMultipart(ApiUrls.User + '/info', {json: stored, file: data['file']}, (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        Bus.emit(Events.UserEditRes, stored);
-                        Bus.emit(Events.UserRes, stored);
+                        UserStore.reset();
+                        Bus.emit(Events.UserReq);
                         return;
                     }
                 }
@@ -56,7 +62,7 @@ export default class ProfilePageModel {
             if (status === 200) {
                 if (json.status === 200) {
                     const stored = UserStore.get() as UserData;
-                    Bus.emit(Events.UserEditRes, stored);
+                    Bus.emit(Events.UserRes, stored);
                     return;
                 }
             }

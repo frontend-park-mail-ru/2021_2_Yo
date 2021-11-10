@@ -15,6 +15,8 @@ const inputLength = new Map([
     ['selfDescription', 150],
 ]);
 
+const MAX_FILE_SIZE_MB = 5242880;
+
 type InputsData = {
     errors: string[],
     value: string,
@@ -67,9 +69,10 @@ export function passwordEditValidateFields(inputsData: Map<string, { errors: str
     checkInputLength(inputsData);
 }
 
-export function userEditValidateFields(inputsData: Map<string, { errors: string[], value: string }>) {
+export function userEditValidateFields(inputsData: Map<string, { errors: string[]; value: string }>, image: File | undefined) {
     const name = <InputsData>inputsData.get('name');
     const surname = <InputsData>inputsData.get('surname');
+    const avatar = <InputsData>inputsData.get('avatar');
 
     name.errors.push(checkEmpty(name.value));
     name.errors.push(checkForbiddenSymbols(name.value));
@@ -77,10 +80,15 @@ export function userEditValidateFields(inputsData: Map<string, { errors: string[
     surname.errors.push(checkEmpty(surname.value));
     surname.errors.push(checkForbiddenSymbols(surname.value));
 
+    if (image) {
+        avatar.errors.push(checkImageType(image));
+        avatar.errors.push(checkImageSize(image));
+    }
+
     checkInputLength(inputsData);
 }
 
-export function eventValidateFields(inputsData: Map<string, InputsData>) {
+export function eventValidateFields(inputsData: Map<string, InputsData>, imageFile: File | undefined) {
     const title = <InputsData>inputsData.get('title');
     const description = <InputsData>inputsData.get('description');
     const text = <InputsData>inputsData.get('text');
@@ -88,6 +96,7 @@ export function eventValidateFields(inputsData: Map<string, InputsData>) {
     const city = <InputsData>inputsData.get('city');
     const geo = <InputsData>inputsData.get('geo');
     const category = <InputsData>inputsData.get('category');
+    const image = <InputsData>inputsData.get('image');
 
     title.errors.push(checkEmpty(title.value));
 
@@ -106,7 +115,26 @@ export function eventValidateFields(inputsData: Map<string, InputsData>) {
     category.errors.push(checkEmpty(category.value));
     category.errors.push(checkForbiddenSymbols(category.value));
 
+    if (imageFile) {
+        image.errors.push(checkImageType(imageFile));
+        image.errors.push(checkImageSize(imageFile));
+    }
+
     checkInputLength(inputsData);
+}
+
+function checkImageType(image: File) {
+    if (!image.type.match('^image/(gif|jpeg|jpg|png|svg|svn|webm|webp|gif)+$')) {
+        return 'Неверный формат';
+    }
+    return '';
+}
+
+function checkImageSize(image: File) {
+    if (image.size > MAX_FILE_SIZE_MB) {
+        return `Размер не должен превышать ${MAX_FILE_SIZE_MB}Мб`;
+    }
+    return '';
 }
 
 function checkEmpty(value: string): string {
