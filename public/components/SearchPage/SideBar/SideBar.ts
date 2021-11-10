@@ -4,7 +4,6 @@ import Events from '@eventbus/events';
 import * as tagTemplate from '@search-page/SideBar/tag.hbs';
 import * as template from '@search-page/SideBar/sidebar.hbs';
 import '@search-page/SideBar/SideBar.css';
-import e from 'express';
 
 const TAG_PING_TIME_MSEC = 500;
 const REQ_WAIT_CHANGE_TIME_MSEC = 500;

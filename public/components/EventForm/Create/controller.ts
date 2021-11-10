@@ -55,7 +55,6 @@ export default class EventFormController {
         this.#view.disable();
     }
 
-    // #validationHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
     #validationHandle = (data: MultipartData) => {
         eventValidateFields(data.input, data.file);
 

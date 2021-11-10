@@ -15,7 +15,7 @@ const inputLength = new Map([
     ['selfDescription', 150],
 ]);
 
-const FIVEMB = 5242880;
+const MAX_FILE_SIZE_MB = 5242880;
 
 type InputsData = {
     errors: string[],
@@ -131,8 +131,8 @@ function checkImageType(image: File) {
 }
 
 function checkImageSize(image: File) {
-    if (image.size > FIVEMB) {
-        return 'Размер не должен превышать 5Мб';
+    if (image.size > MAX_FILE_SIZE_MB) {
+        return `Размер не должен превышать ${MAX_FILE_SIZE_MB}Мб`;
     }
     return '';
 }
