@@ -10,7 +10,7 @@
 .event-li {
   width: 42.55vw;
   min-height: 15.28vh;
-  border: var(--gray-border-color);
+  border: var(--gray-border);
   margin-bottom: 10px;
   box-sizing: border-box;
   display: flex;
