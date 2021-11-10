@@ -1,0 +1,24 @@
+{{#if this}}
+<div class="wrapper-center">
+    <div class="events">
+        {{#each this}}
+        <div class="events__e{{@index}} events__e-wrapper bg-img-wrapper">
+            <img class="bg-img" src="{{imgUrl}}">
+            <a class="events__content" href="events?id={{id}}">
+                <span class="events__description">{{title}}</span>
+                <div class="events__viewed">
+                    <svg class="events__viewed-img">
+                        <use xlink:href="./server/img/sprite.svg#viewed"></use>
+                    </svg>
+                    <span class="events__viewed-score">{{viewed}}</span>
+                </div>
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</div>                   
+{{else}}
+<div class="loader-wrapper">
+    <img class="loader" src="/img/logo.png">
+</div>
+{{/if}}

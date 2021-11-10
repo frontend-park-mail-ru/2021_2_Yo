@@ -1,0 +1,31 @@
+{{#if events}}
+    <div id="events-list">
+    {{#each events}}
+        <div class="event-li">
+            <div class="event-li__img bg-img-wrapper">
+                <img class="bg-img" src="{{imgUrl}}">
+            </div>
+            <div class ="event-li__content">
+                <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
+                <div class="event-li__description">{{description}}</div>
+                <div class="event-li__info event-li__description">
+                    <div class="event-li__description">
+                        <span>Когда:&nbsp;</span>
+                        <span class="text_date">{{date}}</span>
+                        <span>Где:&nbsp;</span>
+                        <span class="text_geo">{{geo}}</span>
+                    </div>
+                    <div class="event-li__viewed">
+                        <svg class="event-li__viewed-img">
+                            <use xlink:href="./server/img/sprite.svg#viewed"></use>
+                        </svg>
+                        <span>{{viewed}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+    </div>
+{{else}}
+    <h2>Прости бро, нет таких ивентосов</h2>
+{{/if}}

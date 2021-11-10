@@ -1,0 +1,41 @@
+<header class="header">
+    <div class="flex header__content header-text">
+        <img id="header-logo" class="header__logo header-button" src="./img/logo.png">
+        <div class="flex">
+            <div class="flex header__search">
+                <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
+                <svg id="header-search" class="header-button header__search-img">
+                    <use xlink:href="./server/img/sprite.svg#search"></use>
+                </svg>
+            </div>
+            <svg class="header-button header__calendar-img">
+                <use xlink:href="./server/img/sprite.svg#calendar"></use>
+            </svg>
+        </div>
+        {{#if user}}
+            <div class="flex">
+                <a class="header__avatar-wrapper" href="/user?id={{user.id}}">
+                    <img id="avatar" class="header__avatar"
+                    {{#if user.imgUrl}}
+                        src="{{user.imgUrl}}"
+                    {{else}}
+                        src="https://source.boringavatars.com/marble/32/{{user.name}}"
+                    {{/if}}
+                    >
+                </a>
+                <span>{{user.name}}</span>
+            </div>
+            <a href="/">
+                <svg id="header-logout" class="header-button header__logout-img" src="./img/logout2.0.png">
+                    <use xlink:href="./server/img/sprite.svg#logout"></use>
+                </svg>
+            </a>
+        {{else}}
+            <div>
+            {{#each authAnchors}}
+                <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
+            {{/each}}
+            </div>
+        {{/if}}
+    </div>
+</header>

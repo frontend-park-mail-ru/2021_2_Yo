@@ -1,20 +1,26 @@
-declare global {
-    interface Window {
-        Handlebars: any;
-    }
-}
-
-export type EventCardData = {
-    imgUrl: string;
-    viewed: number;
-    name: string;
-    description: string;
-}
-
 export type UserData = {
-    id: number;
+    id: string;
+    imgUrl?: string;
     name: string;
+    surname: string;
+    description: string;
+    email: string;
     geo: string;
+}
+
+export type EventData = {
+    id?: number;
+    imgUrl?: string;
+    city: string;
+    category: string;
+    viewed?: number;
+    title: string;
+    description: string;
+    tag: string[];
+    text: string;
+    date: string;
+    geo: string;
+    authorid: string;
 }
 
 export enum PageKeys {
@@ -22,35 +28,36 @@ export enum PageKeys {
     Signup = 'signup',
 }
 
-export type InputErrors = {
-    errors: string[],
-    input: HTMLInputElement
-    value: string
-
-}
-
 export enum UrlPathnames {
+    Error = '/error',
     Main = '/',
     Login = '/login',
     Signup = '/signup',
+    Search = '/search',
+    Profile = '/user',
+    Event = '/events',
+    Create = '/create',
+    Edit = '/edit',
 }
 
 export enum ApiUrls {
     User = '/user',
     Events = '/events',
-    Login = '/login',
-    Signup = '/signup',
+    Login = '/auth/login',
+    Signup = '/auth/signup',
+    Logout = '/auth/logout',
 }
 
 export type FetchResponseData = {
     status: number;
     json: ApiResponseJson;
+    headers?: Headers;
 }
 
 export type ApiResponseJson = {
     status: number;
     message: string;
-    body: any;
+    body?: any;
 }
 
 export type ApiPostLoginData = {
@@ -63,4 +70,10 @@ export type ApiPostSignupData = {
     surname: string;
     email: string;
     password: string;
+}
+
+export type FilterData = {
+    category?: number,
+    tags?: string[],
+    query?: string,
 }

@@ -1,0 +1,64 @@
+<div class ="event-background">
+    <div class="event-background__primary-border-block primary-border-block">
+        <div class="event-header">
+            <span>
+                <span class="event-header-text event-header-text_place">
+                    {{event.city}}
+                </span>
+                <span class ="event-header-text"> > </span>
+                <span class="event-header-text event-header-text_category">{{event.category}}</span>
+            </span>
+            <div class="event-block__event-header-views event-header-views">
+                <svg class="event-views-img">
+                    <use xlink:href="./server/img/sprite.svg#viewed"></use>
+                </svg>
+                <span class="event-header-viewed-text">{{event.viewed}}</span>
+            </div>
+        </div>
+
+        <p class="event-title">{{event.title}}</p>
+
+        <p class="event-text event-text_header">{{event.description}}</p>
+
+        {{#if event.tag}}
+            <span class="event-tags-block">
+                {{#each event.tag}}
+                    <a class="event-tags-block__event-tag event-tag" href="/search?tags={{this}}">{{this}}</a>
+                {{/each}}
+            </span>
+        {{/if}}
+    </div>
+
+    {{#if event.imgUrl}}
+    <div class="event-background__primary-border-block primary-border-block">
+        <img class="event-block__photo" src="{{event.imgUrl}}">
+    </div>
+    {{/if}}
+
+    <div class="event-background__primary-border-block primary-border-block">
+        <p class="primary-text">{{event.text}}</p>
+    </div>
+
+    <div class="event-background__primary-border-block primary-border-block">
+        <div>
+            <span class="primary-text">Когда: </span>
+            <span class="event-button event-button_orange">{{event.date}}</span>
+        </div>
+        <div class="event-block__event-where">
+            <span class="primary-text">Где: </span>
+            <span class="event-button event-button_blue">{{event.geo}}</span>
+        </div>
+    </div>
+    {{#if permission}}
+    <div class="event-background__primary-border-block primary-border-block">
+        <div class="buttons-block">
+            <a class="event-button event-button_blue" id="editButton">
+                Редактировать мероприятие
+            </a>
+            <a class="event-button event-button_red" id="deleteButton">
+                Удалить мероприятие
+            </a>
+        </div>
+    </div>
+    {{/if}}
+</div>

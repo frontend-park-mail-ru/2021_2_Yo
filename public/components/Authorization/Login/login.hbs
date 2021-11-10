@@ -1,0 +1,26 @@
+<div class="auth-background">
+    <img class="auth-background__logo logo" src="./img/logo.png">
+    <div class="authform" id="authFormBackground">
+        <p class="label">Авторизация</p>
+        <form id="authForm">
+            <div class="input-block">
+                <p class="input-block__input-label input-label">Email</p>
+                <input class="form-input form-input_auth" id="emailInput" maxlength="150">
+            </div>
+            <div class="input-block">
+                <p class="input-block__input-label input-label">Пароль</p>
+                <input type="password" class="form-input form-input_auth"
+                       id="passwordInput" maxlength="50">
+            </div>
+            <p class="error" id="errors"></p>
+            <div class="authform__buttons buttons-block">
+                <input type="submit" value="ВОЙТИ" class="button-purple_login button-purple">
+                <a id="back" class="button-darkblue">НАЗАД</a>
+            </div>
+        </form>
+    </div>
+    <div class="authform-bottom">
+        <span>Нет аккаунта?</span>
+        <a class="purple-text-btn" href="/signup">Регистрация</a>
+    </div>
+</div>
