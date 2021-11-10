@@ -319,6 +319,7 @@ input:focus {
 .event-tags-block {
   display: flex;
   flex-wrap: wrap;
+  color: white;
 }
 
 .event-tags-block__event-tag {
