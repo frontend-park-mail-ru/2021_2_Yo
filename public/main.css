@@ -29,6 +29,7 @@ a,
 a:visited,
 a:hover,
 a:active {
+  color: initial;
   text-decoration: none;
 }
 
