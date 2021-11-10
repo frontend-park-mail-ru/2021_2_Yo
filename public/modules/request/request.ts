@@ -46,7 +46,10 @@ export function fetchDelete(url: string, callback?: Callback, error?: Callback) 
     return void fetch(API + url, {
         method: METHODS.DELETE,
         mode: 'cors',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+            'X-CSRF-Token': CSRFStore.get() as string,
+        }
     }).then((response) => {
         HTTPStatus = response.status;
         return response.json();

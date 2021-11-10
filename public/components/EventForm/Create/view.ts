@@ -40,6 +40,8 @@ export default class EventFormView {
 
         this.#setInputs();
         this.#addListeners();
+
+        this.#eventTags = [];
     }
 
     #setInputs() {
@@ -69,7 +71,7 @@ export default class EventFormView {
         tagButton.addEventListener('click', this.#addTag.bind(this));
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));    
+        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #removeListeners() {
@@ -84,7 +86,7 @@ export default class EventFormView {
         }
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));    
+        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #addTag(ev: Event) {
@@ -133,6 +135,7 @@ export default class EventFormView {
     #createEvent(ev: Event) {
         ev.preventDefault();
 
+        this.#inputsData.clear();
         this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});
         this.#inputsData.set('description', {
             errors: [],
