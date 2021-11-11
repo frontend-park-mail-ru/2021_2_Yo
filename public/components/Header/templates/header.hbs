@@ -13,8 +13,8 @@
             </svg>
         </div>
         {{#if user}}
-            <div class="flex">
-                <a class="header__avatar-wrapper" href="/user?id={{user.id}}">
+            <a class="flex" href="/user?id={{user.id}}">
+                <div class="header__avatar-wrapper">
                     <img id="avatar" class="header__avatar"
                     {{#if user.imgUrl}}
                         src="{{user.imgUrl}}"
@@ -22,9 +22,9 @@
                         src="https://source.boringavatars.com/marble/32/{{user.name}}"
                     {{/if}}
                     >
-                </a>
+                </div>
                 <span>{{user.name}}</span>
-            </div>
+            </a>
             <a href="/">
                 <svg id="header-logout" class="header-button header__logout-img" src="./img/logout2.0.png">
                     <use xlink:href="./server/img/sprite.svg#logout"></use>
