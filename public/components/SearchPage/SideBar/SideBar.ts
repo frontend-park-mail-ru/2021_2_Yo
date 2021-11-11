@@ -191,7 +191,7 @@ export default class SideBar {
     }
 
     renderFilter(category?: number, tags?: Array<string>) {
-        if (category) {
+        if (category !== undefined) {
             const categoryElemnt = <HTMLElement>document.getElementById('category-' + category);
             categoryElemnt.style.backgroundColor = 'var(--category-check)';
             this.#category = category;
