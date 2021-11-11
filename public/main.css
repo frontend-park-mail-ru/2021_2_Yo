@@ -43,7 +43,6 @@ input:focus {
 }
 
 #App {
-  background-color: var(--app-bg-color);
   width: 100%;
   font-family: Roboto;
   height: 100%;
@@ -253,6 +252,7 @@ input:focus {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background-color: var(--app-bg-color);
 }
 
 .wrapper__top_forty {
