@@ -8,7 +8,8 @@
   --orange-btn-color: #ff630b;
   --gray-bg-color: #d2d2d3;
   --purple-btn-color: #490063;
-  --gray-border-color: #aaaaaa;
+  --light-gray-color: #aaaaaa;
+  --gray-border: 2px solid var(--light-gray-color);
   --app-bg-color: #f7f7f7;
   --date-orange-color: #ff630b;
   --geo-turquoise-color: #08bbbb;
@@ -320,11 +321,11 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   color: white;
+  margin-top: 10px;
 }
 
 .event-tags-block__event-tag {
-  margin-right: 0.52vw;
-  margin-top: 0.93vh;
+  margin-right: 10px;
 }
 
 .event-tags-block__event-tag:last-child {

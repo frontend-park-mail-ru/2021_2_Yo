@@ -1,9 +1,10 @@
 import config from '@/config';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as tagTemplate from '@search-page/SideBar/tag.hbs';
+import * as tagTemplate from '@templates/tag/tag.hbs';
 import * as template from '@search-page/SideBar/sidebar.hbs';
 import '@search-page/SideBar/SideBar.css';
+import '@templates/tag/tag.css';
 
 const TAG_PING_TIME_MSEC = 500;
 const REQ_WAIT_CHANGE_TIME_MSEC = 500;
@@ -77,11 +78,12 @@ export default class SideBar {
     };
 
     #handleTagDelete = (e: MouseEvent) => {
-        const target = <HTMLLabelElement>e.target;
-        if (!target) return;
-        this.#tags = this.#tags.filter(tag => tag !== target.innerText);
-        target.removeEventListener('click', this.#handleTagDelete);
-        target.outerHTML = '';
+        const target = <HTMLElement>e.target;
+        const tagWrapper = <HTMLElement>e.currentTarget;
+        if (!target || !tagWrapper || !target.dataset['tag']) return;
+        this.#tags = this.#tags.filter(tag => tag !== target.dataset['tag']);
+        tagWrapper.removeEventListener('click', this.#handleTagDelete);
+        tagWrapper.outerHTML = '';
         this.#handleFilter();
     };
 
@@ -94,16 +96,16 @@ export default class SideBar {
             list.innerHTML += tagTemplate(t);
         });
         this.#tags.map((t) => {
-            const label = document.getElementById('tag-' + t);
-            if (label) {
-                label.addEventListener('click', this.#handleTagDelete);
+            const tag = document.getElementById('tag-' + t);
+            if (tag) {
+                tag.addEventListener('click', this.#handleTagDelete);
             }
         });
     }
 
     #tagAdd(tag: string) {
         if (this.#tags.indexOf(tag) !== -1) {
-            const repeated = <HTMLLabelElement>document.getElementById('tag-' + tag);
+            const repeated = <HTMLLabelElement>document.getElementById('tag-label-' + tag);
             if (repeated) {
                 repeated.classList.add('tags__tag_error');
                 setTimeout(() => repeated.classList.remove('tags__tag_error'), TAG_PING_TIME_MSEC);

@@ -2,6 +2,8 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-create/eventcreate.hbs';
+import * as tagTemplate from '@templates/tag/tag.hbs';
+import '@templates/tag/tag.css';
 import '@event-form/EventForm.css';
 
 const MAX_NUM_OF_TAGS = 6;
@@ -89,6 +91,15 @@ export default class EventFormView {
         if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
+    #deleteTag = (e: MouseEvent) => {
+        const target = <HTMLElement>e.target;
+        const tagWrapper = <HTMLElement>e.currentTarget;
+        if (!target || !tagWrapper || !target.dataset['tag']) return;
+        this.#eventTags = this.#eventTags.filter(tag => tag !== target.dataset['tag']);
+        tagWrapper.removeEventListener('click', this.#deleteTag);
+        tagWrapper.outerHTML = '';
+    };
+
     #addTag(ev: Event) {
         ev.preventDefault();
 
@@ -103,23 +114,24 @@ export default class EventFormView {
             return;
         }
 
-        if (tagInput.value.trim()) {
-            if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я0-9]+$')) {
+        const tagTrimmed = tagInput.value.trim();
+        if (tagTrimmed) {
+            if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
                 errorP.textContent = ONE_WORD_TAG_STR;
                 return;
             }
 
-            if (tagInput.value.trim().length > 30) {
+            if (tagTrimmed.length > 30) {
                 errorP.textContent = TAG_LENGTH_STR;
                 return;
             }
-            if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
-                const tag = document.createElement('a');
-                tag.classList.add('event-tag');
-                tag.classList.add('event-tags-block__event-tag');
-                tag.textContent = tagInput.value.trim();
-                tagBlock.appendChild(tag);
-                this.#eventTags.push(tagInput.value.trim());
+            if (this.#eventTags.indexOf(tagTrimmed) === -1) {
+                tagBlock.innerHTML += tagTemplate(tagTrimmed);
+                const tag = <HTMLElement>document.getElementById('tag-' + tagTrimmed);
+                if (tag) {
+                    tag.addEventListener('click', this.#deleteTag);
+                    this.#eventTags.push(tagTrimmed);
+                }
 
                 errorP.classList.add('error_none');
             } else {
