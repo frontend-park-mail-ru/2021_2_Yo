@@ -23,7 +23,7 @@ export default class SearchPageController {
     }
 
     #parseParams() {
-        const queryParam = new URL(window.location.href).searchParams?.get('query');
+        const queryParam = new URL(window.location.href).searchParams?.get('query')?.trim();
         let query: undefined | string = undefined;
         if (queryParam) {
             query = queryParam;
@@ -41,6 +41,8 @@ export default class SearchPageController {
         let tags = new Array<string>();
         if (tagsParam) {
             tags = tagsParam.split('|');
+            tags = tags.map(tag => tag.trim());
+            tags = tags.filter(tag => tag !== '');
         } 
 
         return {category: category, tags: tags, query: query};

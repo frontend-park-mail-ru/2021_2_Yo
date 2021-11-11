@@ -104,6 +104,8 @@ export default class SideBar {
     }
 
     #tagAdd(tag: string) {
+        tag = tag.trim();
+        if (!tag) return false;
         if (this.#tags.indexOf(tag) !== -1) {
             const repeated = <HTMLLabelElement>document.getElementById('tag-label-' + tag);
             if (repeated) {

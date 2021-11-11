@@ -51,7 +51,10 @@ export default class SearchBoard {
     #handleInput = ((e: Event) => {
         const input = <HTMLInputElement>e.target;
         if (!input) return;
-        this.#query = input.value;
+        const value = input.value.trim();
+        if (value === '') return;
+
+        this.#query = value;
 
         const handle = ((query: string | undefined) => {
             if (!query) query = '';
