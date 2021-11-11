@@ -3,6 +3,8 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-edit/eventedit.hbs';
+import * as tagTemplate from '@templates/tag/tag.hbs';
+import '@templates/tag/tag.css';
 import '@event-form/EventForm.css';
 
 const MAX_NUM_OF_TAGS = 6;
@@ -39,6 +41,15 @@ export default class EventEditFormView {
     render(event?: EventData) {
         this.#eventTags = event?.tag as string[];
         this.#parent.innerHTML = template(event);
+
+        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
+        this.#eventTags.map(tag => {
+            tagBlock.innerHTML += tagTemplate(tag);
+        });
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.addEventListener('click', this.#deleteTag);
+        });
 
         this.#setInputs();
         this.#addListeners();
@@ -87,6 +98,40 @@ export default class EventEditFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));    
+
+        this.#eventTags.map((t) => {
+            const tag = <HTMLElement>document.getElementById('tag-' + t);
+            if (!tag) return;
+
+            tag.removeEventListener('click', this.#deleteTag);
+        });
+    }
+
+    #deleteTag = (e: MouseEvent) => {
+        const target = <HTMLElement>e.target;
+        const tagWrapper = <HTMLElement>e.currentTarget;
+        if (!target || !tagWrapper || !target.dataset['tag']) return;
+        this.#eventTags = this.#eventTags.filter(tag => tag !== target.dataset['tag']);
+        tagWrapper.removeEventListener('click', this.#deleteTag);
+        tagWrapper.outerHTML = '';
+    };
+
+    #rerenderTags() {
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.removeEventListener('click', this.#deleteTag);
+        });
+
+        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
+        tagBlock.innerHTML = '';
+        this.#eventTags.map(tag => {
+            tagBlock.innerHTML += tagTemplate(tag);
+        });
+
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.addEventListener('click', this.#deleteTag);
+        });
     }
 
     #addTag(ev: Event) {
@@ -103,24 +148,27 @@ export default class EventEditFormView {
             return;
         }
 
-        if (tagInput.value.trim()) {
-            if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я0-9]+$')) {
+        const tagTrimmed = tagInput.value.trim();
+        if (tagTrimmed) {
+            if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
                 errorP.textContent = ONE_WORD_TAG_STR;
                 return;
             }
 
-            if (tagInput.value.trim().length > 30) {
+            if (tagTrimmed.length > 30) {
                 errorP.textContent = TAG_LENGTH_STR;
                 return;
             }
 
-            if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
-                const tag = document.createElement('a');
-                tag.classList.add('event-tag');
-                tag.classList.add('event-tags-block__event-tag');
-                tag.textContent = tagInput.value.trim();
-                tagBlock.appendChild(tag);
-                this.#eventTags.push(tagInput.value.trim());
+            if (this.#eventTags.indexOf(tagTrimmed) === -1) {
+                // const tag = document.createElement('a');
+                // tag.classList.add('event-tag');
+                // tag.classList.add('event-tags-block__event-tag');
+                // tag.textContent = tagTrimmed;
+                // tagBlock.appendChild(tag);
+                // this.#eventTags.push(tagTrimmed);
+                this.#eventTags.push(tagTrimmed);
+                this.#rerenderTags();
 
                 errorP.classList.add('error_none');
             } else {

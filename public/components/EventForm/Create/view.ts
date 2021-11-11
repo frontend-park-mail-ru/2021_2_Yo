@@ -89,6 +89,13 @@ export default class EventFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        this.#eventTags.map((t) => {
+            const tag = <HTMLElement>document.getElementById('tag-' + t);
+            if (!tag) return;
+
+            tag.removeEventListener('click', this.#deleteTag);
+        });
     }
 
     #deleteTag = (e: MouseEvent) => {
@@ -99,6 +106,24 @@ export default class EventFormView {
         tagWrapper.removeEventListener('click', this.#deleteTag);
         tagWrapper.outerHTML = '';
     };
+
+    #rerenderTags() {
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.removeEventListener('click', this.#deleteTag);
+        });
+
+        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
+        tagBlock.innerHTML = '';
+        this.#eventTags.map(tag => {
+            tagBlock.innerHTML += tagTemplate(tag);
+        });
+
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.addEventListener('click', this.#deleteTag);
+        });
+    }
 
     #addTag(ev: Event) {
         ev.preventDefault();
@@ -126,12 +151,8 @@ export default class EventFormView {
                 return;
             }
             if (this.#eventTags.indexOf(tagTrimmed) === -1) {
-                tagBlock.innerHTML += tagTemplate(tagTrimmed);
-                const tag = <HTMLElement>document.getElementById('tag-' + tagTrimmed);
-                if (tag) {
-                    tag.addEventListener('click', this.#deleteTag);
-                    this.#eventTags.push(tagTrimmed);
-                }
+                this.#eventTags.push(tagTrimmed);
+                this.#rerenderTags();
 
                 errorP.classList.add('error_none');
             } else {
