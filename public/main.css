@@ -52,6 +52,7 @@ input:focus {
 
 #mvc-content {
   flex-grow: 1;
+  background-color: var(--app-bg-color);
 }
 
 .flex {
@@ -252,7 +253,6 @@ input:focus {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--app-bg-color);
 }
 
 .wrapper__top_forty {
