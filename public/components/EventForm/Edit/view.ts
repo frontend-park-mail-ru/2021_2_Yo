@@ -4,6 +4,7 @@ import Events from '@eventbus/events';
 import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-edit/eventedit.hbs';
 import '@event-form/EventForm.css';
+import Calendar from '@calendar/calendar';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -17,6 +18,7 @@ export default class EventEditFormView {
     #eventTags: string[] = [];
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
+    #calendar?: Calendar;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -71,7 +73,10 @@ export default class EventEditFormView {
         tagButton.addEventListener('click', this.#addTag.bind(this));
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));    
+        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        dateInput.addEventListener('focus', this.#renderCalendar.bind(this));
     }
 
     #removeListeners() {
@@ -86,7 +91,15 @@ export default class EventEditFormView {
         }
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));    
+        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+    }
+
+    #renderCalendar() {
+        const calendarBlock = <HTMLInputElement>document.getElementById('calendar');
+        if (!calendarBlock.innerHTML) {
+            this.#calendar = new Calendar(calendarBlock);
+            this.#calendar.render();
+        }
     }
 
     #addTag(ev: Event) {

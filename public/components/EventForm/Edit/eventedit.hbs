@@ -19,12 +19,13 @@
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Фото мероприятия</p>
-            <input class ="form-input form-input_event-thin" id="imageInput" type="file"/>
+            <input class="form-input form-input_event-thin" id="imageInput" type="file" accept="image/*"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Дата проведения</p>
-            <input class="form-input form-input_event-thin" id="dateInput" value="{{date}}" type="date"/>
+            <input class="form-input form-input_event-thin" id="dateInput" value="{{date}}"/>
+            <div id="calendar"></div>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
@@ -39,7 +40,15 @@
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Категория</p>
-            <input class="form-input form-input_event-thin" id="categoryInput" value="{{category}}" maxlength="30"/>
+            <select class="form-input form-input_event-thin" id="categoryInput">
+                <option value="Тусовки">Тусовки</option>
+                <option value="Выставки">Выставки</option>
+                <option value="Театр">Театр</option>
+                <option value="Фестивали">Фестивали</option>
+                <option value="Экскурсии">Экскурсии</option>
+                <option value="Концерты">Концерты</option>
+                <option value="Обучение">Обучение</option>
+            </select>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">

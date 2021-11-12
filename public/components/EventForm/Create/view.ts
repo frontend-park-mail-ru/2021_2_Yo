@@ -3,6 +3,7 @@ import Events from '@eventbus/events';
 import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-create/eventcreate.hbs';
 import '@event-form/EventForm.css';
+import Calendar from '@calendar/calendar';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -16,6 +17,7 @@ export default class EventFormView {
     #eventTags: string[] = [];
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
+    #calendar?: Calendar;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -37,10 +39,7 @@ export default class EventFormView {
 
     render() {
         this.#parent.innerHTML = template();
-
-        this.#setInputs();
         this.#addListeners();
-
         this.#eventTags = [];
     }
 
@@ -72,6 +71,9 @@ export default class EventFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        dateInput.addEventListener('focus', this.#renderCalendar.bind(this));
     }
 
     #removeListeners() {
@@ -87,6 +89,14 @@ export default class EventFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+    }
+
+    #renderCalendar() {
+        const calendarBlock = <HTMLInputElement>document.getElementById('calendar');
+        if (!calendarBlock.innerHTML) {
+            this.#calendar = new Calendar(calendarBlock);
+            this.#calendar.render();
+        }
     }
 
     #addTag(ev: Event) {
@@ -134,6 +144,8 @@ export default class EventFormView {
 
     #createEvent(ev: Event) {
         ev.preventDefault();
+
+        this.#setInputs();
 
         this.#inputsData.clear();
         this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});

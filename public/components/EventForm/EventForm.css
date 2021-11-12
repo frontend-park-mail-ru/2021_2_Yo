@@ -49,3 +49,7 @@
 .button-blue_event-save {
     padding: 0.56vh 2.03vw;
 }
+
+select {
+    background-color: inherit;
+}
