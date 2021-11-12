@@ -1,4 +1,5 @@
-import { ApiUrls, EventData, FetchResponseData } from '@/types';
+import { filterToUrl } from '@/modules/filter';
+import { ApiUrls, EventData, FetchResponseData, FilterData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import { fetchGet } from '@request/request';
@@ -6,9 +7,22 @@ import { fetchGet } from '@request/request';
 export default class MainPageModel {
     enable() {
         Bus.on(Events.EventsReq, this.#eventsHandle);
+        Bus.on(Events.FilterChange, this.#filterHandle);
     }
+
+    #filterHandle = (filter: FilterData) => {
+        const search = filterToUrl(filter);
+        Bus.emit(Events.RouteUpdate, search);
+        this.#getEvents(search);
+    };
+
     #eventsHandle = (() => {
-        fetchGet(ApiUrls.Events, 
+        this.#getEvents(); 
+    });
+
+    #getEvents(search?: string) {
+        if (search === undefined) search = '';
+        fetchGet(ApiUrls.Events + search, 
             (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
@@ -24,7 +38,7 @@ export default class MainPageModel {
                 Bus.emit(Events.EventsError);
             }
         );
-    });
+    }
 
     disable() {
         Bus.off(Events.EventsReq, this.#eventsHandle);
