@@ -41,23 +41,41 @@ export default class Calendar {
         const prevLastDayDate = new Date(this.#date.getFullYear(), this.#date.getMonth(), 0);
         this.#prevMonthLastDay = prevLastDayDate.getDate();
 
-        this.#firstDayIndex = this.#date.getDay();
+        if (this.#date.getDay() === 0) {
+            this.#firstDayIndex = 6;
+        } else {
+            this.#firstDayIndex = this.#date.getDay() - 1;
+        }
 
         const lastDayIndexDate = new Date(this.#date.getFullYear(), this.#date.getMonth() + 1, 0);
-        this.#lastDayIndex = lastDayIndexDate.getDay();
+        if (lastDayIndexDate.getDay() === 0) {
+            this.#lastDayIndex = 6;
+        } else {
+            this.#lastDayIndex = lastDayIndexDate.getDay() - 1;
+        }
 
         this.#nextMonthDays = 7 - this.#lastDayIndex - 1;
     }
 
     render() {
         this.#parent.innerHTML += template();
+        this.#renderDates();
+    }
 
+    #renderDates() {
         this.#calculateDates();
 
         const currentMonth = <HTMLSpanElement>document.getElementById('currentMonth');
         currentMonth.textContent = months[this.#date.getMonth()];
         const currentYear = <HTMLSpanElement>document.getElementById('currentYear');
         currentYear.textContent = this.#date.getFullYear().toString();
+
+        const prev = <HTMLElement>document.getElementById('prev');
+        if (this.#date.getMonth() === new Date().getMonth()) {
+            prev.style.setProperty('visibility', 'hidden');
+        } else {
+            prev.style.removeProperty('visibility');
+        }
 
         let days = '';
 
@@ -85,8 +103,10 @@ export default class Calendar {
         this.#addListeners();
     }
 
-    disable() {
+    disable(e: Event) {
+        e.preventDefault();
         this.#parent.innerHTML = '';
+        this.#removeListeners();
     }
 
     #addListeners() {
@@ -103,23 +123,58 @@ export default class Calendar {
                 parseInt(<string>child.textContent),
                 parseInt(<string>child.dataset.month)));
         }
+
+        const submitButton = <HTMLElement>document.getElementById('submit');
+        submitButton.addEventListener('click', this.disable.bind(this));
+
+        const calendarBg = <HTMLElement>document.getElementById('calendarBg');
+        calendarBg.addEventListener('click', this.disable.bind(this));
+    }
+
+    #removeListeners() {
+        const prevMonthBtn = <HTMLElement>document.getElementById('prev');
+        const nextMonthBtn = <HTMLElement>document.getElementById('next');
+
+        if (prevMonthBtn) {
+            prevMonthBtn.removeEventListener('click', this.#renderPrevMonth);
+        }
+        if (nextMonthBtn) {
+            nextMonthBtn.removeEventListener('click', this.#renderNextMonth);
+        }
+
+        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        if (monthDays) {
+            for (let i = 0; i < monthDays.children.length; i++) {
+                const child = <HTMLElement>monthDays.children[i];
+                monthDays.children[i].removeEventListener('click', this.#writeDate.bind(this,
+                    parseInt(<string>child.textContent),
+                    parseInt(<string>child.dataset.month)));
+            }
+        }
+
+        const submitButton = <HTMLElement>document.getElementById('submit');
+        if (submitButton) {
+            submitButton.removeEventListener('click', this.disable.bind(this));
+        }
+
+        const calendarBg = <HTMLElement>document.getElementById('calendarBg');
+        if (calendarBg) {
+            calendarBg.removeEventListener('click', this.disable.bind(this));
+        }
     }
 
     #renderPrevMonth = () => {
-        this.disable();
         this.#date.setMonth(this.#date.getMonth() - 1);
-        this.render();
+        this.#renderDates();
     };
 
     #writeDate(day: number, month: number) {
         const dateInput = <HTMLInputElement>document.getElementById('dateInput');
         dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
-        this.disable();
     }
 
     #renderNextMonth = () => {
-        this.disable();
         this.#date.setMonth(this.#date.getMonth() + 1);
-        this.render();
+        this.#renderDates();
     };
 }

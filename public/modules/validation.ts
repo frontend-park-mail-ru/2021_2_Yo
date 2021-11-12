@@ -9,7 +9,6 @@ const inputLength = new Map([
     ['geo', 255],
     ['city', 30],
     ['category', 30],
-    ['date', 10],
     ['description', 500],
     ['text', 2200],
     ['selfDescription', 150],
@@ -173,10 +172,13 @@ function checkEmail(value: string): string {
 }
 
 function checkDate(value: string): string {
+    const date = value.split('.');
+    if (parseInt(date[0]) < 0 || parseInt(date[0]) > 31 || parseInt(date[1]) < 0 || parseInt(date[1]) > 12) {
+        return 'Такой даты не существует';
+    }
     if (value.length && !value.match('^\\s*(3[01]|[12][0-9]|0?[1-9])\\.(1[012]|0?[1-9])\\.((?:19|20)\\d{2})\\s*$')) {
         return 'Неверный формат. Дата должна соответствовать формату дд.мм.гггг';
     }
-    const date = value.split('.');
     if (Number(new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))) < Date.now()) {
         return 'Нельзя создать мероприятие в прошлом';
     }

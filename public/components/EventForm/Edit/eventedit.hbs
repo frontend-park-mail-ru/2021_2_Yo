@@ -22,9 +22,14 @@
             <input class="form-input form-input_event-thin" id="imageInput" type="file" accept="image/*"/>
             <p class="error error_none input-block__error"></p>
         </div>
-        <div class="input-block">
+        <div class="input-block input-block_calendar">
             <p class="input-block__input-label primary-text">Дата проведения</p>
-            <input class="form-input form-input_event-thin" id="dateInput" value="{{date}}"/>
+            <div class="buttons-block">
+                <input class="form-input form-input_event-date" id="dateInput" value="{{date}}"/>
+                <svg class="calendar-button" id="calendarButton">
+                    <use xlink:href="./server/img/sprite.svg#calendar"></use>
+                </svg>
+            </div>
             <div id="calendar"></div>
             <p class="error error_none input-block__error"></p>
         </div>

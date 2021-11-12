@@ -1,7 +1,6 @@
 import {EventData} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-edit/eventedit.hbs';
 import '@event-form/EventForm.css';
 import Calendar from '@calendar/calendar';
@@ -37,8 +36,6 @@ export default class EventEditFormView {
     render(event?: EventData) {
         this.#eventTags = event?.tag as string[];
         this.#parent.innerHTML = template(event);
-
-        this.#setInputs();
         this.#addListeners();
     }
 
@@ -71,8 +68,11 @@ export default class EventEditFormView {
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
 
-        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
-        dateInput.addEventListener('focus', this.#renderCalendar.bind(this));
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        calendarButton.addEventListener('click', this.#renderCalendar.bind(this));
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        tagInput.addEventListener('keydown', this.#handleTagKeydown.bind(this));
     }
 
     #removeListeners() {
@@ -88,6 +88,18 @@ export default class EventEditFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        if (calendarButton) calendarButton.removeEventListener('click', this.#renderCalendar.bind(this));
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        if (tagInput) tagInput.removeEventListener('keydown', this.#handleTagKeydown.bind(this));
+    }
+
+    #handleTagKeydown(e: KeyboardEvent) {
+        if (e.code !== 'Enter') return;
+        e.preventDefault();
+        this.#addTag();
     }
 
     #renderCalendar() {
@@ -98,8 +110,8 @@ export default class EventEditFormView {
         }
     }
 
-    #addTag(ev: Event) {
-        ev.preventDefault();
+    #addTag(ev?: Event) {
+        ev?.preventDefault();
 
         const tagBlock = document.getElementById('tagBlock') as HTMLElement;
         const tagInput = document.getElementById('tagInput') as HTMLInputElement;
@@ -145,6 +157,8 @@ export default class EventEditFormView {
     #editEvent(ev: Event) {
         ev.preventDefault();
 
+        this.#setInputs();
+
         this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});
         this.#inputsData.set('description', {
             errors: [],
@@ -167,7 +181,12 @@ export default class EventEditFormView {
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {
             const inputBlock = input.parentElement as HTMLElement;
-            const errorP = inputBlock.lastElementChild as HTMLElement;
+            let errorP: HTMLElement;
+            if (key == 'date') {
+                errorP = inputBlock.parentElement?.lastElementChild as HTMLElement;
+            } else {
+                errorP = inputBlock.lastElementChild as HTMLElement;
+            }
             const inputData = this.#inputsData.get(key) as { errors: string[], value: string };
 
             inputData.errors.forEach(error => {
@@ -188,7 +207,12 @@ export default class EventEditFormView {
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                const inputBlock = input.parentElement as HTMLElement;
+                let inputBlock: HTMLElement;
+                if (key=='date'){
+                    inputBlock = input.parentElement?.parentElement as HTMLElement;
+                } else {
+                    inputBlock = input.parentElement as HTMLElement;
+                }
                 inputBlock.classList.remove('input-block_error');
 
                 const errorP = inputBlock.lastElementChild as HTMLElement;
