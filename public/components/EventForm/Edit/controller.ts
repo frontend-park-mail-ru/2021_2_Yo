@@ -2,7 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import EventEditFormModel from '@event-edit/model';
 import EventEditFormView from '@event-edit/view';
-import {EventData} from '@/types';
+import {EventData, UrlPathnames} from '@/types';
 import {eventValidateFields} from '@modules/validation';
 import UserStore from '@modules/userstore';
 
@@ -45,7 +45,7 @@ export default class EventEditFormController {
     });
 
     #userErrorRenderHandle = (() => {
-        this.#view.renderError();
+        Bus.emit(Events.RouteUrl, UrlPathnames.Login);
     });
 
     #editHandle = (data: MultipartData) => {
@@ -73,7 +73,7 @@ export default class EventEditFormController {
         if (UserStore.get()?.id === event.authorid) {
             this.#view.render(event);
         } else {
-            this.#view.renderError();
+            Bus.emit(Events.RouteUrl, UrlPathnames.Login);
         }
     };
 

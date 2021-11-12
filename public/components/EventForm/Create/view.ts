@@ -33,10 +33,6 @@ export default class EventFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
-    renderError() {
-        this.#parent.innerHTML = errorTemplate();
-    }
-
     render() {
         this.#parent.innerHTML = template();
         this.#addListeners();

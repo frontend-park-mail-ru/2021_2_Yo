@@ -34,10 +34,6 @@ export default class EventEditFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
-    renderError() {
-        this.#parent.innerHTML = errorTemplate();
-    }
-
     render(event?: EventData) {
         this.#eventTags = event?.tag as string[];
         this.#parent.innerHTML = template(event);
