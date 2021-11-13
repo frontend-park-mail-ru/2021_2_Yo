@@ -6,6 +6,7 @@ import * as tagTemplate from '@templates/tag/tag.hbs';
 import '@templates/tag/tag.css';
 import '@event-form/EventForm.css';
 import Calendar from '@calendar/calendar';
+import config from '@/config';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -37,7 +38,7 @@ export default class EventEditFormView {
 
     render(event?: EventData) {
         this.#eventTags = event?.tag as string[];
-        this.#parent.innerHTML = template(event);
+        this.#parent.innerHTML = template({event: event, categories: config.categories});
 
         const tagBlock = <HTMLElement>document.getElementById('tagBlock');
         this.#eventTags.map(tag => {

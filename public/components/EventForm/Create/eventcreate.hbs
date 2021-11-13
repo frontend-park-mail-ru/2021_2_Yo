@@ -46,13 +46,16 @@
         <div class="input-block">
             <p class="input-block__input-label primary-text">Категория</p>
             <select class="form-input form-input_event-thin" id="categoryInput">
-                <option value="Тусовки">Тусовки</option>
+            {{#each categories}}
+                <option value="{{name}}">{{name}}</option>
+            {{/each}}
+                {{!-- <option value="Тусовки">Тусовки</option>
                 <option value="Выставки">Выставки</option>
                 <option value="Театр">Театр</option>
                 <option value="Фестивали">Фестивали</option>
                 <option value="Экскурсии">Экскурсии</option>
                 <option value="Концерты">Концерты</option>
-                <option value="Обучение">Обучение</option>
+                <option value="Обучение">Обучение</option> --}}
             </select>
             <p class="error error_none input-block__error"></p>
         </div>

@@ -5,6 +5,7 @@ import * as tagTemplate from '@templates/tag/tag.hbs';
 import '@templates/tag/tag.css';
 import '@event-form/EventForm.css';
 import Calendar from '@calendar/calendar';
+import config from '@/config';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -35,7 +36,7 @@ export default class EventFormView {
     }).bind(this);
 
     render() {
-        this.#parent.innerHTML = template();
+        this.#parent.innerHTML = template(config);
         this.#addListeners();
         this.#eventTags = [];
     }
