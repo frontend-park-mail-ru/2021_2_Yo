@@ -58,7 +58,7 @@ self.addEventListener('fetch', (event) => {
     //     return;
     // }
 
-    const staticReq = event.request.url.match('^.*\\.(jpg|png|jpeg|woff|woff2)$');
+    const staticReq = event.request.url.match('^.*\\.(jpg|png|jpeg|woff|ico|gif|webp|webm)$');
 
     if (staticReq) {
         event.respondWith(

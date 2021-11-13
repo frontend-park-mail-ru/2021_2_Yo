@@ -119,9 +119,9 @@ export default class Calendar {
         const monthDays = <HTMLElement>document.getElementById('monthDays');
         for (let i = 0; i < monthDays.children.length; i++) {
             const child = <HTMLElement>monthDays.children[i];
-            monthDays.children[i].addEventListener('click', this.#writeDate.bind(this,
+            child.addEventListener('click', this.#writeDate.bind(this,
                 parseInt(<string>child.textContent),
-                parseInt(<string>child.dataset.month)));
+                parseInt(<string>child.dataset.month), child));
         }
 
         const submitButton = <HTMLElement>document.getElementById('submit');
@@ -146,9 +146,9 @@ export default class Calendar {
         if (monthDays) {
             for (let i = 0; i < monthDays.children.length; i++) {
                 const child = <HTMLElement>monthDays.children[i];
-                monthDays.children[i].removeEventListener('click', this.#writeDate.bind(this,
+                child.removeEventListener('click', this.#writeDate.bind(this,
                     parseInt(<string>child.textContent),
-                    parseInt(<string>child.dataset.month)));
+                    parseInt(<string>child.dataset.month), child));
             }
         }
 
@@ -168,7 +168,16 @@ export default class Calendar {
         this.#renderDates();
     };
 
-    #writeDate(day: number, month: number) {
+    #writeDate(day: number, month: number, dateCell: HTMLElement) {
+        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        for (let i = 0; i < monthDays.children.length; i++) {
+            const child = <HTMLElement>monthDays.children[i];
+            if (child.classList.contains('clicked')) {
+                child.classList.remove('clicked');
+            }
+        }
+
+        dateCell.classList.add('clicked');
         const dateInput = <HTMLInputElement>document.getElementById('dateInput');
         dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
     }

@@ -151,3 +151,8 @@
     width: 1.56vw;
     cursor: pointer;
 }
+
+.clicked{
+    color: var(--blue-btn-color) !important;
+    font-weight: 600 !important;
+}
