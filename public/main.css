@@ -2,6 +2,9 @@
 
 :root {
   --header-bg-color: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
+  --header-height: 56px;
+  --header-overlay-bg: rgba(216, 224, 255, 0.5);
+  --lightest-gray-color: #e4e4e4;
   --error-text-color: #e61a3d;
   --black-text-color: #505050;
   --blue-btn-color: #4fbdc5;

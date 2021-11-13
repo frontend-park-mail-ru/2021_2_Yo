@@ -8,13 +8,13 @@ import { filterToUrl } from '@/modules/filter';
 
 export default class HeaderView {
     #parent: HTMLElement;
-    #logo?: HTMLElement;
-    #input?: HTMLInputElement;
-    #search?: HTMLElement;
-    #logout?: HTMLElement;
+    #popupShown: boolean;
+    #headerFocusIds = ['header-input', 'header-search', 'header-calendar'];
+    #headerClickIds = ['header', 'header-logo'];
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
+        this.#popupShown = false;
     }
 
     subscribe() {
@@ -23,63 +23,104 @@ export default class HeaderView {
     }
 
     #addListeners() {
-        this.#logo = <HTMLElement>document.getElementById('header-logo');
-        this.#input = <HTMLInputElement>document.getElementById('header-input');
-        this.#search = <HTMLElement>document.getElementById('header-search');
-        this.#logout = <HTMLElement>document.getElementById('header-logout');
+        const input = <HTMLInputElement>document.getElementById('header-input');
+        if (input) input.addEventListener('keypress', this.#inputHandle);
 
-        if (this.#logout) {
-            this.#logout.addEventListener('click', this.#logoutHandle);
-        }
+        const search = <HTMLElement>document.getElementById('header-search');
+        if (search) search.addEventListener('click', this.#searchHandle);
 
-        if (this.#input) {
-            this.#input.addEventListener('keypress', this.#inputHandle);
-        }
+        const avatar = <HTMLElement>document.getElementById('header-avatar');
+        if (avatar) avatar.addEventListener('click', this.#handleAvatar);
 
-        if (this.#search) {
-            this.#search.addEventListener('click', this.#searchHandle);
-        }
-
-        if (this.#logo) {
-            this.#logo.addEventListener('click', this.#logoHandle);
-        }
+        const overlay = <HTMLElement>document.getElementById('header-overlay');
+        if (overlay) overlay.addEventListener('click', this.#handleOverlay);
     }
 
     #removeListeners() {
-        if (this.#logout) {
-            this.#logout.removeEventListener('click', this.#logoutHandle);
-        }
+        const input = <HTMLInputElement>document.getElementById('header-input');
+        if (input) input.removeEventListener('keypress', this.#inputHandle);
 
-        if (this.#input) {
-            this.#input.removeEventListener('keypress', this.#inputHandle);
-        }
+        const search = <HTMLElement>document.getElementById('header-search');
+        if (search) search.removeEventListener('click', this.#searchHandle);
 
-        if (this.#search) {
-            this.#search.removeEventListener('click', this.#searchHandle);
-        }
+        const avatar = <HTMLElement>document.getElementById('header-avatar');
+        if (avatar) avatar.removeEventListener('click', this.#handleAvatar);
 
-        if (this.#logo) {
-            this.#logo.removeEventListener('click', this.#logoHandle);
+        const overlay = <HTMLElement>document.getElementById('header-overlay');
+        if (overlay) overlay.removeEventListener('click', this.#handleOverlay);
+    }
+
+    #handleFocus = () => {
+        this.#toggleOverlay();
+    };
+
+    #handleOverlay = (e: MouseEvent) => {
+        if (this.#popupShown) this.#toggleOverlay();
+    };
+
+    #handleAvatar = (e: MouseEvent) => {
+        e.stopPropagation();
+        this.#toggleOverlay();
+    };
+
+    #listenOverlay() {
+        if (this.#popupShown) {
+            this.#headerFocusIds.map(id => {
+                const element = <HTMLElement>document.getElementById(id);
+                if (element) element.addEventListener('focus', this.#handleFocus);
+            });
+            this.#headerClickIds.map(id => {
+                const element = <HTMLElement>document.getElementById(id);
+                if (element) element.addEventListener('click', this.#handleFocus);
+            });
+            const logout = document.getElementById('header-logout');
+            if (logout) logout.addEventListener('click', this.#logoutHandle);
+        } else {
+            this.#headerFocusIds.map(id => {
+                const element = <HTMLElement>document.getElementById(id);
+                if (element) element.removeEventListener('focus', this.#handleFocus);
+            });
+            this.#headerClickIds.map(id => {
+                const element = <HTMLElement>document.getElementById(id);
+                if (element) element.removeEventListener('click', this.#handleFocus);
+            });
+            const logout = document.getElementById('header-logout');
+            if (logout) logout.removeEventListener('click', this.#logoutHandle);
         }
     }
 
-    #logoHandle = (() => {
-        Bus.emit(Events.RouteUrl, UrlPathnames.Main);
-    }).bind(this);
+    #toggleOverlay() {
+        const avatar = <HTMLElement>document.getElementById('header-avatar');
+        const overlay = <HTMLElement>document.getElementById('header-overlay');
+        if (!avatar || !overlay) return;
+        if (this.#popupShown) {
+            avatar.classList.remove('header__avatar-wrapper_checked');
+            overlay.classList.remove('header-overlay_shown');
+            overlay.classList.add('header-overlay_hidden');
+        } else {
+            avatar.classList.add('header__avatar-wrapper_checked');
+            overlay.classList.remove('header-overlay_hidden');
+            overlay.classList.add('header-overlay_shown');
+        }
+        this.#popupShown = !this.#popupShown;
+        this.#listenOverlay();
+    }
 
     #inputHandle = ((e: KeyboardEvent) => {
         if (e.code !== 'Enter') return;
-        const value = this.#input?.value;
+        const input = <HTMLInputElement>e.currentTarget;
+        const value = input.value;
         const params = filterToUrl({query: value});
         Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
-        (<HTMLInputElement>(this.#input)).value = '';
+        input.value = '';
     }).bind(this);
 
     #searchHandle = (() => {
-        const value = this.#input?.value;
+        const input = <HTMLInputElement>document.getElementById('header-input');
+        const value = input.value;
         const params = filterToUrl({query: value});
         Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
-        (<HTMLInputElement>(this.#input)).value = '';
+        input.value = '';
     }).bind(this);
 
     #logoutHandle = (() => {
