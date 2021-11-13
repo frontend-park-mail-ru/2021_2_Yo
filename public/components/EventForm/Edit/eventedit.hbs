@@ -45,7 +45,7 @@
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Категория</p>
-            <select class="form-input form-input_event-thin" id="categoryInput">
+            <select class="form-input form-input_event-thin" id="categoryInput" value="{{event.category}}">
             {{#each categories}}
                 <option value="{{name}}">{{name}}</option>
             {{/each}}
