@@ -36,6 +36,7 @@
             "@error-page/*": [ "public/components/ErrorPage/*" ],
             "@search-page/*": [ "public/components/SearchPage/*" ],
             "@profile-page/*": [ "public/components/ProfilePage/*" ],
+            "@calendar/*": [ "public/components/Calendar/*" ],
         },
         "lib": ["es2019", "es6", "dom", "webworker"],
     },

@@ -49,3 +49,33 @@
 .button-blue_event-save {
   padding: 0.56vh 2.03vw;
 }
+
+select {
+    background-color: inherit;
+}
+
+.calendar-button {
+    width: 2.08vw;
+    height: 3.7vh;
+    cursor: pointer;
+}
+
+.calendar-button-container {
+    display: flex;
+    justify-content: start;
+    width: 15.26vw;
+}
+
+.input-block_calendar {
+    position: static;
+}
+
+.form-input_event-date {
+    border: 2px solid var(--gray-border-color);
+    width: 32.9vw;
+    height: 3.7vh;
+}
+
+.input-block_calendar{
+    width: 35.47vw;
+}
