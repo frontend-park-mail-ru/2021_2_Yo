@@ -131,7 +131,7 @@ function checkImageType(image: File) {
 
 function checkImageSize(image: File) {
     if (image.size > MAX_FILE_SIZE_MB) {
-        return `Размер не должен превышать ${MAX_FILE_SIZE_MB}Мб`;
+        return 'Размер не должен превышать 5Mб';
     }
     return '';
 }
