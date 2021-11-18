@@ -11,7 +11,7 @@ export default class EventBoardComponent {
     constructor(parent: HTMLElement) {
         Bus.on(Events.EventsRes, this.#eventsHandle);
         Bus.on(Events.EventsError, this.#eventsError);
-        Bus.emit(Events.EventsReq);
+        // Bus.emit(Events.EventsReq);
         this.#parent = parent;
     }
 

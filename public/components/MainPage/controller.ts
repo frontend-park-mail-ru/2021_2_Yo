@@ -1,3 +1,4 @@
+import { parseParams } from '@/modules/filter';
 import MainPageModel from '@main-page/model';
 import MainPageView from '@main-page/view';
 
@@ -12,7 +13,8 @@ export default class MainPageController {
 
     enable() {
         this.#model.enable();
-        this.#view.render();
+        const params = parseParams().category;
+        this.#view.render(params);
     }
 
     disable() {

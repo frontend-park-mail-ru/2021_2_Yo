@@ -1,8 +1,11 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as errorTemplate from '@event-form/error.hbs';
 import * as template from '@event-create/eventcreate.hbs';
+import * as tagTemplate from '@templates/tag/tag.hbs';
+import '@templates/tag/tag.css';
 import '@event-form/EventForm.css';
+import Calendar from '@calendar/calendar';
+import config from '@/config';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -16,6 +19,7 @@ export default class EventFormView {
     #eventTags: string[] = [];
     #inputs = new Map<string, HTMLInputElement>();
     #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
+    #calendar?: Calendar;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -31,16 +35,9 @@ export default class EventFormView {
         this.#showCorrectInputs();
     }).bind(this);
 
-    renderError() {
-        this.#parent.innerHTML = errorTemplate();
-    }
-
     render() {
-        this.#parent.innerHTML = template();
-
-        this.#setInputs();
+        this.#parent.innerHTML = template(config);
         this.#addListeners();
-
         this.#eventTags = [];
     }
 
@@ -72,6 +69,12 @@ export default class EventFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        calendarButton.addEventListener('click', this.#renderCalendar.bind(this));
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        tagInput.addEventListener('keydown', this.#handleTagKeydown.bind(this));
     }
 
     #removeListeners() {
@@ -87,10 +90,63 @@ export default class EventFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        this.#eventTags.map((t) => {
+            const tag = <HTMLElement>document.getElementById('tag-' + t);
+            if (!tag) return;
+
+            tag.removeEventListener('click', this.#deleteTag);
+        });
     }
 
-    #addTag(ev: Event) {
-        ev.preventDefault();
+    #deleteTag = (e: MouseEvent) => {
+        const target = <HTMLElement>e.target;
+        const tagWrapper = <HTMLElement>e.currentTarget;
+        if (!target || !tagWrapper || !target.dataset['tag']) return;
+        this.#eventTags = this.#eventTags.filter(tag => tag !== target.dataset['tag']);
+        tagWrapper.removeEventListener('click', this.#deleteTag);
+        tagWrapper.outerHTML = '';
+    };
+
+    #rerenderTags() {
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.removeEventListener('click', this.#deleteTag);
+        });
+
+        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
+        tagBlock.innerHTML = '';
+        this.#eventTags.map(tag => {
+            tagBlock.innerHTML += tagTemplate(tag);
+        });
+
+        this.#eventTags.map(tag => {
+            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            if (tagWrapper) tagWrapper.addEventListener('click', this.#deleteTag);
+        });
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        if (calendarButton) calendarButton.removeEventListener('click', this.#renderCalendar.bind(this));
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        if (tagInput) tagInput.removeEventListener('keydown', this.#handleTagKeydown.bind(this));
+    }
+
+    #handleTagKeydown(e: KeyboardEvent) {
+        if (e.code !== 'Enter') return;
+        e.preventDefault();
+        this.#addTag();
+    }
+
+    #renderCalendar() {
+        const calendarBlock = <HTMLInputElement>document.getElementById('calendar');
+        if (!calendarBlock.innerHTML) {
+            this.#calendar = new Calendar(calendarBlock);
+            this.#calendar.render();
+        }
+    }
+
+    #addTag(ev?: Event) {
+        ev?.preventDefault();
 
         const tagBlock = document.getElementById('tagBlock') as HTMLElement;
         const tagInput = document.getElementById('tagInput') as HTMLInputElement;
@@ -103,23 +159,20 @@ export default class EventFormView {
             return;
         }
 
-        if (tagInput.value.trim()) {
-            if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я0-9]+$')) {
+        const tagTrimmed = tagInput.value.trim();
+        if (tagTrimmed) {
+            if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
                 errorP.textContent = ONE_WORD_TAG_STR;
                 return;
             }
 
-            if (tagInput.value.trim().length > 30) {
+            if (tagTrimmed.length > 30) {
                 errorP.textContent = TAG_LENGTH_STR;
                 return;
             }
-            if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
-                const tag = document.createElement('a');
-                tag.classList.add('event-tag');
-                tag.classList.add('event-tags-block__event-tag');
-                tag.textContent = tagInput.value.trim();
-                tagBlock.appendChild(tag);
-                this.#eventTags.push(tagInput.value.trim());
+            if (this.#eventTags.indexOf(tagTrimmed) === -1) {
+                this.#eventTags.push(tagTrimmed);
+                this.#rerenderTags();
 
                 errorP.classList.add('error_none');
             } else {
@@ -134,6 +187,8 @@ export default class EventFormView {
 
     #createEvent(ev: Event) {
         ev.preventDefault();
+
+        this.#setInputs();
 
         this.#inputsData.clear();
         this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});
@@ -158,7 +213,13 @@ export default class EventFormView {
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {
             const inputBlock = input.parentElement as HTMLElement;
-            const errorP = inputBlock.lastElementChild as HTMLElement;
+
+            let errorP: HTMLElement;
+            if (key == 'date') {
+                errorP = inputBlock.parentElement?.lastElementChild as HTMLElement;
+            } else {
+                errorP = inputBlock.lastElementChild as HTMLElement;
+            }
             const inputData = this.#inputsData.get(key) as { errors: string[], value: string };
 
             inputData.errors.forEach(error => {
@@ -179,7 +240,12 @@ export default class EventFormView {
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                const inputBlock = input.parentElement as HTMLElement;
+                let inputBlock: HTMLElement;
+                if (key=='date'){
+                    inputBlock = input.parentElement?.parentElement as HTMLElement;
+                } else {
+                    inputBlock = input.parentElement as HTMLElement;
+                }
                 inputBlock.classList.remove('input-block_error');
 
                 const errorP = inputBlock.lastElementChild as HTMLElement;

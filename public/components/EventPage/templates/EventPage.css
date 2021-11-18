@@ -66,6 +66,8 @@
   font-size: 4.44vh;
   line-height: 5.19vh;
   color: var(--black-text-color);
+  margin-top: 1.85vh;
+  margin-bottom: 1.85vh;
 }
 
 .event-text_header {

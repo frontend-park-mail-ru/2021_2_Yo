@@ -2,6 +2,7 @@ import {fetchDelete, fetchGet} from '@request/request';
 import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import userstore from '@modules/userstore';
 
 export default class EventPageModel {
     getEvent(id: string) {
@@ -24,7 +25,8 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        Bus.emit(Events.RouteBack);
+                        console.log(UrlPathnames.Profile + '?id=' + userstore.get()?.id);
+                        Bus.emit(Events.RouteUrl, UrlPathnames.Profile + '?id=' + userstore.get()?.id);
                     }
                 }
             }

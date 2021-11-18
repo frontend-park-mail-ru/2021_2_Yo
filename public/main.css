@@ -2,13 +2,17 @@
 
 :root {
   --header-bg-color: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
+  --header-height: 56px;
+  --header-overlay-bg: rgba(216, 224, 255, 0.5);
+  --lightest-gray-color: #e4e4e4;
   --error-text-color: #e61a3d;
   --black-text-color: #505050;
   --blue-btn-color: #4fbdc5;
   --orange-btn-color: #ff630b;
   --gray-bg-color: #d2d2d3;
   --purple-btn-color: #490063;
-  --gray-border-color: #aaaaaa;
+  --light-gray-color: #aaaaaa;
+  --gray-border: 2px solid var(--light-gray-color);
   --app-bg-color: #f7f7f7;
   --date-orange-color: #ff630b;
   --geo-turquoise-color: #08bbbb;
@@ -42,7 +46,6 @@ input:focus {
 }
 
 #App {
-  background-color: var(--app-bg-color);
   width: 100%;
   font-family: Roboto;
   height: 100%;
@@ -52,6 +55,7 @@ input:focus {
 
 #mvc-content {
   flex-grow: 1;
+  background-color: var(--app-bg-color);
 }
 
 .flex {
@@ -162,6 +166,10 @@ input:focus {
   border-radius: 2px;
 
   resize: none;
+}
+
+textarea {
+  font-family: inherit;
 }
 
 .form-input_correct {
@@ -320,11 +328,11 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   color: white;
+  margin-top: 10px;
 }
 
 .event-tags-block__event-tag {
-  margin-right: 0.52vw;
-  margin-top: 0.93vh;
+  margin-right: 10px;
 }
 
 .event-tags-block__event-tag:last-child {

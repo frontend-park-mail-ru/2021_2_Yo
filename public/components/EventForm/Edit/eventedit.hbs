@@ -2,44 +2,54 @@
     <form class="eventform" id="eventform">
         <div class="input-block">
             <p class="input-block__input-label primary-text">Название</p>
-            <input class="form-input form-input_event-wide" id="titleInput" maxlength="255" value="{{title}}"/>
+            <input class="form-input form-input_event-wide" id="titleInput" maxlength="255" value="{{event.title}}"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Краткое описание</p>
             <textarea class="form-textarea form-textarea_event" id="descriptionInput"
-                      rows="4" maxlength="500">{{description}}</textarea>
+                      rows="4" maxlength="500">{{event.description}}</textarea>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Описание</p>
             <textarea class="form-textarea form-textarea_event" id="textInput" rows="12"
-                      maxlength="2200">{{text}}</textarea>
+                      maxlength="2200">{{event.text}}</textarea>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Фото мероприятия</p>
-            <input class ="form-input form-input_event-thin" id="imageInput" type="file"/>
+            <input class="form-input form-input_event-thin" id="imageInput" type="file" accept="image/*"/>
             <p class="error error_none input-block__error"></p>
         </div>
-        <div class="input-block">
+        <div class="input-block input-block_calendar">
             <p class="input-block__input-label primary-text">Дата проведения</p>
-            <input class="form-input form-input_event-thin" id="dateInput" value="{{date}}" type="date"/>
+            <div class="buttons-block">
+                <input class="form-input form-input_event-date" id="dateInput" value="{{event.date}}"/>
+                <svg class="calendar-button" id="calendarButton">
+                    <use xlink:href="./server/img/sprite.svg#calendar"></use>
+                </svg>
+            </div>
+            <div id="calendar"></div>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Город</p>
-            <input class="form-input form-input_event-thin" id="cityInput" value="{{city}}" maxlength="30"/>
+            <input class="form-input form-input_event-thin" id="cityInput" value="{{event.city}}" maxlength="30"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Адрес</p>
-            <input class="form-input form-input_event-thin" id="geoInput" value="{{geo}}" maxlength="255"/>
+            <input class="form-input form-input_event-thin" id="geoInput" value="{{event.geo}}" maxlength="255"/>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
             <p class="input-block__input-label primary-text">Категория</p>
-            <input class="form-input form-input_event-thin" id="categoryInput" value="{{category}}" maxlength="30"/>
+            <select class="form-input form-input_event-thin" id="categoryInput" value="{{event.category}}">
+            {{#each categories}}
+                <option value="{{name}}">{{name}}</option>
+            {{/each}}
+            </select>
             <p class="error error_none input-block__error"></p>
         </div>
         <div class="input-block">
@@ -52,13 +62,7 @@
             <div id="tagBlockError">
                 <p class="error error_none"></p>
             </div>
-            <div class="event-tags-block" id="tagBlock">
-                {{#if tag}}
-                    {{#each tag}}
-                        <a class="event-tag event-tags-block__event-tag">{{this}}</a>
-                    {{/each}}
-                {{/if}}
-            </div>
+            <div class="event-tags-block" id="tagBlock"></div>
         </div>
         <div class="eventform__buttons buttons-block">
             <input id="cancel-button" type="button" value="Отмена" class="button-white_event-cancel button-white">
