@@ -29,6 +29,15 @@ body {
   margin: 0;
 }
 
+html {
+  font-size: 14px;
+}
+
+input {
+  padding: 0;
+  font-family: inherit;
+}
+
 a,
 a:visited,
 a:hover,
@@ -355,4 +364,45 @@ textarea {
   color: var(--black-text-color);
 
   margin: 0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+/* @media only screen and (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  html {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 1480px) {
+  html {
+    font-size: 14px;
+  }
 }

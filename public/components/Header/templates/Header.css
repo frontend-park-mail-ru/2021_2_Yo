@@ -3,10 +3,10 @@
 }
 
 .header-text {
-  font-size: 1.85vh;
   color: white;
   text-align: center;
   font-weight: normal;
+  font-size: 1.4rem;
 }
 
 .header-text_decoration_underline {
@@ -22,7 +22,7 @@
 }
 
 .header__content {
-  width: 67vw;
+  width: 62%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,17 +34,18 @@
 }
 
 .header__search {
-  width: 24.48vw;
-  height: 32px;
+  width: 39.5%;
+  height: 34px;
   border: 1px solid white;
-  border-radius: 2px;
-  padding: 5px;
+  border-radius: 5px;
+  padding: 6px 0px 6px 10px;
   box-sizing: border-box;
 }
 
 .header__search-input {
-  width: 100%;
-  height: 32px;
+  flex-grow: 1;
+  height: 100%;
+  font-size: 1.4rem;
   background: transparent;
   border: none;
   color: white;
@@ -56,8 +57,10 @@
 
 .header__search-img {
   fill: white;
-  width: 20px;
+  width: 32px;
   height: 20px;
+  box-sizing: border-box;
+  padding: 0px 6px 0px;
 }
 
 .header__calendar-img {
@@ -81,8 +84,8 @@
 }
 
 .header__avatar {
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -120,11 +123,11 @@
 .user-popup-wrapper {
   display: flex;
   flex-direction: row-reverse;
-  width: 67vw;
+  width: 62%;
 }
 
 .user-popup {
-  width: 17.2vw;
+  min-width: 28%;
   height: fit-content;
   background: white;
   filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.5));
@@ -135,8 +138,12 @@
 .user-popup-userblock {
   display: flex;
   align-items: center;
-  height: 6.48vh;
   padding: 10px 10px;
+}
+
+.user-popup-avatar {
+  width: 50px;
+  height: 50px;
 }
 
 .user-popup-userblock:hover {
@@ -146,15 +153,18 @@
 
 .user-popup-userblock-info {
   margin-left: 10px;
+  margin-right: 54px;
 }
 
 .user-popup-userblock-name {
-  font-size: 1.85vh;
+  font-size: 1.4rem;
+  line-height: 1.65rem;
   color: var(--black-text-color);
 }
 
 .user-popup-userblock-email {
-  font-size: 1.3vh;
+  font-size: 1rem;
+  line-height: 1.15rem;
   font-weight: bold;
   color: var(--light-gray-color);
 }
@@ -162,12 +172,8 @@
 .user-popup-item-wrapper {
   display: flex;
   align-items: center;
-  height: 3.5vh;
-  padding: 5px 10px;
-  font-size: 1.7vh;
-}
-
-.user-popup-item-wrapper {
+  padding: 7px 10px;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 
@@ -209,13 +215,12 @@
 }
 
 .user-popup-item {
-  height: 2.6vh;
   display: flex;
   align-items: center;
 }
 
 .user-popup-item-img {
-  width: 2.2vh;
-  height: 2.2vh;
+  width: 1.7rem;
+  height: 1.7rem;
   margin-right: 5px;
 }

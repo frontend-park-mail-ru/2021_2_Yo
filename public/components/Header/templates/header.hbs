@@ -3,15 +3,10 @@
         <a href="/">
             <img id="header-logo" class="header__logo header-button" src="./img/logo.png">
         </a>
-        <div class="flex">
-            <div class="flex header__search">
-                <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
-                <svg id="header-search" class="header-button header__search-img">
-                    <use xlink:href="./server/img/sprite.svg#search"></use>
-                </svg>
-            </div>
-            <svg id="header-calendar" class="header-button header__calendar-img">
-                <use xlink:href="./server/img/sprite.svg#calendar"></use>
+        <div class="flex header__search">
+            <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
+            <svg id="header-search" class="header-button header__search-img">
+                <use xlink:href="./server/img/sprite.svg#search"></use>
             </svg>
         </div>
         {{#if user}}
@@ -37,7 +32,7 @@
     <div class="user-popup-wrapper">
         <div class="user-popup">
             <a class="user-popup-userblock" href="/user?id={{user.id}}">
-                <img class="header__avatar"
+                <img class="header__avatar user-popup-avatar"
                 {{#if user.imgUrl}}
                     src="{{user.imgUrl}}"
                 {{else}}
