@@ -1,5 +1,5 @@
 <div class ="event-background">
-    <div class="event-background__primary-border-block primary-border-block">
+    <div class="event-background__primary-border-block primary-white-block">
         <div class="event-header">
             <span>
                 <span class="event-header-text event-header-text_place">
@@ -30,16 +30,16 @@
     </div>
 
     {{#if event.imgUrl}}
-    <div class="event-background__primary-border-block primary-border-block">
+    <div class="event-background__primary-border-block primary-white-block">
         <img class="event-block__photo" src="{{event.imgUrl}}">
     </div>
     {{/if}}
 
-    <div class="event-background__primary-border-block primary-border-block">
+    <div class="event-background__primary-border-block primary-white-block">
         <p class="primary-text">{{event.text}}</p>
     </div>
 
-    <div class="event-background__primary-border-block primary-border-block">
+    <div class="event-background__primary-border-block primary-white-block">
         <div>
             <span class="primary-text">Когда: </span>
             <span class="event-button event-button_orange">{{event.date}}</span>
@@ -50,7 +50,7 @@
         </div>
     </div>
     {{#if permission}}
-    <div class="event-background__primary-border-block primary-border-block">
+    <div class="event-background__primary-border-block primary-white-block">
         <div class="buttons-block">
             <a class="event-button event-button_blue" id="editButton">
                 Редактировать мероприятие

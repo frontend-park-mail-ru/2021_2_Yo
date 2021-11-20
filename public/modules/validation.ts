@@ -144,7 +144,7 @@ function checkEmpty(value: string): string {
 }
 
 function checkForbiddenSymbols(value: string): string {
-    if (!value.match('^[a-zA-Zа-яА-Я]+$') && value) {
+    if (value && !value.match('^[a-zA-Zа-яА-Я]+$')) {
         return 'Поле может содержать только буквы';
     }
     return '';

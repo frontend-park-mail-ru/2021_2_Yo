@@ -1,11 +1,13 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as template from '@event-create/eventcreate.hbs';
+import * as template from '@event-create/create.hbs';
 import * as tagTemplate from '@templates/tag/tag.hbs';
 import '@templates/tag/tag.css';
 import '@event-form/EventForm.css';
 import Calendar from '@calendar/calendar';
+import MapPopUp from '@map/map';
 import config from '@/config';
+import {InputData} from '@/types';
 
 const MAX_NUM_OF_TAGS = 6;
 const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
@@ -18,8 +20,9 @@ export default class EventFormView {
     #parent: HTMLElement;
     #eventTags: string[] = [];
     #inputs = new Map<string, HTMLInputElement>();
-    #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
+    #inputsData = new Map<string, InputData>();
     #calendar?: Calendar;
+    #map?: MapPopUp;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -41,30 +44,11 @@ export default class EventFormView {
         this.#eventTags = [];
     }
 
-    #setInputs() {
-        const titleInput = <HTMLInputElement>document.getElementById('titleInput');
-        this.#inputs.set('title', titleInput);
-        const descriptionInput = <HTMLInputElement>document.getElementById('descriptionInput');
-        this.#inputs.set('description', descriptionInput);
-        const textInput = <HTMLInputElement>document.getElementById('textInput');
-        this.#inputs.set('text', textInput);
-        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
-        this.#inputs.set('date', dateInput);
-        const cityInput = <HTMLInputElement>document.getElementById('cityInput');
-        this.#inputs.set('city', cityInput);
-        const geoInput = <HTMLInputElement>document.getElementById('geoInput');
-        this.#inputs.set('geo', geoInput);
-        const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
-        this.#inputs.set('category', categoryInput);
-        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
-        this.#inputs.set('image', imageInput);
-    }
-
     #addListeners() {
-        const form = document.getElementById('eventform') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('eventform');
         form.addEventListener('submit', this.#createEvent.bind(this));
 
-        const tagButton = document.getElementById('tagButton') as HTMLInputElement;
+        const tagButton = <HTMLInputElement>document.getElementById('tagButton');
         tagButton.addEventListener('click', this.#addTag.bind(this));
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
@@ -75,21 +59,31 @@ export default class EventFormView {
 
         const tagInput = <HTMLElement>document.getElementById('tagInput');
         tagInput.addEventListener('keydown', this.#handleTagKeydown.bind(this));
+
+        const geoButton = <HTMLElement>document.getElementById('geoButton');
+        geoButton.addEventListener('click', this.#renderMap);
+
+        this.#setInputs();
+        this.#inputs.forEach((input) => {
+            input.addEventListener('oninput')
+        })
     }
 
     #removeListeners() {
-        const form = document.getElementById('eventform') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('eventform');
         if (form) {
             form.removeEventListener('submit', this.#createEvent.bind(this));
         }
 
-        const tagButton = document.getElementById('tagButton') as HTMLInputElement;
+        const tagButton = <HTMLInputElement>document.getElementById('tagButton');
         if (tagButton) {
             tagButton.removeEventListener('click', this.#addTag.bind(this));
         }
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+        if (cancelButton) {
+            cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+        }
 
         this.#eventTags.map((t) => {
             const tag = <HTMLElement>document.getElementById('tag-' + t);
@@ -97,13 +91,45 @@ export default class EventFormView {
 
             tag.removeEventListener('click', this.#deleteTag);
         });
+
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        if (calendarButton) {
+            calendarButton.removeEventListener('click', this.#renderCalendar.bind(this));
+        }
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        if (tagInput) {
+            tagInput.removeEventListener('keydown', this.#handleTagKeydown.bind(this));
+        }
+
+        const geoButton = <HTMLElement>document.getElementById('geoButton');
+        if (geoButton) {
+            geoButton.removeEventListener('click', this.#renderMap);
+        }
     }
+
+    #handleInputChange = (e: Event) => {
+        e.preventDefault();
+
+
+    }
+
+    #renderMap = (e: Event) => {
+        e.preventDefault();
+
+        const map = new MapPopUp(this.#parent);
+        // map.render();
+    };
 
     #deleteTag = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
         const tagWrapper = <HTMLElement>e.currentTarget;
-        if (!target || !tagWrapper || !target.dataset['tag']) return;
+
+        if (!target || !tagWrapper || !target.dataset['tag'])
+            return;
+
         this.#eventTags = this.#eventTags.filter(tag => tag !== target.dataset['tag']);
+
         tagWrapper.removeEventListener('click', this.#deleteTag);
         tagWrapper.outerHTML = '';
     };
@@ -124,11 +150,6 @@ export default class EventFormView {
             const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
             if (tagWrapper) tagWrapper.addEventListener('click', this.#deleteTag);
         });
-        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
-        if (calendarButton) calendarButton.removeEventListener('click', this.#renderCalendar.bind(this));
-
-        const tagInput = <HTMLElement>document.getElementById('tagInput');
-        if (tagInput) tagInput.removeEventListener('keydown', this.#handleTagKeydown.bind(this));
     }
 
     #handleTagKeydown(e: KeyboardEvent) {
@@ -139,6 +160,7 @@ export default class EventFormView {
 
     #renderCalendar() {
         const calendarBlock = <HTMLInputElement>document.getElementById('calendar');
+
         if (!calendarBlock.innerHTML) {
             this.#calendar = new Calendar(calendarBlock);
             this.#calendar.render();
@@ -148,38 +170,38 @@ export default class EventFormView {
     #addTag(ev?: Event) {
         ev?.preventDefault();
 
-        const tagBlock = document.getElementById('tagBlock') as HTMLElement;
-        const tagInput = document.getElementById('tagInput') as HTMLInputElement;
-        const tagBlockError = document.getElementById('tagBlockError') as HTMLElement;
-        const errorP = tagBlockError.firstElementChild as HTMLElement;
-        errorP.classList.remove('error_none');
+        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
+        const tagInput = <HTMLInputElement>document.getElementById('tagInput');
+        const tagError = <HTMLElement>document.getElementById('tagError');
+        tagError.classList.remove('error_none');
 
         if (tagBlock.children.length === MAX_NUM_OF_TAGS) {
-            errorP.textContent = TAGS_LIMIT_STR;
+            tagError.textContent = TAGS_LIMIT_STR;
             return;
         }
 
         const tagTrimmed = tagInput.value.trim();
         if (tagTrimmed) {
             if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
-                errorP.textContent = ONE_WORD_TAG_STR;
+                tagError.textContent = ONE_WORD_TAG_STR;
                 return;
             }
 
             if (tagTrimmed.length > 30) {
-                errorP.textContent = TAG_LENGTH_STR;
+                tagError.textContent = TAG_LENGTH_STR;
                 return;
             }
+
             if (this.#eventTags.indexOf(tagTrimmed) === -1) {
                 this.#eventTags.push(tagTrimmed);
                 this.#rerenderTags();
 
-                errorP.classList.add('error_none');
+                tagError.classList.add('error_none');
             } else {
-                errorP.textContent = TAG_EXISTS_STR;
+                tagError.textContent = TAG_EXISTS_STR;
             }
         } else {
-            errorP.textContent = NO_EMPTY_TAG_STR;
+            tagError.textContent = NO_EMPTY_TAG_STR;
         }
 
         tagInput.value = '';
@@ -191,45 +213,54 @@ export default class EventFormView {
         this.#setInputs();
 
         this.#inputsData.clear();
-        this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});
+        this.#inputsData.set('title', {errors: [], value: <string>this.#inputs.get('title')?.value.trim()});
         this.#inputsData.set('description', {
             errors: [],
-            value: this.#inputs.get('description')?.value.trim() as string
+            value: <string>this.#inputs.get('description')?.value.trim()
         });
-        this.#inputsData.set('text', {errors: [], value: this.#inputs.get('text')?.value.trim() as string});
-        this.#inputsData.set('date', {errors: [], value: this.#inputs.get('date')?.value.trim() as string});
-        this.#inputsData.set('city', {errors: [], value: this.#inputs.get('city')?.value.trim() as string});
-        this.#inputsData.set('geo', {errors: [], value: this.#inputs.get('geo')?.value.trim() as string});
-        this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
+        this.#inputsData.set('text', {errors: [], value: <string>this.#inputs.get('text')?.value.trim()});
+        this.#inputsData.set('date', {errors: [], value: <string>this.#inputs.get('date')?.value.trim()});
+        this.#inputsData.set('city', {errors: [], value: <string>this.#inputs.get('city')?.value.trim()});
+        this.#inputsData.set('geo', {errors: [], value: <string>this.#inputs.get('geo')?.value.trim()});
+        this.#inputsData.set('category', {errors: [], value: <string>this.#inputs.get('category')?.value.trim()});
         this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
         this.#inputsData.set('image', {errors: [], value: ''});
 
         let file: undefined | File;
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
         if (imageInput.files) file = imageInput.files[0];
+
         Bus.emit(Events.EventCreateReq, {input: this.#inputsData, file});
+    }
+
+    #setInputs() {
+        const titleInput = <HTMLInputElement>document.getElementById('titleInput');
+        this.#inputs.set('title', titleInput);
+        const descriptionInput = <HTMLInputElement>document.getElementById('descriptionInput');
+        this.#inputs.set('description', descriptionInput);
+        const textInput = <HTMLInputElement>document.getElementById('textInput');
+        this.#inputs.set('text', textInput);
+        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        this.#inputs.set('date', dateInput);
+        const geoInput = <HTMLInputElement>document.getElementById('geoInput');
+        this.#inputs.set('geo', geoInput);
+        const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
+        this.#inputs.set('category', categoryInput);
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        this.#inputs.set('image', imageInput);
     }
 
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {
-            const inputBlock = input.parentElement as HTMLElement;
-
-            let errorP: HTMLElement;
-            if (key == 'date') {
-                errorP = inputBlock.parentElement?.lastElementChild as HTMLElement;
-            } else {
-                errorP = inputBlock.lastElementChild as HTMLElement;
-            }
-            const inputData = this.#inputsData.get(key) as { errors: string[], value: string };
+            const inputError = <HTMLElement>document.getElementById(key + 'Error');
+            console.log(inputError);
+            inputError.classList.add('error_none');
+            const inputData = <InputData>this.#inputsData.get(key);
 
             inputData.errors.forEach(error => {
                 if (error) {
-                    inputBlock.classList.add('input-block_error');
-
-                    if (inputBlock.innerHTML.indexOf(error) === -1) {
-                        errorP.classList.remove('error_none');
-                        errorP.textContent = error;
-                    }
+                    inputError.classList.remove('error_none');
+                    inputError.textContent = error;
                 } else {
                     inputData.errors = inputData.errors.slice(1);
                 }
@@ -240,17 +271,10 @@ export default class EventFormView {
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                let inputBlock: HTMLElement;
-                if (key=='date'){
-                    inputBlock = input.parentElement?.parentElement as HTMLElement;
-                } else {
-                    inputBlock = input.parentElement as HTMLElement;
-                }
-                inputBlock.classList.remove('input-block_error');
+                const inputError = <HTMLElement>document.getElementById(key + 'Error');
+                inputError.classList.add('error_none');
 
-                const errorP = inputBlock.lastElementChild as HTMLElement;
-                errorP.textContent = '';
-                errorP.classList.add('error_none');
+                input.classList.add('form-input_correct');
             }
         });
     }

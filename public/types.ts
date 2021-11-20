@@ -77,3 +77,8 @@ export type FilterData = {
     tags?: string[],
     query?: string,
 }
+
+export type InputData = {
+    errors: string[],
+    value: string | string[],
+}

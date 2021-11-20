@@ -102,7 +102,7 @@
   top: var(--header-height);
   bottom: 0;
   width: 100%;
-  background: var(--header-overlay-bg);
+  background: var(--overlay-bg);
   z-index: 1000;
   opacity: 0;
   transition: visibility 0.3s, opacity 0.3s linear;

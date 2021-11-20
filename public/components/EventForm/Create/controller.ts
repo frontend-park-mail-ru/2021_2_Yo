@@ -42,7 +42,8 @@ export default class EventFormController {
     });
 
     #userErrorRenderHandle = (() => {
-        Bus.emit(Events.RouteUrl, UrlPathnames.Login);
+        // Bus.emit(Events.RouteUrl, UrlPathnames.Login);
+        this.#view.render();
     });
 
     disable() {

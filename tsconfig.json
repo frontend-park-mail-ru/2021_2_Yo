@@ -37,6 +37,7 @@
             "@search-page/*": [ "public/components/SearchPage/*" ],
             "@profile-page/*": [ "public/components/ProfilePage/*" ],
             "@calendar/*": [ "public/components/Calendar/*" ],
+            "@map/*": [ "public/components/Map/*" ],
         },
         "lib": ["es2019", "es6", "dom", "webworker"],
     },

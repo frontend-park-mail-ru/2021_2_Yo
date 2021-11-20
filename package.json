@@ -6,6 +6,7 @@
     "start": "node ./server/index.js"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.12.9",
     "@types/windows-script-host": "^5.8.3",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",

@@ -1,0 +1,78 @@
+<div class="eventform-background">
+    <div class="primary-white-block">
+        <form class="eventform" id="eventform">
+
+            <div class="input-block input-block_event-thin">
+                <div class="input-label">Название</div>
+                <input class="form-input" placeholder="Тусовка" id="titleInput" maxlength="255"
+                       value="{{event.title}}"/>
+                <span class="error error_none" id="titleError">none</span>
+            </div>
+
+            <div class="input-block input-block_event-thin">
+                <div class="input-label">Категория</div>
+                <select class="form-input" id="categoryInput" value="{{event.category}}">
+                    <option value="">Выберите категорию</option>
+                    {{#each categories}}
+                        <option value="{{name}}">{{name}}</option>
+                    {{/each}}
+                </select>
+                <span class="error error_none" id="categoryError">none</span>
+            </div>
+
+            <div class="input-block input-block_event-wide">
+                <div class="input-label">Краткое описание</div>
+                <textarea id="descriptionInput"
+                          rows="4" maxlength="500" class="form-input"
+                          placeholder="Весёлая вечеринка для всех студентов!">{{event.description}}</textarea>
+                <span class="error error_none" id="descriptionError">none</span>
+            </div>
+
+            <div class="input-block input-block_event-wide">
+                <div class="input-label">Подробное описание</div>
+                <textarea  id="textInput" rows="12"
+                           maxlength="2200" class="form-input"
+                           placeholder="Весёлая вечеринка для всех студентов!">{{event.text}}</textarea>
+                <span class="error error_none" id="textError">none</span>
+            </div>
+
+            <div class="input-block input-block_event-date">
+                <div class="input-label">Дата</div>
+                <div class="input-button-block">
+                    <input class="form-input form-input_date" placeholder="01.01.1997" id="dateInput" value="{{event.date}}"/>
+                    <svg class="calendar-btn" id="calendarButton">
+                        <use xlink:href="../../server/img/sprite.svg#calendar"></use>
+                    </svg>
+                </div>
+                <span class="error error_none" id="dateError">none</span>
+            </div>
+
+            <div class="input-block input-block_event-thin">
+                <div class="input-label">Адрес</div>
+                <input class="geo-input" id="geoButton" placeholder="Укажите адрес" value="{{event.geo}}" readonly/>
+                <span class="error error_none" id="geoError">none</span>
+            </div>
+
+            <div class="input-block input-block_event-thin">
+                <div class="input-label">Теги</div>
+                <div class="input-button-block">
+                    <input class="form-input" placeholder="Тусовка" id="tagInput" maxlength="30"/>
+                    <span class="button-white" id="tagButton" >+</span>
+                </div>
+                <span class="error error_none" id="tagError">none</span>
+                <div class="event-tags-block" id="tagBlock"></div>
+            </div>
+
+            <div class="input-block input-block_event-thin">
+                <div class="input-label">Фотография</div>
+                <input class="form-input-photo" id="imageInput" type="file" accept="image/*"/>
+                <span class="error error_none" id="imageError">none</span>
+            </div>
+
+            <div class="buttons-block">
+                <button type="submit" class="button-blue">Сохранить</button>
+                <span id="cancel-button" class="button-white">Отмена</span>
+            </div>
+        </form>
+    </div>
+</div>

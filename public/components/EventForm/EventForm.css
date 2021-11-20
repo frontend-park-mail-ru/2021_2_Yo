@@ -1,81 +1,72 @@
 .eventform-background {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: var(--gray-bg-color);
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-bg-color);
 }
 
 .eventform {
-  width: 55.9vw;
-  box-sizing: border-box;
-  padding: 0.93vh 2.08vw 1.76vh;
-  background: white;
-  margin-top: 3.7vh;
-  margin-bottom: 3.7vh;
+    display: grid;
+    grid-gap: 5px;
+
+    width: 45vw;
 }
 
-.form-input_event-wide {
-  width: 51.77vw;
-  height: 3.7vh;
-  border: var(--gray-border);
+.input-block_event-wide {
+    width: 85%;
 }
 
-.form-input_event-thin {
-  width: 35.47vw;
-  height: 3.7vh;
-  border: var(--gray-border);
+.input-block_event-thin {
+    width: 50%;
 }
 
-.form-textarea_event {
-  width: 100%;
-  border: var(--gray-border);
+.input-block_event-date {
+    width: 30%;
 }
 
-.button-white_event-tag {
-  width: 15.26vw;
-  height: 3.7vh;
+.form-input_date {
+    min-width: 130px;
+    max-width: 140px;
+
+    text-align: center;
 }
 
-.button-white_event-cancel {
-  width: 10.42vw;
-  height: 3.7vh;
+.input-button-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
 }
 
-.button-blue_event-save {
-  padding: 0.56vh 2.03vw;
+.calendar-btn {
+    width: 35px;
+    height: 35px;
+    fill: black;
 }
 
-select {
-  background-color: inherit;
+.geo-input {
+    cursor: pointer;
+
+    padding: 5px 10px;
+
+    width: 150px;
+    min-width: 150px;
+    max-width: max-content;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.65rem;
+    color: white;
+    text-align: center;
+
+    background: var(--light-purple);
+    border: 1px solid var(--light-purple);
+    border-radius: 5px;
 }
 
-.calendar-button {
-  width: 2.08vw;
-  height: 3.7vh;
-  cursor: pointer;
-}
-
-.calendar-button-container {
-  display: flex;
-  justify-content: start;
-  width: 15.26vw;
-}
-
-.input-block_calendar {
-  position: static;
-}
-
-.form-input_event-date {
-  border: var(--gray-border);
-  width: 32.9vw;
-  height: 3.7vh;
-}
-
-.input-block_calendar {
-  width: 35.47vw;
+.geo-input::placeholder {
+    color: white;
 }
