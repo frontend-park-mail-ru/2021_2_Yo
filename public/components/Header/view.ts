@@ -8,13 +8,12 @@ import { filterToUrl } from '@/modules/filter';
 
 export default class HeaderView {
     #parent: HTMLElement;
-    #popupShown: boolean;
+    #popupShown?: boolean;
     #headerFocusIds = ['header-input', 'header-search', 'header-calendar'];
     #headerClickIds = ['header', 'header-logo'];
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#popupShown = false;
     }
 
     subscribe() {
@@ -33,7 +32,7 @@ export default class HeaderView {
         if (avatar) avatar.addEventListener('click', this.#handleAvatar);
 
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.addEventListener('click', this.#handleOverlay);
+        if (overlay) overlay.addEventListener('click', this.#toggleOverlay);
     }
 
     #removeListeners() {
@@ -47,19 +46,16 @@ export default class HeaderView {
         if (avatar) avatar.removeEventListener('click', this.#handleAvatar);
 
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.removeEventListener('click', this.#handleOverlay);
+        if (overlay) overlay.removeEventListener('click', this.#toggleOverlay);
     }
-
-    #handleFocus = () => {
-        this.#toggleOverlay();
-    };
-
-    #handleOverlay = (e: MouseEvent) => {
-        if (this.#popupShown) this.#toggleOverlay();
-    };
 
     #handleAvatar = (e: MouseEvent) => {
         e.stopPropagation();
+        this.#toggleOverlay();
+    };
+
+    #handleEscape = (e: KeyboardEvent) => {
+        if (e.code !== 'Escape') return;
         this.#toggleOverlay();
     };
 
@@ -67,29 +63,33 @@ export default class HeaderView {
         if (this.#popupShown) {
             this.#headerFocusIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.addEventListener('focus', this.#handleFocus);
+                if (element) element.addEventListener('focus', this.#toggleOverlay);
             });
             this.#headerClickIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.addEventListener('click', this.#handleFocus);
+                if (element) element.addEventListener('click', this.#toggleOverlay);
             });
             const logout = document.getElementById('header-logout');
             if (logout) logout.addEventListener('click', this.#logoutHandle);
+
+            window.addEventListener('keydown', this.#handleEscape);
         } else {
             this.#headerFocusIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.removeEventListener('focus', this.#handleFocus);
+                if (element) element.removeEventListener('focus', this.#toggleOverlay);
             });
             this.#headerClickIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.removeEventListener('click', this.#handleFocus);
+                if (element) element.removeEventListener('click', this.#toggleOverlay);
             });
             const logout = document.getElementById('header-logout');
             if (logout) logout.removeEventListener('click', this.#logoutHandle);
+
+            window.removeEventListener('keydown', this.#handleEscape);
         }
     }
 
-    #toggleOverlay() {
+    #toggleOverlay = () => {
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         const overlay = <HTMLElement>document.getElementById('header-overlay');
         if (!avatar || !overlay) return;
@@ -104,7 +104,7 @@ export default class HeaderView {
         }
         this.#popupShown = !this.#popupShown;
         this.#listenOverlay();
-    }
+    };
 
     #inputHandle = ((e: KeyboardEvent) => {
         if (e.code !== 'Enter') return;
@@ -124,6 +124,8 @@ export default class HeaderView {
     }).bind(this);
 
     #logoutHandle = (() => {
+        this.#popupShown = !this.#popupShown;
+        this.#listenOverlay();
         Bus.emit(Events.UserLogout);
         this.render();
     }).bind(this);
@@ -133,6 +135,7 @@ export default class HeaderView {
     }).bind(this);
 
     render(user?: UserData) {
+        this.#popupShown = false;
         const authAnchors = config.authAnchors;
         this.#parent.innerHTML = template({authAnchors, user});
 
