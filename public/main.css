@@ -161,6 +161,10 @@ input:focus {
     color: var(--black-text-color);
 }
 
+.gray-option {
+    color: var(--light-gray-color);
+}
+
 .form-input {
     background: rgba(164, 164, 164, 0.2);
     border-radius: 5px;
@@ -181,6 +185,10 @@ input:focus {
     outline: none;
 }
 
+.form-input::placeholder {
+    color: var(--light-gray-color);
+}
+
 .form-input:focus {
     background: white;
     border: 1px solid var(--light-purple);
@@ -189,6 +197,15 @@ input:focus {
 .form-input_correct {
     background: white;
     border: 1px solid green;
+}
+
+.form-input_error {
+    background: white;
+    border: 1px solid red;
+}
+
+.form-input_changed {
+    background: white;
 }
 
 .form-textarea {

@@ -97,8 +97,15 @@ export default class Calendar {
             days += `<div class="next-date" data-month="${this.#date.getMonth() + 1}">${i}</div>`;
         }
 
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
-        monthDays.innerHTML = days;
+        const monthDays = <HTMLElement>document.getElementById('calendar');
+        monthDays.innerHTML = `
+        <div class="weekday">Пн</div>
+        <div class="weekday">Вт</div>
+        <div class="weekday">Ср</div>
+        <div class="weekday">Чт</div>
+        <div class="weekday">Пт</div>
+        <div class="weekday">Сб</div>
+        <div class="weekday">Вс</div>` + days;
 
         this.#addListeners();
     }
@@ -116,7 +123,7 @@ export default class Calendar {
         prevMonthBtn.addEventListener('click', this.#renderPrevMonth);
         nextMonthBtn.addEventListener('click', this.#renderNextMonth);
 
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        const monthDays = <HTMLElement>document.getElementById('calendar');
         for (let i = 0; i < monthDays.children.length; i++) {
             const child = <HTMLElement>monthDays.children[i];
             child.addEventListener('click', this.#writeDate.bind(this,
@@ -142,7 +149,7 @@ export default class Calendar {
             nextMonthBtn.removeEventListener('click', this.#renderNextMonth);
         }
 
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        const monthDays = <HTMLElement>document.getElementById('calendar');
         if (monthDays) {
             for (let i = 0; i < monthDays.children.length; i++) {
                 const child = <HTMLElement>monthDays.children[i];
@@ -169,7 +176,7 @@ export default class Calendar {
     };
 
     #writeDate(day: number, month: number, dateCell: HTMLElement) {
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        const monthDays = <HTMLElement>document.getElementById('calendar');
         for (let i = 0; i < monthDays.children.length; i++) {
             const child = <HTMLElement>monthDays.children[i];
             if (child.classList.contains('clicked')) {

@@ -60,13 +60,13 @@ export default class EventFormView {
         const tagInput = <HTMLElement>document.getElementById('tagInput');
         tagInput.addEventListener('keydown', this.#handleTagKeydown.bind(this));
 
-        const geoButton = <HTMLElement>document.getElementById('geoButton');
+        const geoButton = <HTMLElement>document.getElementById('geoInput');
         geoButton.addEventListener('click', this.#renderMap);
 
         this.#setInputs();
-        this.#inputs.forEach((input) => {
-            input.addEventListener('oninput')
-        })
+        this.#inputs.forEach((input, key) => {
+            input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+        });
     }
 
     #removeListeners() {
@@ -102,23 +102,36 @@ export default class EventFormView {
             tagInput.removeEventListener('keydown', this.#handleTagKeydown.bind(this));
         }
 
-        const geoButton = <HTMLElement>document.getElementById('geoButton');
+        const geoButton = <HTMLElement>document.getElementById('geoInput');
         if (geoButton) {
             geoButton.removeEventListener('click', this.#renderMap);
         }
+
+        this.#inputs.forEach((input, key) => {
+            if (input) {
+                input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+            }
+        });
     }
 
-    #handleInputChange = (e: Event) => {
-        e.preventDefault();
+    #handleInputChange(input: HTMLInputElement, key: string) {
+        input.classList.remove('form-input_correct');
+        input.classList.remove('form-input_error');
+        const inputError = <HTMLElement>document.getElementById(key + 'Error');
+        inputError.classList.add('error_none');
 
-
+        if (input.value.trim()) {
+            input.classList.add('form-input_changed');
+        } else {
+            input.classList.remove('form-input_changed');
+        }
     }
 
     #renderMap = (e: Event) => {
         e.preventDefault();
 
         const map = new MapPopUp(this.#parent);
-        // map.render();
+        map.render();
     };
 
     #deleteTag = (e: MouseEvent) => {
@@ -159,7 +172,7 @@ export default class EventFormView {
     }
 
     #renderCalendar() {
-        const calendarBlock = <HTMLInputElement>document.getElementById('calendar');
+        const calendarBlock = <HTMLInputElement>document.getElementById('calendarBlock');
 
         if (!calendarBlock.innerHTML) {
             this.#calendar = new Calendar(calendarBlock);
@@ -184,11 +197,13 @@ export default class EventFormView {
         if (tagTrimmed) {
             if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
                 tagError.textContent = ONE_WORD_TAG_STR;
+                tagInput.classList.add('form-input_error');
                 return;
             }
 
             if (tagTrimmed.length > 30) {
                 tagError.textContent = TAG_LENGTH_STR;
+                tagInput.classList.add('form-input_error');
                 return;
             }
 
@@ -196,14 +211,18 @@ export default class EventFormView {
                 this.#eventTags.push(tagTrimmed);
                 this.#rerenderTags();
 
+                tagInput.classList.remove('form-input_error');
                 tagError.classList.add('error_none');
             } else {
+                tagInput.classList.add('form-input_error');
                 tagError.textContent = TAG_EXISTS_STR;
             }
         } else {
+            tagInput.classList.add('form-input_error');
             tagError.textContent = NO_EMPTY_TAG_STR;
         }
 
+        tagInput.classList.remove('form-input_changed');
         tagInput.value = '';
     }
 
@@ -244,6 +263,8 @@ export default class EventFormView {
         this.#inputs.set('date', dateInput);
         const geoInput = <HTMLInputElement>document.getElementById('geoInput');
         this.#inputs.set('geo', geoInput);
+        const tagInput = <HTMLInputElement>document.getElementById('tagInput');
+        this.#inputs.set('tag', tagInput);
         const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
         this.#inputs.set('category', categoryInput);
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
@@ -253,12 +274,13 @@ export default class EventFormView {
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {
             const inputError = <HTMLElement>document.getElementById(key + 'Error');
-            console.log(inputError);
             inputError.classList.add('error_none');
             const inputData = <InputData>this.#inputsData.get(key);
 
             inputData.errors.forEach(error => {
                 if (error) {
+                    if (key != 'geo')
+                        input.classList.add('form-input_error');
                     inputError.classList.remove('error_none');
                     inputError.textContent = error;
                 } else {

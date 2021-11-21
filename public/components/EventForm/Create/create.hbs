@@ -11,8 +11,8 @@
 
             <div class="input-block input-block_event-thin">
                 <div class="input-label">Категория</div>
-                <select class="form-input" id="categoryInput" value="{{event.category}}">
-                    <option value="">Выберите категорию</option>
+                <select class="form-input" id="categoryInput">
+                    <option value="" class="gray-option">Выберите категорию</option>
                     {{#each categories}}
                         <option value="{{name}}">{{name}}</option>
                     {{/each}}
@@ -45,11 +45,12 @@
                     </svg>
                 </div>
                 <span class="error error_none" id="dateError">none</span>
+                <div id="calendarBlock"></div>
             </div>
 
             <div class="input-block input-block_event-thin">
                 <div class="input-label">Адрес</div>
-                <input class="geo-input" id="geoButton" placeholder="Укажите адрес" value="{{event.geo}}" readonly/>
+                <input class="geo-input" id="geoInput" placeholder="Укажите адрес" value="{{event.geo}}" readonly/>
                 <span class="error error_none" id="geoError">none</span>
             </div>
 

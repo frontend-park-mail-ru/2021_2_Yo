@@ -1,9 +1,10 @@
 .map-overlay {
     display: flex;
     justify-content: space-around;
-    position: absolute;
-    top: var(--header-height);
-    height: 100%;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
     width: 100%;
     background: var(--overlay-bg);
     z-index: 1000;

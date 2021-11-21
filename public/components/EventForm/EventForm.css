@@ -6,6 +6,9 @@
     align-items: center;
     justify-content: center;
     background: var(--gray-bg-color);
+
+    padding-bottom: 150px;
+    padding-top: 20px;
 }
 
 .eventform {
@@ -44,6 +47,7 @@
     width: 35px;
     height: 35px;
     fill: black;
+    cursor: pointer;
 }
 
 .geo-input {
