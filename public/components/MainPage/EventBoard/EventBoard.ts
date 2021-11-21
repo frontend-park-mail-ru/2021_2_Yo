@@ -29,7 +29,7 @@ export default class EventBoardComponent {
 
     render(data?: EventData[]) {
         // Временные меры (пока не хотим контактировать с беком)
-        data = data?.slice(0, 13);
+        // data = data?.slice(0, 13);
         
         this.#parent.innerHTML = template(data);
     }

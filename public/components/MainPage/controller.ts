@@ -13,7 +13,7 @@ export default class MainPageController {
 
     enable() {
         this.#model.enable();
-        const params = parseParams().category;
+        const params = parseParams();
         this.#view.render(params);
     }
 

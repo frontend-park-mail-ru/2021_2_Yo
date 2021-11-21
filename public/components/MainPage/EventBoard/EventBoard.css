@@ -1,4 +1,4 @@
-#events-error {
+/* #events-error {
   left: 20px;
   position: fixed;
 }
@@ -130,4 +130,11 @@
   fill: white;
   width: 32px;
   height: 16px;
+} */
+
+.event-board {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }

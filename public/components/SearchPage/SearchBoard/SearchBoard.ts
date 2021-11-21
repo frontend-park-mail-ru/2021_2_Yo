@@ -52,7 +52,6 @@ export default class SearchBoard {
         const input = <HTMLInputElement>e.target;
         if (!input) return;
         const value = input.value.trim();
-        // if (value === '') return;
 
         this.#query = value;
 
