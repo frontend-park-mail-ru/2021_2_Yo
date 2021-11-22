@@ -2,7 +2,7 @@ import {UserData} from '@/types';
 import Events from '@eventbus/events';
 import Bus from '@eventbus/eventbus';
 import UserStore from '@modules/userstore';
-import * as template from '@profile-page/ProfileEditForm/profileedit.hbs';
+import * as template from '@profile-page/templates/profileedit.hbs';
 
 export default class ProfileEditForm {
     #parent: HTMLElement;

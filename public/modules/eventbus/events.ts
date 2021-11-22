@@ -16,6 +16,8 @@ enum Events {
     // Events
     EventsReq = 'events:request',
     EventsRes = 'events:response',
+    EventsResFav = 'events-favourite:response',
+    EventsReqFav = 'events-favourite:request',
     EventsError = 'events:error',
     EventRes = 'event:response',
     EventCreateReq = 'event:create',
@@ -39,6 +41,12 @@ enum Events {
     // CSRF
     CSRFRes = 'csrf:response',
     CSRFDelete = 'csrf:delete',
+
+    // Subscriptions
+    SubscribersReq = 'user-subscribers:request',
+    SubscriptionsReq = 'user-subscriptions:request',
+    SubscribersRes = 'user-subscribers:response',
+    SubscriptionsRes = 'user-subscriptions:response',
 }
 
 export default Events;

@@ -43,7 +43,10 @@ export default class ProfilePageModel {
             stored.surname = newUserInfo.surname;
             stored.description = newUserInfo.description;
 
-            fetchPostMultipart(ApiUrls.User + '/info', {json: stored, file: data['file']}, (data: FetchResponseData) => {
+            fetchPostMultipart(ApiUrls.User + '/info', {
+                json: stored,
+                file: data['file']
+            }, (data: FetchResponseData) => {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
@@ -69,13 +72,52 @@ export default class ProfilePageModel {
         });
     }
 
-    getUserEvents(userId: string) {
-        fetchGet(ApiUrls.Events + '?authorid=' + userId, (data: FetchResponseData) => {
+    getUserEventsCreated(userId: string) {
+        fetchGet(ApiUrls.User + '/' + userId + ApiUrls.Events + '/created', (data: FetchResponseData) => {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
                     const events = json.body.events as EventData[];
                     Bus.emit(Events.EventsRes, events);
+                    return;
+                }
+            }
+        });
+    }
+
+    getUserEventsFavourite(userId: string) {
+        fetchGet(ApiUrls.User + '/' + userId + ApiUrls.Events + '/favourite', (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    const events = json.body.events as EventData[];
+                    Bus.emit(Events.EventsResFav, events);
+                    return;
+                }
+            }
+        });
+    }
+
+    getSubscribers(userId: string) {
+        fetchGet(ApiUrls.User + '/' + userId + '/subscribers', (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    const users = json.body.users as UserData[];
+                    Bus.emit(Events.SubscribersRes, users);
+                    return;
+                }
+            }
+        });
+    }
+
+    getSubscriptions(userId: string) {
+        fetchGet(ApiUrls.User + '/' + userId + '/subscriptions', (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    const users = json.body.users as UserData[];
+                    Bus.emit(Events.SubscriptionsRes, users);
                     return;
                 }
             }

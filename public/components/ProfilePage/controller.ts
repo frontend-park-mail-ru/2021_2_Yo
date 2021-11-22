@@ -21,13 +21,20 @@ export default class ProfilePageController {
     }
 
     enable() {
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
+
         Bus.on(Events.UserEditReq, this.#editReqHandle);
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
         Bus.on(Events.EventsRes, this.#listHandle);
+        Bus.on(Events.EventsResFav, this.#listHandle);
         Bus.on(Events.UserRes, this.#renderHandle);
         Bus.on(Events.UserError, this.#userErrorRenderHandle);
+        Bus.on(Events.EventsReq, this.#model.getUserEventsCreated.bind(this, userURLId));
+        Bus.on(Events.EventsReqFav, this.#model.getUserEventsFavourite.bind(this, userURLId));
+        Bus.on(Events.SubscriptionsReq, this.#model.getSubscriptions.bind(this, userURLId));
+        Bus.on(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -35,11 +42,11 @@ export default class ProfilePageController {
             if (storedUser.id === userURLId) {
                 this.#view.render();
                 this.#view.renderProfileBlock(storedUser);
-                this.#model.getUserEvents(storedUser.id);
+                this.#model.getUserEventsCreated(storedUser.id);
             } else {
                 this.#model.getUser(userURLId);
             }
-        } 
+        }
     }
 
     #listHandle = ((events: EventData[]) => {
@@ -64,7 +71,7 @@ export default class ProfilePageController {
     #userGetHandle = ((user: UserData) => {
         this.#view.render();
         this.#view.renderProfileBlock(user);
-        this.#model.getUserEvents(user.id);
+        this.#model.getUserEventsCreated(user.id);
     });
 
     #editReqHandle = ((data: MultipartData) => {
@@ -110,12 +117,18 @@ export default class ProfilePageController {
     });
 
     disable() {
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
+
         Bus.off(Events.UserEditReq, this.#editReqHandle);
         Bus.off(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.off(Events.UserByIdRes, this.#userGetHandle);
         Bus.off(Events.EventsRes, this.#listHandle);
         Bus.off(Events.UserRes, this.#renderHandle);
         Bus.off(Events.UserError, this.#userErrorRenderHandle);
+        Bus.off(Events.EventsReq, this.#model.getUserEventsCreated.bind(this, userURLId));
+        Bus.off(Events.EventsReqFav, this.#model.getUserEventsFavourite.bind(this, userURLId));
+        Bus.off(Events.SubscriptionsReq, this.#model.getSubscriptions.bind(this, userURLId));
+        Bus.off(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
 
         this.#view.disable();
     }
