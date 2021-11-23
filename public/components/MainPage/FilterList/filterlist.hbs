@@ -1,3 +1,55 @@
 <div class="filter-list">
+    <section class="filter-li">
+        <div class="filter-li__item filter-li__item_header">
+            Категория
+        </div>
+        {{#each this}}
+        <div class="filter-li__item filter-li__item_selectable">{{name}}</div>
+        {{/each}}
 
+    </section>
+
+    <section class="filter-li">
+        <div class="filter-li__item filter-li__item_header">Теги</div>
+        <div class="filter-tag">
+            <div class="filter-tag__search">
+                <input class="filter-tag__search-input" type="text" id="tag-input" placeholder="Например, вечеринка">
+                <svg id="tags-search-img" class="filter-tag__search-img">
+                    <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
+                </svg>
+            </div>
+        </div>
+        <div class="filter-tag__tags">
+            <div class="tag">
+               <span>вечеринка</span> 
+               <svg class="tag-img">
+                    <use xlink:href="./server/img/sprite.svg#cross"></use>
+               </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="filter-li"> 
+        <div class="filter-li__item filter-li__item_header">Дата</div>
+        <div class="filter-tag__tags">
+            <div class="tag tag_orange">
+                <time>24.11.2023</time>
+                <svg class="tag-img">
+                    <use xlink:href="./server/img/sprite.svg#cross"></use>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="filter-li"> 
+        <div class="filter-li__item filter-li__item_header">Место</div>
+        <div class="filter-tag__tags">
+            <div class="tag tag_purple">
+                <span>г. Москва</span>
+                <svg class="tag-img">
+                    <use xlink:href="./server/img/sprite.svg#cross"></use>
+                </svg>
+            </div>
+        </div>
+    </section>
 </div>

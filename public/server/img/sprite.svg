@@ -38,4 +38,8 @@
         <polygon points="455,212.5 242.5,212.5 242.5,0 212.5,0 212.5,212.5 0,212.5 0,242.5 212.5,242.5 212.5,455 242.5,455 242.5,242.5 
 	    455,242.5 "/>
     </symbol>
+
+    <symbol id="stroke-plus" viewBox="0 0 23 24">
+        <path d="M11.741 2V22M21.3706 12H2.11133H21.3706Z" stroke="inherit" stroke-width="inherit" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
 </svg>
