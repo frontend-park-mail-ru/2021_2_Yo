@@ -7,7 +7,6 @@ const inputLength = new Map([
     ['password', 50],
     ['title', 255],
     ['geo', 255],
-    ['city', 30],
     ['category', 30],
     ['description', 500],
     ['text', 2200],
@@ -92,7 +91,6 @@ export function eventValidateFields(inputsData: Map<string, InputsData>, imageFi
     const description = <InputsData>inputsData.get('description');
     const text = <InputsData>inputsData.get('text');
     const date = <InputsData>inputsData.get('date');
-    const city = <InputsData>inputsData.get('city');
     const geo = <InputsData>inputsData.get('geo');
     const category = <InputsData>inputsData.get('category');
     const image = <InputsData>inputsData.get('image');
@@ -107,9 +105,6 @@ export function eventValidateFields(inputsData: Map<string, InputsData>, imageFi
     date.errors.push(checkDate(date.value));
 
     geo.errors.push(checkEmpty(geo.value));
-
-    city.errors.push(checkEmpty(city.value));
-    city.errors.push(checkForbiddenSymbols(city.value));
 
     category.errors.push(checkEmpty(category.value));
     category.errors.push(checkForbiddenSymbols(category.value));
