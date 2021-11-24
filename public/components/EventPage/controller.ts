@@ -4,6 +4,8 @@ import EventPageModel from '@event-page/model';
 import EventPageView from '@event-page/view';
 import {EventData} from '@/types';
 
+const eventId = <string>new URL(window.location.href).searchParams?.get('id');
+
 export default class EventPageController {
     #view: EventPageView;
     #model: EventPageModel;
@@ -16,14 +18,18 @@ export default class EventPageController {
     enable() {
         Bus.on(Events.EventRes, this.#eventHandle);
         Bus.on(Events.EventDelete, this.#eventDeleteHandle);
+        Bus.on(Events.UserRes, this.#userResHandle.bind(this));
 
-        const eventId = new URL(window.location.href).searchParams?.get('id') as string;
         this.#model.getEvent(eventId);
     }
 
     #eventHandle = ((event: EventData) => {
         this.#view.render(event);
     });
+
+    #userResHandle() {
+        this.#model.getEvent(eventId);
+    }
 
     #eventDeleteHandle = ((eventId: string) => {
         this.#model.deleteEvent(eventId);

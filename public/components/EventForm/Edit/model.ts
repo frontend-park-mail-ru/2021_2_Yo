@@ -10,6 +10,7 @@ type MultipartData = {
 
 export default class EventEditFormModel {
     editEvent(data: MultipartData) {
+        console.log('edit event req');
         const event = {
             title: data['input'].get('title')?.value as string,
             description: data['input'].get('description')?.value as string,

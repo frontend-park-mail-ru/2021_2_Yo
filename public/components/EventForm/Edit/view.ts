@@ -16,13 +16,16 @@ export default class EventEditView extends EventFormView {
         this.parent.innerHTML = template({event: event, categories: config.categories});
 
         const tagBlock = <HTMLElement>document.getElementById('tagBlock');
-        this.eventTags.map(tag => {
-            tagBlock.innerHTML += tagTemplate(tag);
-        });
-        this.eventTags.map(tag => {
-            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
-            if (tagWrapper) tagWrapper.addEventListener('click', this.deleteTag);
-        });
+
+        if (this.eventTags) {
+            this.eventTags.map(tag => {
+                tagBlock.innerHTML += tagTemplate(tag);
+            });
+            this.eventTags.map(tag => {
+                const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+                if (tagWrapper) tagWrapper.addEventListener('click', this.deleteTag);
+            });
+        }
 
         this.setInputs();
         this.#addListeners();
@@ -103,7 +106,7 @@ export default class EventEditView extends EventFormView {
 
         this.inputs.forEach((input, key) => {
             if (input) {
-                input.addEventListener('input', this.handleInputChange.bind(this, input, key));
+                input.removeEventListener('input', this.handleInputChange.bind(this, input, key));
             }
         });
     }
@@ -116,12 +119,12 @@ export default class EventEditView extends EventFormView {
         this.inputsData.set('title', {errors: [], value: <string>this.inputs.get('title')?.value.trim()});
         this.inputsData.set('description', {
             errors: [],
-            value:  <string>this.inputs.get('description')?.value.trim()
+            value: <string>this.inputs.get('description')?.value.trim()
         });
-        this.inputsData.set('text', {errors: [], value:  <string>this.inputs.get('text')?.value.trim()});
-        this.inputsData.set('date', {errors: [], value:  <string>this.inputs.get('date')?.value.trim()});
-        this.inputsData.set('geo', {errors: [], value:  <string>this.inputs.get('geo')?.value.trim()});
-        this.inputsData.set('category', {errors: [], value:  <string>this.inputs.get('category')?.value.trim()});
+        this.inputsData.set('text', {errors: [], value: <string>this.inputs.get('text')?.value.trim()});
+        this.inputsData.set('date', {errors: [], value: <string>this.inputs.get('date')?.value.trim()});
+        this.inputsData.set('geo', {errors: [], value: <string>this.inputs.get('geo')?.placeholder.trim()});
+        this.inputsData.set('category', {errors: [], value: <string>this.inputs.get('category')?.value.trim()});
         this.inputsData.set('tag', {errors: [], value: this.eventTags});
         this.inputsData.set('image', {errors: [], value: ''});
 
@@ -129,6 +132,7 @@ export default class EventEditView extends EventFormView {
         let file: undefined | File;
         if (imageInput.files) file = imageInput.files[0];
 
+        console.log(this.inputsData);
         Bus.emit(Events.EventEditReq, {input: this.inputsData, file});
     }
 }

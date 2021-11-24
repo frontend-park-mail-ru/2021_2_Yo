@@ -61,7 +61,6 @@ export default class EventPageView {
     }
 
     #renderMap() {
-        console.log(process.env.MAPS_API_KEY);
         const loader = new Loader({
             apiKey: <string>KEY,
             libraries: ['places'],

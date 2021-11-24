@@ -51,7 +51,12 @@
 
             <div class="input-block input-block_event-thin">
                 <div class="input-label">Адрес</div>
-                <input class="geo-input" id="geoInput" placeholder="Укажите адрес" value="{{event.address}}" readonly/>
+                {{#if event.geo}}
+                    <input class="geo-input" id="geoInput" placeholder="{{event.geo}}" value="{{event.address}}" readonly/>
+                {{else}}
+                    <input class="geo-input" id="geoInput" placeholder="Укажите адрес" value="{{event.address}}" readonly/>
+                {{/if}}
+
                 <span class="error error_none" id="geoError">none</span>
             </div>
 

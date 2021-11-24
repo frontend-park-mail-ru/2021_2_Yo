@@ -122,32 +122,34 @@ export abstract class EventFormView {
         if (tagTrimmed) {
             if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
                 tagError.textContent = ONE_WORD_TAG_STR;
-                tagInput.classList.add('form-input_error');
                 return;
             }
 
             if (tagTrimmed.length > 30) {
                 tagError.textContent = TAG_LENGTH_STR;
-                tagInput.classList.add('form-input_error');
                 return;
             }
 
-            if (this.eventTags.indexOf(tagTrimmed) === -1) {
+            if (this.eventTags) {
+                if (this.eventTags.indexOf(tagTrimmed) === -1) {
+                    this.eventTags.push(tagTrimmed);
+                    this.#rerenderTags();
+
+                    tagError.classList.add('error_none');
+                } else {
+                    tagError.textContent = TAG_EXISTS_STR;
+                }
+            } else {
+                this.eventTags = [];
                 this.eventTags.push(tagTrimmed);
                 this.#rerenderTags();
 
-                tagInput.classList.remove('form-input_error');
                 tagError.classList.add('error_none');
-            } else {
-                tagInput.classList.add('form-input_error');
-                tagError.textContent = TAG_EXISTS_STR;
             }
         } else {
-            tagInput.classList.add('form-input_error');
             tagError.textContent = NO_EMPTY_TAG_STR;
         }
 
-        tagInput.classList.remove('form-input_changed');
         tagInput.value = '';
     }
 
