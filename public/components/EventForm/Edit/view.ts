@@ -12,7 +12,7 @@ export default class EventEditView extends EventFormView {
     render(event?: EventData) {
         this.event = event;
 
-        this.eventTags = event?.tag as string[];
+        this.eventTags = <string[]>event?.tag;
         this.parent.innerHTML = template({event: event, categories: config.categories});
 
         const tagBlock = <HTMLElement>document.getElementById('tagBlock');
@@ -37,7 +37,7 @@ export default class EventEditView extends EventFormView {
     }
 
     #addListeners() {
-        const form = document.getElementById('eventform') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('eventform');
         form.addEventListener('submit', this.#editEvent.bind(this));
 
         const tagButton = <HTMLInputElement>document.getElementById('tagButton');
@@ -62,7 +62,7 @@ export default class EventEditView extends EventFormView {
     }
 
     #removeListeners() {
-        const form = document.getElementById('eventform') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('eventform');
         if (form) {
             form.removeEventListener('submit', this.#editEvent.bind(this));
         }
@@ -113,15 +113,15 @@ export default class EventEditView extends EventFormView {
 
         this.setInputs();
 
-        this.inputsData.set('title', {errors: [], value: this.inputs.get('title')?.value.trim() as string});
+        this.inputsData.set('title', {errors: [], value: <string>this.inputs.get('title')?.value.trim()});
         this.inputsData.set('description', {
             errors: [],
-            value: this.inputs.get('description')?.value.trim() as string
+            value:  <string>this.inputs.get('description')?.value.trim()
         });
-        this.inputsData.set('text', {errors: [], value: this.inputs.get('text')?.value.trim() as string});
-        this.inputsData.set('date', {errors: [], value: this.inputs.get('date')?.value.trim() as string});
-        this.inputsData.set('geo', {errors: [], value: this.inputs.get('geo')?.value.trim() as string});
-        this.inputsData.set('category', {errors: [], value: this.inputs.get('category')?.value.trim() as string});
+        this.inputsData.set('text', {errors: [], value:  <string>this.inputs.get('text')?.value.trim()});
+        this.inputsData.set('date', {errors: [], value:  <string>this.inputs.get('date')?.value.trim()});
+        this.inputsData.set('geo', {errors: [], value:  <string>this.inputs.get('geo')?.value.trim()});
+        this.inputsData.set('category', {errors: [], value:  <string>this.inputs.get('category')?.value.trim()});
         this.inputsData.set('tag', {errors: [], value: this.eventTags});
         this.inputsData.set('image', {errors: [], value: ''});
 

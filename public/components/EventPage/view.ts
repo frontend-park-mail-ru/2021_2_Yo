@@ -6,7 +6,7 @@ import Userstore from '../../modules/userstore';
 import * as template from '@event-page/templates/eventpage.hbs';
 import '@event-page/templates/EventPage.css';
 
-const KEY = 'AIzaSyA9qUUP6w_uqsJWrvDcPIfY8oBnIigjAT4';
+const KEY = process.env.MAPS_API_KEY?.toString();
 
 export default class EventPageView {
     #parent: HTMLElement;
@@ -61,8 +61,9 @@ export default class EventPageView {
     }
 
     #renderMap() {
+        console.log(process.env.MAPS_API_KEY);
         const loader = new Loader({
-            apiKey: KEY,
+            apiKey: <string>KEY,
             libraries: ['places'],
         });
 

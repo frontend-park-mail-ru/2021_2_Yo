@@ -3,9 +3,10 @@ import './map.css';
 import * as template from './map.hbs';
 import {EventData} from '@/types';
 
-const KEY = 'AIzaSyA9qUUP6w_uqsJWrvDcPIfY8oBnIigjAT4';
 const MSC_LAT_LNG = {lat: 55.751244, lng: 37.618423};
 const ADDRESS_NOT_FOUND = 'Адрес не найден';
+
+const KEY = process.env.MAPS_API_KEY?.toString();
 
 export default class MapPopUp {
     #loader: Loader;
@@ -21,7 +22,7 @@ export default class MapPopUp {
         this.#parent = parent;
         this.#loadSuccess = false;
         this.#loader = new Loader({
-            apiKey: KEY,
+            apiKey: <string>KEY,
             libraries: ['places'],
         });
     }

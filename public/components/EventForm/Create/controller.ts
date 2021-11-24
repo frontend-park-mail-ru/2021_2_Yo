@@ -4,6 +4,7 @@ import EventCreateView from '@event-create/view';
 import EventFormModel from '@event-create/model';
 import {eventValidateFields} from '@modules/validation';
 import UserStore from '@modules/userstore';
+import {UrlPathnames} from '@/types';
 
 type MultipartData = {
     input: Map<string, { errors: string[], value: string }>;
@@ -41,8 +42,7 @@ export default class EventFormController {
     });
 
     #userErrorRenderHandle = (() => {
-        // Bus.emit(Events.RouteUrl, UrlPathnames.Login);
-        this.#view.render();
+        Bus.emit(Events.RouteUrl, UrlPathnames.Login);
     });
 
     disable() {
