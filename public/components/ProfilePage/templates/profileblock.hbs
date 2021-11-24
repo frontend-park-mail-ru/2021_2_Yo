@@ -22,7 +22,9 @@
         </div>
     </div>
     {{#if permitEdit}}
-    <button class="button-white button-white_profile" id="editButton">Редактировать профиль</button>
-    <a class="button-white button-white_profile" href="/create">Cоздать мероприятие</a>
+        <button class="button-white button-white_profile" id="editButton">Редактировать профиль</button>
+        <a class="button-white button-white_profile" href="/create">Cоздать мероприятие</a>
+    {{else}}
+        <div id="subscribeBlock"></div>
     {{/if}}
 </div>

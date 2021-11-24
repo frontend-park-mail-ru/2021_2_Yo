@@ -12,6 +12,7 @@ enum Events {
     UserPasswordEditReq = 'user-password-edit:request',
     UserPasswordEditRes = 'user-password-edit:response',
     UserByIdRes = 'user-by-id:response',
+    UserIsSubscribed = 'user-subscribed:response',
 
     // Events
     EventsReq = 'events:request',
@@ -47,6 +48,10 @@ enum Events {
     SubscriptionsReq = 'user-subscriptions:request',
     SubscribersRes = 'user-subscribers:response',
     SubscriptionsRes = 'user-subscriptions:response',
+    SubscribeReq = 'subscribe:request',
+    SubscribeRes = 'subscribe:response',
+    UnsubscribeReq = 'subscribe:request',
+    UnsubscribeRes = 'subscribe:response',
 }
 
 export default Events;

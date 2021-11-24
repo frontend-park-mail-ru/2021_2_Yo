@@ -1,5 +1,5 @@
 import {ApiUrls, EventData, FetchResponseData, UserData} from '@/types';
-import {fetchGet, fetchPost, fetchPostMultipart} from '@request/request';
+import {fetchDelete, fetchGet, fetchPost, fetchPostMultipart} from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import UserStore from '@modules/userstore';
@@ -118,6 +118,43 @@ export default class ProfilePageModel {
                 if (json.status === 200) {
                     const users = json.body.users as UserData[];
                     Bus.emit(Events.SubscriptionsRes, users);
+                    return;
+                }
+            }
+        });
+    }
+
+    getIsSubscribed(userId: string) {
+        fetchGet(ApiUrls.User + '/' + userId + '/subscription', (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    const result = json.body.result;
+                    Bus.emit(Events.UserIsSubscribed, result);
+                    return;
+                }
+            }
+        });
+    }
+
+    makeSubscription(userId: string) {
+        fetchPost(ApiUrls.User + '/' + userId + '/subscription', {}, (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    Bus.emit(Events.SubscribeRes);
+                    return;
+                }
+            }
+        });
+    }
+
+    unsubscribe(userId: string) {
+        fetchDelete(ApiUrls.User + '/' + userId + '/subscription', (data: FetchResponseData) => {
+            const {status, json} = data;
+            if (status === 200) {
+                if (json.status === 200) {
+                    Bus.emit(Events.UnsubscribeRes);
                     return;
                 }
             }

@@ -27,14 +27,21 @@ export default class ProfilePageController {
         Bus.on(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.on(Events.UserByIdRes, this.#userGetHandle);
         Bus.on(Events.UserLogout, this.#userErrorRenderHandle);
-        Bus.on(Events.EventsRes, this.#listHandle);
-        Bus.on(Events.EventsResFav, this.#listHandle);
+        Bus.on(Events.EventsRes, this.#eventListHandle);
+        Bus.on(Events.EventsResFav, this.#eventListHandle);
+        Bus.on(Events.SubscriptionsRes, this.#userListHandle.bind(this));
+        Bus.on(Events.SubscribersRes, this.#userListHandle.bind(this));
         Bus.on(Events.UserRes, this.#renderHandle);
         Bus.on(Events.UserError, this.#userErrorRenderHandle);
         Bus.on(Events.EventsReq, this.#model.getUserEventsCreated.bind(this, userURLId));
         Bus.on(Events.EventsReqFav, this.#model.getUserEventsFavourite.bind(this, userURLId));
         Bus.on(Events.SubscriptionsReq, this.#model.getSubscriptions.bind(this, userURLId));
         Bus.on(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
+        Bus.on(Events.SubscribeReq, this.#model.makeSubscription.bind(this, userURLId));
+        Bus.on(Events.UnsubscribeReq, this.#model.unsubscribe.bind(this, userURLId));
+        Bus.on(Events.UserIsSubscribed, this.#handleIsSubscribed);
+        Bus.on(Events.SubscribeRes, this.#handleIsSubscribed);
+        Bus.on(Events.UnsubscribeRes, this.#handleIsSubscribed);
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -43,15 +50,24 @@ export default class ProfilePageController {
                 this.#view.render();
                 this.#view.renderProfileBlock(storedUser);
                 this.#model.getUserEventsCreated(storedUser.id);
+                this.#model.getIsSubscribed(storedUser.id);
             } else {
                 this.#model.getUser(userURLId);
             }
         }
     }
 
-    #listHandle = ((events: EventData[]) => {
+    #eventListHandle = ((events: EventData[]) => {
         this.#view.renderEventList(events);
     }).bind(this);
+
+    #userListHandle(users: UserData[]) {
+        this.#view.renderUsersList(users);
+    }
+
+    #handleIsSubscribed(isSubscribed: boolean) {
+        this.#view.renderSubscribeBlock(isSubscribed);
+    }
 
     #userErrorRenderHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
@@ -72,6 +88,7 @@ export default class ProfilePageController {
         this.#view.render();
         this.#view.renderProfileBlock(user);
         this.#model.getUserEventsCreated(user.id);
+        this.#model.getIsSubscribed(user.id);
     });
 
     #editReqHandle = ((data: MultipartData) => {
@@ -122,13 +139,22 @@ export default class ProfilePageController {
         Bus.off(Events.UserEditReq, this.#editReqHandle);
         Bus.off(Events.UserPasswordEditReq, this.#passwordEditHandle);
         Bus.off(Events.UserByIdRes, this.#userGetHandle);
-        Bus.off(Events.EventsRes, this.#listHandle);
+        Bus.off(Events.UserLogout, this.#userErrorRenderHandle);
+        Bus.off(Events.EventsRes, this.#eventListHandle);
+        Bus.off(Events.EventsResFav, this.#eventListHandle);
+        Bus.off(Events.SubscriptionsRes, this.#userListHandle.bind(this));
+        Bus.off(Events.SubscribersRes, this.#userListHandle.bind(this));
         Bus.off(Events.UserRes, this.#renderHandle);
         Bus.off(Events.UserError, this.#userErrorRenderHandle);
         Bus.off(Events.EventsReq, this.#model.getUserEventsCreated.bind(this, userURLId));
         Bus.off(Events.EventsReqFav, this.#model.getUserEventsFavourite.bind(this, userURLId));
         Bus.off(Events.SubscriptionsReq, this.#model.getSubscriptions.bind(this, userURLId));
         Bus.off(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
+        Bus.off(Events.SubscribeReq, this.#model.makeSubscription.bind(this, userURLId));
+        Bus.off(Events.UnsubscribeReq, this.#model.unsubscribe.bind(this, userURLId));
+        Bus.off(Events.UserIsSubscribed, this.#handleIsSubscribed);
+        Bus.off(Events.SubscribeRes, this.#handleIsSubscribed);
+        Bus.off(Events.UnsubscribeRes, this.#handleIsSubscribed);
 
         this.#view.disable();
     }

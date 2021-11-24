@@ -3,6 +3,8 @@ import ProfileEditForm from '@profile-page/ProfileEditForm/ProfileEditForm';
 import UserStore from '@modules/userstore';
 import * as template from '@profile-page/templates/profilepage.hbs';
 import * as blockTemplate from '@profile-page/templates/profileblock.hbs';
+import * as userList from '@profile-page/templates/userlist.hbs';
+import * as subscribe from '@profile-page/templates/subscribe.hbs';
 import * as listTemplate from '@templates/eventlist/eventlist.hbs';
 import '@templates/eventlist/eventlist.css';
 import Bus from '@eventbus/eventbus';
@@ -42,6 +44,16 @@ export default class ProfilePageView {
         if (subscribersButton) {
             subscribersButton.addEventListener('click', () => Bus.emit(Events.SubscribersReq));
         }
+
+        const subscribeButton = document.getElementById('subscribeButton');
+        if (subscribeButton) {
+            subscribeButton.addEventListener('click', () => Bus.emit(Events.SubscribeReq))
+        }
+
+        const unsubscribeButton = document.getElementById('unsubscribeButton');
+        if (unsubscribeButton) {
+            unsubscribeButton.addEventListener('click', () => Bus.emit(Events.UnsubscribeReq))
+        }
     }
 
     #removeListeners() {
@@ -69,6 +81,16 @@ export default class ProfilePageView {
         if (subscribersButton) {
             subscribersButton.removeEventListener('click', () => Bus.emit(Events.SubscribersReq));
         }
+
+        const subscribeButton = document.getElementById('subscribeButton');
+        if (subscribeButton) {
+            subscribeButton.removeEventListener('click', () => Bus.emit(Events.SubscribeReq))
+        }
+
+        const unsubscribeButton = document.getElementById('unsubscribeButton');
+        if (unsubscribeButton) {
+            unsubscribeButton.removeEventListener('click', () => Bus.emit(Events.UnsubscribeReq))
+        }
     }
 
     #editHandle = ((ev: Event) => {
@@ -94,6 +116,13 @@ export default class ProfilePageView {
         const storedId = UserStore.get()?.id;
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = blockTemplate({user, permitEdit});
+    }
+
+    renderSubscribeBlock(isSubscribed: boolean) {
+        const subscribeBlock = <HTMLElement>document.getElementById('subscribeBlock');
+        if (subscribeBlock) {
+            subscribeBlock.innerHTML = subscribe(isSubscribed);
+        }
 
         this.#addListeners();
     }
@@ -102,6 +131,12 @@ export default class ProfilePageView {
         const listBlock = <HTMLElement>document.getElementById('listBlock');
 
         listBlock.innerHTML = listTemplate({events: events});
+    }
+
+    renderUsersList(users?: UserData[]) {
+        const listBlock = <HTMLElement>document.getElementById('listBlock');
+
+        listBlock.innerHTML = userList({users: users});
     }
 
     disableProfileForm() {
