@@ -2,7 +2,7 @@
   "privete": true,
   "scripts": {
     "dev": "webpack --mode development",
-    "build": "webpack --mode development",
+    "build": "webpack --mode production",
     "start": "node ./server/index.js"
   },
   "dependencies": {
