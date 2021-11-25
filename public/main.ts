@@ -42,3 +42,4 @@ Router.add(UrlPathnames.Create, {header: hController, content: evCreateControlle
 Router.add(UrlPathnames.Edit, {header: hController, content: evEditController});
 
 Router.route();
+console.log(process.env.MAPS_API_KEY);
