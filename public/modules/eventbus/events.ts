@@ -39,6 +39,10 @@ enum Events {
     // CSRF
     CSRFRes = 'csrf:response',
     CSRFDelete = 'csrf:delete',
+
+    //City Store
+    CitiesRes = 'cities:request',
+    CityAdd = 'city:add',
 }
 
 export default Events;

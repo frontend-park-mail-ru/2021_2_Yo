@@ -13,7 +13,7 @@ export default class SearchBoard {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        Bus.on(Events.EventsRes, this.#handleEvents);
+        // Bus.on(Events.EventsRes, this.#handleEvents);
         Bus.on(Events.EventsError, this.#handleEventsError);
     }
 

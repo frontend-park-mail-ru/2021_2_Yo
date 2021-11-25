@@ -17,12 +17,12 @@ export function filterToUrl (data: FilterData) {
         res += 'query=' + data.query;
     }
 
-    if (data.category !== undefined) {
+    if (data.category !== undefined && data.category < config.categories.length) {
         if (res.length > 1) res += '&';
         res += 'category=' + config.categories[data.category].name;
     }
 
-    if ( data.tags && data.tags.length > 0) {
+    if (data.tags && data.tags.length > 0) {
         if (res.length > 1) res += '&';
         res += 'tags=';
         res += data.tags.reduce((prev, curr) => {
@@ -30,20 +30,30 @@ export function filterToUrl (data: FilterData) {
         });
     }
 
+    if (data.date && data.date !== '') {
+        if (res.length > 1) res += '&';
+        res += 'date=' + data.date;
+    }
+
+    if (data.city && data.city !== '') {
+        if (res.length > 1) res += '&';
+        res += 'city=' + data.city;
+    }
+
     if (res.length === 1) {
         res = '';
     }
-    return res;
+    return encodeURI(res);
 }
 
 export function parseParams() {
     const queryParam = new URL(window.location.href).searchParams?.get('query')?.trim();
-    let query: undefined | string = undefined;
+    let query: undefined | string;
     if (queryParam) {
         query = queryParam;
     }
     const categoryParam = new URL(window.location.href).searchParams?.get('category');
-    let category: undefined | number = undefined;
+    let category: undefined | number;
     if (categoryParam) {
         category = customIndexOfCategories(categoryParam);
         if (category === -1) {
@@ -57,7 +67,15 @@ export function parseParams() {
         tags = tagsParam.split('|');
         tags = tags.map(tag => tag.trim());
         tags = tags.filter(tag => tag !== '');
-    } 
+    }
 
-    return {category: category, tags: tags, query: query};
+    const dateParam = new URL(window.location.href).searchParams?.get('date');
+    let date: undefined | string;
+    if (dateParam) date = dateParam;
+
+    const cityParam = new URL(window.location.href).searchParams?.get('city');
+    let city: undefined | string;
+    if (cityParam) city = cityParam;
+
+    return { query, category, tags, date, city };
 }

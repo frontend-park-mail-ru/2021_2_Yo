@@ -7,20 +7,15 @@ import { fetchGet } from '@request/request';
 export default class MainPageModel {
     enable() {
         Bus.on(Events.EventsReq, this.#eventsHandle);
-        Bus.on(Events.FilterChange, this.#filterHandle);
     }
 
-    #filterHandle = (filter: FilterData) => {
+    #eventsHandle = ((filter: FilterData) => {
         const search = filterToUrl(filter);
         Bus.emit(Events.RouteUpdate, search);
-        this.#getEvents(search);
-    };
-
-    #eventsHandle = (() => {
-        this.#getEvents(); 
+        this.#getEvents(search); 
     });
 
-    #getEvents(search?: string) {
+    #getEvents(search: string) {
         if (search === undefined) search = '';
         fetchGet(ApiUrls.Events + search, 
             (data: FetchResponseData) => {

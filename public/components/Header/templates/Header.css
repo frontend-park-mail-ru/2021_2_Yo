@@ -19,6 +19,9 @@
   align-items: center;
   justify-content: space-around;
   background: var(--header-bg-color);
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
 }
 
 .header__content {
@@ -101,7 +104,7 @@
 .header-overlay {
   display: flex;
   justify-content: space-around;
-  position: absolute;
+  position: fixed;
   top: var(--header-height);
   bottom: 0;
   width: 100%;

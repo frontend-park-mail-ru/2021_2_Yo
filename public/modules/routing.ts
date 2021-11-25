@@ -20,7 +20,7 @@ class Router {
         this.#controllers = new Map<UrlPathnames, Controllers>();
 
         window.onpopstate = () => {
-            console.log('to?: ', window.location.pathname, 'and mb search: ', window.location.search);
+            console.log('onpopstate routing');
             this.route();
         };
         window.addEventListener('click', this.#clickHandler);
@@ -42,14 +42,11 @@ class Router {
     };
 
     #handleUpdate = ((params: string) => {
-        console.log('this path:', this.#path);
-        console.log('params: ', params);
+        console.log('updatin:', params);
         if (this.#path && (window.location.search !== params)) {
             window.history.pushState({}, '', this.#path + params);
-            console.log('PUSHED!!!!: ', this.#path + params);
             // window.history.pushState({}, '', params);
         }
-        console.log('this path2:', this.#path);
     }).bind(this);
 
     #handleUrl = ((url: string) => {
@@ -80,13 +77,11 @@ class Router {
     }
 
     route(path?: UrlPathnames) {
-        console.log('ROUNTING FROM ', this.#path, ' to ', path);
-        console.log('OR FROM ', window.location.pathname + window.location.search, ' to ', path);
+        console.log('routin to ', path);
         if (window.location.pathname + window.location.search === path) return;
 
         if (path) {
             window.history.pushState({}, '', path);
-            console.log('PUSHED: ', path);
         }
 
         const nextPath = this.#getValidPath();

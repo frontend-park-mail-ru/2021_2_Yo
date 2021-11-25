@@ -1,5 +1,6 @@
 :root {
   --tag-transition: 0.3s;
+  --category-selected: rgba(79, 189, 197, 0.2);
 }
 
 .filter-list {
@@ -24,6 +25,7 @@
   align-items: center;
   font-size: 1.4rem;
   font-weight: normal;
+  color: #505050;
 }
 
 .filter-li__item_selectable {
@@ -31,7 +33,7 @@
 }
 
 .filter-li__item_selectable:hover {
-  background: rgba(79, 189, 197, 0.2);
+  background: var(--category-selected);
 }
 
 .filter-li__item_header {
@@ -83,18 +85,27 @@
 
 .tag {
   width: fit-content;
-  padding: 5px 23px;
+  padding: 5px 10px;
   color: white;
   font-size: 1.3rem;
   font-weight: bold;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   background: #4fbdc5;
   border-radius: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.tag_error {
+  background-color: var(--tag-error-color);
+}
+
+.tag_delitable {
+  padding: 5px 23px;
   transition: padding-right var(--tag-transition),
-    padding-left var(--tag-transition);
-  /* cursor: pointer; */
+    padding-left var(--tag-transition), background-color 1s;
+  animation-direction: alternate-reverse;
 }
 
 .tag_orange {
@@ -114,7 +125,7 @@
     padding-right var(--tag-transition);
 }
 
-.tag:hover {
+.tag_delitable:hover {
   padding-left: 10px;
   padding-right: 0px;
 }
@@ -126,4 +137,20 @@
 
 .tag time {
   margin-top: 1px;
+}
+
+.filter-calendar-img {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  fill: #505050;
+  cursor: pointer;
+}
+
+.filter-geo-img {
+  height: 20px;
+  width: 14px;
+  margin-left: 10px;
+  fill: #505050;
+  cursor: pointer;
 }
