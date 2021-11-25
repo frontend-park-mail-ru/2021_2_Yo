@@ -21,6 +21,7 @@ export default class MapPopUp {
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#loadSuccess = false;
+        console.log(KEY);
         this.#loader = new Loader({
             apiKey: <string>KEY,
             libraries: ['places'],
