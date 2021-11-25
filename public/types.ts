@@ -20,6 +20,7 @@ export type EventData = {
     text: string;
     date: string;
     geo: string;
+    address: string;
     authorid: string;
 }
 

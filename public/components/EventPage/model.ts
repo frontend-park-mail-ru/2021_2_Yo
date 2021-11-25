@@ -38,7 +38,7 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        Bus.emit(Events.EventAddFavRes);
+                        Bus.emit(Events.EventAddFavRes, id);
                     }
                 }
             }
@@ -51,7 +51,7 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        Bus.emit(Events.EventRemoveFavRes);
+                        Bus.emit(Events.EventRemoveFavRes, id);
                     }
                 }
             }

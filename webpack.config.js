@@ -5,6 +5,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     context: path.resolve(__dirname, 'public'),
@@ -39,9 +40,6 @@ module.exports = {
             new CssMinimizerPlugin(),
         ],
     },
-    resolve: {
-        extensions: ['.js', '.ts'],
-    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: (pathData) => {
@@ -56,6 +54,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new ESLintPlugin({extensions: ['.js', '.ts']}),
         new MiniCssExtractPlugin(),
+        new Dotenv(),
     ],
     resolve: {
         plugins: [new TsconfigPathsPlugin()],

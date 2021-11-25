@@ -185,8 +185,15 @@ export default class Calendar {
         }
 
         dateCell.classList.add('clicked');
+
         const dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        dateInput.classList.remove('form-input_correct');
+        dateInput.classList.remove('form-input_error');
+        dateInput.classList.add('form-input_changed');
         dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
+
+        const inputError = <HTMLElement>document.getElementById('dateError');
+        inputError.classList.add('error_none');
     }
 
     #renderNextMonth = () => {

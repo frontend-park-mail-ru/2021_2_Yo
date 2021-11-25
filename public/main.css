@@ -194,12 +194,12 @@ input:focus {
     border: 1px solid var(--light-purple);
 }
 
-.form-input_correct {
+.form-input_correct:not(#geoInput) {
     background: white;
     border: 1px solid green;
 }
 
-.form-input_error {
+.form-input_error:not(#geoInput) {
     background: white;
     border: 1px solid red;
 }
