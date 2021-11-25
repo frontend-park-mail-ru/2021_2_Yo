@@ -111,7 +111,7 @@ export default class HeaderView {
         const input = <HTMLInputElement>e.currentTarget;
         const value = input.value;
         const params = filterToUrl({query: value});
-        Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
+        Bus.emit(Events.RouteUrl, UrlPathnames.Main + params);
         input.value = '';
     }).bind(this);
 
