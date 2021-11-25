@@ -174,7 +174,13 @@ function checkDate(value: string): string {
     if (value.length && !value.match('^\\s*(3[01]|[12][0-9]|0?[1-9])\\.(1[012]|0?[1-9])\\.((?:19|20)\\d{2})\\s*$')) {
         return 'Неверный формат. Дата должна соответствовать формату дд.мм.гггг';
     }
-    if (Number(new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))) < Date.now()) {
+
+    const jsDate = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]));
+    const today = new Date();
+    if (Number(jsDate) < Date.now() &&
+        !(jsDate.getDate() == today.getDate() &&
+            jsDate.getMonth() == today.getMonth() &&
+            jsDate.getFullYear() == today.getFullYear())) {
         return 'Нельзя создать мероприятие в прошлом';
     }
     return '';

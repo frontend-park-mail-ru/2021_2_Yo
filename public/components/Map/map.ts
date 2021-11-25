@@ -21,7 +21,6 @@ export default class MapPopUp {
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#loadSuccess = false;
-        console.log(process.env.MAPS_API_KEY);
         this.#loader = new Loader({
             apiKey: <string>KEY,
             libraries: ['places'],
@@ -149,6 +148,9 @@ export default class MapPopUp {
         const geoInput = <HTMLInputElement>document.getElementById('geoInput');
         geoInput.placeholder = <string>places[0].geometry?.location?.toString();
         geoInput.value = <string>places[0].formatted_address;
+
+        const inputError = <HTMLElement>document.getElementById('geoError');
+        inputError.classList.add('error_none');
 
         this.#removeListeners();
         this.#parent.innerHTML = '';
