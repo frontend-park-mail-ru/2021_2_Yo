@@ -1,142 +1,146 @@
 .profile-background {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  background: var(--gray-bg-color);
-  padding-top: 40px;
-  padding-bottom: 40px;
-  box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background: var(--gray-bg-color);
+    padding-top: 40px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
 }
 
 .profile-block {
-  width: 423px;
-  padding-right: 10px;
+    width: 423px;
+    padding-right: 10px;
 }
 
 .list-block {
-  width: 44.53vw;
+    width: 44.53vw;
 }
 
 .profile-header {
-  display: flex;
-  align-items: start;
-  justify-content: start;
+    display: flex;
+    align-items: start;
+    justify-content: start;
 }
 
 .profile-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-header__avatar {
-  display: inline-block;
-  margin-right: 10px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
+    display: inline-block;
+    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .profile-header__name {
-  display: inline-block;
+    display: inline-block;
 }
 
 .profile-name {
-  margin: 0;
+    margin: 0;
 
-  font-style: normal;
-  font-weight: normal;
-  font-size: 32px;
-  line-height: 37px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 37px;
 
-  color: var(--black-text-color);
+    color: var(--black-text-color);
 }
 
 .profile-email {
-  margin: 0;
+    margin: 0;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
 
-  color: var(--profile-email-text-color);
+    color: var(--profile-email-text-color);
 }
 
 .profile-about-text {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
 
-  color: var(--black-text-color);
+    color: var(--black-text-color);
 
-  margin: 0;
+    margin: 0;
 }
 
 .profile-bottom {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .profile-description-text {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
 
-  color: var(--black-text-color);
+    color: var(--black-text-color);
 
-  margin: 5px 0;
+    margin: 5px 0;
 }
 
 .button-white_profile {
-  width: 100%;
-  height: 3.7vh;
-  margin-top: 1.2vh;
+    width: 100%;
+    height: 3.7vh;
+    margin-top: 1.2vh;
 
-  display: block;
-  padding-top: 0.56vh;
-  padding-bottom: 0.56vh;
-  text-align: center;
+    display: block;
+    padding-top: 0.56vh;
+    padding-bottom: 0.56vh;
+    text-align: center;
 }
 
 .form-input_profile {
-  width: 100%;
-  height: 2.59vh;
-  border: 1px solid var(--black-text-color);
-  border-radius: 2px;
+    width: 100%;
+    height: 2.59vh;
+    border: 1px solid var(--black-text-color);
+    border-radius: 2px;
 }
 
 .form-textarea_profile {
-  width: 100%;
-  border: 1px solid var(--black-text-color);
-  border-radius: 2px;
+    width: 100%;
+    border: 1px solid var(--black-text-color);
+    border-radius: 2px;
 }
 
 .button-blue_profile {
-  width: 100%;
-  height: 3.7vh;
-  margin-bottom: 2.4vh;
+    width: 100%;
+    height: 3.7vh;
+    margin-bottom: 2.4vh;
 }
 
 .button-white_eventlist {
-  display: block;
-  margin-bottom: 10px;
-  border: 1px solid var(--black-text-color);
-  border-radius: 5px;
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid var(--black-text-color);
+    border-radius: 5px;
 
-  width: 10vw;
-  height: 4.63vh;
-  padding: 1.02vh 1.77vw;
+    width: 10vw;
+    height: 4.63vh;
+    padding: 1.02vh 1.77vw;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  text-decoration-line: underline;
-  color: var(--black-text-color);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    text-decoration-line: underline;
+    color: var(--black-text-color);
+}
+
+.button-sub_none {
+    visibility: hidden;
 }

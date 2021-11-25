@@ -47,12 +47,12 @@ export default class ProfilePageView {
 
         const subscribeButton = document.getElementById('subscribeButton');
         if (subscribeButton) {
-            subscribeButton.addEventListener('click', () => Bus.emit(Events.SubscribeReq))
+            subscribeButton.addEventListener('click', () => Bus.emit(Events.SubscribeReq));
         }
 
         const unsubscribeButton = document.getElementById('unsubscribeButton');
         if (unsubscribeButton) {
-            unsubscribeButton.addEventListener('click', () => Bus.emit(Events.UnsubscribeReq))
+            unsubscribeButton.addEventListener('click', () => Bus.emit(Events.UnsubscribeReq));
         }
     }
 
@@ -84,12 +84,12 @@ export default class ProfilePageView {
 
         const subscribeButton = document.getElementById('subscribeButton');
         if (subscribeButton) {
-            subscribeButton.removeEventListener('click', () => Bus.emit(Events.SubscribeReq))
+            subscribeButton.removeEventListener('click', () => Bus.emit(Events.SubscribeReq));
         }
 
         const unsubscribeButton = document.getElementById('unsubscribeButton');
         if (unsubscribeButton) {
-            unsubscribeButton.removeEventListener('click', () => Bus.emit(Events.UnsubscribeReq))
+            unsubscribeButton.removeEventListener('click', () => Bus.emit(Events.UnsubscribeReq));
         }
     }
 
@@ -116,12 +116,30 @@ export default class ProfilePageView {
         const storedId = UserStore.get()?.id;
         const permitEdit = (user?.id == storedId);
         profileBlock.innerHTML = blockTemplate({user, permitEdit});
+
+        if (!permitEdit) {
+            Bus.emit(Events.UserIsSubscribedReq);
+        } else {
+            this.#addListeners();
+            Bus.emit(Events.EventsReq);
+        }
     }
 
     renderSubscribeBlock(isSubscribed: boolean) {
         const subscribeBlock = <HTMLElement>document.getElementById('subscribeBlock');
         if (subscribeBlock) {
-            subscribeBlock.innerHTML = subscribe(isSubscribed);
+            subscribeBlock.innerHTML = subscribe();
+        }
+
+        const unsubscribeButton = <HTMLElement>document.getElementById('unsubscribeButton');
+        const subscribeButton = <HTMLElement>document.getElementById('subscribeButton');
+
+        if (isSubscribed) {
+            unsubscribeButton.classList.remove('button-sub_none');
+            subscribeButton.classList.add('button-sub_none');
+        } else {
+            unsubscribeButton.classList.add('button-sub_none');
+            subscribeButton.classList.remove('button-sub_none');
         }
 
         this.#addListeners();

@@ -39,9 +39,10 @@ export default class ProfilePageController {
         Bus.on(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
         Bus.on(Events.SubscribeReq, this.#model.makeSubscription.bind(this, userURLId));
         Bus.on(Events.UnsubscribeReq, this.#model.unsubscribe.bind(this, userURLId));
-        Bus.on(Events.UserIsSubscribed, this.#handleIsSubscribed);
-        Bus.on(Events.SubscribeRes, this.#handleIsSubscribed);
-        Bus.on(Events.UnsubscribeRes, this.#handleIsSubscribed);
+        Bus.on(Events.UserIsSubscribedReq, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.on(Events.UserIsSubscribedRes, this.#handleIsSubscribed.bind(this));
+        Bus.on(Events.SubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.on(Events.UnsubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
 
         const storedUser = UserStore.get();
         if (storedUser) {
@@ -49,8 +50,6 @@ export default class ProfilePageController {
             if (storedUser.id === userURLId) {
                 this.#view.render();
                 this.#view.renderProfileBlock(storedUser);
-                this.#model.getUserEventsCreated(storedUser.id);
-                this.#model.getIsSubscribed(storedUser.id);
             } else {
                 this.#model.getUser(userURLId);
             }
@@ -66,6 +65,8 @@ export default class ProfilePageController {
     }
 
     #handleIsSubscribed(isSubscribed: boolean) {
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
+        this.#model.getUserEventsCreated(userURLId);
         this.#view.renderSubscribeBlock(isSubscribed);
     }
 
@@ -87,8 +88,6 @@ export default class ProfilePageController {
     #userGetHandle = ((user: UserData) => {
         this.#view.render();
         this.#view.renderProfileBlock(user);
-        this.#model.getUserEventsCreated(user.id);
-        this.#model.getIsSubscribed(user.id);
     });
 
     #editReqHandle = ((data: MultipartData) => {
@@ -152,9 +151,10 @@ export default class ProfilePageController {
         Bus.off(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
         Bus.off(Events.SubscribeReq, this.#model.makeSubscription.bind(this, userURLId));
         Bus.off(Events.UnsubscribeReq, this.#model.unsubscribe.bind(this, userURLId));
-        Bus.off(Events.UserIsSubscribed, this.#handleIsSubscribed);
-        Bus.off(Events.SubscribeRes, this.#handleIsSubscribed);
-        Bus.off(Events.UnsubscribeRes, this.#handleIsSubscribed);
+        Bus.off(Events.UserIsSubscribedReq, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.off(Events.UserIsSubscribedRes, this.#handleIsSubscribed.bind(this));
+        Bus.off(Events.SubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.off(Events.UnsubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
 
         this.#view.disable();
     }

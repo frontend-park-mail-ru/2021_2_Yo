@@ -12,7 +12,8 @@ enum Events {
     UserPasswordEditReq = 'user-password-edit:request',
     UserPasswordEditRes = 'user-password-edit:response',
     UserByIdRes = 'user-by-id:response',
-    UserIsSubscribed = 'user-subscribed:response',
+    UserIsSubscribedReq = 'user-subscribed:request',
+    UserIsSubscribedRes = 'user-subscribed:response',
 
     // Events
     EventsReq = 'events:request',
@@ -25,6 +26,12 @@ enum Events {
     EventCreated = 'event:created',
     EventEditReq = 'event:edit-request',
     EventDelete = 'event:delete',
+    EventAddFavReq = 'event-addfav:request',
+    EventAddFavRes = 'event-addfav:response',
+    EventRemoveFavReq = 'event-removefav:request',
+    EventRemoveFavRes = 'event-removefav:response',
+    EventFavRes = 'event-fav:response',
+    EventFavReq = 'event-fav:request',
 
     // Authorization
     UserLogout = 'user:logout',
@@ -50,8 +57,8 @@ enum Events {
     SubscriptionsRes = 'user-subscriptions:response',
     SubscribeReq = 'subscribe:request',
     SubscribeRes = 'subscribe:response',
-    UnsubscribeReq = 'subscribe:request',
-    UnsubscribeRes = 'subscribe:response',
+    UnsubscribeReq = 'unsubscribe:request',
+    UnsubscribeRes = 'unsubscribe:response',
 }
 
 export default Events;

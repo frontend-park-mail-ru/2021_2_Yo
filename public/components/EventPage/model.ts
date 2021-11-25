@@ -1,4 +1,4 @@
-import {fetchDelete, fetchGet} from '@request/request';
+import {fetchDelete, fetchGet, fetchPost} from '@request/request';
 import {ApiUrls, EventData, FetchResponseData, UrlPathnames} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
@@ -25,8 +25,47 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        console.log(UrlPathnames.Profile + '?id=' + userstore.get()?.id);
                         Bus.emit(Events.RouteUrl, UrlPathnames.Profile + '?id=' + userstore.get()?.id);
+                    }
+                }
+            }
+        );
+    }
+
+    addEventToFavourite(id: string) {
+        fetchPost(ApiUrls.Events + '/' + id + '/favourite', {},
+            (data: FetchResponseData) => {
+                const {status, json} = data;
+                if (status === 200) {
+                    if (json.status === 200) {
+                        Bus.emit(Events.EventAddFavRes);
+                    }
+                }
+            }
+        );
+    }
+
+    removeEventFromFavourite(id: string) {
+        fetchDelete(ApiUrls.Events + '/' + id + '/favourite',
+            (data: FetchResponseData) => {
+                const {status, json} = data;
+                if (status === 200) {
+                    if (json.status === 200) {
+                        Bus.emit(Events.EventRemoveFavRes);
+                    }
+                }
+            }
+        );
+    }
+
+    isEventFavourite(id: string) {
+        fetchGet(ApiUrls.Events + '/' + id + '/favourite',
+            (data: FetchResponseData) => {
+                const {status, json} = data;
+                if (status === 200) {
+                    if (json.status === 200) {
+                        const result = json.body.result;
+                        Bus.emit(Events.EventFavRes, result);
                     }
                 }
             }

@@ -130,7 +130,7 @@ export default class ProfilePageModel {
             if (status === 200) {
                 if (json.status === 200) {
                     const result = json.body.result;
-                    Bus.emit(Events.UserIsSubscribed, result);
+                    Bus.emit(Events.UserIsSubscribedRes, result);
                     return;
                 }
             }

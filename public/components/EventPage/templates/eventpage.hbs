@@ -1,11 +1,11 @@
-<div class ="event-background">
+<div class="event-background">
     <div class="event-background__primary-border-block primary-white-block">
         <div class="event-header">
             <span>
                 <span class="event-header-text event-header-text_place">
                     {{event.city}}
                 </span>
-                <span class ="event-header-text"> > </span>
+                <span class="event-header-text"> > </span>
                 <span class="event-header-text event-header-text_category">{{event.category}}</span>
             </span>
             <div class="event-block__event-header-views event-header-views">
@@ -30,9 +30,9 @@
     </div>
 
     {{#if event.imgUrl}}
-    <div class="event-background__primary-border-block primary-white-block">
-        <img class="event-block__photo" src="{{event.imgUrl}}">
-    </div>
+        <div class="event-background__primary-border-block primary-white-block">
+            <img class="event-block__photo" src="{{event.imgUrl}}">
+        </div>
     {{/if}}
 
     <div class="event-background__primary-border-block primary-white-block">
@@ -50,15 +50,25 @@
         </div>
     </div>
     {{#if permission}}
-    <div class="event-background__primary-border-block primary-white-block">
+        <div class="event-background__primary-border-block primary-white-block">
+            <div class="buttons-block">
+                <a class="event-button event-button_blue" id="editButton">
+                    Редактировать мероприятие
+                </a>
+                <a class="event-button event-button_red" id="deleteButton">
+                    Удалить мероприятие
+                </a>
+            </div>
+        </div>
+    {{/if}}
+    <div class="event-background__primary-border-block primary-white-block button_none" id="favBlock">
         <div class="buttons-block">
-            <a class="event-button event-button_blue" id="editButton">
-                Редактировать мероприятие
-            </a>
-            <a class="event-button event-button_red" id="deleteButton">
-                Удалить мероприятие
-            </a>
+                <span class="event-button event-button_blue" id="addFavourite">
+                    Добавить в избранное
+                </span>
+            <span class="event-button event-button_red" id="removeFavourite">
+                    Удалить из избранного
+                </span>
         </div>
     </div>
-    {{/if}}
 </div>
