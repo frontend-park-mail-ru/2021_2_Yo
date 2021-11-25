@@ -55,7 +55,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    overflow: overlay;
+    /*overflow: overlay;*/
 }
 
 html {
@@ -91,7 +91,7 @@ input:focus {
     flex-grow: 1;
     background-color: var(--app-bg-color);
     margin-top: var(--header-height);
-    overflow: visible;
+    /*overflow: visible;*/
 }
 
 .flex {
