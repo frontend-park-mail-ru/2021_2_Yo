@@ -112,7 +112,7 @@ export default class HeaderView {
         const value = input.value;
         const params = filterToUrl({query: value});
         Bus.emit(Events.RouteUrl, UrlPathnames.Main + params);
-        input.value = '';
+        // input.value = '';
     }).bind(this);
 
     #searchHandle = (() => {
