@@ -132,7 +132,6 @@ export default class EventEditView extends EventFormView {
         let file: undefined | File;
         if (imageInput.files) file = imageInput.files[0];
 
-        console.log(this.inputsData);
         Bus.emit(Events.EventEditReq, {input: this.inputsData, file});
     }
 }
