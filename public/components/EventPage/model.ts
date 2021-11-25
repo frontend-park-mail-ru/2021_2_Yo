@@ -25,7 +25,6 @@ export default class EventPageModel {
                 const {status, json} = data;
                 if (status === 200) {
                     if (json.status === 200) {
-                        console.log(UrlPathnames.Profile + '?id=' + userstore.get()?.id);
                         Bus.emit(Events.RouteUrl, UrlPathnames.Profile + '?id=' + userstore.get()?.id);
                     }
                 }
