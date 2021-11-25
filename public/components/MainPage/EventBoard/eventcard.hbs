@@ -1,0 +1,33 @@
+<div class="event-board-event">
+    <div class="event-img-wrapper">
+        <img class="event-img" src="{{imgUrl}}">
+        <div class="event-img-overlay">
+            <div class="event-img-overlay__view event-img-overlay__item">
+                <svg class="view-img">
+                    <use xlink:href="./server/img/sprite.svg#view"></use>
+                </svg>
+                {{viewed}}
+            </div>
+            <div class="event-img-overlay__star event-img-overlay__item">
+                <svg class="star-img">
+                    <use xlink:href="./server/img/sprite.svg#star"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="event-info">
+        <div class="event-info__item">
+            <a href="events?id={{id}}"><div class="event-info__title">{{title}}</div></a>
+            <div class="event-info__meta">{{date}}</div>
+            <div class="event-info__meta">{{city}}</div>
+        </div>
+        <div class="event-info__item">
+            <span class="event-info__text">{{description}}</span>                
+        </div>
+        <div class="event-info__tags">
+            {{#each tag}}
+                <a href="/?tags={{this}}"><div class="tag">{{this}}</div></a>
+            {{/each}}
+        </div>
+    </div>
+</div>

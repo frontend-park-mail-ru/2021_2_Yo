@@ -1,0 +1,18 @@
+.main-page-content {
+  width: 62%;
+  margin: 10px auto 20px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+}
+
+#filter-list-wrapper {
+  width: 100%;
+}
+
+#event-board-wrapper {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 10px;
+}

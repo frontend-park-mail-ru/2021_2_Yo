@@ -44,6 +44,7 @@ export enum UrlPathnames {
 export enum ApiUrls {
     User = '/user',
     Events = '/events',
+    Cities = '/events/cities',
     Login = '/auth/login',
     Signup = '/auth/signup',
     Logout = '/auth/logout',
@@ -74,9 +75,13 @@ export type ApiPostSignupData = {
 }
 
 export type FilterData = {
+    query?: string,
     category?: number,
     tags?: string[],
-    query?: string,
+    // date?: string[],
+    date?: string,
+    // cities?: string[],
+    city?: string,
 }
 
 export type InputData = {

@@ -13,7 +13,6 @@
     --purple-btn-color: #490063;
     --light-gray-color: #aaaaaa;
     --gray-border: 2px solid var(--light-gray-color);
-    --app-bg-color: #f7f7f7;
     --date-orange-color: #ff630b;
     --geo-turquoise-color: #08bbbb;
     --auth-form-bg-color: linear-gradient(90deg, #f3f2ff 0%, #ffe6fe 100%);
@@ -23,6 +22,32 @@
     --light-purple: #7b73d0;
     --light-orange: #ff965b;
     --btn_gray: #a4a4a4;
+    --header-overlay-bg: rgba(216, 224, 255, 0.5);
+    --app-bg-color: #efefef;
+}
+
+::-webkit-scrollbar {
+    width: 1.2em;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block-start: calc(var(--header-height) + 0.5em);
+    margin-block-end: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #505050;
+    border-radius: 100vw;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #343434;
+    border-radius: 100vw;
+    border: 3px solid transparent;
+    background-clip: padding-box;
 }
 
 html,
@@ -30,8 +55,16 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
+    overflow: overlay;
+}
 
+html {
     font-size: 14px;
+}
+
+input {
+    padding: 0;
+    font-family: inherit;
 }
 
 a,
@@ -39,10 +72,6 @@ a:visited,
 a:hover,
 a:active {
     color: inherit;
-    text-decoration: none;
-}
-
-a {
     text-decoration: none;
 }
 
@@ -61,6 +90,8 @@ input:focus {
 #mvc-content {
     flex-grow: 1;
     background-color: var(--app-bg-color);
+    margin-top: var(--header-height);
+    overflow: visible;
 }
 
 .flex {
@@ -139,7 +170,7 @@ input:focus {
     padding: 1.02vh 0.57vw;
 
     background: var(--blue-btn-color);
-    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 
     font-weight: bold;
@@ -274,7 +305,7 @@ textarea {
     background: var(--purple-btn-color);
     border: 2px solid #ffffff;
     box-sizing: border-box;
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
     border-radius: 2px;
 
     height: 3.7vh;
@@ -363,7 +394,7 @@ textarea {
 
 .authform {
     background: var(--auth-form-bg-color);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
     padding: 9.537vh 1.82vw 2.78vh;
     box-sizing: border-box;
@@ -407,4 +438,45 @@ textarea {
     color: var(--black-text-color);
 
     margin: 0;
+}
+
+/* Extra small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+/* @media only screen and (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {
+  html {
+    font-size: 14px;
+  }
+} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    html {
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 1480px) {
+    html {
+        font-size: 14px;
+    }
 }

@@ -13,7 +13,7 @@ export default class SearchBoard {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        Bus.on(Events.EventsRes, this.#handleEvents);
+        // Bus.on(Events.EventsRes, this.#handleEvents);
         Bus.on(Events.EventsError, this.#handleEventsError);
     }
 
@@ -52,7 +52,6 @@ export default class SearchBoard {
         const input = <HTMLInputElement>e.target;
         if (!input) return;
         const value = input.value.trim();
-        // if (value === '') return;
 
         this.#query = value;
 

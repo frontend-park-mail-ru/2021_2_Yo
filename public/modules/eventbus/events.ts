@@ -59,6 +59,10 @@ enum Events {
     SubscribeRes = 'subscribe:response',
     UnsubscribeReq = 'unsubscribe:request',
     UnsubscribeRes = 'unsubscribe:response',
+
+    // City Store
+    CitiesRes = 'cities:request',
+    CityAdd = 'city:add',
 }
 
 export default Events;

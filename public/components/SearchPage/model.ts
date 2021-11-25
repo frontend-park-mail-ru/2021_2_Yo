@@ -9,15 +9,15 @@ export default class SearchPageModel {
 
     constructor() {
         this.#data = {
-            tags: new Array<string>(),
+            tags: [],
         };
     }
     
     enable(data: FilterData) {
         this.#data = data;
-        Bus.on(Events.EventsReq, this.#handleEvents);
-        Bus.on(Events.FilterChange, this.#handleFilter);
-        Bus.on(Events.QueryChange, this.#handleQuery);
+        // Bus.on(Events.EventsReq, this.#handleEvents);
+        // Bus.on(Events.FilterChange, this.#handleFilter);
+        // Bus.on(Events.QueryChange, this.#handleQuery);
     }
 
     #handleFilter = ((data: {category?: number, tags: Array<string>}) => {
@@ -50,7 +50,7 @@ export default class SearchPageModel {
     }).bind(this);
 
     disable() {
-        Bus.off(Events.EventsReq, this.#handleEvents);
+        // Bus.off(Events.EventsReq, this.#handleEvents);
         this.#data = {
             tags: new Array<string>(),
         };
