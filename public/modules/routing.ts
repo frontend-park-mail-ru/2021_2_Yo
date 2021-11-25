@@ -20,7 +20,6 @@ class Router {
         this.#controllers = new Map<UrlPathnames, Controllers>();
 
         window.onpopstate = () => {
-            console.log('onpopstate routing');
             this.route();
         };
         window.addEventListener('click', this.#clickHandler);
@@ -42,7 +41,6 @@ class Router {
     };
 
     #handleUpdate = ((params: string) => {
-        console.log('updatin:', params);
         if (this.#path && (window.location.search !== params)) {
             window.history.pushState({}, '', this.#path + params);
             // window.history.pushState({}, '', params);
@@ -77,7 +75,6 @@ class Router {
     }
 
     route(path?: UrlPathnames) {
-        console.log('routin to ', path);
         if (window.location.pathname + window.location.search === path) return;
 
         if (path) {

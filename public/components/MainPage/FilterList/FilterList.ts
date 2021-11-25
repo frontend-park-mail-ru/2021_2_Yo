@@ -107,9 +107,6 @@ export default class FilterListComponent {
         if (e instanceof KeyboardEvent) {
             if (e.code !== 'Enter') return;
         }
-        if (e instanceof MouseEvent) {
-            console.log('clicked?');
-        }
 
         const input = <HTMLInputElement>this.#tagInput;
         const added = this.#tagAdd(input.value);
@@ -193,7 +190,6 @@ export default class FilterListComponent {
     }
 
     render() {
-        console.log(CityStore.get());
         this.#parent.innerHTML = template({
             categories: config.categories,
             cities: CityStore.get()

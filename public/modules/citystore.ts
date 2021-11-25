@@ -23,7 +23,6 @@ class CityStore {
                 if (data.status === 200) {
                     if (data.json.status === 200) {
                         Bus.emit(Events.CitiesRes, data.json.body?.cities);
-                        console.log(data.json.body);
                     }
                 }
             },

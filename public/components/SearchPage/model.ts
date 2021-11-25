@@ -21,14 +21,12 @@ export default class SearchPageModel {
     }
 
     #handleFilter = ((data: {category?: number, tags: Array<string>}) => {
-        console.log('handleFilter');
         this.#data.category = data.category;
         this.#data.tags = data.tags;
         this.#handleEvents();
     }).bind(this);
 
     #handleQuery = ((query: string) => {
-        console.log('handleQuery');
         this.#data.query = query;
         this.#handleEvents();
     }).bind(this);
@@ -36,7 +34,6 @@ export default class SearchPageModel {
     #handleEvents = (() => {
         let filter = '';
         filter = filterToUrl(this.#data);
-        console.log('handleEvents');
         Bus.emit(Events.RouteUpdate, filter);
         fetchGet(ApiUrls.Events + filter, 
             (data: FetchResponseData) => {
