@@ -18,7 +18,6 @@ function getDotEnvPlugin(mode) {
             'MAPS_API_KEY': JSON.stringify(process.env.MAPS_API_KEY),
         }
     };
-    console.log(options);
     return new webpack.DefinePlugin(options);
 }
 
@@ -71,8 +70,6 @@ module.exports = (env, argv) => {
             new ESLintPlugin({extensions: ['.js', '.ts']}),
             new MiniCssExtractPlugin(),
             new getDotEnvPlugin(argv.mode),
-            // new Dotenv(),
-            // new webpack.DefinePlugin()
         ],
         resolve: {
             plugins: [new TsconfigPathsPlugin()],
