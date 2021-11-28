@@ -33,6 +33,12 @@ export default class EventPageView {
 
         const deleteButton = document.getElementById('deleteButton');
         deleteButton?.addEventListener('click', this.#deleteHandle);
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.addEventListener('click', this.#hideEditPopup.bind(this));
+
+        const popupOpenButton = <HTMLElement>document.getElementById('popupOpen');
+        popupOpenButton?.addEventListener('click', this.#showEditPopup.bind(this));
     }
 
     #removeListeners() {
@@ -40,7 +46,13 @@ export default class EventPageView {
         editButton?.removeEventListener('click', this.#editHandle);
 
         const deleteButton = document.getElementById('deleteButton');
-        deleteButton?.addEventListener('click', this.#deleteHandle);
+        deleteButton?.removeEventListener('click', this.#deleteHandle);
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.removeEventListener('click', this.#hideEditPopup.bind(this));
+
+        const popupOpenButton = <HTMLElement>document.getElementById('popupOpen');
+        popupOpenButton?.removeEventListener('click', this.#showEditPopup.bind(this));
     }
 
     #editHandle = ((e: Event) => {
@@ -54,6 +66,22 @@ export default class EventPageView {
 
         Bus.emit(Events.EventDelete, this.#event?.id);
     }).bind(this);
+
+    #hideEditPopup() {
+        const popup = document.getElementById('editPopup');
+        popup?.classList.add('edit-popup_none');
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.classList.add('edit-popup_none');
+    }
+
+    #showEditPopup() {
+        const popup = document.getElementById('editPopup');
+        popup?.classList.remove('edit-popup_none');
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.classList.remove('edit-popup_none');
+    }
 
     disable() {
         this.#removeListeners();

@@ -41,6 +41,9 @@ export default class EventCreateView extends EventFormView {
         this.inputs.forEach((input, key) => {
             input.addEventListener('input', this.handleInputChange.bind(this, input, key));
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        imageInput.addEventListener('change', this.showPhoto.bind(this, imageInput));
     }
 
     #removeListeners() {
@@ -83,9 +86,19 @@ export default class EventCreateView extends EventFormView {
 
         this.inputs.forEach((input, key) => {
             if (input) {
-                input.addEventListener('input', this.handleInputChange.bind(this, input, key));
+                input.removeEventListener('input', this.handleInputChange.bind(this, input, key));
             }
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput) {
+            imageInput.removeEventListener('change', this.showPhoto.bind(this, imageInput));
+        }
+
+        const photoLabel = <HTMLElement>document.getElementById('photo-label');
+        if (photoLabel) {
+            photoLabel.removeEventListener('click', this.deletePhoto.bind(this));
+        }
     }
 
     #createEvent(ev: Event) {

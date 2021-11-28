@@ -28,6 +28,10 @@ export default class EventEditView extends EventFormView {
         }
 
         this.setInputs();
+
+        const categoryInput = <HTMLSelectElement>document.getElementById('categoryInput');
+        categoryInput.value = <string>event?.category;
+
         this.#addListeners();
     }
 
@@ -62,6 +66,9 @@ export default class EventEditView extends EventFormView {
         this.inputs.forEach((input, key) => {
             input.addEventListener('input', this.handleInputChange.bind(this, input, key));
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        imageInput.addEventListener('change', this.showPhoto.bind(this, imageInput));
     }
 
     #removeListeners() {
@@ -109,6 +116,16 @@ export default class EventEditView extends EventFormView {
                 input.removeEventListener('input', this.handleInputChange.bind(this, input, key));
             }
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput) {
+            imageInput.removeEventListener('change', this.showPhoto.bind(this, imageInput));
+        }
+
+        const photoLabel = <HTMLElement>document.getElementById('photo-label');
+        if (photoLabel) {
+            photoLabel.removeEventListener('click', this.deletePhoto.bind(this));
+        }
     }
 
     #editEvent(ev: Event) {
@@ -132,7 +149,6 @@ export default class EventEditView extends EventFormView {
         let file: undefined | File;
         if (imageInput.files) file = imageInput.files[0];
 
-        console.log(this.inputsData);
         Bus.emit(Events.EventEditReq, {input: this.inputsData, file});
     }
 }

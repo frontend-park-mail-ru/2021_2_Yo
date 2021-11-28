@@ -11,11 +11,15 @@
     padding-top: 20px;
 }
 
+.white-block_size {
+    width: 45%;
+}
+
 .eventform {
     display: grid;
     grid-gap: 5px;
-
-    width: 45vw;
+    width: 100%;
+    grid-template-columns: 100%;
 }
 
 .input-block_event-wide {
@@ -41,13 +45,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
-}
-
-.calendar-btn {
-    width: 35px;
-    height: 35px;
-    fill: black;
-    cursor: pointer;
+    align-items: center;
 }
 
 .geo-input {
@@ -55,9 +53,8 @@
 
     padding: 5px 10px;
 
-    width: 150px;
-    min-width: 150px;
-    max-width: max-content;
+    width: 200px;
+    max-width: 85%;
 
     font-style: normal;
     font-weight: bold;
@@ -73,4 +70,44 @@
 
 .geo-input::placeholder {
     color: white;
+}
+
+.photo-input_none {
+    display: none;
+}
+
+.photo-input-label {
+    padding: 5px 10px;
+
+    width: 200px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.65rem;
+    color: white;
+    fill: white;
+    text-align: center;
+
+    background: var(--light-orange);
+    border: 1px solid var(--light-orange);
+    border-radius: 5px;
+}
+
+.input-btn {
+    width: 35px;
+    height: 35px;
+    fill: black;
+    cursor: pointer;
+}
+
+.tag-btn {
+    color: black !important;
+    border: 1px solid black !important;
+}
+
+.photo {
+    border-radius: 5px;
+    width: 65%;
+    height: 100%;
 }

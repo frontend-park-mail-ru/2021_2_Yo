@@ -22,7 +22,7 @@
     --profile-email-text-color: #aaaaaa;
     --light-purple: #7b73d0;
     --light-orange: #ff965b;
-    --btn_gray: #a4a4a4;
+    --secondary_gray: #a4a4a4;
 }
 
 html,
@@ -99,6 +99,7 @@ input:focus {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    position: relative;
 }
 
 .error {
@@ -136,15 +137,15 @@ input:focus {
 
 .event-tag {
     display: inline-block;
-    padding: 1.02vh 0.57vw;
+    padding: 5px 10px;
 
     background: var(--blue-btn-color);
-    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 
+    font-style: normal;
     font-weight: bold;
-    font-size: 2.22vh;
-    line-height: 2.59vh;
+    font-size: 1.3rem;
+    line-height: 1.5rem;
     color: white;
 }
 
@@ -252,7 +253,7 @@ textarea {
 }
 
 .button-white {
-    border: 1px solid var(--btn_gray);
+    border: 1px solid var(--secondary_gray);
     box-sizing: border-box;
     border-radius: 5px;
 
@@ -262,7 +263,7 @@ textarea {
     font-weight: normal;
     font-size: 1.5rem;
     line-height: 1.65rem;
-    color: var(--btn_gray);
+    color: var(--secondary_gray);
 
     width: max-content;
 
@@ -384,6 +385,7 @@ textarea {
 
 .event-tags-block__event-tag {
     margin-right: 10px;
+    margin-top: 10px;
 }
 
 .event-tags-block__event-tag:last-child {
@@ -396,15 +398,20 @@ textarea {
     border-radius: 15px;
 
     padding: 20px 60px;
-    max-width: 50%;
 }
 
 .primary-text {
     font-style: normal;
     font-weight: normal;
-    font-size: 2.22vh;
-    line-height: 2.59vh;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
     color: var(--black-text-color);
+}
 
-    margin: 0;
+.secondary-text {
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    color: var(--secondary_gray);
+    font-style: normal;
+    font-weight: normal;
 }
