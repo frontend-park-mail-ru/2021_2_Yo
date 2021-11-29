@@ -1,5 +1,6 @@
 :root {
   --tag-transition: 0.3s;
+  --tag-error-color: #e432e4;
   --category-selected: rgba(79, 189, 197, 0.2);
 }
 

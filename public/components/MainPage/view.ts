@@ -16,7 +16,7 @@ export default class MainPageView {
         this.#parent = parent;
     }
 
-    render(params: FilterData) {
+    render() {
         this.#parent.innerHTML = template();
         // const ssWrapper = <HTMLElement>document.getElementById('search-status-wrapper');
         const flWrapper = <HTMLElement>document.getElementById('filter-list-wrapper');
@@ -29,7 +29,6 @@ export default class MainPageView {
         // this.#status.render();
         this.#board.render();
         this.#filterlist.render();
-        this.#filterlist.renderFilter(params);
     }
 
     disable() {

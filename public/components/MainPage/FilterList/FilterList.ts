@@ -6,9 +6,10 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import config from '@/config';
 import CityStore from '@/modules/citystore';
+import FilterStore, { FilterParams } from '@/modules/filter';
+import fStore from '@/modules/filter';
 
 const TAG_PING_TIME_MSEC = 500;
-const REQ_WAIT_CHANGE_TIME_MSEC = 500;
 
 
 export default class FilterListComponent {
@@ -23,20 +24,9 @@ export default class FilterListComponent {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#filter = {
-            tags: [],
-        };
+        this.#filter = fStore.get();
         const callback = () => {Bus.off(Events.CitiesRes, callback); this.render();};
         Bus.on(Events.CitiesRes, callback);
-    }
-
-    #handleFilter() {
-        const handle = (filter: FilterData) => {
-            if (this.#filter === filter) {
-                Bus.emit(Events.EventsReq, filter);
-            }
-        };
-        setTimeout(handle, REQ_WAIT_CHANGE_TIME_MSEC, this.#filter);
     }
 
     #tagAdd(tag: string): boolean {
@@ -51,12 +41,13 @@ export default class FilterListComponent {
             return false;
         }
 
-        this.#filter?.['tags'].map((name) => {
+        this.#filter['tags']?.map((name) => {
             const tagCross = <HTMLElement>document.getElementById('tag-cross-' + name);
             tagCross.removeEventListener('click', this.#handleTagDelete);
         });
 
         this.#filter['tags'].push(tag);
+        FilterStore.set(FilterParams.Tags, this.#filter['tags']);
         this.#renderTags();
         return true;
     }
@@ -64,9 +55,11 @@ export default class FilterListComponent {
     #renderTags() {
         if (!this.#tags) return;
         this.#tags.innerHTML = '';
-        this.#filter['tags']?.map((tag) => {
-            if (this.#tags) this.#tags.innerHTML += tagTemplate(tag);
-        });
+        if (this.#filter['tags']) {
+            (this.#filter['tags']).map((tag) => {
+                if (this.#tags) this.#tags.innerHTML += tagTemplate(tag);
+            });
+        }
         this.#filter['tags']?.map((t) => {
             const tagCross = document.getElementById('tag-cross-' + t);
             if (tagCross) {
@@ -90,17 +83,17 @@ export default class FilterListComponent {
         const target = <HTMLElement>e.target; 
         const index = +<string>target.dataset['num'];
         const selected = this.#filter['category'];
+        let category: number | undefined;
         if (selected === index) {
             target.style.backgroundColor = '';
-            this.#filter['category'] = undefined;
         } else {
             if (selected !== undefined && this.#categories) {
                 this.#categories[selected].style.backgroundColor = '';
             }
             target.style.backgroundColor = 'var(--category-selected)';
-            this.#filter['category'] = index;
+            category = index;
         }
-        this.#handleFilter();
+        this.#filter = FilterStore.set(FilterParams.Category, category);
     };
 
     #handleTagAdd = (e: KeyboardEvent | MouseEvent) =>  {
@@ -110,35 +103,30 @@ export default class FilterListComponent {
 
         const input = <HTMLInputElement>this.#tagInput;
         const added = this.#tagAdd(input.value);
-        if (added) {
-            input.value = '';
-            this.#handleFilter();
-        }
+        if (added) input.value = '';
     };
 
     #handleTagDelete = (e: MouseEvent) => {
         const target = <HTMLElement>e.currentTarget;
         if (!target || !target.dataset['tag']) return;
-        this.#filter['tags'] = this.#filter['tags']?.filter(tag => tag !== target.dataset['tag']);
-        const tags = this.#filter['tags'];
+        const tags = this.#filter['tags']?.filter(tag => tag !== target.dataset['tag']);
         target.removeEventListener('click', this.#handleTagDelete);
         const tag = <HTMLElement>document.getElementById('filter-tag-' + target.dataset['tag']);
         tag.outerHTML = '';
         this.#tags = <HTMLElement>document.getElementById('filter-tags');
-        this.#handleFilter();
+        this.#filter = FilterStore.set(FilterParams.Tags, tags);
     };
 
     #handleDateChange = () => {
         const value = <string>this.#dateInput?.value;
-        const date = value.split('-').reduce((prev, curr) => {return curr + '.' + prev;}, '');
-        this.#filter['date'] = date.slice(0, date.length - 1);
-        this.#handleFilter();
+        let date = value.split('-').reduce((prev, curr) => {return curr + '.' + prev;}, '');
+        date = date.slice(0, date.length - 1);
+        this.#filter = FilterStore.set(FilterParams.Date, date);
     };
 
     #handleCityInput = () => {
         const value = <string>this.#cityInput?.value;
-        this.#filter['city'] = value;
-        this.#handleFilter();
+        this.#filter = FilterStore.set(FilterParams.City, value);
     };
 
     #removeListeners() {
@@ -158,12 +146,8 @@ export default class FilterListComponent {
         this.#cityInput?.removeEventListener('input', this.#handleCityInput);
     }
 
-    renderFilter(filter: FilterData) {
-        this.#filter['category'] = filter['category'];
-        this.#filter['query'] = filter['query'];
-        this.#filter['tags'] = filter['tags'];
-        this.#filter['date'] = filter['date'];
-        this.#filter['city'] = filter['city'];
+    #renderFilter() {
+        this.#filter = FilterStore.get();
         if (this.#filter['category'] !== undefined) {
             if (this.#categories) {
                 this.#categories[this.#filter['category']].style.backgroundColor = 'var(--category-selected)';
@@ -175,10 +159,10 @@ export default class FilterListComponent {
         }
 
         if (this.#filter['date'] !== undefined && this.#filter['date'] !== '') {
-            const date = filter['date']?.split('.').reduce((prev, curr) => {return curr + '-' + prev;}, '');
+            const date = this.#filter['date']?.split('.').reduce((prev, curr) => {return curr + '-' + prev;}, '');
             this.#filter['date'] = date?.slice(0, date.length - 1);
             if (this.#dateInput) {
-                this.#dateInput.value = <string>this.#filter['date'];
+                this.#dateInput.value = this.#filter['date'];
             }
         }
 
@@ -203,6 +187,7 @@ export default class FilterListComponent {
         this.#dateInput = <HTMLInputElement>document.getElementById('filter-date-input');
         this.#cityInput = <HTMLInputElement>document.getElementById('filter-city-input');
         this.#addListeners();
+        this.#renderFilter();
     }
 
     disable() {

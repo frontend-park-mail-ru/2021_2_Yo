@@ -75,11 +75,14 @@ class Router {
     }
 
     route(path?: UrlPathnames) {
+        // if (window.location.pathname + window.location.search === path) return;
         if (window.location.pathname + window.location.search === path) return;
 
         if (path) {
             window.history.pushState({}, '', path);
         }
+
+        Bus.emit(Events.RouteChange, window.location.pathname);
 
         const nextPath = this.#getValidPath();
         const nextControllers = <Controllers>this.#controllers.get(nextPath);

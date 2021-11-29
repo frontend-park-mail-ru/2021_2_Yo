@@ -1,13 +1,14 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import config from '@/config';
-import { UserData, UrlPathnames } from '@/types';
+import { UserData } from '@/types';
 import * as template from '@header/templates/header.hbs';
 import '@header/templates/Header.css';
-import { filterToUrl } from '@/modules/filter';
+import FilterStore, { FilterParams } from '@/modules/filter';
 
 export default class HeaderView {
     #parent: HTMLElement;
+    #input?: HTMLInputElement;
     #popupShown?: boolean;
     #headerFocusIds = ['header-input', 'header-search', 'header-calendar'];
     #headerClickIds = ['header', 'header-logo'];
@@ -19,35 +20,35 @@ export default class HeaderView {
     subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
         Bus.on(Events.UserError, this.#userHandle);
+        Bus.on(Events.RouteChange, this.#handleRouteChange);
     }
 
     #addListeners() {
-        const input = <HTMLInputElement>document.getElementById('header-input');
-        if (input) input.addEventListener('keypress', this.#inputHandle);
-
-        const search = <HTMLElement>document.getElementById('header-search');
-        if (search) search.addEventListener('click', this.#searchHandle);
+        if (this.#input) this.#input.addEventListener('input', this.#inputHandle);
 
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         if (avatar) avatar.addEventListener('click', this.#handleAvatar);
 
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.addEventListener('click', this.#toggleOverlay);
+        if (overlay) overlay.addEventListener('click', this.#handleOverlayClick);
     }
 
     #removeListeners() {
-        const input = <HTMLInputElement>document.getElementById('header-input');
-        if (input) input.removeEventListener('keypress', this.#inputHandle);
-
-        const search = <HTMLElement>document.getElementById('header-search');
-        if (search) search.removeEventListener('click', this.#searchHandle);
+        if (this.#input) this.#input.removeEventListener('input', this.#inputHandle);
 
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         if (avatar) avatar.removeEventListener('click', this.#handleAvatar);
 
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.removeEventListener('click', this.#toggleOverlay);
+        if (overlay) overlay.removeEventListener('click', this.#handleOverlayClick);
     }
+
+    #handleRouteChange = () => {
+        // if (this.#input) {
+        //     this.#input.value = '';
+        // }
+        this.#renderFilter();
+    };
 
     #handleAvatar = (e: MouseEvent) => {
         e.stopPropagation();
@@ -57,6 +58,12 @@ export default class HeaderView {
     #handleEscape = (e: KeyboardEvent) => {
         if (e.code !== 'Escape') return;
         this.#toggleOverlay();
+    };
+
+    #handleOverlayClick = () => {
+        if (this.#popupShown) {
+            this.#toggleOverlay();
+        }
     };
 
     #listenOverlay() {
@@ -106,21 +113,9 @@ export default class HeaderView {
         this.#listenOverlay();
     };
 
-    #inputHandle = ((e: KeyboardEvent) => {
-        if (e.code !== 'Enter') return;
-        const input = <HTMLInputElement>e.currentTarget;
-        const value = input.value;
-        const params = filterToUrl({query: value});
-        Bus.emit(Events.RouteUrl, UrlPathnames.Main + params);
-        // input.value = '';
-    }).bind(this);
-
-    #searchHandle = (() => {
-        const input = <HTMLInputElement>document.getElementById('header-input');
-        const value = input.value;
-        const params = filterToUrl({query: value});
-        Bus.emit(Events.RouteUrl, UrlPathnames.Main + params);
-        // input.value = '';
+    #inputHandle = (() => {
+        const value = this.#input?.value;
+        FilterStore.set(FilterParams.Query, value);
     }).bind(this);
 
     #logoutHandle = (() => {
@@ -134,19 +129,32 @@ export default class HeaderView {
         this.render(user);
     }).bind(this);
 
+    #renderFilter() {
+        const filter = FilterStore.get();
+        if (this.#input) {
+            if (filter['query']) {
+                this.#input.value = filter['query'];
+            } else {
+                this.#input.value = '';
+            }
+        }
+    }
+
     render(user?: UserData) {
         this.#popupShown = false;
         const authAnchors = config.authAnchors;
         this.#parent.innerHTML = template({authAnchors, user});
+        this.#input = <HTMLInputElement>document.getElementById('header-input');
 
         this.#addListeners();
+        this.#renderFilter();
     }
 
     disable() {
         this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
-        Bus.off(Events.UserLogout, this.#logoutHandle);
         Bus.off(Events.UserError, this.#logoutHandle);
+        Bus.off(Events.RouteChange, this.#handleRouteChange);
         this.#parent.innerHTML = '';
     }
 }

@@ -1,9 +1,8 @@
-import { parseParams } from '@/modules/filter';
+import fStore, { parseParams } from '@/modules/filter';
 import MainPageModel from '@main-page/model';
 import MainPageView from '@main-page/view';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import { FilterData } from '@/types';
 
 export default class MainPageController {
     #model: MainPageModel;
@@ -15,14 +14,15 @@ export default class MainPageController {
     }
 
     enable() {
-        this.#model.enable();
-        const filter = parseParams();
-        this.#view.render(filter);
-        Bus.emit(Events.EventsReq, filter);
+        // this.#model.enable();
+        // const filter = parseParams();
+        this.#view.render();
+        Bus.emit(Events.EventsReq);
     }
 
     disable() {
         this.#view.disable();
-        this.#model.disable();
+        // fStore.reset();
+        // this.#model.disable();
     }
 }

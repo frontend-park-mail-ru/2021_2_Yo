@@ -3,6 +3,7 @@ enum Events {
     RouteBack = 'route:back',
     RouteUrl = 'route:url',
     RouteUpdate = 'route:update',
+    RouteChange = 'reoute:change',
 
     // User
     UserRes = 'user:response',

@@ -1,5 +1,10 @@
-import { FilterData } from '@/types';
+import { ApiUrls, EventData, FetchResponseData, FilterData, UrlPathnames } from '@/types';
 import config from '@/config';
+import { fetchGet } from './request/request';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
+
+const REQ_WAIT_CHANGE_TIME_MSEC = 500;
 
 function customIndexOfCategories(category: string) {
     for (let i = 0; i < config.categories.length; i++) {
@@ -10,7 +15,8 @@ function customIndexOfCategories(category: string) {
     return -1;
 }
 
-export function filterToUrl (data: FilterData) {
+export function filterToUrl () {
+    const data = fStore.get();
     let res = '?';
 
     if (data.query && data.query !== '') {
@@ -46,7 +52,7 @@ export function filterToUrl (data: FilterData) {
     return encodeURI(res);
 }
 
-export function parseParams() {
+export function parseParams(): FilterData {
     const queryParam = new URL(window.location.href).searchParams?.get('query')?.trim();
     let query: undefined | string;
     if (queryParam) {
@@ -79,3 +85,130 @@ export function parseParams() {
 
     return { query, category, tags, date, city };
 }
+
+export enum FilterParams {
+    Query = 'query',
+    Tags = 'tags', 
+    Category = 'category', 
+    Date = 'date', 
+    City = 'city', 
+}
+
+class FilterStore {
+    #filter: FilterData;
+    #enabled: boolean;
+
+    constructor() {
+        this.#filter = parseParams();
+        this.#enabled = false;
+        Bus.on(Events.RouteChange, this.#handleRouteChange);
+    }
+
+    enable() {
+        Bus.on(Events.EventsReq, this.#handleFilterChange);
+        this.#enabled = true;
+    }
+
+    disable() {
+        Bus.off(Events.EventsReq, this.#handleFilterChange);
+        this.#enabled = false;
+    }
+
+    get() {
+        const filter: FilterData = {
+            query: this.#filter['query'],
+            tags: this.#filter['tags'],
+            category: this.#filter['category'],
+            date: this.#filter['date'],
+            city: this.#filter['city'],
+        }; 
+        return filter;
+    }
+
+    #isEqual(filter: FilterData): boolean {
+        for (const [key, value] of Object.entries(this.#filter)) {
+            if (value !== filter[<FilterParams>key]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    set(param: FilterParams, value?: string | string[] | number): FilterData {
+        this.#filter[param] = <undefined>value;
+        const handle = (filter: FilterData) => {
+            if (this.#isEqual(filter)) {
+                this.#handleFilterChange();
+            }
+        };
+        const filter = fStore.get();
+        setTimeout(handle, REQ_WAIT_CHANGE_TIME_MSEC, filter);
+        return filter;
+    }
+
+    reset() {
+        this.#filter = { 
+            query: undefined,
+            tags: [],
+            category: undefined,
+            date: undefined,
+            city: undefined,
+        };
+    }
+
+    #onlyQuery(): boolean {
+        if (this.#filter['query']) {
+            if ((!this.#filter['category']) &&
+                (!this.#filter['tags'] || this.#filter['tags'].length == 0) &&
+                (!this.#filter['date'] || this.#filter['date'] == '') &&
+                (!this.#filter['city'] || this.#filter['city'] == '')
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    #handleRouteChange = (path: string) => {
+        if (path == UrlPathnames.Main) {
+            if (!this.#enabled) {
+                this.enable();
+            }
+            this.#filter = parseParams();
+        } else {
+            if (this.#enabled) {
+                this.disable();
+            }
+            this.reset();
+        }
+    };
+
+    #handleFilterChange = () => {
+        const search = filterToUrl();
+        if (this.#onlyQuery()) {
+            Bus.emit(Events.RouteUrl, UrlPathnames.Main + search);
+        } else {
+            Bus.emit(Events.RouteUpdate, search);
+        }
+        fetchGet(ApiUrls.Events + search, 
+            (data: FetchResponseData) => {
+                const {status, json} = data;
+                if (status === 200) {
+                    if (json.status) {
+                        const events = <EventData[]>json.body.events;
+                        Bus.emit(Events.EventsRes, events); 
+                        return;
+                    }
+                }
+                Bus.emit(Events.EventsError);
+            },
+            () => {
+                Bus.emit(Events.EventsError);
+            }
+        );
+
+    };
+}
+
+const fStore = new FilterStore();
+export default fStore;

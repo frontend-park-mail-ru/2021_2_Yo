@@ -34,7 +34,6 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
-    Search = '/search',
     Profile = '/user',
     Event = '/events',
     Create = '/create',
@@ -78,9 +77,7 @@ export type FilterData = {
     query?: string,
     category?: number,
     tags?: string[],
-    // date?: string[],
     date?: string,
-    // cities?: string[],
     city?: string,
 }
 
