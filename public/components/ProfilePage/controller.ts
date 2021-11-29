@@ -33,23 +33,23 @@ export default class ProfilePageController {
         Bus.on(Events.SubscribersRes, this.#userListHandle.bind(this));
         Bus.on(Events.UserRes, this.#renderHandle);
         Bus.on(Events.UserError, this.#userErrorRenderHandle);
-        Bus.on(Events.EventsReq, this.#model.getUserEventsCreated.bind(this, userURLId));
-        Bus.on(Events.EventsReqFav, this.#model.getUserEventsFavourite.bind(this, userURLId));
-        Bus.on(Events.SubscriptionsReq, this.#model.getSubscriptions.bind(this, userURLId));
-        Bus.on(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
-        Bus.on(Events.SubscribeReq, this.#model.makeSubscription.bind(this, userURLId));
-        Bus.on(Events.UnsubscribeReq, this.#model.unsubscribe.bind(this, userURLId));
-        Bus.on(Events.UserIsSubscribedReq, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.on(Events.EventsReq, this.#createdEventsRequestHandle);
+        Bus.on(Events.EventsReqFav, this.#favouriteEventsRequestHandle);
+        Bus.on(Events.SubscriptionsReq, this.#subscriptionsHandle);
+        Bus.on(Events.SubscribersReq, this.#subscribersHandle);
+
+        Bus.on(Events.SubscribeReq, this.#subscribeHandle);
+        Bus.on(Events.UnsubscribeReq, this.#unsubscribeHandle);
+        Bus.on(Events.UserIsSubscribedReq, this.#isSubscribedHandle);
         Bus.on(Events.UserIsSubscribedRes, this.#handleIsSubscribed.bind(this));
-        Bus.on(Events.SubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
-        Bus.on(Events.UnsubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.on(Events.SubscribeRes, this.#isSubscribedHandle);
+        Bus.on(Events.UnsubscribeRes, this.#isSubscribedHandle);
 
         const storedUser = UserStore.get();
         if (storedUser) {
             const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
             if (storedUser.id === userURLId) {
-                this.#view.render();
-                this.#view.renderProfileBlock(storedUser);
+                this.#view.render(storedUser);
             } else {
                 this.#model.getUser(userURLId);
             }
@@ -58,17 +58,43 @@ export default class ProfilePageController {
 
     #eventListHandle = ((events: EventData[]) => {
         this.#view.renderEventList(events);
-    }).bind(this);
+    });
+
+    #isSubscribedHandle = ((id: string) => {
+        this.#model.getIsSubscribed(id);
+    });
 
     #userListHandle(users: UserData[]) {
         this.#view.renderUsersList(users);
     }
 
     #handleIsSubscribed(isSubscribed: boolean) {
-        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
-        this.#model.getUserEventsCreated(userURLId);
-        this.#view.renderSubscribeBlock(isSubscribed);
+        this.#view.renderSubscribeButton(isSubscribed);
     }
+
+    #subscribeHandle = ((id: string) => {
+        this.#model.makeSubscription(id);
+    });
+
+    #unsubscribeHandle = ((id: string) => {
+        this.#model.unsubscribe(id);
+    });
+
+    #createdEventsRequestHandle = ((id: string) => {
+        this.#model.getUserEventsCreated(id);
+    });
+
+    #favouriteEventsRequestHandle = ((id: string) => {
+        this.#model.getUserEventsFavourite(id);
+    });
+
+    #subscriptionsHandle = ((id: string) => {
+        this.#model.getSubscriptions(id);
+    });
+
+    #subscribersHandle = ((id: string) => {
+        this.#model.getSubscribers(id);
+    });
 
     #userErrorRenderHandle = (() => {
         const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
@@ -86,8 +112,7 @@ export default class ProfilePageController {
     }).bind(this);
 
     #userGetHandle = ((user: UserData) => {
-        this.#view.render();
-        this.#view.renderProfileBlock(user);
+        this.#view.render(user);
     });
 
     #editReqHandle = ((data: MultipartData) => {
@@ -145,16 +170,16 @@ export default class ProfilePageController {
         Bus.off(Events.SubscribersRes, this.#userListHandle.bind(this));
         Bus.off(Events.UserRes, this.#renderHandle);
         Bus.off(Events.UserError, this.#userErrorRenderHandle);
-        Bus.off(Events.EventsReq, this.#model.getUserEventsCreated.bind(this, userURLId));
-        Bus.off(Events.EventsReqFav, this.#model.getUserEventsFavourite.bind(this, userURLId));
-        Bus.off(Events.SubscriptionsReq, this.#model.getSubscriptions.bind(this, userURLId));
-        Bus.off(Events.SubscribersReq, this.#model.getSubscribers.bind(this, userURLId));
-        Bus.off(Events.SubscribeReq, this.#model.makeSubscription.bind(this, userURLId));
-        Bus.off(Events.UnsubscribeReq, this.#model.unsubscribe.bind(this, userURLId));
-        Bus.off(Events.UserIsSubscribedReq, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.off(Events.EventsReq, this.#createdEventsRequestHandle);
+        Bus.off(Events.EventsReqFav, this.#favouriteEventsRequestHandle);
+        Bus.off(Events.SubscriptionsReq, this.#subscriptionsHandle);
+        Bus.off(Events.SubscribersReq, this.#subscribersHandle);
+        Bus.off(Events.SubscribeReq, this.#subscribeHandle);
+        Bus.off(Events.UnsubscribeReq, this.#unsubscribeHandle);
+        Bus.off(Events.UserIsSubscribedReq, this.#isSubscribedHandle);
         Bus.off(Events.UserIsSubscribedRes, this.#handleIsSubscribed.bind(this));
-        Bus.off(Events.SubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
-        Bus.off(Events.UnsubscribeRes, this.#model.getIsSubscribed.bind(this, userURLId));
+        Bus.off(Events.SubscribeRes, this.#isSubscribedHandle);
+        Bus.off(Events.UnsubscribeRes, this.#isSubscribedHandle);
 
         this.#view.disable();
     }

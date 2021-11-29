@@ -28,6 +28,10 @@ export default class EventEditView extends EventFormView {
         }
 
         this.setInputs();
+
+        const categoryInput = <HTMLSelectElement>document.getElementById('categoryInput');
+        categoryInput.value = <string>event?.category;
+
         this.#addListeners();
     }
 
@@ -62,6 +66,12 @@ export default class EventEditView extends EventFormView {
         this.inputs.forEach((input, key) => {
             input.addEventListener('input', this.handleInputChange.bind(this, input, key));
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        imageInput.addEventListener('change', this.showPhoto.bind(this, imageInput));
+
+        const backButton = document.getElementById('backButton');
+        backButton?.addEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #removeListeners() {
@@ -109,6 +119,21 @@ export default class EventEditView extends EventFormView {
                 input.removeEventListener('input', this.handleInputChange.bind(this, input, key));
             }
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput) {
+            imageInput.removeEventListener('change', this.showPhoto.bind(this, imageInput));
+        }
+
+        const photoLabel = <HTMLElement>document.getElementById('photo-label');
+        if (photoLabel) {
+            photoLabel.removeEventListener('click', this.deletePhoto.bind(this));
+        }
+
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+        }
     }
 
     #editEvent(ev: Event) {

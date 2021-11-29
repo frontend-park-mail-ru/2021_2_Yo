@@ -1,75 +1,72 @@
+<div class="edit-overlay edit-popup_none" id="overlay"></div>
 <div class="event-background">
-    <div class="event-background__primary-border-block primary-white-block">
-        <div class="event-header">
-            <span>
-                <span class="event-header-text event-header-text_place">
-                    {{event.city}}
-                </span>
-                <span class="event-header-text"> > </span>
-                <span class="event-header-text event-header-text_category">{{event.category}}</span>
-            </span>
-            <div class="event-block__event-header-views event-header-views">
-                <svg class="event-views-img">
-                    <use xlink:href="./server/img/sprite.svg#viewed"></use>
-                </svg>
-                <span class="event-header-viewed-text">{{event.viewed}}</span>
-            </div>
+    <div class="back" id="backButton">< Назад</div>
+    <div class="primary-white-block event-block">
+        {{#if unpermission}}
+            {{#if author}}
+                <div class="buttons-block">
+                    <a href="/user?id={{author.id}}" class="buttons-block-wrapper">
+                        {{#if author.imgUrl}}
+                            <img src="{{author.imgUrl}}" class="buttons-block-wrapper__icon">
+                        {{else}}
+                            <img src="https://source.boringavatars.com/marble/32/{{author.name}}" class="buttons-block-wrapper__icon">
+                        {{/if}}
+                        <span class="secondary-text">{{author.name}} {{author.surname}}</span>
+                    </a>
+                    <span class="buttons-block-wrapper" id="addFavourite">
+                        <img src="./server/img/like.svg" class="buttons-block-wrapper__icon unlike">
+                        <span class="secondary-text">В избранное</span>
+                    </span>
+                    <span class="buttons-block-wrapper" id="removeFavourite">
+                        <img src="./server/img/like.svg" class="buttons-block-wrapper__icon like">
+                        <span class="secondary-text">Удалить из избранного</span>
+                    </span>
+                </div>
+            {{/if}}
+        {{/if}}
+        <div class="buttons-block">
+            <span class="event-title">{{event.title}}</span>
+            {{#if permission}}
+                <span class="event-title event-title_pointer" id="popupOpen">...</span>
+                <div class="edit-popup edit-popup_none" id="editPopup">
+                    <div class="edit-popup__item" id="editButton">
+                        <img class="edit-popup__icon" src="./server/img/pencil.svg">
+                        <span class="edit-pop__label"> Редактировать</span>
+                    </div>
+                    <div class="edit-popup__item" id="deleteButton">
+                        <img class="edit-popup__icon" src="./server/img/delete.svg">
+                        <span class="edit-pop__label"> Удалить</span>
+                    </div>
+                </div>
+            {{/if}}
         </div>
 
-        <p class="event-title">{{event.title}}</p>
-
-        <p class="event-text event-text_header">{{event.description}}</p>
+        <div>
+            <div class="secondary-text">{{event.date}}</div>
+            <div class="secondary-text">{{event.city}}</div>
+        </div>
 
         {{#if event.tag}}
-            <span class="event-tags-block">
+            <div class="event-tags-block">
                 {{#each event.tag}}
                     <a class="event-tags-block__event-tag event-tag" href="/search?tags={{this}}">{{this}}</a>
                 {{/each}}
-            </span>
-        {{/if}}
-    </div>
-
-    {{#if event.imgUrl}}
-        <div class="event-background__primary-border-block primary-white-block">
-            <img class="event-block__photo" src="{{event.imgUrl}}">
-        </div>
-    {{/if}}
-
-    <div class="event-background__primary-border-block primary-white-block">
-        <p class="primary-text">{{event.text}}</p>
-    </div>
-
-    <div class="event-background__primary-border-block primary-white-block">
-        <div>
-            <span class="primary-text">Когда: </span>
-            <span class="event-button event-button_orange">{{event.date}}</span>
-        </div>
-        <div class="event-block__event-where">
-            <span class="primary-text">Где: </span>
-            <span class="event-button event-button_blue">{{event.address}}</span>
-            <div id="mapContainer" class="map-container"></div>
-        </div>
-    </div>
-    {{#if permission}}
-        <div class="event-background__primary-border-block primary-white-block">
-            <div class="buttons-block">
-                <a class="event-button event-button_blue" id="editButton">
-                    Редактировать мероприятие
-                </a>
-                <a class="event-button event-button_red" id="deleteButton">
-                    Удалить мероприятие
-                </a>
             </div>
+        {{/if}}
+
+        <div class="primary-text">{{event.description}}</div>
+
+        {{#if event.imgUrl}}
+            <img class="event-photo" src="{{event.imgUrl}}">
+        {{/if}}
+
+        <div class="primary-text">{{event.text}}</div>
+
+        <div>
+            <span class="primary-text">Адрес: </span>
+            <span class="secondary-text address-text">{{event.address}}</span>
         </div>
-    {{/if}}
-    <div class="event-background__primary-border-block primary-white-block button_none" id="favBlock">
-        <div class="buttons-block">
-                <span class="event-button event-button_blue" id="addFavourite">
-                    Добавить в избранное
-                </span>
-            <span class="event-button event-button_red" id="removeFavourite">
-                    Удалить из избранного
-                </span>
-        </div>
+
+        <div id="mapContainer" class="map-container"></div>
     </div>
 </div>

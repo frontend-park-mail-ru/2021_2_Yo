@@ -33,6 +33,7 @@ enum Events {
     EventRemoveFavRes = 'event-removefav:response',
     EventFavRes = 'event-fav:response',
     EventFavReq = 'event-fav:request',
+    EventAuthorRes = 'event-author:response',
 
     // Authorization
     UserLogout = 'user:logout',

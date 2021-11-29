@@ -142,7 +142,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    Bus.emit(Events.SubscribeRes);
+                    Bus.emit(Events.SubscribeRes, userId);
                     return;
                 }
             }
@@ -154,7 +154,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    Bus.emit(Events.UnsubscribeRes);
+                    Bus.emit(Events.UnsubscribeRes, userId);
                     return;
                 }
             }

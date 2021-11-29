@@ -24,6 +24,28 @@
   --btn_gray: #a4a4a4;
   --header-overlay-bg: rgba(216, 224, 255, 0.5);
   --app-bg-color: #efefef;
+  --header-bg-color: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
+  --header-height: 56px;
+  --overlay-bg: rgba(216, 224, 255, 0.5);
+  --lightest-gray-color: #e4e4e4;
+  --error-text-color: #e61a3d;
+  --black-text-color: #505050;
+  --blue-btn-color: #4fbdc5;
+  --orange-btn-color: #ff630b;
+  --gray-bg-color: #d2d2d3;
+  --purple-btn-color: #490063;
+  --light-gray-color: #aaaaaa;
+  --gray-border: 2px solid var(--light-gray-color);
+  --app-bg-color: #f7f7f7;
+  --date-orange-color: #ff630b;
+  --geo-turquoise-color: #08bbbb;
+  --auth-form-bg-color: linear-gradient(90deg, #f3f2ff 0%, #ffe6fe 100%);
+  --auth-page-bg-color: linear-gradient(137.34deg, #0e0063 0%, #5e0043 100%);
+  --darkblue-btn-color: #005e5e;
+  --profile-email-text-color: #aaaaaa;
+  --light-purple: #7b73d0;
+  --light-orange: #ff965b;
+  --secondary_gray: #a4a4a4;
 }
 
 ::-webkit-scrollbar {
@@ -147,6 +169,7 @@ input:focus {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  position: relative;
 }
 
 .error {
@@ -184,15 +207,15 @@ input:focus {
 
 .event-tag {
   display: inline-block;
-  padding: 1.02vh 0.57vw;
+  padding: 5px 10px;
 
   background: var(--blue-btn-color);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 
+  font-style: normal;
   font-weight: bold;
-  font-size: 2.22vh;
-  line-height: 2.59vh;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
   color: white;
 }
 
@@ -299,7 +322,7 @@ textarea {
 }
 
 .button-white {
-  border: 1px solid var(--btn_gray);
+  border: 1px solid var(--secondary_gray);
   box-sizing: border-box;
   border-radius: 5px;
 
@@ -309,7 +332,7 @@ textarea {
   font-weight: normal;
   font-size: 1.5rem;
   line-height: 1.65rem;
-  color: var(--btn_gray);
+  color: var(--secondary_gray);
 
   width: max-content;
 
@@ -431,6 +454,7 @@ textarea {
 
 .event-tags-block__event-tag {
   margin-right: 10px;
+  margin-top: 10px;
 }
 
 .event-tags-block__event-tag:last-child {
@@ -442,8 +466,7 @@ textarea {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 
-  padding: 20px 60px;
-  max-width: 50%;
+  padding: 40px 60px;
 }
 
 .primary-text {
@@ -454,6 +477,41 @@ textarea {
   color: var(--black-text-color);
 
   margin: 0;
+}
+
+.primary-text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: var(--black-text-color);
+}
+
+.secondary-text {
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  color: var(--secondary_gray);
+  font-style: normal;
+  font-weight: normal;
+}
+
+.back {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  grid-area: back;
+  width: 10vw;
+  padding-top: 70px;
+  padding-left: 25px;
+  color: var(--black-text-color);
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  cursor: pointer;
+}
+
+.back:hover {
+  background: var(--secondary_gray);
 }
 
 /* Extra small devices (phones, 600px and down) */

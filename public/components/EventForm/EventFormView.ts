@@ -201,4 +201,43 @@ export abstract class EventFormView {
             }
         });
     }
+
+    protected showPhoto() {
+        const reader = new FileReader();
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput.files) {
+            const selectedFile = imageInput?.files[0];
+            reader.readAsDataURL(selectedFile);
+        }
+
+        const photoBlock = <HTMLImageElement>document.getElementById('photo');
+
+        reader.onload = function (event) {
+            if (reader.result) {
+                photoBlock.classList.remove('photo-input_none');
+                photoBlock.src = <string>reader.result;
+            }
+        };
+
+        const photoLabel = <HTMLInputElement>document.getElementById('photo-label');
+        photoLabel.value = 'Удалить фото';
+        photoLabel.addEventListener('click', this.deletePhoto.bind(this));
+        photoLabel.style.cursor = 'pointer';
+    }
+
+    protected deletePhoto() {
+        const photoBlock = <HTMLImageElement>document.getElementById('photo');
+        photoBlock.classList.add('photo-input_none');
+
+        const photoLabel = <HTMLInputElement>document.getElementById('photo-label');
+        photoLabel.value = 'Не выбрано';
+
+        photoLabel.removeEventListener('click', this.deletePhoto.bind(this));
+        photoLabel.style.cursor = '';
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        imageInput.files = null;
+        imageInput.value = '';
+    }
 }

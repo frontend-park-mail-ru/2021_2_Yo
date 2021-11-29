@@ -1,6 +1,7 @@
 <div id="map"></div>
 <div class="eventform-background">
-    <div class="primary-white-block">
+    <div class="back" id="backButton">< Назад</div>
+    <div class="primary-white-block white-block_size">
         <form class="eventform" id="eventform">
 
             <div class="input-block input-block_event-thin">
@@ -40,8 +41,8 @@
             <div class="input-block input-block_event-date">
                 <div class="input-label">Дата</div>
                 <div class="input-button-block">
-                    <input class="form-input form-input_date" placeholder="01.01.1997" id="dateInput" value="{{event.date}}"/>
-                    <svg class="calendar-btn" id="calendarButton">
+                    <input class="form-input form-input_date" placeholder="дд.мм.гггг" id="dateInput" value="{{event.date}}"/>
+                    <svg class="input-btn" id="calendarButton">
                         <use xlink:href="../../server/img/sprite.svg#calendar"></use>
                     </svg>
                 </div>
@@ -54,7 +55,7 @@
                 {{#if event.geo}}
                     <input class="geo-input" id="geoInput" placeholder="{{event.geo}}" value="{{event.address}}" readonly/>
                 {{else}}
-                    <input class="geo-input" id="geoInput" value="Укажите адрес" readonly/>
+                    <input class="geo-input" id="geoInput" placeholder="(55.75222, 37.61556)" value="Укажите адрес" readonly/>
                 {{/if}}
 
                 <span class="error error_none" id="geoError">none</span>
@@ -64,7 +65,7 @@
                 <div class="input-label">Теги</div>
                 <div class="input-button-block">
                     <input class="form-input" placeholder="Тусовка" id="tagInput" maxlength="30"/>
-                    <span class="button-white" id="tagButton" >+</span>
+                    <span class="button-white tag-btn" id="tagButton" >+</span>
                 </div>
                 <span class="error error_none" id="tagError">none</span>
                 <div class="event-tags-block" id="tagBlock"></div>
@@ -72,7 +73,22 @@
 
             <div class="input-block input-block_event-thin">
                 <div class="input-label">Фотография</div>
-                <input class="form-input-photo" id="imageInput" type="file" accept="image/*"/>
+                <input class="photo-input_none" id="imageInput" type="file" accept="image/*"/>
+                <div class="input-button-block">
+                    {{#if event.imgUrl}}
+                        <input class="photo-input photo-input-label" id="photo-label" value="Новое фото не выбрано" readonly/>
+                    {{else}}
+                        <input class="photo-input photo-input-label" id="photo-label" value="Не выбрано" readonly/>
+                    {{/if}}
+                    <label for="imageInput">
+                        <img class="input-btn" src="../../server/img/add-photo.svg">
+                    </label>
+                </div>
+                {{#if event.imgUrl}}
+                    <img class="photo" id="photo" src="{{event.imgUrl}}">
+                {{else}}
+                    <img class="photo" id="photo">
+                {{/if}}
                 <span class="error error_none" id="imageError">none</span>
             </div>
 

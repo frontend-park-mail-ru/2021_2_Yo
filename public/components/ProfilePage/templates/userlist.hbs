@@ -1,18 +1,19 @@
 {{#if users}}
-    <div id="userList">
+    <div id="userList" class="users-grid-list">
         {{#each users}}
-            <div class="event-li">
-                <div class="event-li__img bg-img-wrapper">
-                    <img class="bg-img" src="{{imgUrl}}">
-                </div>
-                <div class ="event-li__content">
+            <a class="users-li" href="/user?id={{id}}">
+                {{#if imgUrl}}
+                    <img src="{{imgUrl}}" class="users-li__avatar">
+                {{else}}
+                    <img src="https://source.boringavatars.com/marble/32/{{name}}" class="users-li__avatar">
+                {{/if}}
+                <div class="primary-text">
                     <div>{{name}}</div>
                     <div>{{surname}}</div>
-                    <div>{{email}}</div>
                 </div>
-            </div>
+            </a>
         {{/each}}
     </div>
 {{else}}
-    <h2>Здесь ничего нет</h2>
+    <h2>Список пуст</h2>
 {{/if}}
