@@ -44,9 +44,6 @@ export default class HeaderView {
     }
 
     #handleRouteChange = () => {
-        // if (this.#input) {
-        //     this.#input.value = '';
-        // }
         this.#renderFilter();
     };
 
@@ -97,15 +94,12 @@ export default class HeaderView {
     }
 
     #toggleOverlay = () => {
-        const avatar = <HTMLElement>document.getElementById('header-avatar');
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (!avatar || !overlay) return;
+        if (!overlay) return;
         if (this.#popupShown) {
-            avatar.classList.remove('header__avatar-wrapper_checked');
             overlay.classList.remove('header-overlay_shown');
             overlay.classList.add('header-overlay_hidden');
         } else {
-            avatar.classList.add('header__avatar-wrapper_checked');
             overlay.classList.remove('header-overlay_hidden');
             overlay.classList.add('header-overlay_shown');
         }

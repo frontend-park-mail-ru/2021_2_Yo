@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 
-.header__avatar-wrapper_checked {
+.header__avatar-wrapper:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 

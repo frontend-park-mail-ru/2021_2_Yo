@@ -101,6 +101,14 @@ input:focus {
   background-color: var(--app-bg-color);
   margin-top: var(--header-height);
   overflow: visible;
+  padding: 0px 150px;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .flex {
@@ -357,10 +365,10 @@ textarea {
   padding-top: 40px;
 }
 
-.content {
+/* .content {
   width: 67vw;
   display: flex;
-}
+} */
 
 .text_date {
   color: var(--date-orange-color);
