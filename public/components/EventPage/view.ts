@@ -1,9 +1,12 @@
-import {EventData, UrlPathnames} from '@/types';
+import {EventData, UrlPathnames, UserData} from '@/types';
+import {Loader} from '@googlemaps/js-api-loader';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import Userstore from '../../modules/userstore';
 import * as template from '@event-page/templates/eventpage.hbs';
 import '@event-page/templates/EventPage.css';
+
+const KEY = process.env.MAPS_API_KEY?.toString();
 
 export default class EventPageView {
     #parent: HTMLElement;
@@ -13,17 +16,18 @@ export default class EventPageView {
         this.#parent = parent;
     }
 
-    render(event: EventData) {
+    render(event: EventData, author: UserData) {
         this.#event = event;
 
         const permission = (this.#event.authorid === Userstore.get()?.id);
-        this.#parent.innerHTML = template({event, permission});
+        const unpermission = !permission;
+        this.#parent.innerHTML = template({event, permission, unpermission, author});
 
-        if (!permission) {
-            Bus.emit(Events.EventFavReq);
-        }
+        this.#renderMap();
 
         this.#addListeners();
+
+        Bus.emit(Events.EventFavReq);
     }
 
     #addListeners() {
@@ -33,12 +37,20 @@ export default class EventPageView {
         const deleteButton = document.getElementById('deleteButton');
         deleteButton?.addEventListener('click', this.#deleteHandle);
 
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.addEventListener('click', this.#hideEditPopup.bind(this));
+
+        const popupOpenButton = <HTMLElement>document.getElementById('popupOpen');
+        popupOpenButton?.addEventListener('click', this.#showEditPopup.bind(this));
+
         const addFavouriteButton = document.getElementById('addFavourite');
         addFavouriteButton?.addEventListener('click', this.#addFavouriteHandle.bind(this));
 
         const removeFavouriteButton = document.getElementById('removeFavourite');
         removeFavouriteButton?.addEventListener('click', this.#removeFavouriteHandle.bind(this));
 
+        const backButton = document.getElementById('backButton');
+        backButton?.addEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #removeListeners() {
@@ -47,6 +59,12 @@ export default class EventPageView {
 
         const deleteButton = document.getElementById('deleteButton');
         deleteButton?.removeEventListener('click', this.#deleteHandle);
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.removeEventListener('click', this.#hideEditPopup.bind(this));
+
+        const popupOpenButton = <HTMLElement>document.getElementById('popupOpen');
+        popupOpenButton?.removeEventListener('click', this.#showEditPopup.bind(this));
 
         const addFavouriteButton = <HTMLElement>document.getElementById('addFavourite');
         if (addFavouriteButton) {
@@ -57,52 +75,100 @@ export default class EventPageView {
         if (removeFavouriteButton) {
             removeFavouriteButton.removeEventListener('click', this.#removeFavouriteHandle.bind(this));
         }
+
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+        }
     }
 
     #editHandle = ((e: Event) => {
         e.preventDefault();
 
         Bus.emit(Events.RouteUrl, UrlPathnames.Edit + '?id=' + this.#event?.id);
-    }).bind(this);
+    });
 
     #deleteHandle = ((e: Event) => {
         e.preventDefault();
 
         Bus.emit(Events.EventDelete, this.#event?.id);
-    }).bind(this);
+    });
 
     #addFavouriteHandle(e: Event) {
         e.preventDefault();
 
-        Bus.emit(Events.EventAddFavReq);
+        Bus.emit(Events.EventAddFavReq, this.#event?.id);
     }
 
     #removeFavouriteHandle(e: Event) {
         e.preventDefault();
 
-        Bus.emit(Events.EventRemoveFavReq);
+        Bus.emit(Events.EventRemoveFavReq, this.#event?.id);
     }
 
-    renderFavBlock(isFavourite: boolean) {
-        const favBlock = <HTMLElement>document.getElementById('favBlock');
-        favBlock.classList.remove('button_none');
+    #hideEditPopup() {
+        const popup = document.getElementById('editPopup');
+        popup?.classList.add('edit-popup_none');
 
-        const addFavouriteButton = <HTMLElement>document.getElementById('addFavourite');
-        const removeFavouriteButton = <HTMLElement>document.getElementById('removeFavourite');
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.classList.add('edit-popup_none');
+    }
 
-        if (addFavouriteButton && removeFavouriteButton) {
-            if (isFavourite) {
-                addFavouriteButton.classList.add('button_none');
-                removeFavouriteButton.classList.remove('button_none');
-            } else {
-                addFavouriteButton.classList.remove('button_none');
-                removeFavouriteButton.classList.add('button_none');
-            }
-        }
+    #showEditPopup() {
+        const popup = document.getElementById('editPopup');
+        popup?.classList.remove('edit-popup_none');
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.classList.remove('edit-popup_none');
     }
 
     disable() {
         this.#removeListeners();
         this.#parent.innerHTML = '';
     }
+
+    #renderMap() {
+        const loader = new Loader({
+            apiKey: <string>KEY,
+            libraries: ['places'],
+        });
+
+        void loader.load().then(() => {
+            const map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
+                zoom: 16,
+            });
+
+            const geo = this.#event?.geo.replace('(', '');
+            const latLng = <string[]>geo?.split(',', 2);
+            const lat = parseFloat(latLng[0]);
+            const lng = parseFloat(latLng[1]);
+            const parsedPosition = new google.maps.LatLng(lat, lng);
+
+            const marker = new google.maps.Marker({
+                map: map,
+                title: this.#event?.title,
+                position: parsedPosition,
+            });
+
+            map.setCenter(parsedPosition);
+            map.setZoom(16);
+        }).catch((reason: string) => {
+            const container = <HTMLElement>document.getElementById('mapContainer');
+            container.textContent = 'Ошибка подключения к картам: ' + reason;
+        });
+    }
+
+    renderFavBlock(isFavourite: boolean) {
+        const addFavouriteButton = <HTMLElement>document.getElementById('addFavourite');
+        const removeFavouriteButton = <HTMLElement>document.getElementById('removeFavourite');
+
+        if (isFavourite) {
+            addFavouriteButton?.classList.add('buttons-block-wrapper_none');
+            removeFavouriteButton?.classList.remove('buttons-block-wrapper_none');
+        } else {
+            addFavouriteButton?.classList.remove('buttons-block-wrapper_none');
+            removeFavouriteButton?.classList.add('buttons-block-wrapper_none');
+        }
+    }
+
 }

@@ -2,11 +2,8 @@ import {EventData, UserData} from '@/types';
 import ProfileEditForm from '@profile-page/ProfileEditForm/ProfileEditForm';
 import UserStore from '@modules/userstore';
 import * as template from '@profile-page/templates/profilepage.hbs';
-import * as blockTemplate from '@profile-page/templates/profileblock.hbs';
 import * as userList from '@profile-page/templates/userlist.hbs';
-import * as subscribe from '@profile-page/templates/subscribe.hbs';
-import * as listTemplate from '@templates/eventlist/eventlist.hbs';
-import '@templates/eventlist/eventlist.css';
+import * as listTemplate from '@profile-page/templates/eventlist.hbs';
 import Bus from '@eventbus/eventbus';
 import '@profile-page/templates/Profile.css';
 import Events from '@eventbus/events';
@@ -14,6 +11,12 @@ import Events from '@eventbus/events';
 export default class ProfilePageView {
     #parent: HTMLElement;
     #editForm?: ProfileEditForm;
+    #user?: UserData;
+
+    #createdButton?: HTMLElement;
+    #favouriteButton?: HTMLElement;
+    #subscriptionsButton?: HTMLElement;
+    #subscribersButton?: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -22,128 +25,162 @@ export default class ProfilePageView {
     #addListeners() {
         const editButton = <HTMLElement>document.getElementById('editButton');
         if (editButton) {
-            editButton.addEventListener('click', this.#editHandle);
+            editButton.addEventListener('click', this.#editHandle.bind(this));
         }
 
-        const createdButton = document.getElementById('createdButton');
-        if (createdButton) {
-            createdButton.addEventListener('click', () => Bus.emit(Events.EventsReq));
+        this.#createdButton = <HTMLElement>document.getElementById('createdButton');
+        if (this.#createdButton) {
+            this.#createdButton.addEventListener('click', this.#makeCreatedEventsRequest);
         }
 
-        const favouriteButton = document.getElementById('favouriteButton');
-        if (favouriteButton) {
-            favouriteButton.addEventListener('click', () => Bus.emit(Events.EventsReqFav));
+        this.#favouriteButton = <HTMLElement>document.getElementById('favouriteButton');
+        if (this.#favouriteButton) {
+            this.#favouriteButton.addEventListener('click', this.#makeFavouriteEventsRequest);
         }
 
-        const subscriptionsButton = document.getElementById('subscriptionsButton');
-        if (subscriptionsButton) {
-            subscriptionsButton.addEventListener('click', () => Bus.emit(Events.SubscriptionsReq));
+        this.#subscriptionsButton = <HTMLElement>document.getElementById('subscriptionsButton');
+        if (this.#subscriptionsButton) {
+            this.#subscriptionsButton.addEventListener('click', this.#makeSubscriptionsRequest);
         }
 
-        const subscribersButton = document.getElementById('subscribersButton');
-        if (subscribersButton) {
-            subscribersButton.addEventListener('click', () => Bus.emit(Events.SubscribersReq));
+        this.#subscribersButton = <HTMLElement>document.getElementById('subscribersButton');
+        if (this.#subscribersButton) {
+            this.#subscribersButton.addEventListener('click', this.#makeSubscribersRequest);
         }
 
         const subscribeButton = document.getElementById('subscribeButton');
         if (subscribeButton) {
-            subscribeButton.addEventListener('click', () => Bus.emit(Events.SubscribeReq));
+            subscribeButton.addEventListener('click', this.#makeSubscribeRequest);
         }
 
         const unsubscribeButton = document.getElementById('unsubscribeButton');
         if (unsubscribeButton) {
-            unsubscribeButton.addEventListener('click', () => Bus.emit(Events.UnsubscribeReq));
+            unsubscribeButton.addEventListener('click', this.#makeUnsubscribeRequest);
+        }
+
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
         }
     }
 
     #removeListeners() {
         const editButton = <HTMLElement>document.getElementById('editButton');
         if (editButton) {
-            editButton.removeEventListener('click', this.#editHandle);
+            editButton.removeEventListener('click', this.#editHandle.bind(this));
         }
 
-        const createdButton = document.getElementById('createdButton');
-        if (createdButton) {
-            createdButton.removeEventListener('click', () => Bus.emit(Events.EventsReq));
+        if (this.#createdButton) {
+            this.#createdButton.removeEventListener('click', this.#makeCreatedEventsRequest);
         }
 
-        const favouriteButton = document.getElementById('favouriteButton');
-        if (favouriteButton) {
-            favouriteButton.removeEventListener('click', () => Bus.emit(Events.EventsReqFav));
+        if (this.#favouriteButton) {
+            this.#favouriteButton.removeEventListener('click', this.#makeFavouriteEventsRequest);
         }
 
-        const subscriptionsButton = document.getElementById('subscriptionsButton');
-        if (subscriptionsButton) {
-            subscriptionsButton.removeEventListener('click', () => Bus.emit(Events.SubscriptionsReq));
+        if (this.#subscriptionsButton) {
+            this.#subscriptionsButton.removeEventListener('click', this.#makeSubscriptionsRequest);
         }
 
-        const subscribersButton = document.getElementById('subscribersButton');
-        if (subscribersButton) {
-            subscribersButton.removeEventListener('click', () => Bus.emit(Events.SubscribersReq));
+        if (this.#subscribersButton) {
+            this.#subscribersButton.removeEventListener('click', this.#makeSubscribersRequest);
         }
 
         const subscribeButton = document.getElementById('subscribeButton');
         if (subscribeButton) {
-            subscribeButton.removeEventListener('click', () => Bus.emit(Events.SubscribeReq));
+            subscribeButton.removeEventListener('click', this.#makeSubscribeRequest);
         }
 
         const unsubscribeButton = document.getElementById('unsubscribeButton');
         if (unsubscribeButton) {
-            unsubscribeButton.removeEventListener('click', () => Bus.emit(Events.UnsubscribeReq));
+            unsubscribeButton.removeEventListener('click', this.#makeUnsubscribeRequest);
+        }
+
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
         }
     }
 
-    #editHandle = ((ev: Event) => {
+    #editHandle(ev: Event) {
         ev.preventDefault();
 
-        const bottomBlock = <HTMLElement>document.getElementById('bottomBlock');
-        this.#editForm = new ProfileEditForm(bottomBlock);
-
-        const editButton = <HTMLElement>document.getElementById('editButton');
-        editButton.classList.add('button_none');
+        const mainContent = <HTMLElement>document.getElementById('mainContent');
+        this.#editForm = new ProfileEditForm(mainContent);
 
         this.#editForm.subscribe();
         this.#editForm.render(UserStore.get());
-    });
-
-    render() {
-        this.#parent.innerHTML = template();
     }
 
-    renderProfileBlock(user?: UserData) {
-        const profileBlock = <HTMLElement>document.getElementById('profileBlock');
+    render(user?: UserData) {
+        this.#user = user;
 
-        const storedId = UserStore.get()?.id;
-        const permitEdit = (user?.id == storedId);
-        profileBlock.innerHTML = blockTemplate({user, permitEdit});
-
-        if (!permitEdit) {
-            Bus.emit(Events.UserIsSubscribedReq);
-        } else {
-            this.#addListeners();
-            Bus.emit(Events.EventsReq);
-        }
-    }
-
-    renderSubscribeBlock(isSubscribed: boolean) {
-        const subscribeBlock = <HTMLElement>document.getElementById('subscribeBlock');
-        if (subscribeBlock) {
-            subscribeBlock.innerHTML = subscribe();
-        }
-
-        const unsubscribeButton = <HTMLElement>document.getElementById('unsubscribeButton');
-        const subscribeButton = <HTMLElement>document.getElementById('subscribeButton');
-
-        if (isSubscribed) {
-            unsubscribeButton.classList.remove('button-sub_none');
-            subscribeButton.classList.add('button-sub_none');
-        } else {
-            unsubscribeButton.classList.add('button-sub_none');
-            subscribeButton.classList.remove('button-sub_none');
-        }
+        const permission = (user?.id === UserStore.get()?.id);
+        this.#parent.innerHTML = template({user, permission});
 
         this.#addListeners();
+
+        Bus.emit(Events.UserIsSubscribedReq, this.#user?.id);
+        this.#makeCreatedEventsRequest();
     }
+
+    renderSubscribeButton(isSubscribed: boolean) {
+        const subscribeButton = <HTMLElement>document.getElementById('subscribeButton');
+        const unsubscribeButton = <HTMLElement>document.getElementById('unsubscribeButton');
+
+        if (isSubscribed) {
+            subscribeButton?.classList.add('profile-button-subscribe_none');
+            unsubscribeButton?.classList.remove('profile-button-subscribe_none');
+        } else {
+            subscribeButton?.classList.remove('profile-button-subscribe_none');
+            unsubscribeButton?.classList.add('profile-button-subscribe_none');
+        }
+    }
+
+    #makeCreatedEventsRequest = (() => {
+        this.#createdButton?.classList.add('menu__item_clicked');
+        this.#favouriteButton?.classList.remove('menu__item_clicked');
+        this.#subscribersButton?.classList.remove('menu__item_clicked');
+        this.#subscriptionsButton?.classList.remove('menu__item_clicked');
+
+        Bus.emit(Events.EventsReq, this.#user?.id);
+    });
+
+    #makeFavouriteEventsRequest = (() => {
+        this.#createdButton?.classList.remove('menu__item_clicked');
+        this.#favouriteButton?.classList.add('menu__item_clicked');
+        this.#subscribersButton?.classList.remove('menu__item_clicked');
+        this.#subscriptionsButton?.classList.remove('menu__item_clicked');
+
+        Bus.emit(Events.EventsReqFav, this.#user?.id);
+    });
+
+    #makeSubscribersRequest = (() => {
+        this.#createdButton?.classList.remove('menu__item_clicked');
+        this.#favouriteButton?.classList.remove('menu__item_clicked');
+        this.#subscribersButton?.classList.add('menu__item_clicked');
+        this.#subscriptionsButton?.classList.remove('menu__item_clicked');
+
+        Bus.emit(Events.SubscribersReq, this.#user?.id);
+    });
+
+    #makeSubscriptionsRequest = (() => {
+        this.#createdButton?.classList.remove('menu__item_clicked');
+        this.#favouriteButton?.classList.remove('menu__item_clicked');
+        this.#subscribersButton?.classList.remove('menu__item_clicked');
+        this.#subscriptionsButton?.classList.add('menu__item_clicked');
+
+        Bus.emit(Events.SubscriptionsReq, this.#user?.id);
+    });
+
+    #makeSubscribeRequest = (() => {
+        Bus.emit(Events.SubscribeReq, this.#user?.id);
+    });
+
+    #makeUnsubscribeRequest = (() => {
+        Bus.emit(Events.UnsubscribeReq, this.#user?.id);
+    });
+
 
     renderEventList(events?: EventData[]) {
         const listBlock = <HTMLElement>document.getElementById('listBlock');

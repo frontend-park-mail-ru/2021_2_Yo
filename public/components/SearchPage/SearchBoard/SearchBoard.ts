@@ -2,10 +2,9 @@ import { EventData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as errorTemplate from '@search-page/SearchBoard/eventerror.hbs';
-import * as listTemplate from '@templates/eventlist/eventlist.hbs';
+import * as listTemplate from '@profile-page/templates/eventlist.hbs';
 import * as template from '@search-page/SearchBoard/searchboard.hbs';
 import '@search-page/SearchBoard/SearchBoard.css';
-import '@templates/eventlist/eventlist.css';
 
 export default class SearchBoard {
     #parent: HTMLElement;

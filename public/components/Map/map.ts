@@ -3,8 +3,10 @@ import './map.css';
 import * as template from './map.hbs';
 import {EventData} from '@/types';
 
-const KEY = 'AIzaSyA9qUUP6w_uqsJWrvDcPIfY8oBnIigjAT4';
 const MSC_LAT_LNG = {lat: 55.751244, lng: 37.618423};
+const ADDRESS_NOT_FOUND = 'Адрес не найден';
+
+const KEY = process.env.MAPS_API_KEY?.toString();
 
 export default class MapPopUp {
     #loader: Loader;
@@ -12,17 +14,21 @@ export default class MapPopUp {
     #map?: google.maps.Map;
     #loadSuccess: boolean;
     #searchBox?: google.maps.places.SearchBox;
+    #eventGeo?: string;
+    #bounds?: google.maps.LatLngBounds;
+    #marker?: google.maps.Marker;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#loadSuccess = false;
         this.#loader = new Loader({
-            apiKey: KEY,
+            apiKey: <string>KEY,
             libraries: ['places'],
         });
     }
 
     render(event?: EventData) {
+        this.#eventGeo = event?.geo;
         this.#parent.innerHTML += template(event);
         this.#loadMapAPI();
     }
@@ -31,23 +37,47 @@ export default class MapPopUp {
         void this.#loader.load().then(() => {
             this.#loadSuccess = true;
 
-            let currentPos = MSC_LAT_LNG;
+            this.#bounds = new google.maps.LatLngBounds();
+            let parsedPosition: google.maps.LatLng;
+
+            if (this.#eventGeo) {
+                const geo = this.#eventGeo?.replace('(', '');
+                const latLng = geo?.split(',', 2);
+                const lat = parseFloat(latLng[0]);
+                const lng = parseFloat(latLng[1]);
+                parsedPosition = new google.maps.LatLng(lat, lng);
+            }
+
+            this.#map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
+                center: MSC_LAT_LNG,
+                zoom: 16,
+            });
+
             navigator.geolocation.getCurrentPosition(
                 (position: GeolocationPosition) => {
-                    currentPos = {
+                    const currentPos = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
                     };
-                    this.#map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
-                        center: currentPos,
-                        zoom: 16,
-                    });
+
+                    this.#map?.setCenter(currentPos);
+                    this.#map?.setZoom(16);
+
+                    if (parsedPosition) {
+                        this.#marker = new google.maps.Marker({
+                            map: this.#map,
+                            position: parsedPosition,
+                        });
+
+                        this.#map?.setCenter(parsedPosition);
+                        this.#map?.setZoom(16);
+                    }
                 });
 
             this.#addListeners();
-        }).catch(() => {
+        }).catch((reason: string) => {
             const container = <HTMLElement>document.getElementById('mapContainer');
-            container.textContent = 'Ошибка подключения к картам';
+            container.textContent = 'Ошибка подключения к картам: ' + reason;
         });
     }
 
@@ -55,63 +85,79 @@ export default class MapPopUp {
         const input = <HTMLInputElement>document.getElementById('mapInput');
         this.#searchBox = new google.maps.places.SearchBox(input);
         this.#searchBox.addListener('places_changed', this.#handleInputGeo.bind(this));
+
+        const submitButton = <HTMLElement>document.getElementById('mapSubmitButton');
+        submitButton.addEventListener('click', this.#handleSubmit.bind(this));
+
+        const cancelButton = <HTMLElement>document.getElementById('mapCancelButton');
+        cancelButton.addEventListener('click', this.#handleCancel.bind(this));
+    }
+
+    #removeListeners() {
+        const submitButton = <HTMLElement>document.getElementById('mapSubmitButton');
+        if (submitButton) {
+            submitButton.removeEventListener('click', this.#handleSubmit.bind(this));
+        }
+
+        const cancelButton = <HTMLElement>document.getElementById('mapCancelButton');
+        if (cancelButton) {
+            cancelButton.removeEventListener('click', this.#handleCancel.bind(this));
+        }
     }
 
     #handleInputGeo() {
         const places = this.#searchBox?.getPlaces();
 
-        if (places?.length == 0) {
+        if (places?.length != 1) {
             this.#showInputError();
             return;
         }
 
+        const place = places[0];
+        const bounds = new google.maps.LatLngBounds();
+        this.#marker?.setMap(null);
+        this.#marker = new google.maps.Marker({
+            map: this.#map,
+            title: place.name,
+            position: place.geometry?.location,
+        });
 
+        if (place.geometry?.viewport) {
+            bounds.union(place.geometry.viewport);
+        } else {
+            bounds.extend(<google.maps.LatLng>place.geometry?.location);
+        }
+
+        this.#map?.fitBounds(bounds);
     }
 
     #showInputError() {
         const inputError = <HTMLElement>document.getElementById('geoInputError');
-        inputError.textContent = 'Адрес не найден';
+        inputError.classList.remove('error_none');
+        inputError.textContent = ADDRESS_NOT_FOUND;
+    }
+
+    #handleSubmit() {
+        const places = this.#searchBox?.getPlaces();
+
+        if (!places || places?.length == 0) {
+            this.#showInputError();
+            return;
+        }
+
+        const geoInput = <HTMLInputElement>document.getElementById('geoInput');
+        geoInput.placeholder = <string>places[0].geometry?.location?.toString();
+        geoInput.value = <string>places[0].formatted_address;
+
+        const inputError = <HTMLElement>document.getElementById('geoError');
+        inputError.classList.add('error_none');
+
+        this.#removeListeners();
+        this.#parent.innerHTML = '';
+    }
+
+    #handleCancel() {
+        this.#removeListeners();
+        this.#parent.innerHTML = '';
     }
 }
-
-
-// map.addListener('bounds_changed', () => {
-//     searchBox.setBounds(map.getBounds() as google.maps.LatLngBounds);
-// });
-//
-// searchBox.addListener('places_changed', () => {
-//
-// });
-
-// Clear out the old markers.
-// this.#markers.forEach((marker) => {
-//     marker.setMap(null);
-// });
-// this.#markers = [];
-//
-// For each place, get the icon, name and location.
-// const bounds = new google.maps.LatLngBounds();
-//
-// places?.forEach((place) => {
-//     if (!place.geometry || !place.geometry.location) {
-//         console.log('Returned place contains no geometry');
-//         return;
-//     }
-//
-// Create a marker for each place.
-//     this.#markers.push(
-//         new google.maps.Marker({
-//             map,
-//             title: place.name,
-//             position: place.geometry.location,
-//         })
-//     );
-//
-//     if (place.geometry.viewport) {
-// Only geocodes have viewport.
-//         bounds.union(place.geometry.viewport);
-//     } else {
-//         bounds.extend(place.geometry.location);
-//     }
-// });
-// map.fitBounds(bounds);

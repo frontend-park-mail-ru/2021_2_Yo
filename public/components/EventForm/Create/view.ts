@@ -1,72 +1,52 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as template from '@event-create/create.hbs';
-import * as tagTemplate from '@templates/tag/tag.hbs';
-import '@templates/tag/tag.css';
-import '@event-form/EventForm.css';
-import Calendar from '@calendar/calendar';
-import MapPopUp from '@map/map';
+import {EventFormView} from '@event-form/EventFormView';
+import * as template from '@event-form/templates/eventform.hbs';
 import config from '@/config';
-import {InputData} from '@/types';
 
-const MAX_NUM_OF_TAGS = 6;
-const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
-const ONE_WORD_TAG_STR = 'Тег должен состоять из одного слова';
-const NO_EMPTY_TAG_STR = 'Невозможно добавить пустой тег';
-const TAG_EXISTS_STR = 'Тег уже добавлен';
-const TAG_LENGTH_STR = 'Слишком много символов. Максимальная длина 30 символов';
-
-export default class EventFormView {
-    #parent: HTMLElement;
-    #eventTags: string[] = [];
-    #inputs = new Map<string, HTMLInputElement>();
-    #inputsData = new Map<string, InputData>();
-    #calendar?: Calendar;
-    #map?: MapPopUp;
-
-    constructor(parent: HTMLElement) {
-        this.#parent = parent;
-    }
-
-    subscribe() {
-        Bus.on(Events.ValidationError, this.#validationHandle);
-        Bus.on(Events.ValidationOk, this.#validationHandle);
-    }
-
-    #validationHandle = (() => {
-        this.#showValidationErrors();
-        this.#showCorrectInputs();
-    }).bind(this);
-
+export default class EventCreateView extends EventFormView {
     render() {
-        this.#parent.innerHTML = template(config);
-        this.#addListeners();
-        this.#eventTags = [];
+        this.parent.innerHTML = template(config);
+        this.addListeners();
+        this.eventTags = [];
     }
 
-    #addListeners() {
+    disable() {
+        this.#removeListeners();
+        Bus.off(Events.ValidationError, this.validationHandle);
+        Bus.off(Events.ValidationOk, this.validationHandle);
+        this.parent.innerHTML = '';
+    }
+
+    addListeners() {
         const form = <HTMLFormElement>document.getElementById('eventform');
         form.addEventListener('submit', this.#createEvent.bind(this));
 
         const tagButton = <HTMLInputElement>document.getElementById('tagButton');
-        tagButton.addEventListener('click', this.#addTag.bind(this));
+        tagButton.addEventListener('click', this.addTag.bind(this));
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
 
         const calendarButton = <HTMLElement>document.getElementById('calendarButton');
-        calendarButton.addEventListener('click', this.#renderCalendar.bind(this));
+        calendarButton.addEventListener('click', this.renderCalendar.bind(this));
 
         const tagInput = <HTMLElement>document.getElementById('tagInput');
-        tagInput.addEventListener('keydown', this.#handleTagKeydown.bind(this));
+        tagInput.addEventListener('keydown', this.handleTagKeydown.bind(this));
 
         const geoButton = <HTMLElement>document.getElementById('geoInput');
-        geoButton.addEventListener('click', this.#renderMap);
+        geoButton.addEventListener('click', this.renderMap);
 
-        this.#setInputs();
-        this.#inputs.forEach((input, key) => {
-            input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+        this.setInputs();
+        this.inputs.forEach((input, key) => {
+            input.addEventListener('input', this.handleInputChange.bind(this, input, key));
         });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        imageInput.addEventListener('change', this.showPhoto.bind(this, imageInput));
+
+        const backButton = document.getElementById('backButton');
+        backButton?.addEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #removeListeners() {
@@ -77,7 +57,7 @@ export default class EventFormView {
 
         const tagButton = <HTMLInputElement>document.getElementById('tagButton');
         if (tagButton) {
-            tagButton.removeEventListener('click', this.#addTag.bind(this));
+            tagButton.removeEventListener('click', this.addTag.bind(this));
         }
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
@@ -85,226 +65,72 @@ export default class EventFormView {
             cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
         }
 
-        this.#eventTags.map((t) => {
+        this.eventTags.map((t) => {
             const tag = <HTMLElement>document.getElementById('tag-' + t);
             if (!tag) return;
 
-            tag.removeEventListener('click', this.#deleteTag);
+            tag.removeEventListener('click', this.deleteTag);
         });
 
         const calendarButton = <HTMLElement>document.getElementById('calendarButton');
         if (calendarButton) {
-            calendarButton.removeEventListener('click', this.#renderCalendar.bind(this));
+            calendarButton.removeEventListener('click', this.renderCalendar.bind(this));
         }
 
         const tagInput = <HTMLElement>document.getElementById('tagInput');
         if (tagInput) {
-            tagInput.removeEventListener('keydown', this.#handleTagKeydown.bind(this));
+            tagInput.removeEventListener('keydown', this.handleTagKeydown.bind(this));
         }
 
         const geoButton = <HTMLElement>document.getElementById('geoInput');
         if (geoButton) {
-            geoButton.removeEventListener('click', this.#renderMap);
+            geoButton.removeEventListener('click', this.renderMap);
         }
 
-        this.#inputs.forEach((input, key) => {
+        this.inputs.forEach((input, key) => {
             if (input) {
-                input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+                input.removeEventListener('input', this.handleInputChange.bind(this, input, key));
             }
         });
-    }
 
-    #handleInputChange(input: HTMLInputElement, key: string) {
-        input.classList.remove('form-input_correct');
-        input.classList.remove('form-input_error');
-        const inputError = <HTMLElement>document.getElementById(key + 'Error');
-        inputError.classList.add('error_none');
-
-        if (input.value.trim()) {
-            input.classList.add('form-input_changed');
-        } else {
-            input.classList.remove('form-input_changed');
-        }
-    }
-
-    #renderMap = (e: Event) => {
-        e.preventDefault();
-
-        const map = new MapPopUp(this.#parent);
-        map.render();
-    };
-
-    #deleteTag = (e: MouseEvent) => {
-        const target = <HTMLElement>e.target;
-        const tagWrapper = <HTMLElement>e.currentTarget;
-
-        if (!target || !tagWrapper || !target.dataset['tag'])
-            return;
-
-        this.#eventTags = this.#eventTags.filter(tag => tag !== target.dataset['tag']);
-
-        tagWrapper.removeEventListener('click', this.#deleteTag);
-        tagWrapper.outerHTML = '';
-    };
-
-    #rerenderTags() {
-        this.#eventTags.map(tag => {
-            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
-            if (tagWrapper) tagWrapper.removeEventListener('click', this.#deleteTag);
-        });
-
-        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
-        tagBlock.innerHTML = '';
-        this.#eventTags.map(tag => {
-            tagBlock.innerHTML += tagTemplate(tag);
-        });
-
-        this.#eventTags.map(tag => {
-            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
-            if (tagWrapper) tagWrapper.addEventListener('click', this.#deleteTag);
-        });
-    }
-
-    #handleTagKeydown(e: KeyboardEvent) {
-        if (e.code !== 'Enter') return;
-        e.preventDefault();
-        this.#addTag();
-    }
-
-    #renderCalendar() {
-        const calendarBlock = <HTMLInputElement>document.getElementById('calendarBlock');
-
-        if (!calendarBlock.innerHTML) {
-            this.#calendar = new Calendar(calendarBlock);
-            this.#calendar.render();
-        }
-    }
-
-    #addTag(ev?: Event) {
-        ev?.preventDefault();
-
-        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
-        const tagInput = <HTMLInputElement>document.getElementById('tagInput');
-        const tagError = <HTMLElement>document.getElementById('tagError');
-        tagError.classList.remove('error_none');
-
-        if (tagBlock.children.length === MAX_NUM_OF_TAGS) {
-            tagError.textContent = TAGS_LIMIT_STR;
-            return;
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput) {
+            imageInput.removeEventListener('change', this.showPhoto.bind(this, imageInput));
         }
 
-        const tagTrimmed = tagInput.value.trim();
-        if (tagTrimmed) {
-            if (!tagTrimmed.match('^[a-zA-Zа-яА-Я0-9]+$')) {
-                tagError.textContent = ONE_WORD_TAG_STR;
-                tagInput.classList.add('form-input_error');
-                return;
-            }
-
-            if (tagTrimmed.length > 30) {
-                tagError.textContent = TAG_LENGTH_STR;
-                tagInput.classList.add('form-input_error');
-                return;
-            }
-
-            if (this.#eventTags.indexOf(tagTrimmed) === -1) {
-                this.#eventTags.push(tagTrimmed);
-                this.#rerenderTags();
-
-                tagInput.classList.remove('form-input_error');
-                tagError.classList.add('error_none');
-            } else {
-                tagInput.classList.add('form-input_error');
-                tagError.textContent = TAG_EXISTS_STR;
-            }
-        } else {
-            tagInput.classList.add('form-input_error');
-            tagError.textContent = NO_EMPTY_TAG_STR;
+        const photoLabel = <HTMLElement>document.getElementById('photo-label');
+        if (photoLabel) {
+            photoLabel.removeEventListener('click', this.deletePhoto.bind(this));
         }
 
-        tagInput.classList.remove('form-input_changed');
-        tagInput.value = '';
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+        }
     }
 
     #createEvent(ev: Event) {
         ev.preventDefault();
 
-        this.#setInputs();
+        this.setInputs();
 
-        this.#inputsData.clear();
-        this.#inputsData.set('title', {errors: [], value: <string>this.#inputs.get('title')?.value.trim()});
-        this.#inputsData.set('description', {
+        this.inputsData.clear();
+        this.inputsData.set('title', {errors: [], value: <string>this.inputs.get('title')?.value.trim()});
+        this.inputsData.set('description', {
             errors: [],
-            value: <string>this.#inputs.get('description')?.value.trim()
+            value: <string>this.inputs.get('description')?.value.trim()
         });
-        this.#inputsData.set('text', {errors: [], value: <string>this.#inputs.get('text')?.value.trim()});
-        this.#inputsData.set('date', {errors: [], value: <string>this.#inputs.get('date')?.value.trim()});
-        this.#inputsData.set('city', {errors: [], value: <string>this.#inputs.get('city')?.value.trim()});
-        this.#inputsData.set('geo', {errors: [], value: <string>this.#inputs.get('geo')?.value.trim()});
-        this.#inputsData.set('category', {errors: [], value: <string>this.#inputs.get('category')?.value.trim()});
-        this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
-        this.#inputsData.set('image', {errors: [], value: ''});
+        this.inputsData.set('text', {errors: [], value: <string>this.inputs.get('text')?.value.trim()});
+        this.inputsData.set('date', {errors: [], value: <string>this.inputs.get('date')?.value.trim()});
+        this.inputsData.set('geo', {errors: [], value: <string>this.inputs.get('geo')?.placeholder.trim()});
+        this.inputsData.set('category', {errors: [], value: <string>this.inputs.get('category')?.value.trim()});
+        this.inputsData.set('tag', {errors: [], value: this.eventTags});
+        this.inputsData.set('image', {errors: [], value: ''});
 
         let file: undefined | File;
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
         if (imageInput.files) file = imageInput.files[0];
 
-        Bus.emit(Events.EventCreateReq, {input: this.#inputsData, file});
-    }
-
-    #setInputs() {
-        const titleInput = <HTMLInputElement>document.getElementById('titleInput');
-        this.#inputs.set('title', titleInput);
-        const descriptionInput = <HTMLInputElement>document.getElementById('descriptionInput');
-        this.#inputs.set('description', descriptionInput);
-        const textInput = <HTMLInputElement>document.getElementById('textInput');
-        this.#inputs.set('text', textInput);
-        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
-        this.#inputs.set('date', dateInput);
-        const geoInput = <HTMLInputElement>document.getElementById('geoInput');
-        this.#inputs.set('geo', geoInput);
-        const tagInput = <HTMLInputElement>document.getElementById('tagInput');
-        this.#inputs.set('tag', tagInput);
-        const categoryInput = <HTMLInputElement>document.getElementById('categoryInput');
-        this.#inputs.set('category', categoryInput);
-        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
-        this.#inputs.set('image', imageInput);
-    }
-
-    #showValidationErrors() {
-        this.#inputs.forEach((input, key) => {
-            const inputError = <HTMLElement>document.getElementById(key + 'Error');
-            inputError.classList.add('error_none');
-            const inputData = <InputData>this.#inputsData.get(key);
-
-            inputData.errors.forEach(error => {
-                if (error) {
-                    if (key != 'geo')
-                        input.classList.add('form-input_error');
-                    inputError.classList.remove('error_none');
-                    inputError.textContent = error;
-                } else {
-                    inputData.errors = inputData.errors.slice(1);
-                }
-            });
-        });
-    }
-
-    #showCorrectInputs() {
-        this.#inputs.forEach((input, key) => {
-            if (!this.#inputsData.get(key)?.errors.length) {
-                const inputError = <HTMLElement>document.getElementById(key + 'Error');
-                inputError.classList.add('error_none');
-
-                input.classList.add('form-input_correct');
-            }
-        });
-    }
-
-    disable() {
-        this.#removeListeners();
-        Bus.off(Events.ValidationError, this.#validationHandle);
-        Bus.off(Events.ValidationOk, this.#validationHandle);
-        this.#parent.innerHTML = '';
+        Bus.emit(Events.EventCreateReq, {input: this.inputsData, file});
     }
 }
