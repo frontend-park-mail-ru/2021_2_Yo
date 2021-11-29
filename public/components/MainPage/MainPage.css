@@ -8,6 +8,7 @@
 
 #filter-list-wrapper {
   width: 100%;
+  position: relative;
 }
 
 #event-board-wrapper {
@@ -15,4 +16,40 @@
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
   gap: 10px;
+}
+
+#gotop {
+  position: fixed;
+  left: 0;
+  top: var(--header-height);
+  /* width: 6.25%; */
+  width: fit-content;
+  cursor: pointer;
+  background: transparent;
+  height: 100vh;
+  padding: 10px 25px;
+  color: rgba(164, 164, 164, 0.75);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#gotop:hover {
+  background: rgba(170, 170, 170, 0.25);
+  color: rgba(174, 174, 174);
+}
+
+.gotop_hidden {
+  display: none;
+}
+
+.gotop_shown {
+  display: block;
+}
+
+.gotop-img {
+  margin-right: 5px;
+  height: 10px;
+  width: 18px;
+  fill: #a4a4a4;
+  display: inline;
 }

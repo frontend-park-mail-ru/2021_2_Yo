@@ -70,6 +70,12 @@ input {
   font-family: inherit;
 }
 
+svg {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 a,
 a:visited,
 a:hover,
@@ -464,11 +470,11 @@ textarea {
 } */
 
 /* Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 992px) {
+@media only screen and (min-width: 992px) {
   html {
-    font-size: 14px;
+    font-size: 8px;
   }
-} */
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {

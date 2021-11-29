@@ -14,15 +14,13 @@ export default class MainPageController {
     }
 
     enable() {
-        // this.#model.enable();
-        // const filter = parseParams();
+        this.#model.enable();
         this.#view.render();
         Bus.emit(Events.EventsReq);
     }
 
     disable() {
         this.#view.disable();
-        // fStore.reset();
-        // this.#model.disable();
+        this.#model.disable();
     }
 }

@@ -3,6 +3,7 @@ import config from '@/config';
 import { fetchGet } from './request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
+import UserStore from './userstore';
 
 const REQ_WAIT_CHANGE_TIME_MSEC = 500;
 
@@ -84,6 +85,12 @@ export function parseParams(): FilterData {
     if (cityParam) city = cityParam;
 
     return { query, category, tags, date, city };
+}
+
+function userSearch(): string {
+    const user = UserStore.get();
+    if (!user) return '';
+    return 'userId=' + user.id;
 }
 
 export enum FilterParams {
@@ -184,12 +191,22 @@ class FilterStore {
     };
 
     #handleFilterChange = () => {
-        const search = filterToUrl();
+        let search = filterToUrl();
         if (this.#onlyQuery()) {
             Bus.emit(Events.RouteUrl, UrlPathnames.Main + search);
         } else {
             Bus.emit(Events.RouteUpdate, search);
         }
+
+        const user = userSearch();
+        if (user !== '') {
+            if (search === '') {
+                search = '?' + user;
+            } else {
+                search = search + '&' + user;
+            }
+        }
+
         fetchGet(ApiUrls.Events + search, 
             (data: FetchResponseData) => {
                 const {status, json} = data;

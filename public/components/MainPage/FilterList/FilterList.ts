@@ -7,7 +7,6 @@ import Events from '@eventbus/events';
 import config from '@/config';
 import CityStore from '@/modules/citystore';
 import FilterStore, { FilterParams } from '@/modules/filter';
-import fStore from '@/modules/filter';
 
 const TAG_PING_TIME_MSEC = 500;
 
@@ -24,7 +23,7 @@ export default class FilterListComponent {
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#filter = fStore.get();
+        this.#filter = FilterStore.get();
         const callback = () => {Bus.off(Events.CitiesRes, callback); this.render();};
         Bus.on(Events.CitiesRes, callback);
     }
