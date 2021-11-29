@@ -27,7 +27,6 @@
 }
 
 .header__content {
-  width: 62%;
   display: flex;
   justify-content: space-between;
   align-items: center;

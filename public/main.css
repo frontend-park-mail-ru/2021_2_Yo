@@ -123,7 +123,7 @@ input:focus {
   background-color: var(--app-bg-color);
   margin-top: var(--header-height);
   overflow: visible;
-  padding: 0px 150px;
+  /* padding: 0px 150px; */
 }
 
 .content {
