@@ -562,6 +562,12 @@ textarea {
   }
 }
 
+@media only screen and (min-width: 1450px) {
+  .content {
+    max-width: 1200px;
+  }
+}
+
 @media (min-width: 1480px) {
   html {
     font-size: 14px;
