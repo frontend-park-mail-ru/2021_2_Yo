@@ -432,13 +432,13 @@ textarea {
 }
 
 .authform {
-/*  background: var(--auth-form-bg-color);*/
-/*  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);*/
-/*  border-radius: 12px;*/
-/*  box-sizing: border-box;*/
-/*  display: grid;*/
-/*  grid-gap: 10px;*/
-/*  grid-template-columns: 100%;*/
+  /*  background: var(--auth-form-bg-color);*/
+  /*  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);*/
+  /*  border-radius: 12px;*/
+  /*  box-sizing: border-box;*/
+  /*  display: grid;*/
+  /*  grid-gap: 10px;*/
+  /*  grid-template-columns: 100%;*/
   width: 30.5vw;
   padding: 30px !important;
   margin-bottom: 10px;
@@ -545,12 +545,20 @@ textarea {
   html {
     font-size: 8px;
   }
+
+  .content {
+    max-width: 742px;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   html {
     font-size: 11px;
+  }
+
+  .content {
+    max-width: 950px;
   }
 }
 
