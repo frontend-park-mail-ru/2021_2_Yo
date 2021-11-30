@@ -84,7 +84,7 @@ body {
 }
 
 html {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 input {
@@ -127,7 +127,7 @@ input:focus {
 }
 
 .content {
-  /* width: 100%; */
+  width: 100%;
   max-width: 1200px;
   margin-right: auto;
   margin-left: auto;
@@ -388,11 +388,6 @@ textarea {
   padding-top: 40px;
 }
 
-/* .content {
-  width: 67vw;
-  display: flex;
-} */
-
 .text_date {
   color: var(--date-orange-color);
   text-decoration: underline;
@@ -570,6 +565,6 @@ textarea {
 
 @media (min-width: 1480px) {
   html {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
