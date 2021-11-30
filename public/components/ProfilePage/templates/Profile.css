@@ -221,54 +221,6 @@
   visibility: hidden;
 }
 
-.event-li {
-  display: grid;
-  grid-template-columns: 40% auto;
-  grid-gap: 20px;
-}
-
-.event-li__img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-}
-
-.grid-list {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-gap: 15px;
-}
-
-.event-li__content {
-  height: max-content;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-gap: 10px;
-}
-
-.event-li__title {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 1.9rem;
-}
-
-.secondary-text_small {
-  font-size: 1rem !important;
-  line-height: 1.2rem !important;
-}
-
-.primary-text_small {
-  font-size: 1.2rem !important;
-  line-height: 1.4rem !important;
-}
-
-.event-tag_small {
-  font-size: 1rem !important;
-  line-height: 1.2rem !important;
-}
-
 .users-grid-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
