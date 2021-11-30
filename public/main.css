@@ -530,7 +530,7 @@ textarea {
 } */
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+@media only screen and (max-width: 1029px) {
   html {
     font-size: 8px;
   }
@@ -541,24 +541,12 @@ textarea {
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1030px) {
+@media only screen and (max-width: 1449px) {
   html {
     font-size: 10px;
   }
 
   .content {
     max-width: 780px;
-  }
-}
-
-@media only screen and (min-width: 1450px) {
-  .content {
-    max-width: 1200px;
-  }
-}
-
-@media (min-width: 1480px) {
-  html {
-    font-size: 13px;
   }
 }
