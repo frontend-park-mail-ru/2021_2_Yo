@@ -74,8 +74,8 @@
   }
 } */
 
-/* Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 992px) {
+/*Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1029px) {
   html {
     font-size: 8px;
   }
@@ -83,17 +83,11 @@
   .content {
     max-width: 742px;
   }
-} */
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1030px) {
-  .main-page-content {
-    grid-template-columns: 0.9fr 2fr;
-  }
 }
 
-@media only screen and (min-width: 1450px) {
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1449px) {
   .main-page-content {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 0.9fr 2fr;
   }
 }
