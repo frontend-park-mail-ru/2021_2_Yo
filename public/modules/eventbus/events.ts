@@ -19,6 +19,8 @@ enum Events {
     // Events
     EventsReq = 'events:request',
     EventsRes = 'events:response',
+    EventsStoredReq = 'events-stored:request',
+    EventsStoredRes = 'events-stored:response',
     EventsResFav = 'events-favourite:response',
     EventsReqFav = 'events-favourite:request',
     EventsError = 'events:error',

@@ -104,6 +104,7 @@ export enum FilterParams {
 class FilterStore {
     #filter: FilterData;
     #enabled: boolean;
+    #events?: EventData[];
 
     constructor() {
         this.#filter = parseParams();
@@ -113,11 +114,13 @@ class FilterStore {
 
     enable() {
         Bus.on(Events.EventsReq, this.#handleFilterChange);
+        Bus.on(Events.EventsStoredReq, this.#handleStoredEvents);
         this.#enabled = true;
     }
 
     disable() {
         Bus.off(Events.EventsReq, this.#handleFilterChange);
+        Bus.off(Events.EventsStoredReq, this.#handleStoredEvents);
         this.#enabled = false;
     }
 
@@ -213,6 +216,7 @@ class FilterStore {
                 if (status === 200) {
                     if (json.status) {
                         const events = <EventData[]>json.body.events;
+                        this.#events = events;
                         Bus.emit(Events.EventsRes, events); 
                         return;
                     }
@@ -225,7 +229,12 @@ class FilterStore {
         );
 
     };
+
+    #handleStoredEvents = () => {
+        Bus.emit(Events.EventsStoredRes, this.#events);
+    };
 }
+
 
 const fStore = new FilterStore();
 export default fStore;
