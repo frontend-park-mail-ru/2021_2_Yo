@@ -9,9 +9,16 @@ import * as eventFavOffTemplate from '@main-page/EventBoard/eventfavoff.hbs';
 import '@main-page/EventBoard/EventBoard.css';
 import UserStore from '@/modules/userstore';
 
+const WIDTH_BREAKPOINTS = [
+    700,
+    1200,
+    1450,
+];
+
 export default class EventBoardComponent {
     #parent: HTMLElement;
     #board?: HTMLElement;
+    #cols: number[];
 
     constructor(parent: HTMLElement) {
         Bus.on(Events.EventsRes, this.#eventsHandle);
@@ -19,6 +26,12 @@ export default class EventBoardComponent {
         Bus.on(Events.UserRes, this.#handleUser);
         Bus.on(Events.UserLogout, this.#handleUser);
         this.#parent = parent;
+        this.#cols = [];
+        WIDTH_BREAKPOINTS.map((width, index) => {
+            if (document.documentElement.clientWidth >= width) {
+                this.#cols.push(index);
+            }
+        });
     }
 
     #eventsHandle = ((data: EventData[]) => {
@@ -35,7 +48,14 @@ export default class EventBoardComponent {
 
     #addListeners() {
         if (this.#board) this.#board.addEventListener('click', this.#handleClick);
+        window.addEventListener('resize', this.#handleResize);
     }
+
+    #handleResize = () => {
+        if (document.documentElement.clientWidth < 1450) {
+            console.log('lala');
+        }
+    };
 
     #handleClick = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
@@ -54,6 +74,7 @@ export default class EventBoardComponent {
 
     #removeListeners() {
         if (this.#board) this.#board.removeEventListener('click', this.#handleClick);
+        window.addEventListener('resize', this.#handleResize);
     }
 
     #handleUser = () => {
@@ -61,13 +82,18 @@ export default class EventBoardComponent {
     };
 
     render(data?: EventData[]) {
+        this.#parent.innerHTML = '';
         const user = UserStore.get() ? true : false;
-        this.#parent.innerHTML = template();
+        
+        this.#cols.map(num => {
+            this.#parent.innerHTML += template(num);
+        });
         if (data) {
-            const cols = ['0', '1', '2'].map(num => <HTMLElement>document.getElementById('event-column-' + num));
+            const colElements = this.#cols.map(num => <HTMLElement>document.getElementById('event-column-' + num));
+            // const cols = ['0', '1', '2'].map(num => <HTMLElement>document.getElementById('event-column-' + num));
             data.map((event, index) => {
-                const colNum = index % 3;
-                cols[colNum].innerHTML += eventTemplate({
+                const colNum = index % this.#cols.length;
+                colElements[colNum].innerHTML += eventTemplate({
                     event: event,
                     user: user,
                 });
