@@ -11,28 +11,42 @@ import UserStore from '@/modules/userstore';
 
 const WIDTH_BREAKPOINTS = [
     700,
-    1200,
+    1030,
     1450,
 ];
+
+const RESIZE_MSEC = 50;
 
 export default class EventBoardComponent {
     #parent: HTMLElement;
     #board?: HTMLElement;
-    #cols: number[];
+    #cols: number;
 
     constructor(parent: HTMLElement) {
         Bus.on(Events.EventsRes, this.#eventsHandle);
+        Bus.on(Events.EventsStoredRes, this.#eventsStoredHandle);
         Bus.on(Events.EventsError, this.#eventsError);
         Bus.on(Events.UserRes, this.#handleUser);
         Bus.on(Events.UserLogout, this.#handleUser);
         this.#parent = parent;
-        this.#cols = [];
-        WIDTH_BREAKPOINTS.map((width, index) => {
-            if (document.documentElement.clientWidth >= width) {
-                this.#cols.push(index);
+        this.#cols = this.#colsCount();
+    }
+
+    #colsCount() {
+        let cols = 0;
+        const currentWidth = document.documentElement.clientWidth;
+        WIDTH_BREAKPOINTS.map(width => {
+            if (currentWidth >= width) {
+                cols += 1;
             }
         });
+        return cols;
     }
+
+    #eventsStoredHandle = (data: EventData[]) => {
+        // this.#cols = this.#colsCount();   
+        this.render(data);
+    };
 
     #eventsHandle = ((data: EventData[]) => {
         this.render(data);
@@ -52,10 +66,25 @@ export default class EventBoardComponent {
     }
 
     #handleResize = () => {
-        if (document.documentElement.clientWidth < 1450) {
-            console.log('lala');
-        }
+        const cols = this.#colsCount();
+        if (this.#cols === cols) return;
+        this.#cols = cols;
+
+        const callback = (cols: number) => {
+            const currentCols = this.#colsCount();
+            if (cols !== currentCols) return;
+            Bus.emit(Events.EventsStoredReq);
+        };
+
+        setTimeout(callback, RESIZE_MSEC, this.#cols);
     };
+
+    // #handleResize = () => {
+    //     const cols = this.#colsCount();
+    //     if (this.#cols === cols) return;
+    //     this.#cols = cols;
+    //     Bus.emit(Events.EventsStoredReq);
+    // };
 
     #handleClick = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
@@ -85,15 +114,20 @@ export default class EventBoardComponent {
         this.#parent.innerHTML = '';
         const user = UserStore.get() ? true : false;
         
-        this.#cols.map(num => {
-            this.#parent.innerHTML += template(num);
-        });
+        for (let i = 0; i < this.#cols; i++) {
+            this.#parent.innerHTML += template(i);
+        }
         if (data) {
-            const colElements = this.#cols.map(num => <HTMLElement>document.getElementById('event-column-' + num));
+            // const colElements = this.#cols.map(num => <HTMLElement>document.getElementById('event-column-' + num));
             // const cols = ['0', '1', '2'].map(num => <HTMLElement>document.getElementById('event-column-' + num));
+            const cols: HTMLElement[] = [];
+            for (let i = 0; i < this.#cols; i++) {
+                const col = <HTMLElement>document.getElementById('event-column-' + i.toString());
+                cols.push(col);
+            }
             data.map((event, index) => {
-                const colNum = index % this.#cols.length;
-                colElements[colNum].innerHTML += eventTemplate({
+                const colNum = index % this.#cols;
+                cols[colNum].innerHTML += eventTemplate({
                     event: event,
                     user: user,
                 });
@@ -105,6 +139,7 @@ export default class EventBoardComponent {
 
     disable() {
         Bus.off(Events.EventsRes, this.#eventsHandle);
+        Bus.off(Events.EventsStoredRes, this.#eventsStoredHandle);
         Bus.off(Events.EventsError, this.#eventsError);
         Bus.off(Events.UserRes, this.#handleUser);
         Bus.off(Events.UserLogout, this.#handleUser);
