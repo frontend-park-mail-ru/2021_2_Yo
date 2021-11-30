@@ -427,13 +427,6 @@ textarea {
 }
 
 .authform {
-  /*  background: var(--auth-form-bg-color);*/
-  /*  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);*/
-  /*  border-radius: 12px;*/
-  /*  box-sizing: border-box;*/
-  /*  display: grid;*/
-  /*  grid-gap: 10px;*/
-  /*  grid-template-columns: 100%;*/
   width: 30.5vw;
   padding: 30px !important;
   margin-bottom: 10px;
@@ -489,7 +482,6 @@ textarea {
 
 .secondary-text {
   font-size: 1.3rem;
-  line-height: 1.5rem;
   color: var(--secondary_gray);
   font-style: normal;
   font-weight: normal;
@@ -497,17 +489,19 @@ textarea {
 
 .back {
   position: fixed;
-  top: 0;
   bottom: 0;
   z-index: 1;
   grid-area: back;
   width: 10vw;
-  padding-top: 70px;
-  padding-left: 25px;
+  padding: 25px;
   color: var(--black-text-color);
   font-size: 1.3rem;
   line-height: 1.5rem;
   cursor: pointer;
+  left: 0;
+  top: var(--header-height);
+  height: 100vh;
+  font-weight: bold;
 }
 
 .back:hover {

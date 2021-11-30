@@ -17,7 +17,8 @@
     grid-area: content;
     display: grid;
     grid-gap: 15px;
-    width: 45vw;
+    width: 75%;
+    margin: 20px auto;
     grid-template-columns: 100%;
 }
 
@@ -90,6 +91,8 @@
     position: fixed;
     top: 0;
     bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     z-index: 1000;
 }
@@ -115,12 +118,16 @@
     height: 32px;
 }
 
+.buttons-block-wrapper__icon_avatar {
+    border-radius: 50%;
+}
+
 .unlike {
     fill: var(--secondary_gray);
 }
 
 .like {
-    fill: red;
+    fill: var(--light-orange);
 }
 
 .event-header-text {

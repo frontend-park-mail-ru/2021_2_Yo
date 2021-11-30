@@ -1,7 +1,7 @@
-<div id="map"></div>
-<div class="eventform-background">
-    <div class="back" id="backButton">< Назад</div>
+<div class="content">
     <div class="primary-white-block white-block_size">
+        <div id="map"></div>
+        <div class="back" id="backButton">< Назад</div>
         <form class="eventform" id="eventform">
 
             <div class="input-block input-block_event-thin">
@@ -76,12 +76,14 @@
                 <input class="photo-input_none" id="imageInput" type="file" accept="image/*"/>
                 <div class="input-button-block">
                     {{#if event.imgUrl}}
-                        <input class="photo-input photo-input-label" id="photo-label" value="Новое фото не выбрано" readonly/>
+                        <input class="photo-input-label" id="photo-label" value="Новое фото не выбрано" readonly/>
                     {{else}}
-                        <input class="photo-input photo-input-label" id="photo-label" value="Не выбрано" readonly/>
+                        <input class="photo-input-label" id="photo-label" value="Не выбрано" readonly/>
                     {{/if}}
                     <label for="imageInput">
-                        <img class="input-btn" src="../../server/img/add-photo.svg">
+                        <svg class="input-btn">
+                            <use xlink:href="../../server/img/sprite.svg#add-photo"></use>
+                        </svg>
                     </label>
                 </div>
                 {{#if event.imgUrl}}

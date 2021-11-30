@@ -15,7 +15,8 @@
 .profile-block {
   display: grid;
   grid-gap: 20px;
-  width: 45vw;
+  width: 75%;
+  margin: 20px auto;
   grid-template-columns: 100%;
   height: max-content;
   grid-area: content;
@@ -85,7 +86,6 @@
   font-style: normal;
   font-weight: normal;
   font-size: 1.2rem;
-  line-height: 1.65rem;
 }
 
 .profile-button-subscribe_none {

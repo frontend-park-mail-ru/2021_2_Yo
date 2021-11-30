@@ -12,9 +12,10 @@
 }
 
 .white-block_size {
-    width: 44vw;
+    width: 75%;
     grid-area: content;
     grid-template-columns: 100%;
+    margin: 20px auto 130px;
 }
 
 .eventform {
@@ -80,8 +81,6 @@
 
 .photo-input-label {
     padding: 5px 10px;
-
-    width: 200px;
 
     font-style: normal;
     font-weight: bold;
