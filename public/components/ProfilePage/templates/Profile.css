@@ -64,6 +64,7 @@
   cursor: pointer;
   width: 24px;
   height: 24px;
+  fill: var(--black-text-color);
 }
 
 .profile-button-subscribe {
