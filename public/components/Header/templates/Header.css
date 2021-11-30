@@ -128,7 +128,7 @@
 .user-popup-wrapper {
   display: flex;
   flex-direction: row-reverse;
-  width: 62%;
+  width: 100%;
 }
 
 .user-popup {
