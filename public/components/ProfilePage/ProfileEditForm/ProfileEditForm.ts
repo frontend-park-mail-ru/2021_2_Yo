@@ -110,6 +110,12 @@ export default class ProfileEditForm {
         if (this.#passwordEditButton) {
             this.#passwordEditButton.addEventListener('click', this.#renderPasswordEdit.bind(this));
         }
+
+        this.#inputs.forEach((input, key) => {
+            if (input) {
+                input.removeEventListener('input', this.#handleInputChange.bind(this, input, key));
+            }
+        });
     }
 
     #passwordFormSubmitHandle = ((ev: Event) => {
@@ -125,6 +131,10 @@ export default class ProfileEditForm {
         const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
         this.#inputs.set('password2', passwordInput2);
         this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
+
+        this.#inputs.forEach((input, key) => {
+            input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+        });
 
         Bus.emit(Events.UserPasswordEditReq, this.#inputsData);
     });
@@ -152,6 +162,10 @@ export default class ProfileEditForm {
         this.#inputsData.set('avatar', {errors: [], value: ''});
         let file: File | undefined;
         if (avatarInput.files) file = avatarInput.files[0];
+
+        this.#inputs.forEach((input, key) => {
+            input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+        });
 
         Bus.emit(Events.UserEditReq, {input: this.#inputsData, file});
     });
@@ -223,6 +237,19 @@ export default class ProfileEditForm {
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
         imageInput.files = null;
         imageInput.value = '';
+    }
+
+    #handleInputChange(input: HTMLInputElement, key: string) {
+        input.classList.remove('form-input_correct');
+        input.classList.remove('form-input_error');
+        const inputError = <HTMLElement>document.getElementById(key + 'Error');
+        inputError.classList.add('error_none');
+
+        if (input.value.trim()) {
+            input.classList.add('form-input_changed');
+        } else {
+            input.classList.remove('form-input_changed');
+        }
     }
 
 }

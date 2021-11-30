@@ -432,11 +432,16 @@ textarea {
 }
 
 .authform {
-  background: var(--auth-form-bg-color);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
-  padding: 9.537vh 1.82vw 2.78vh;
-  box-sizing: border-box;
+/*  background: var(--auth-form-bg-color);*/
+/*  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);*/
+/*  border-radius: 12px;*/
+/*  box-sizing: border-box;*/
+/*  display: grid;*/
+/*  grid-gap: 10px;*/
+/*  grid-template-columns: 100%;*/
+  width: 30.5vw;
+  padding: 30px !important;
+  margin-bottom: 10px;
 }
 
 .label {
