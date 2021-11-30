@@ -11,7 +11,7 @@ import UserStore from '@/modules/userstore';
 
 const WIDTH_BREAKPOINTS = [
     700,
-    1100,
+    1030,
     1450,
 ];
 
