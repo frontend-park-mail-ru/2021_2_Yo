@@ -20,6 +20,7 @@ export type EventData = {
     text: string;
     date: string;
     geo: string;
+    address: string;
     authorid: string;
 }
 
@@ -33,7 +34,6 @@ export enum UrlPathnames {
     Main = '/',
     Login = '/login',
     Signup = '/signup',
-    Search = '/search',
     Profile = '/user',
     Event = '/events',
     Create = '/create',
@@ -43,6 +43,7 @@ export enum UrlPathnames {
 export enum ApiUrls {
     User = '/user',
     Events = '/events',
+    Cities = '/events/cities',
     Login = '/auth/login',
     Signup = '/auth/signup',
     Logout = '/auth/logout',
@@ -73,7 +74,14 @@ export type ApiPostSignupData = {
 }
 
 export type FilterData = {
+    query?: string,
     category?: number,
     tags?: string[],
-    query?: string,
+    date?: string,
+    city?: string,
+}
+
+export type InputData = {
+    errors: string[],
+    value: string | string[],
 }

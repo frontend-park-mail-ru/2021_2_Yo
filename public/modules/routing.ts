@@ -80,6 +80,8 @@ class Router {
             window.history.pushState({}, '', path);
         }
 
+        Bus.emit(Events.RouteChange, window.location.pathname);
+
         const nextPath = this.#getValidPath();
         const nextControllers = <Controllers>this.#controllers.get(nextPath);
 

@@ -1,0 +1,36 @@
+{{#if events}}
+    <div id="events-list" class="grid-list">
+    {{#each events}}
+        <div class="event-li">
+            <div class="card">
+                {{#if imgUrl}}
+                    <a class="card_gradient" href="/events?id={{id}}"></a>
+                    <img class="event-li__img" src="{{imgUrl}}">
+                {{else}}
+                    <a class="card_gradient" href="/events?id={{id}}"></a>
+                    <img class="event-li__img" src="./server/img/tusa-placeholder.png">
+                {{/if}}
+                <div class="card-wrapper">
+                    <div class="card__title">{{title}}</div>
+                    <div class="card__info">{{city}}, {{date}}</div>
+                </div>
+            </div>
+            <div class ="event-li__content">
+                <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
+                <div class="secondary-text secondary-text_small">
+                    <div>{{date}}</div>
+                    <div>{{city}}</div>
+                </div>
+                <div class="primary-text primary-text_small">{{description}}</div>
+                <div>
+                    {{#each tag}}
+                        <a class="event-tags-block__event-tag event-tag event-tag_small" href="/search?tags={{this}}">{{this}}</a>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+    </div>
+{{else}}
+    <h2>Список пуст</h2>
+{{/if}}

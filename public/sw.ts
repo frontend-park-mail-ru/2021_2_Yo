@@ -44,7 +44,9 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
         const responseClone = onlineResponse.clone();
         void caches.open(CACHE_NAME)
             .then((cache) => {
-                void cache.put(event.request, responseClone);
+                if (cache) {
+                    void cache.put(event.request, responseClone);
+                }
             });
     }
 
@@ -52,11 +54,11 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
 }
 
 self.addEventListener('fetch', (event) => {
-    if ((new URL(event.request.url)).pathname === '/sw.js') {
-        return;
-    }
+    // if (event.request.url.match('^.*\\.(css|js)$')) {
+    //     return;
+    // }
 
-    const staticReq = event.request.url.match('^https?://\\S+(?:jpg|jpeg|png|ico|woff)$');
+    const staticReq = event.request.url.match('^.*\\.(jpg|png|jpeg|woff|ico|gif|webp|webm)$');
 
     if (staticReq) {
         event.respondWith(
@@ -65,24 +67,38 @@ self.addEventListener('fetch', (event) => {
                     if (cachedResponse) {
                         return cachedResponse;
                     }
-                    return fetch(event.request)
-                        .then((onlineResponse) => putInCache(event, onlineResponse))
-                        .catch(() => offlineResponse());
+                    throw Error();
                 })
+                .catch(() => fetch(event.request)
+                    .then((onlineResponse) => {
+                        if (onlineResponse) {
+                            return putInCache(event, onlineResponse);
+                        }
+                        throw Error();
+                    })
+                    .catch(() => offlineResponse())
+                )
         );
     } else {
         event.respondWith(
             fetch(event.request)
-                .then(onlineResponse => putInCache(event, onlineResponse))
+                .then(onlineResponse => {
+                    if (onlineResponse) {
+                        putInCache(event, onlineResponse);
+                        return onlineResponse;
+                    } else {
+                        throw Error();
+                    }
+                })
                 .catch(() => {
                     return caches.match(event.request)
                         .then((cachedResponse) => {
                             if (cachedResponse) {
                                 return cachedResponse;
-                            } else {
-                                return offlineResponse();
                             }
-                        });
+                            throw Error();
+                        })
+                        .catch(() => offlineResponse());
                 })
         );
     }

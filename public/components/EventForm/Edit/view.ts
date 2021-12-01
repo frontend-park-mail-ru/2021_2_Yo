@@ -1,198 +1,162 @@
 import {EventData} from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import * as errorTemplate from '@event-form/error.hbs';
-import * as template from '@event-edit/eventedit.hbs';
-import '@event-form/EventForm.css';
+import * as template from '@event-form/templates/eventform.hbs';
+import * as tagTemplate from '@templates/tag/tag.hbs';
+import '@templates/tag/tag.css';
+import '@event-form/templates/EventForm.css';
+import config from '@/config';
+import {EventFormView} from '@event-form/EventFormView';
 
-const MAX_NUM_OF_TAGS = 6;
-const TAGS_LIMIT_STR = 'К одному мероприятию можно добавить не больше шести тегов';
-const ONE_WORD_TAG_STR = 'Тег должен состоять из одного слова';
-const NO_EMPTY_TAG_STR = 'Невозможно добавить пустой тег';
-const TAG_EXISTS_STR = 'Тег уже добавлен';
-const TAG_LENGTH_STR = 'Слишком много символов. Максимальная длина 30 символов';
-
-export default class EventEditFormView {
-    #parent: HTMLElement;
-    #eventTags: string[] = [];
-    #inputs = new Map<string, HTMLInputElement>();
-    #inputsData = new Map<string, { errors: string[], value: string | string[] }>();
-
-    constructor(parent: HTMLElement) {
-        this.#parent = parent;
-    }
-
-    subscribe() {
-        Bus.on(Events.ValidationError, this.#validationHandle);
-        Bus.on(Events.ValidationOk, this.#validationHandle);
-    }
-
-    #validationHandle = (() => {
-        this.#showValidationErrors();
-        this.#showCorrectInputs();
-    }).bind(this);
-
-    renderError() {
-        this.#parent.innerHTML = errorTemplate();
-    }
-
+export default class EventEditView extends EventFormView {
     render(event?: EventData) {
-        this.#eventTags = event?.tag as string[];
-        this.#parent.innerHTML = template(event);
+        this.event = event;
 
-        this.#setInputs();
+        this.eventTags = <string[]>event?.tag;
+        this.parent.innerHTML = template({event: event, categories: config.categories});
+
+        const tagBlock = <HTMLElement>document.getElementById('tagBlock');
+
+        if (this.eventTags) {
+            this.eventTags.map(tag => {
+                tagBlock.innerHTML += tagTemplate(tag);
+            });
+            this.eventTags.map(tag => {
+                const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+                if (tagWrapper) tagWrapper.addEventListener('click', this.deleteTag);
+            });
+        }
+
+        this.setInputs();
+
+        const categoryInput = <HTMLSelectElement>document.getElementById('categoryInput');
+        categoryInput.value = <string>event?.category;
+
         this.#addListeners();
     }
 
-    #setInputs() {
-        const titleInput = document.getElementById('titleInput') as HTMLInputElement;
-        this.#inputs.set('title', titleInput);
-        const descriptionInput = document.getElementById('descriptionInput') as HTMLInputElement;
-        this.#inputs.set('description', descriptionInput);
-        const textInput = document.getElementById('textInput') as HTMLInputElement;
-        this.#inputs.set('text', textInput);
-        const dateInput = document.getElementById('dateInput') as HTMLInputElement;
-        this.#inputs.set('date', dateInput);
-        const cityInput = document.getElementById('cityInput') as HTMLInputElement;
-        this.#inputs.set('city', cityInput);
-        const geoInput = document.getElementById('geoInput') as HTMLInputElement;
-        this.#inputs.set('geo', geoInput);
-        const categoryInput = document.getElementById('categoryInput') as HTMLInputElement;
-        this.#inputs.set('category', categoryInput);
-        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
-        this.#inputs.set('image', imageInput);
+
+    disable() {
+        this.#removeListeners();
+        Bus.off(Events.ValidationError, this.validationHandle);
+        Bus.off(Events.ValidationOk, this.validationHandle);
+        this.parent.innerHTML = '';
     }
 
     #addListeners() {
-        const form = document.getElementById('eventform') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('eventform');
         form.addEventListener('submit', this.#editEvent.bind(this));
 
-        const tagButton = document.getElementById('tagButton') as HTMLInputElement;
-        tagButton.addEventListener('click', this.#addTag.bind(this));
+        const tagButton = <HTMLInputElement>document.getElementById('tagButton');
+        tagButton.addEventListener('click', this.addTag.bind(this));
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));    
+        cancelButton.addEventListener('click', this.handleCancel.bind(this));
+
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        calendarButton.addEventListener('click', this.renderCalendar.bind(this));
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        tagInput.addEventListener('keydown', this.handleTagKeydown.bind(this));
+
+        const geoButton = <HTMLElement>document.getElementById('geoInput');
+        geoButton.addEventListener('click', this.renderMap);
+
+        this.setInputs();
+        this.inputs.forEach((input, key) => {
+            input.addEventListener('input', this.handleInputChange.bind(this, input, key));
+        });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        imageInput.addEventListener('change', this.showPhoto.bind(this, imageInput));
+
+        const backButton = document.getElementById('backButton');
+        backButton?.addEventListener('click', () => Bus.emit(Events.RouteBack));
     }
 
     #removeListeners() {
-        const form = document.getElementById('eventform') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('eventform');
         if (form) {
             form.removeEventListener('submit', this.#editEvent.bind(this));
         }
 
-        const tagButton = document.getElementById('tagButton') as HTMLInputElement;
+        const tagButton = <HTMLInputElement>document.getElementById('tagButton');
         if (tagButton) {
-            tagButton.removeEventListener('click', this.#addTag.bind(this));
+            tagButton.removeEventListener('click', this.addTag.bind(this));
         }
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        if (cancelButton) cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));    
-    }
-
-    #addTag(ev: Event) {
-        ev.preventDefault();
-
-        const tagBlock = document.getElementById('tagBlock') as HTMLElement;
-        const tagInput = document.getElementById('tagInput') as HTMLInputElement;
-        const tagBlockError = document.getElementById('tagBlockError') as HTMLElement;
-        const errorP = tagBlockError.firstElementChild as HTMLElement;
-        errorP.classList.remove('error_none');
-
-        if (tagBlock.children.length === MAX_NUM_OF_TAGS) {
-            errorP.textContent = TAGS_LIMIT_STR;
-            return;
+        if (cancelButton) {
+            cancelButton.removeEventListener('click', this.handleCancel.bind(this));
         }
 
-        if (tagInput.value.trim()) {
-            if (!tagInput.value.trim().match('^[a-zA-Zа-яА-Я0-9]+$')) {
-                errorP.textContent = ONE_WORD_TAG_STR;
-                return;
-            }
+        if (this.eventTags) {
+            this.eventTags.map((t) => {
+                const tag = <HTMLElement>document.getElementById('tag-' + t);
+                if (!tag) return;
 
-            if (tagInput.value.trim().length > 30) {
-                errorP.textContent = TAG_LENGTH_STR;
-                return;
-            }
-
-            if (this.#eventTags.indexOf(tagInput.value.trim()) === -1) {
-                const tag = document.createElement('a');
-                tag.classList.add('event-tag');
-                tag.classList.add('event-tags-block__event-tag');
-                tag.textContent = tagInput.value.trim();
-                tagBlock.appendChild(tag);
-                this.#eventTags.push(tagInput.value.trim());
-
-                errorP.classList.add('error_none');
-            } else {
-                errorP.textContent = TAG_EXISTS_STR;
-            }
-        } else {
-            errorP.textContent = NO_EMPTY_TAG_STR;
+                tag.removeEventListener('click', this.deleteTag);
+            });
         }
 
-        tagInput.value = '';
+        const calendarButton = <HTMLElement>document.getElementById('calendarButton');
+        if (calendarButton) {
+            calendarButton.removeEventListener('click', this.renderCalendar.bind(this));
+        }
+
+        const tagInput = <HTMLElement>document.getElementById('tagInput');
+        if (tagInput) {
+            tagInput.removeEventListener('keydown', this.handleTagKeydown.bind(this));
+        }
+
+        const geoButton = <HTMLElement>document.getElementById('geoInput');
+        if (geoButton) {
+            geoButton.removeEventListener('click', this.renderMap);
+        }
+
+        this.inputs.forEach((input, key) => {
+            if (input) {
+                input.removeEventListener('input', this.handleInputChange.bind(this, input, key));
+            }
+        });
+
+        const imageInput = <HTMLInputElement>document.getElementById('imageInput');
+        if (imageInput) {
+            imageInput.removeEventListener('change', this.showPhoto.bind(this, imageInput));
+        }
+
+        const photoLabel = <HTMLElement>document.getElementById('photo-label');
+        if (photoLabel) {
+            photoLabel.removeEventListener('click', this.deletePhoto.bind(this));
+        }
+
+        const backButton = document.getElementById('backButton');
+        if (backButton) {
+            backButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+        }
     }
 
     #editEvent(ev: Event) {
         ev.preventDefault();
 
-        this.#inputsData.set('title', {errors: [], value: this.#inputs.get('title')?.value.trim() as string});
-        this.#inputsData.set('description', {
+        this.setInputs();
+
+        this.inputsData.set('title', {errors: [], value: <string>this.inputs.get('title')?.value.trim()});
+        this.inputsData.set('description', {
             errors: [],
-            value: this.#inputs.get('description')?.value.trim() as string
+            value: <string>this.inputs.get('description')?.value.trim()
         });
-        this.#inputsData.set('text', {errors: [], value: this.#inputs.get('text')?.value.trim() as string});
-        this.#inputsData.set('date', {errors: [], value: this.#inputs.get('date')?.value.trim() as string});
-        this.#inputsData.set('city', {errors: [], value: this.#inputs.get('city')?.value.trim() as string});
-        this.#inputsData.set('geo', {errors: [], value: this.#inputs.get('geo')?.value.trim() as string});
-        this.#inputsData.set('category', {errors: [], value: this.#inputs.get('category')?.value.trim() as string});
-        this.#inputsData.set('tag', {errors: [], value: this.#eventTags});
-        this.#inputsData.set('image', {errors: [], value: ''});
+        this.inputsData.set('text', {errors: [], value: <string>this.inputs.get('text')?.value.trim()});
+        this.inputsData.set('date', {errors: [], value: <string>this.inputs.get('date')?.value.trim()});
+        this.inputsData.set('geo', {errors: [], value: <string>this.inputs.get('geo')?.placeholder.trim()});
+        this.inputsData.set('category', {errors: [], value: <string>this.inputs.get('category')?.value.trim()});
+        this.inputsData.set('tag', {errors: [], value: this.eventTags});
+        this.inputsData.set('image', {errors: [], value: ''});
 
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
         let file: undefined | File;
         if (imageInput.files) file = imageInput.files[0];
-        Bus.emit(Events.EventEditReq, {input: this.#inputsData, file});
-    }
 
-    #showValidationErrors() {
-        this.#inputs.forEach((input, key) => {
-            const inputBlock = input.parentElement as HTMLElement;
-            const errorP = inputBlock.lastElementChild as HTMLElement;
-            const inputData = this.#inputsData.get(key) as { errors: string[], value: string };
-
-            inputData.errors.forEach(error => {
-                if (error) {
-                    inputBlock.classList.add('input-block_error');
-
-                    if (inputBlock.innerHTML.indexOf(error) === -1) {
-                        errorP.classList.remove('error_none');
-                        errorP.textContent = error;
-                    }
-                } else {
-                    inputData.errors = inputData.errors.slice(1);
-                }
-            });
-        });
-    }
-
-    #showCorrectInputs() {
-        this.#inputs.forEach((input, key) => {
-            if (!this.#inputsData.get(key)?.errors.length) {
-                const inputBlock = input.parentElement as HTMLElement;
-                inputBlock.classList.remove('input-block_error');
-
-                const errorP = inputBlock.lastElementChild as HTMLElement;
-                errorP.textContent = '';
-                errorP.classList.add('error_none');
-            }
-        });
-    }
-
-    disable() {
-        this.#removeListeners();
-        Bus.off(Events.ValidationError, this.#validationHandle);
-        Bus.off(Events.ValidationOk, this.#validationHandle);
-        this.#parent.innerHTML = '';
+        Bus.emit(Events.EventEditReq, {input: this.inputsData, file});
     }
 }

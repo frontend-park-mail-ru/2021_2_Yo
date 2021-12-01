@@ -1,0 +1,43 @@
+.tag {
+  width: fit-content;
+  padding: 5px 10px;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  background: #4fbdc5;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.tag_error {
+  background-color: var(--tag-error-color);
+}
+
+.tag_delitable {
+  padding: 5px 23px;
+  transition: padding-right var(--tag-transition),
+    padding-left var(--tag-transition), background-color 1s;
+  animation-direction: alternate-reverse;
+}
+
+.tag-img {
+  width: 0px;
+  height: 16px;
+  cursor: pointer;
+  fill: white;
+  transition: width var(--tag-transition), padding-left var(--tag-transition),
+    padding-right var(--tag-transition);
+}
+
+.tag_delitable:hover {
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+.tag:hover .tag-img {
+  width: 16px;
+  padding: 0px 10px;
+}

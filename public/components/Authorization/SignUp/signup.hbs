@@ -1,34 +1,39 @@
-<div class = "auth-background">
+<div class="auth-background">
     <img class="auth-background__logo logo" src="./img/logo.png">
-    <div class = "authform">
-        <p class="label">Регистрация</p>
-        <form id="regForm">
+    <div class="primary-white-block authform">
+        <p class="auth-title">Регистрация</p>
+        <form id="regForm" novalidate>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Имя</p>
-                <input class ="form-input form-input_auth" id="nameInput" maxlength="50">
+                <div class="input-label">Имя</div>
+                <input class="form-input" id="nameInput" maxlength="50"/>
+                <span class="error error_none" id="nameError">none</span>
             </div>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Фамилия</p>
-                <input class ="form-input form-input_auth" id="surnameInput" maxlength="50">
+                <div class="input-label">Фамилия</div>
+                <input class="form-input" id="surnameInput" maxlength="50"/>
+                <span class="error error_none" id="surnameError">none</span>
             </div>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Email</p>
-                <input class ="form-input form-input_auth" id="emailInput" maxlength="150">
+                <div class="input-label">Email</div>
+                <input class="form-input" id="emailInput" maxlength="150" name="email" type="email"/>
+                <span class="error error_none" id="emailError">none</span>
             </div>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Пароль</p>
-                <input class ="form-input form-input_auth" type="password"
-                id="passwordInput1" maxlength="50">
+                <div class="input-label">Пароль</div>
+                <input class="form-input" type="password"
+                       id="passwordInput1" maxlength="50"/>
+                <span class="error error_none" id="password1Error">none</span>
             </div>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Пароль еще раз</p>
-                <input class ="form-input form-input_auth" type="password"
-                id="passwordInput2" maxlength="50">
+                <div class="input-label">Повторите пароль</div>
+                <input class="form-input" type="password"
+                       id="passwordInput2" maxlength="50"/>
+                <span class="error error_none" id="password2Error">none</span>
             </div>
             <p class="error" id="errors"></p>
-            <div class="authform__buttons buttons-block">
-                <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" class="button-purple_signup button-purple">
-                <a id="back" class="button-darkblue">НАЗАД</a>
+            <div class="buttons-block">
+                <a id="back" class="button-white">Назад</a>
+                <input type="submit" value="Зарегистрироваться" class="button-blue">
             </div>
         </form>
     </div>

@@ -1,35 +1,21 @@
-<header class="header">
-    <div class="flex header__content header-text">
-        <img id="header-logo" class="header__logo header-button" src="./img/logo.png">
-        <div class="flex">
-            <div class="flex header__search">
-                <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
-                <svg id="header-search" class="header-button header__search-img">
-                    <use xlink:href="./server/img/sprite.svg#search"></use>
-                </svg>
-            </div>
-            <svg class="header-button header__calendar-img">
-                <use xlink:href="./server/img/sprite.svg#calendar"></use>
-            </svg>
+<header id="header" class="header">
+    <div class="flex header__content header-text content">
+        <a href="/" class="header__logo-anchor">
+            <img id="header-logo" class="header__logo header-button" src="./img/logo.png">
+        </a>
+        <div class="header__search">
+            <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
         </div>
         {{#if user}}
-            <div class="flex">
-                <a class="header__avatar-wrapper" href="/user?id={{user.id}}">
-                    <img id="avatar" class="header__avatar"
-                    {{#if user.imgUrl}}
-                        src="{{user.imgUrl}}"
-                    {{else}}
-                        src="https://source.boringavatars.com/marble/32/{{user.name}}"
-                    {{/if}}
-                    >
-                </a>
-                <span>{{user.name}}</span>
+            <div id="header-avatar" class="header__avatar-wrapper">
+                <img class="header__avatar"
+                {{#if user.imgUrl}}
+                    src="{{user.imgUrl}}"
+                {{else}}
+                    src="https://source.boringavatars.com/marble/32/{{user.name}}"
+                {{/if}}
+                >
             </div>
-            <a href="/">
-                <svg id="header-logout" class="header-button header__logout-img" src="./img/logout2.0.png">
-                    <use xlink:href="./server/img/sprite.svg#logout"></use>
-                </svg>
-            </a>
         {{else}}
             <div>
             {{#each authAnchors}}
@@ -39,3 +25,40 @@
         {{/if}}
     </div>
 </header>
+<div id="header-overlay" class="header-overlay header-overlay_hidden">
+    <div class="user-popup-wrapper content">
+        <div class="user-popup">
+            <a class="user-popup-userblock" href="/user?id={{user.id}}">
+                <img class="header__avatar user-popup-avatar"
+                {{#if user.imgUrl}}
+                    src="{{user.imgUrl}}"
+                {{else}}
+                    src="https://source.boringavatars.com/marble/32/{{user.name}}"
+                {{/if}}
+                >
+                <div class="user-popup-userblock-info">
+                    <div class="user-popup-userblock-name">{{user.name}}</div>
+                    <div class="user-popup-userblock-email">{{user.email}}</div>
+                </div>
+            </a>
+            
+            <a class="user-popup-item-wrapper user-popup-item-wrapper_color_rave" href="/create">
+                <div class="user-popup-item">
+                    <svg class="user-popup-item-img">
+                        <use xlink:href="./server/img/sprite.svg#plus"></use>
+                    </svg>
+                    <span>Создать мероприятие</span>
+                </div>
+            </a>
+            
+            <a id="header-logout" class="user-popup-item-wrapper user-popup-item-wrapper_color_default" href="/">
+                <div class="user-popup-item">
+                    <svg class="user-popup-item-img">
+                        <use xlink:href="./server/img/sprite.svg#logout"></use>
+                    </svg>
+                    <span>Выйти из аккаунта</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
