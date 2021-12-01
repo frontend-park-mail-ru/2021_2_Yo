@@ -523,8 +523,13 @@ textarea {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 649px) {
+
+  html {
+    font-size: 8px;
+  }
+
   .content {
-    max-width: calc(100% - 60px);
+    max-width: 100%;
   }
 }
 

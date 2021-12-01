@@ -132,4 +132,18 @@
   font-size: 1rem;
 }
 
+@media only screen and (max-width: 649px) {
+  .event-img-wrapper {
+    max-height: 210px;
+    border-radius: 15px;
+  }
+
+  .event-img {
+    border-radius: 15px;
+  }
+
+  .event-info {
+    display: none;
+  }
+}
 
