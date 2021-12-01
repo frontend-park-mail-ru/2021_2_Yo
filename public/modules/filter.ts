@@ -145,7 +145,7 @@ class FilterStore {
     }
 
     set(param: FilterParams, value?: string | string[] | number, header?: boolean): FilterData {
-        if (this.#filter[param] === <undefined>value) return fStore.get();
+        // if (this.#filter[param] === <undefined>value) return fStore.get();
         this.#filter[param] = <undefined>value;
         const handle = (filter: FilterData) => {
             if (this.#isEqual(filter)) {

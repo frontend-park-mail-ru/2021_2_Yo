@@ -91,7 +91,7 @@
   flex-wrap: wrap;
 }
 
-.tag {
+/* .tag {
   width: fit-content;
   padding: 5px 10px;
   color: white;
@@ -103,9 +103,9 @@
   border-radius: 5px;
   margin-bottom: 5px;
   margin-right: 5px;
-}
+} */
 
-.tag_error {
+/* .tag_error {
   background-color: var(--tag-error-color);
 }
 
@@ -114,7 +114,7 @@
   transition: padding-right var(--tag-transition),
     padding-left var(--tag-transition), background-color 1s;
   animation-direction: alternate-reverse;
-}
+} */
 
 .tag_orange {
   background: #ff965b;
@@ -124,16 +124,16 @@
   background: #7b73d0;
 }
 
-.tag-img {
+/* .tag-img {
   width: 0px;
   height: 16px;
   cursor: pointer;
   fill: white;
   transition: width var(--tag-transition), padding-left var(--tag-transition),
     padding-right var(--tag-transition);
-}
+} */
 
-.tag_delitable:hover {
+/* .tag_delitable:hover {
   padding-left: 10px;
   padding-right: 0px;
 }
@@ -141,7 +141,7 @@
 .tag:hover .tag-img {
   width: 16px;
   padding: 0px 10px;
-}
+} */
 
 .tag time {
   margin-top: 1px;

@@ -1,5 +1,7 @@
 import * as template from '@main-page/FilterList/filterlist.hbs';
-import * as tagTemplate from '@main-page/FilterList/tag.hbs';
+// import * as tagTemplate from '@main-page/FilterList/tag.hbs';
+import * as tagTemplate from '@templates/tag/tag.hbs';
+import '@templates/tag/tag.css';
 import '@main-page/FilterList/FilterList.css';
 import {FilterData} from '@/types';
 import Bus from '@eventbus/eventbus';
@@ -37,7 +39,8 @@ export default class FilterListComponent {
         tag = tag.trim();
         if (!tag) return false;
         if (this.#filter['tags']?.indexOf(tag) !== -1) {
-            const repeated = <HTMLElement>document.getElementById('filter-tag-' + tag);
+            // const repeated = <HTMLElement>document.getElementById('filter-tag-' + tag);
+            const repeated = <HTMLElement>document.getElementById('tag-' + tag);
             if (repeated) {
                 repeated.classList.add('tag_error');
                 setTimeout(() => repeated.classList.remove('tag_error'), TAG_PING_TIME_MSEC);
@@ -122,7 +125,8 @@ export default class FilterListComponent {
         if (!target || !target.dataset['tag']) return;
         const tags = this.#filter['tags']?.filter(tag => tag !== target.dataset['tag']);
         target.removeEventListener('click', this.#handleTagDelete);
-        const tag = <HTMLElement>document.getElementById('filter-tag-' + target.dataset['tag']);
+        // const tag = <HTMLElement>document.getElementById('filter-tag-' + target.dataset['tag']);
+        const tag = <HTMLElement>document.getElementById('tag-' + target.dataset['tag']);
         tag.outerHTML = '';
         this.#tags = <HTMLElement>document.getElementById('filter-tags');
         this.#filter = FilterStore.set(FilterParams.Tags, tags);

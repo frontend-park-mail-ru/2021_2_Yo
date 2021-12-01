@@ -1,10 +1,6 @@
-<div id="tag-{{this}}" class="tag-wrapper" data-tag="{{this}}">
-    <label id="tag-label-{{this}}" class="tags__tag">
-        {{this}}
-    </label>
-    <div class="tag-img-wrapper" data-tag="{{this}}">
-        <svg class="tag-img" data-tag="{{this}}">
-            <use xlink:href="./server/img/sprite.svg#cross" data-tag="{{this}}"></use>
-        </svg>
-    </div>
+<div id="tag-{{this}}" class="tag tag_delitable">
+    <span>{{this}}</span> 
+    <svg id="tag-cross-{{this}}" class="tag-img" data-tag="{{this}}">
+        <use xlink:href="./server/img/sprite.svg#cross"></use>
+    </svg>
 </div>

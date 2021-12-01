@@ -1,43 +1,43 @@
-/* .tag-wrapper {
-  display: flex;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.25);
-  margin-bottom: 10px;
-  margin-right: 10px;
-  align-items: stretch;
-  border-radius: 3px;
-}
-
-.tags__tag {
+.tag {
+  width: fit-content;
+  padding: 5px 10px;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
   display: flex;
   align-items: center;
-  background-color: var(--geo-turquoise-color);
-  border-radius: 3px 0px 0px 3px;
-  box-sizing: border-box;
-  padding: 5px 15px;
-  color: white;
-  font-weight: 700;
-  font-size: 1.8vh;
-  transition: background-color 1s;
-  animation-direction: alternate-reverse;
+  background: #4fbdc5;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
 }
 
-.tags__tag_error {
+.tag_error {
   background-color: var(--tag-error-color);
 }
 
-.tag-img-wrapper {
-  padding: 1px 3px;
-  box-sizing: border-box;
-  border: 1px solid var(--light-gray-color);
-  border-radius: 0px 3px 3px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.tag_delitable {
+  padding: 5px 23px;
+  transition: padding-right var(--tag-transition),
+    padding-left var(--tag-transition), background-color 1s;
+  animation-direction: alternate-reverse;
 }
 
 .tag-img {
-  width: 11px;
-  height: 12px;
-  fill: var(--light-gray-color);
+  width: 0px;
+  height: 16px;
   cursor: pointer;
-} */
+  fill: white;
+  transition: width var(--tag-transition), padding-left var(--tag-transition),
+    padding-right var(--tag-transition);
+}
+
+.tag_delitable:hover {
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+.tag:hover .tag-img {
+  width: 16px;
+  padding: 0px 10px;
+}
