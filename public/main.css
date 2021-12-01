@@ -460,6 +460,7 @@ textarea {
   border-radius: 15px;
 
   padding: 40px 60px;
+  box-sizing: border-box;
 }
 
 .primary-text {
@@ -524,10 +525,20 @@ textarea {
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 649px) {
   html {
-    font-size: 7px;
+    font-size: 8px;
   }
+
   .content {
-    max-width: calc(100% - 60px);
+    max-width: 100%;
+  }
+
+  .primary-white-block {
+    border-radius: 0;
+    padding: 15px;
+  }
+
+  .back {
+    display: none;
   }
 }
 
@@ -543,6 +554,10 @@ textarea {
 
   .back {
     padding: 10px 15px;
+  }
+
+  .primary-white-block {
+    padding: 30px;
   }
 }
 
