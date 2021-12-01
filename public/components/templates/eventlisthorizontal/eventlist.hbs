@@ -4,11 +4,15 @@
         <div class="event-li">
             <div class="card">
                 {{#if imgUrl}}
+                    <a class="card_gradient" href="/events?id={{id}}"></a>
                     <img class="event-li__img" src="{{imgUrl}}">
                 {{else}}
                     <img class="event-li__img" src="./server/img/photo.png">
                 {{/if}}
-                <div class="card__title card_none"></div>
+                <div class="card-wrapper">
+                    <div class="card__title">{{title}}</div>
+                    <div class="card__info">{{city}}, {{date}}</div>
+                </div>
             </div>
             <div class ="event-li__content">
                 <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>

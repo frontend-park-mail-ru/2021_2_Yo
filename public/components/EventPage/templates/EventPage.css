@@ -189,8 +189,20 @@
     height: 100%;
 }
 
-@media only screen and (min-width: 1030px) and (max-width: 1449px){
-    .buttons-block-wrapper__icon{
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
+    .buttons-block-wrapper__icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .edit-popup__icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+    .buttons-block-wrapper__icon {
         width: 30px;
         height: 30px;
     }

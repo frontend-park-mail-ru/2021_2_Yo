@@ -136,6 +136,13 @@
     right: 32px;
 }
 
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
+    .calendar-block {
+        width: 240px;
+        height: 390px;
+    }
+}
+
 @media only screen and (min-width: 1030px) and (max-width: 1449px) {
     .calendar-block {
         width: 370px;

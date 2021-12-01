@@ -492,8 +492,7 @@ textarea {
   bottom: 0;
   z-index: 1;
   grid-area: back;
-  width: 10vw;
-  padding: 25px;
+  padding: 10px 25px;
   color: var(--black-text-color);
   font-size: 1.3rem;
   line-height: 1.5rem;
@@ -527,7 +526,7 @@ textarea {
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 400px) and (max-width: 1029px) {
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
   html {
     font-size: 8px;
   }
@@ -535,6 +534,10 @@ textarea {
   .content {
     /* max-width: 500px; */
     max-width: calc(100% - 170px);
+  }
+
+  .back {
+    padding: 10px 15px;
   }
 }
 
