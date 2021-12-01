@@ -33,7 +33,7 @@
 
 .header__logo {
   width: 140px;
-  height: var(--header-height);
+  /* height: var(--header-height); */
 }
 
 .header__search {
@@ -43,6 +43,9 @@
   border-radius: 5px;
   padding: 6px 0px 6px 10px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header__search-input {
@@ -226,4 +229,12 @@
   width: 1.7rem;
   height: 1.7rem;
   margin-right: 5px;
+}
+
+
+/* @media only screen and (max-width: 451px) { */
+@media only screen and (max-width: 1029px) {
+  .header__search {
+    display: none;
+  }
 }
