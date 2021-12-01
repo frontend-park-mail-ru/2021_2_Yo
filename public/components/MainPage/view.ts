@@ -33,11 +33,8 @@ export default class MainPageView {
     }
 
     #handleFilterButton = () => {
-        console.log('clicked');
         const wrapper = <HTMLElement>document.getElementById('filter-list-wrapper');
         if (!wrapper) return;
-        console.log('found wrapper');
-        console.log(this.#filterShown);
         if (this.#filterShown) {
             wrapper.classList.add('filter-list_hidden');
             wrapper.classList.remove('filter-list_shown');
@@ -100,7 +97,6 @@ export default class MainPageView {
         this.#board?.disable();
         this.#filterlist?.disable();
         this.#removeListeners();
-        // this.#status?.disable();
         this.#parent.innerHTML = '';
     }
 }

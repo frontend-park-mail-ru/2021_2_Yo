@@ -43,7 +43,6 @@ class Router {
     #handleUpdate = ((params: string) => {
         if (this.#path && (window.location.search !== params)) {
             window.history.pushState({}, '', this.#path + params);
-            // window.history.pushState({}, '', params);
         }
     }).bind(this);
 
@@ -75,7 +74,6 @@ class Router {
     }
 
     route(path?: UrlPathnames) {
-        // if (window.location.pathname + window.location.search === path) return;
         if (window.location.pathname + window.location.search === path) return;
 
         if (path) {

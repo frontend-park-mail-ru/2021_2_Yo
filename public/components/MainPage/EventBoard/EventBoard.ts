@@ -11,18 +11,9 @@ import UserStore from '@/modules/userstore';
 
 const WIDTH_BREAKPOINTS = [
     0,
-    // 650,
-    // 450,
     451,
-    // 500,
     1450,
 ];
-
-// const WIDTH_BREAKPOINTS = [
-//     700,
-//     1030,
-//     1450,
-// ];
 
 const RESIZE_MSEC = 50;
 
@@ -53,7 +44,6 @@ export default class EventBoardComponent {
     }
 
     #eventsStoredHandle = (data: EventData[]) => {
-        // this.#cols = this.#colsCount();   
         this.render(data);
     };
 
@@ -88,13 +78,6 @@ export default class EventBoardComponent {
         setTimeout(callback, RESIZE_MSEC, this.#cols);
     };
 
-    // #handleResize = () => {
-    //     const cols = this.#colsCount();
-    //     if (this.#cols === cols) return;
-    //     this.#cols = cols;
-    //     Bus.emit(Events.EventsStoredReq);
-    // };
-
     #handleClick = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
         const id = target.dataset['fav'];
@@ -127,8 +110,6 @@ export default class EventBoardComponent {
             this.#parent.innerHTML += template(i);
         }
         if (data) {
-            // const colElements = this.#cols.map(num => <HTMLElement>document.getElementById('event-column-' + num));
-            // const cols = ['0', '1', '2'].map(num => <HTMLElement>document.getElementById('event-column-' + num));
             const cols: HTMLElement[] = [];
             for (let i = 0; i < this.#cols; i++) {
                 const col = <HTMLElement>document.getElementById('event-column-' + i.toString());

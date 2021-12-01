@@ -27,14 +27,6 @@ class CityStore {
                 }
             },
         );
-
-        // const mock = [
-        //     'Москва',
-        //     'Санкт-Петербург',
-        //     'Мытищи',
-        //     'Люберцы'
-        // ];
-        // Bus.emit(Events.CitiesRes, mock);
     }
 
     #addCity = (city: string) => {
