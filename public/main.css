@@ -523,7 +523,7 @@ textarea {
 } */
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 649px) {
+@media only screen and (max-width: 650px) {
   html {
     font-size: 8px;
   }
