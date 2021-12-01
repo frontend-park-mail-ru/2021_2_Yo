@@ -53,6 +53,36 @@
   display: inline;
 }
 
+#filter-button {
+  display: none;
+  width: 100%;
+  background-color: white;
+  color: #a4a4a4;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.filter-button-content {
+  display: flex;
+  align-items: center;
+}
+
+.filter-button-img {
+  height: 0.7rem;
+  width: 1.3rem;
+  fill: #A4A4A4;
+  margin-right: 5px;
+}
+
+.filter-button-img_hidden {
+  rotate: 180deg;
+}
+
 /* Extra small devices (phones, 600px and down) */
 /* @media only screen and (max-width: 600px) {
   html {
@@ -68,22 +98,40 @@
 } */
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 599px) {
+@media only screen and (max-width: 649px) {
+  #gotop {
+    display: none;
+  }
 }
 
 /*Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 400px) and (max-width: 1029px) {
+/* @media only screen and (min-width: 650px) and (max-width: 1029px) { */
+@media only screen and (max-width: 1029px) {
   .main-page-content {
     grid-template-columns: 1fr;
   }
 
   #filter-list-wrapper {
-    display: none;
-    position: sticky;
+    transition: max-height 0.2s ease-out;
+  }
+
+  .filter-list_hidden {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .filter-list_shown {
+    height: fit-content;
+    max-height: 500px;
   }
 
   #gotop {
     padding: 10px 15px;
+  }
+
+  #filter-button {
+    display: flex;
+    margin-top: -10px;
   }
 }
 

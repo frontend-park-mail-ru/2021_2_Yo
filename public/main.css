@@ -529,17 +529,20 @@ textarea {
 } */
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 649px) {
+  .content {
+    max-width: calc(100% - 60px);
+  }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 400px) and (max-width: 1029px) {
+/* @media only screen and (min-width: 650px) and (max-width: 1029px) { */
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
   html {
     font-size: 8px;
   }
 
   .content {
-    /* max-width: 500px; */
     max-width: calc(100% - 170px);
   }
 }

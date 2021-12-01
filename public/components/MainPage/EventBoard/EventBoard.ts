@@ -11,7 +11,7 @@ import UserStore from '@/modules/userstore';
 
 const WIDTH_BREAKPOINTS = [
     0,
-    700,
+    650,
     1450,
 ];
 
@@ -119,7 +119,7 @@ export default class EventBoardComponent {
     render(data?: EventData[]) {
         this.#parent.innerHTML = '';
         const user = UserStore.get() ? true : false;
-        
+
         for (let i = 0; i < this.#cols; i++) {
             this.#parent.innerHTML += template(i);
         }

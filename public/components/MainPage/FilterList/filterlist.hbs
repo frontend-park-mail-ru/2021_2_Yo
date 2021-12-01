@@ -4,7 +4,8 @@
             Категория
         </div>
         {{#each categories}}
-        <div id="filter-category-{{@index}}" class="filter-li__item filter-li__item_selectable" data-num="{{@index}}">{{name}}</div>
+        <div id="filter-category-{{@index}}" class="filter-li__item filter-li__item_selectable" data-num="{{@index}}">
+            {{name}}</div>
         {{/each}}
 
     </section>
@@ -13,7 +14,8 @@
         <div class="filter-li__item filter-li__item_header">Теги</div>
         <div class="filter-tag">
             <div class="filter-tag__search">
-                <input class="filter-tag__search-input" type="text" id="filter-tag-input" placeholder="Например, вечеринка">
+                <input class="filter-tag__search-input" type="text" id="filter-tag-input"
+                    placeholder="Например, вечеринка">
                 <svg id="tags-search-img" class="filter-tag__search-img">
                     <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
                 </svg>
@@ -23,7 +25,7 @@
         </div>
     </section>
 
-    <section class="filter-li"> 
+    <section class="filter-li">
         <div class="filter-li__item filter-li__item_header">
             Дата
             <svg class="filter-calendar-img">
@@ -45,7 +47,7 @@
         </div> --}}
     </section>
 
-    <section class="filter-li"> 
+    <section class="filter-li">
         <div class="filter-li__item filter-li__item_header">
             Город
             <svg class="filter-geo-img">
@@ -57,12 +59,12 @@
                 <input class="filter-tag__search-input" type="text" id="filter-city-input" list="citiesList">
                 <datalist id="citiesList">
                     {{#each cities}}
-                        <option>{{this}}</option>
+                    <option>{{this}}</option>
                     {{/each}}
                 </datalist>
                 {{!-- <select>
                     {{#each cities}}
-                        <option>{{this}}</option>
+                    <option>{{this}}</option>
                     {{/each}}
                 </select> --}}
             </div>

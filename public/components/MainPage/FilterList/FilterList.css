@@ -156,3 +156,13 @@
   fill: #505050;
   cursor: pointer;
 }
+
+/* @media only screen and (min-width: 400px) and (max-width: 1029px) { */
+@media only screen and (max-width: 1029px) {
+  .filter-list {
+    box-shadow: none;
+    border-radius: 0;
+    position: relative;
+    top: 0;
+  }
+}
