@@ -36,6 +36,10 @@
   /* height: var(--header-height); */
 }
 
+.header__logo-anchor {
+  display: flex;
+}
+
 .header__search {
   width: 39.5%;
   /* height: 34px; */
@@ -233,7 +237,12 @@
 
 
 /* @media only screen and (max-width: 451px) { */
-@media only screen and (max-width: 1029px) {
+@media only screen and (max-width: 600px) {
+  .header__logo {
+    width: 100px;
+    margin-left: 15px;
+  }
+
   .header__search {
     display: none;
   }

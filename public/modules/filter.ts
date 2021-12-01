@@ -144,11 +144,12 @@ class FilterStore {
         return true;
     }
 
-    set(param: FilterParams, value?: string | string[] | number): FilterData {
+    set(param: FilterParams, value?: string | string[] | number, header?: boolean): FilterData {
+        if (this.#filter[param] === <undefined>value) return fStore.get();
         this.#filter[param] = <undefined>value;
         const handle = (filter: FilterData) => {
             if (this.#isEqual(filter)) {
-                this.#handleFilterChange();
+                this.#handleFilterChange(header);
             }
         };
         const filter = fStore.get();
@@ -193,9 +194,9 @@ class FilterStore {
         }
     };
 
-    #handleFilterChange = () => {
+    #handleFilterChange = (header?: boolean) => {
         let search = filterToUrl();
-        if (this.#onlyQuery()) {
+        if (this.#onlyQuery() && header !== false) {
             Bus.emit(Events.RouteUrl, UrlPathnames.Main + search);
         } else {
             Bus.emit(Events.RouteUpdate, search);
