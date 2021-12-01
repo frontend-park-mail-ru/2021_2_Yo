@@ -255,14 +255,16 @@
     grid-template-columns: 100%;
 }
 
-@media only screen and (min-width: 0) and (max-width: 649px) {
+@media only screen and (max-width: 649px) {
     .profile-block {
         margin: 0;
         width: 100%;
     }
 
     .card {
-        margin: 0 20px;
+        margin: auto;
+        max-height: 210px;
+        max-width: 400px;
     }
 
     .profile-avatar {
@@ -313,6 +315,10 @@
     .profile-button-subscribe__icon {
         width: 10px;
         height: 10px;
+    }
+
+    .event-li__img {
+        height: 210px;
     }
 }
 
@@ -371,8 +377,8 @@
     }
 
     .users-li__avatar {
-        width: 65px;
-        height: 65px;
+        width: 50px;
+        height: 50px;
     }
 
     .profile-button-subscribe__icon {
