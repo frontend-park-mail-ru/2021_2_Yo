@@ -179,8 +179,8 @@ function checkDate(value: string): string {
     const today = new Date();
     if (Number(jsDate) < Date.now() &&
         !(jsDate.getDate() == today.getDate() &&
-            jsDate.getMonth() == today.getMonth() &&
-            jsDate.getFullYear() == today.getFullYear())) {
+        jsDate.getMonth() == today.getMonth() &&
+        jsDate.getFullYear() == today.getFullYear())) {
         return 'Нельзя создать мероприятие в прошлом';
     }
     return '';

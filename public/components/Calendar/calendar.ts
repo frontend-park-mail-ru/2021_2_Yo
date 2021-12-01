@@ -193,7 +193,8 @@ export default class Calendar {
         dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
 
         const inputError = <HTMLElement>document.getElementById('dateError');
-        inputError.classList.add('error_none');
+        if (inputError)
+            inputError.classList.add('error_none');
     }
 
     #renderNextMonth = () => {

@@ -5,11 +5,13 @@ import {EventData} from '@/types';
 
 const MSC_LAT_LNG = {lat: 55.751244, lng: 37.618423};
 const ADDRESS_NOT_FOUND = 'Адрес не найден';
+const ZOOM = 16;
 
 const KEY = process.env.MAPS_API_KEY?.toString();
+const PLACES_LIB = 'places';
 
 export default class MapPopUp {
-    #loader: Loader;
+    #loader?: Loader;
     #parent: HTMLElement;
     #map?: google.maps.Map;
     #loadSuccess: boolean;
@@ -21,10 +23,12 @@ export default class MapPopUp {
     constructor(parent: HTMLElement) {
         this.#parent = parent;
         this.#loadSuccess = false;
-        this.#loader = new Loader({
-            apiKey: <string>KEY,
-            libraries: ['places'],
-        });
+        if (KEY) {
+            this.#loader = new Loader({
+                apiKey: KEY,
+                libraries: [PLACES_LIB],
+            });
+        }
     }
 
     render(event?: EventData) {
@@ -34,7 +38,7 @@ export default class MapPopUp {
     }
 
     #loadMapAPI() {
-        void this.#loader.load().then(() => {
+        void this.#loader?.load().then(() => {
             this.#loadSuccess = true;
 
             this.#bounds = new google.maps.LatLngBounds();
@@ -50,7 +54,7 @@ export default class MapPopUp {
 
             this.#map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
                 center: MSC_LAT_LNG,
-                zoom: 16,
+                zoom: ZOOM,
             });
 
             navigator.geolocation.getCurrentPosition(
@@ -61,7 +65,7 @@ export default class MapPopUp {
                     };
 
                     this.#map?.setCenter(currentPos);
-                    this.#map?.setZoom(16);
+                    this.#map?.setZoom(ZOOM);
 
                     if (parsedPosition) {
                         this.#marker = new google.maps.Marker({
@@ -70,14 +74,14 @@ export default class MapPopUp {
                         });
 
                         this.#map?.setCenter(parsedPosition);
-                        this.#map?.setZoom(16);
+                        this.#map?.setZoom(ZOOM);
                     }
                 });
 
             this.#addListeners();
-        }).catch((reason: string) => {
+        }).catch(() => {
             const container = <HTMLElement>document.getElementById('mapContainer');
-            container.textContent = 'Ошибка подключения к картам: ' + reason;
+            container.textContent = 'Ошибка подключения к картам';
         });
     }
 
@@ -95,14 +99,12 @@ export default class MapPopUp {
 
     #removeListeners() {
         const submitButton = <HTMLElement>document.getElementById('mapSubmitButton');
-        if (submitButton) {
-            submitButton.removeEventListener('click', this.#handleSubmit.bind(this));
-        }
+        submitButton?.removeEventListener('click', this.#handleSubmit.bind(this));
+
 
         const cancelButton = <HTMLElement>document.getElementById('mapCancelButton');
-        if (cancelButton) {
-            cancelButton.removeEventListener('click', this.#handleCancel.bind(this));
-        }
+        cancelButton?.removeEventListener('click', this.#handleCancel.bind(this));
+
     }
 
     #handleInputGeo() {
