@@ -53,6 +53,7 @@
 
 .geo-input {
     cursor: pointer;
+    box-sizing: border-box;
 
     padding: 5px 10px;
 
@@ -112,6 +113,37 @@
     width: 65%;
     height: 100%;
 }
+
+svg {
+    display: inline;
+}
+
+@media only screen and (max-width: 649px) {
+    .white-block_size {
+        width: 100%;
+        margin: 0;
+    }
+
+    .input-block_event-thin,
+    .input-block_event-wide,
+    .input-block_event-date,
+    .geo-input,
+    .input-button-block,
+    .form-input_date{
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .input-button-block {
+        grid-template-columns: auto max-content;
+    }
+
+    .input-btn {
+        width: 24px;
+        height: 24px;
+    }
+}
+
 @media only screen and (min-width: 650px) and (max-width: 1029px) {
     .input-btn {
         width: 24px;

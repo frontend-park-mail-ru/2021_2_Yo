@@ -41,6 +41,12 @@
     height: 50vh;
 }
 
+@media only screen and (max-width: 649px) {
+    .map-background {
+        width: 100%;
+    }
+}
+
 @media only screen and (min-width: 650px) and (max-width: 1029px) {
     .map-container {
         height: 250px;

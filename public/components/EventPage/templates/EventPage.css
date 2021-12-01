@@ -189,6 +189,27 @@
     height: 100%;
 }
 
+@media only screen and (max-width: 649px) {
+    .event-block {
+        width: 100%;
+        margin: 0;
+    }
+
+    .buttons-block-wrapper {
+        grid-gap: 5px;
+    }
+
+    .buttons-block-wrapper__icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .edit-popup__icon {
+        width: 17px;
+        height: 17px;
+    }
+}
+
 @media only screen and (min-width: 650px) and (max-width: 1029px) {
     .buttons-block-wrapper__icon {
         width: 25px;
