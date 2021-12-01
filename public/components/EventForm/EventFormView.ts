@@ -74,8 +74,6 @@ export abstract class EventFormView {
     //     this.#filter = FilterStore.set(FilterParams.Tags, tags);
     // };
 
-
-
     deleteTag = (e: MouseEvent) => {
         const target = <HTMLElement>e.currentTarget;
 
@@ -84,7 +82,8 @@ export abstract class EventFormView {
         this.eventTags = this.eventTags.filter(tag => tag !== target.dataset['tag']);
 
         target.removeEventListener('click', this.deleteTag);
-        target.outerHTML = '';
+        const tag = <HTMLElement>document.getElementById('tag-' + target.dataset['tag']);
+        tag.outerHTML = '';
     };
 
     #rerenderTags() {

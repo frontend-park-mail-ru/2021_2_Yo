@@ -22,8 +22,8 @@ export default class EventEditView extends EventFormView {
                 tagBlock.innerHTML += tagTemplate(tag);
             });
             this.eventTags.map(tag => {
-                const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
-                if (tagWrapper) tagWrapper.addEventListener('click', this.deleteTag);
+                const tagCross = <HTMLElement>document.getElementById('tag-cross-' + tag);
+                if (tagCross) tagCross.addEventListener('click', this.deleteTag);
             });
         }
 
@@ -92,7 +92,7 @@ export default class EventEditView extends EventFormView {
 
         if (this.eventTags) {
             this.eventTags.map((t) => {
-                const tag = <HTMLElement>document.getElementById('tag-' + t);
+                const tag = <HTMLElement>document.getElementById('tag-cross-' + t);
                 if (!tag) return;
 
                 tag.removeEventListener('click', this.deleteTag);

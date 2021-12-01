@@ -123,7 +123,6 @@ input:focus {
   background-color: var(--app-bg-color);
   margin-top: var(--header-height);
   overflow: visible;
-  /* padding: 0px 150px; */
 }
 
 .content {
@@ -483,7 +482,7 @@ textarea {
   z-index: 1;
   grid-area: back;
   padding: 10px 25px;
-  color: var(--black-text-color);
+  color: rgba(164, 164, 164, 0.75);
   font-size: 1.3rem;
   line-height: 1.5rem;
   cursor: pointer;
@@ -494,22 +493,9 @@ textarea {
 }
 
 .back:hover {
-  background: var(--secondary_gray);
+  background: rgba(170, 170, 170, 0.25);
+  color: rgba(174, 174, 174);
 }
-
-/* Extra small devices (phones, 600px and down) */
-/* @media only screen and (max-width: 600px) {
-  html {
-    font-size: 14px;
-  }
-} */
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-/* @media only screen and (min-width: 600px) {
-  html {
-    font-size: 14px;
-  }
-} */
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 650px) {
