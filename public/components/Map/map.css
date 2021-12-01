@@ -5,6 +5,8 @@
     position: fixed;
     top: 0;
     bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     background: var(--overlay-bg);
     z-index: 1000;
@@ -20,7 +22,7 @@
 }
 
 .map-background {
-    width: 40vw;
+    width: 40%;
     height: max-content;
     z-index: 2000;
 
@@ -36,5 +38,15 @@
 
 .map-container {
     width: 100%;
-    height: 55vh;
+    height: 50vh;
+}
+
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
+    .map-container {
+        height: 250px;
+    }
+
+    .map-background {
+        width: 60%;
+    }
 }

@@ -4,7 +4,7 @@ import Events from '@eventbus/events';
 import * as template from '@event-form/templates/eventform.hbs';
 import * as tagTemplate from '@templates/tag/tag.hbs';
 import '@templates/tag/tag.css';
-import '@event-form/EventForm.css';
+import '@event-form/templates/EventForm.css';
 import config from '@/config';
 import {EventFormView} from '@event-form/EventFormView';
 

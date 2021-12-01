@@ -1,4 +1,4 @@
-<div class="profile-background">
+<div class="content">
     <div class="back" id="backButton">< Назад</div>
     <div class="primary-white-block profile-block">
         <div class="profile-header">
@@ -19,12 +19,16 @@
                     <div class="buttons-block">
                         <span class="primary-text primary-text_name">{{user.name}} {{user.surname}}</span>
                         <span class="profile-button-subscribe profile-button-subscribe_none" id="subscribeButton">
-                            <img src="./server/img/plus-svgrepo-com.svg" class="profile-button-subscribe__icon">
+                            <svg class="profile-button-subscribe__icon">
+                                <use xlink:href="./server/img/sprite.svg#plus"></use>
+                            </svg>
                             <span>Подписаться</span>
                         </span>
                         <span class="profile-button-subscribe profile-button-subscribe_subscribed profile-button-subscribe_none"
                               id="unsubscribeButton">
-                            <img src="./server/img/ok.svg" class="profile-button-subscribe__icon">
+                            <svg class="profile-button-subscribe__icon">
+                                <use xlink:href="./server/img/sprite.svg#ok"></use>
+                            </svg>
                             <span>Вы подписаны</span>
                         </span>
                     </div>

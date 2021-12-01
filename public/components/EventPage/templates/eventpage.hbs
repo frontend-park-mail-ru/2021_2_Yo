@@ -1,24 +1,30 @@
-<div class="edit-overlay edit-popup_none" id="overlay"></div>
-<div class="event-background">
+<div class="content">
+    <div class="edit-overlay edit-popup_none" id="overlay"></div>
     <div class="back" id="backButton">< Назад</div>
     <div class="primary-white-block event-block">
         {{#if unpermission}}
             {{#if author}}
                 <div class="buttons-block">
                     <a href="/user?id={{author.id}}" class="buttons-block-wrapper">
-                        {{#if author.imgUrl}}
-                            <img src="{{author.imgUrl}}" class="buttons-block-wrapper__icon">
-                        {{else}}
-                            <img src="https://source.boringavatars.com/marble/32/{{author.name}}" class="buttons-block-wrapper__icon">
-                        {{/if}}
-                        <span class="secondary-text">{{author.name}} {{author.surname}}</span>
+                    {{#if author.imgUrl}}
+                        <img src="{{author.imgUrl}}"
+                             class="buttons-block-wrapper__icon buttons-block-wrapper__icon_avatar">
+                    {{else}}
+                        <img src="https://source.boringavatars.com/marble/32/{{author.name}}"
+                             class="buttons-block-wrapper__icon .buttons-block-wrapper__icon_avatar">
+                    {{/if}}
+                    <span class="secondary-text">{{author.name}} {{author.surname}}</span>
                     </a>
                     <span class="buttons-block-wrapper" id="addFavourite">
-                        <img src="./server/img/like.svg" class="buttons-block-wrapper__icon unlike">
+                        <svg class="buttons-block-wrapper__icon unlike">
+                            <use xlink:href="./server/img/sprite.svg#star"></use>
+                        </svg>
                         <span class="secondary-text">В избранное</span>
                     </span>
                     <span class="buttons-block-wrapper" id="removeFavourite">
-                        <img src="./server/img/like.svg" class="buttons-block-wrapper__icon like">
+                        <svg class="buttons-block-wrapper__icon like">
+                            <use xlink:href="./server/img/sprite.svg#star-selected"></use>
+                        </svg>
                         <span class="secondary-text">Удалить из избранного</span>
                     </span>
                 </div>
@@ -30,11 +36,15 @@
                 <span class="event-title event-title_pointer" id="popupOpen">...</span>
                 <div class="edit-popup edit-popup_none" id="editPopup">
                     <div class="edit-popup__item" id="editButton">
-                        <img class="edit-popup__icon" src="./server/img/pencil.svg">
+                        <svg class="edit-popup__icon">
+                            <use xlink:href="./server/img/sprite.svg#pencil"></use>
+                        </svg>
                         <span class="edit-pop__label"> Редактировать</span>
                     </div>
                     <div class="edit-popup__item" id="deleteButton">
-                        <img class="edit-popup__icon" src="./server/img/delete.svg">
+                        <svg class="edit-popup__icon">
+                            <use xlink:href="./server/img/sprite.svg#delete"></use>
+                        </svg>
                         <span class="edit-pop__label"> Удалить</span>
                     </div>
                 </div>

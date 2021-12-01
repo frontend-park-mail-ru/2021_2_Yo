@@ -12,9 +12,10 @@
 }
 
 .white-block_size {
-    width: 44vw;
+    width: 75%;
     grid-area: content;
     grid-template-columns: 100%;
+    margin: 20px auto 130px;
 }
 
 .eventform {
@@ -81,8 +82,6 @@
 .photo-input-label {
     padding: 5px 10px;
 
-    width: 200px;
-
     font-style: normal;
     font-weight: bold;
     font-size: 1.5rem;
@@ -112,4 +111,17 @@
     border-radius: 5px;
     width: 65%;
     height: 100%;
+}
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
+    .input-btn {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+    .input-btn {
+        width: 28px;
+        height: 28px;
+    }
 }

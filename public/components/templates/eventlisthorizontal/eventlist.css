@@ -45,3 +45,62 @@
     font-size: 1rem !important;
     line-height: 1.2rem !important;
 }
+
+.card__title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.7rem;
+    line-height: 2rem;
+    width: 100%;
+    color: white;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    white-space: nowrap;
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+}
+
+.card__info {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.07rem;
+    line-height: 1.23rem;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    white-space: nowrap;
+
+    color: white;
+}
+
+.card_gradient {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0.8;
+    border-radius: 15px;
+    background: transparent linear-gradient(to bottom, rgba(164, 164, 164, 0.2) 0%, rgba(133, 134, 134, 0.589105) 59.86%, #646767 100.87%)
+}
+
+.card-wrapper {
+    display: grid;
+    position: absolute;
+
+    grid-template-columns: 100%;
+    grid-gap: 5px;
+
+    padding: 0 3%;
+    bottom: 10px;
+}
