@@ -421,17 +421,6 @@ textarea {
   display: none;
 }
 
-.logo {
-  height: 15.4vh;
-  width: 22.2vw;
-}
-
-.authform {
-  width: 30.5vw;
-  padding: 30px !important;
-  margin-bottom: 10px;
-}
-
 .label {
   font-style: normal;
   font-weight: 500;
