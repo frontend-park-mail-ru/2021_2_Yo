@@ -14,8 +14,6 @@
 }
 
 .header {
-  position: relative;
-  z-index: 2;
   height: var(--header-height);
   display: flex;
   align-items: center;
@@ -23,7 +21,7 @@
   background: var(--header-bg-color);
   width: 100%;
   position: fixed;
-  z-index: 1000;
+  z-index: 2001;
 }
 
 .header__content {
@@ -40,7 +38,7 @@
 
 .header__search {
   width: 39.5%;
-  height: 34px;
+  /* height: 34px; */
   border: 1px solid white;
   border-radius: 5px;
   padding: 6px 0px 6px 10px;

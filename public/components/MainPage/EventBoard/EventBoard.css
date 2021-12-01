@@ -153,7 +153,8 @@
   font-size: 1rem;
 }
 
-@media only screen and (max-width: 450px) {
+/* @media only screen and (max-width: 450px) { */
+@media only screen and (max-width: 451px) {
   .event-img-overlay-info__title {
     font-size: 2.75rem;
   }
