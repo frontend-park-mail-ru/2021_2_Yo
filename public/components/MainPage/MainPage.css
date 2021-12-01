@@ -21,7 +21,6 @@
   position: fixed;
   left: 0;
   top: var(--header-height);
-  /* width: 6.25%; */
   width: fit-content;
   cursor: pointer;
   background: transparent;
@@ -83,20 +82,6 @@
   rotate: 180deg;
 }
 
-/* Extra small devices (phones, 600px and down) */
-/* @media only screen and (max-width: 600px) {
-  html {
-    font-size: 14px;
-  }
-} */
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-/* @media only screen and (min-width: 600px) {
-  html {
-    font-size: 14px;
-  }
-} */
-
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 650px) {
   #gotop {
@@ -109,7 +94,6 @@
 }
 
 /*Large devices (laptops/desktops, 992px and up) */
-/* @media only screen and (min-width: 650px) and (max-width: 1029px) { */
 @media only screen and (max-width: 1029px) {
   .main-page-content {
     grid-template-columns: 1fr;
