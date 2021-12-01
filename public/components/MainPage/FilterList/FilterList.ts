@@ -134,7 +134,7 @@ export default class FilterListComponent {
             this.#filter = FilterStore.set(FilterParams.Date, undefined);
             return;
         }
-    }
+    };
 
     #handleDateChange = () => {
         this.#dateInput?.classList.remove('form-input_changed');
