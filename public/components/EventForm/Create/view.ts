@@ -26,7 +26,7 @@ export default class EventCreateView extends EventFormView {
         tagButton.addEventListener('click', this.addTag.bind(this));
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
-        cancelButton.addEventListener('click', () => Bus.emit(Events.RouteBack));
+        cancelButton.addEventListener('click', this.handleCancel.bind(this));
 
         const calendarButton = <HTMLElement>document.getElementById('calendarButton');
         calendarButton.addEventListener('click', this.renderCalendar.bind(this));
@@ -59,7 +59,7 @@ export default class EventCreateView extends EventFormView {
 
         const cancelButton = <HTMLInputElement>document.getElementById('cancel-button');
         if (cancelButton) {
-            cancelButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+            cancelButton.removeEventListener('click', this.handleCancel.bind(this));
         }
 
         this.eventTags.map((t) => {

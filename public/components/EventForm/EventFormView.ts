@@ -51,6 +51,10 @@ export abstract class EventFormView {
         }
     }
 
+    protected handleCancel() {
+        Bus.emit(Events.RouteBack);
+    }
+
     protected renderMap = (e: Event) => {
         e.preventDefault();
 

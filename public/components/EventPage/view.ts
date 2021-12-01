@@ -7,6 +7,9 @@ import * as template from '@event-page/templates/eventpage.hbs';
 import '@event-page/templates/EventPage.css';
 
 const KEY = process.env.MAPS_API_KEY?.toString();
+const PLACES_LIB = 'places';
+
+const ZOOM = 16;
 
 export default class EventPageView {
     #parent: HTMLElement;
@@ -89,33 +92,38 @@ export default class EventPageView {
     }
 
     #renderMap() {
-        const loader = new Loader({
-            apiKey: <string>KEY,
-            libraries: ['places'],
-        });
-
-        void loader.load().then(() => {
-            const map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
-                zoom: 16,
+        let loader!: Loader;
+        if (KEY) {
+            loader = new Loader({
+                apiKey: KEY,
+                libraries: [PLACES_LIB],
             });
+        }
 
-            const geo = this.#event?.geo.replace('(', '');
-            const latLng = <string[]>geo?.split(',', 2);
-            const lat = parseFloat(latLng[0]);
-            const lng = parseFloat(latLng[1]);
-            const parsedPosition = new google.maps.LatLng(lat, lng);
+        if (loader) {
+            void loader.load().then(() => {
+                const map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
+                    zoom: ZOOM,
+                });
 
-            const marker = new google.maps.Marker({
-                map: map,
-                title: this.#event?.title,
-                position: parsedPosition,
+                const geo = this.#event?.geo.replace('(', '');
+                const latLng = <string[]>geo?.split(',', 2);
+                const lat = parseFloat(latLng[0]);
+                const lng = parseFloat(latLng[1]);
+                const parsedPosition = new google.maps.LatLng(lat, lng);
+
+                const marker = new google.maps.Marker({
+                    map: map,
+                    title: this.#event?.title,
+                    position: parsedPosition,
+                });
+
+                map.setCenter(parsedPosition);
+                map.setZoom(ZOOM);
+            }).catch(() => {
+                const container = <HTMLElement>document.getElementById('mapContainer');
+                container.textContent = 'Ошибка подключения к картам';
             });
-
-            map.setCenter(parsedPosition);
-            map.setZoom(16);
-        }).catch((reason: string) => {
-            const container = <HTMLElement>document.getElementById('mapContainer');
-            container.textContent = 'Ошибка подключения к картам: ' + reason;
-        });
+        }
     }
 }
