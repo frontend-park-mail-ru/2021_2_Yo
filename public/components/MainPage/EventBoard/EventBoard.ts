@@ -10,10 +10,16 @@ import '@main-page/EventBoard/EventBoard.css';
 import UserStore from '@/modules/userstore';
 
 const WIDTH_BREAKPOINTS = [
+    0,
     700,
-    1030,
     1450,
 ];
+
+// const WIDTH_BREAKPOINTS = [
+//     700,
+//     1030,
+//     1450,
+// ];
 
 const RESIZE_MSEC = 50;
 

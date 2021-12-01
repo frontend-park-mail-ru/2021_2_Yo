@@ -529,25 +529,23 @@ textarea {
 } */
 
 /* Medium devices (landscape tablets, 768px and up) */
-/* @media only screen and (min-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-} */
+@media only screen and (max-width: 600px) {
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (max-width: 1029px) {
+@media only screen and (min-width: 400px) and (max-width: 1029px) {
   html {
     font-size: 8px;
   }
 
   .content {
-    max-width: 742px;
+    /* max-width: 500px; */
+    max-width: calc(100% - 170px);
   }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (max-width: 1449px) {
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
   html {
     font-size: 10px;
   }
