@@ -98,9 +98,13 @@
 } */
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 649px) {
+@media only screen and (max-width: 650px) {
   #gotop {
     display: none;
+  }
+
+  #event-board-wrapper {
+    padding: 0px 30px;
   }
 }
 
@@ -109,6 +113,7 @@
 @media only screen and (max-width: 1029px) {
   .main-page-content {
     grid-template-columns: 1fr;
+    margin-top: 0px;
   }
 
   #filter-list-wrapper {

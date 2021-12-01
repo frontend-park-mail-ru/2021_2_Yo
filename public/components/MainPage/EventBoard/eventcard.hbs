@@ -14,32 +14,43 @@
             </div>
             {{#if user}}
                 {{#if event.favourite}}
-                <div id="event-fav-{{event.id}}" class="event-img-overlay__star event-img-overlay__item event-img-overlay__item_selected" data-fav="{{event.id}}" data-status="on">
+                <div id="event-fav-{{event.id}}"
+                    class="event-img-overlay__star event-img-overlay__item event-img-overlay__item_selected"
+                    data-fav="{{event.id}}" data-status="on">
                     <svg class="star-img" data-fav="{{event.id}}" data-status="on">
                         <use xlink:href="./server/img/sprite.svg#star-selected" data-fav="{{event.id}}" data-status="on"></use>
                 {{else}}
-                <div id="event-fav-{{event.id}}" class="event-img-overlay__star event-img-overlay__item" data-fav="{{event.id}}" data-status="off">
+                <div id="event-fav-{{event.id}}" class="event-img-overlay__star event-img-overlay__item"
+                    data-fav="{{event.id}}" data-status="off">
                     <svg class="star-img" data-fav="{{event.id}}" data-status="off">
                         <use xlink:href="./server/img/sprite.svg#star" data-fav="{{event.id}}" data-status="off"></use>
                 {{/if}}
                     </svg>
                 </div>
             {{/if}}
+            <div class="event-img-overlay-info">
+                <div class="event-img-overlay-info__title">{{event.title}}</div>
+                <div class="event-img-overlay-info__meta">{{event.city}},{{event.date}}</div>
+            </div>
             <a href="events?id={{event.id}}" class="event-anchor"></a>
         </div>
-    </div>
+    </div>  
     <div class="event-info">
         <div class="event-info__item">
-            <a href="events?id={{event.id}}"><div class="event-info__title">{{event.title}}</div></a>
+            <a href="events?id={{event.id}}">
+                <div class="event-info__title">{{event.title}}</div>
+            </a>
             <div class="event-info__meta">{{event.date}}</div>
             <div class="event-info__meta">{{event.city}}</div>
         </div>
         <div class="event-info__item">
-            <span class="event-info__text">{{event.description}}</span>                
+            <span class="event-info__text">{{event.description}}</span>
         </div>
         <div class="event-info__tags">
             {{#each event.tag}}
-                <a href="/?tags={{this}}"><div class="tag">{{this}}</div></a>
+            <a href="/?tags={{this}}">
+                <div class="tag">{{this}}</div>
+            </a>
             {{/each}}
         </div>
     </div>
