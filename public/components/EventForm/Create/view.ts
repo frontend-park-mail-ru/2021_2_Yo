@@ -66,7 +66,7 @@ export default class EventCreateView extends EventFormView {
         }
 
         this.eventTags.map((t) => {
-            const tag = <HTMLElement>document.getElementById('tag-' + t);
+            const tag = <HTMLElement>document.getElementById('tag-cross-' + t);
             if (!tag) return;
 
             tag.removeEventListener('click', this.deleteTag);
