@@ -63,17 +63,6 @@ export abstract class EventFormView {
         map.render(this.event);
     };
 
-    // #handleTagDelete = (e: MouseEvent) => {
-    //     const target = <HTMLElement>e.currentTarget;
-    //     if (!target || !target.dataset['tag']) return;
-    //     const tags = this.#filter['tags']?.filter(tag => tag !== target.dataset['tag']);
-    //     target.removeEventListener('click', this.#handleTagDelete);
-    //     const tag = <HTMLElement>document.getElementById('tag-' + target.dataset['tag']);
-    //     tag.outerHTML = '';
-    //     this.#tags = <HTMLElement>document.getElementById('filter-tags');
-    //     this.#filter = FilterStore.set(FilterParams.Tags, tags);
-    // };
-
     deleteTag = (e: MouseEvent) => {
         const target = <HTMLElement>e.currentTarget;
 

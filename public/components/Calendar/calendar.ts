@@ -191,6 +191,7 @@ export default class Calendar {
         dateInput.classList.remove('form-input_error');
         dateInput.classList.add('form-input_changed');
         dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
+        dateInput.dispatchEvent(new Event('change'));
 
         const inputError = <HTMLElement>document.getElementById('dateError');
         if (inputError)
