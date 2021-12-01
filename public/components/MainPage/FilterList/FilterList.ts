@@ -14,6 +14,7 @@ const TAG_PING_TIME_MSEC = 500;
 
 export default class FilterListComponent {
     #parent: HTMLElement;
+    #search?: HTMLInputElement;
     #categories?: HTMLElement[];
     #tags?: HTMLElement;
     #tagInput?: HTMLInputElement;
@@ -72,6 +73,7 @@ export default class FilterListComponent {
     }
 
     #addListeners() {
+        this.#search?.addEventListener('input', this.#handleSearch);
         this.#categories?.map((category) => {
             category.addEventListener('click', this.#handleCategoryClick);
         });
@@ -82,6 +84,11 @@ export default class FilterListComponent {
         this.#cityInput?.addEventListener('input', this.#handleCityInput);
     }
 
+    #handleSearch = () => {
+        // const value = this.#search?.value.trim();
+        const value = this.#search?.value.trim();
+        this.#filter = FilterStore.set(FilterParams.Query, value, false);
+    };
 
     #handleCategoryClick = (e: MouseEvent) => {
         const target = <HTMLElement>e.target;
@@ -143,6 +150,7 @@ export default class FilterListComponent {
     };
 
     #removeListeners() {
+        this.#search?.removeEventListener('input', this.#handleSearch);
         this.#categories?.map((category) => {
             category.removeEventListener('click', this.#handleCategoryClick);
         });
@@ -162,6 +170,12 @@ export default class FilterListComponent {
 
     #renderFilter() {
         this.#filter = FilterStore.get();
+        if (this.#filter['query'] !== undefined) {
+            if (this.#search) {
+                this.#search.value = this.#filter['query'];
+            }
+        }
+
         if (this.#filter['category'] !== undefined) {
             if (this.#categories) {
                 this.#categories[this.#filter['category']].style.backgroundColor = 'var(--category-selected)';
@@ -194,6 +208,7 @@ export default class FilterListComponent {
             categories: config.categories,
             cities: CityStore.get()
         });
+        this.#search = <HTMLInputElement>document.getElementById('filter-search-input');
         this.#categories = config.categories.map((_, index) => {
             return <HTMLElement>document.getElementById('filter-category-' + index.toString());
         });
