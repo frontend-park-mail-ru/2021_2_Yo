@@ -21,7 +21,7 @@
                         </svg>
                         <span class="secondary-text">В избранное</span>
                     </span>
-                    <span class="buttons-block-wrapper" id="removeFavourite">
+                    <span class="buttons-block-wrapper buttons-block-wrapper_none" id="removeFavourite">
                         <svg class="buttons-block-wrapper__icon like">
                             <use xlink:href="./server/img/sprite.svg#star-selected"></use>
                         </svg>
@@ -72,11 +72,13 @@
 
         <div class="primary-text">{{event.text}}</div>
 
-        <div>
-            <span class="primary-text">Адрес: </span>
-            <span class="secondary-text address-text">{{event.address}}</span>
-        </div>
+        {{#if event.address}}
+            <div>
+                <span class="primary-text">Адрес: </span>
+                <span class="secondary-text address-text">{{event.address}}</span>
+            </div>
 
-        <div id="mapContainer" class="map-container"></div>
+            <div id="mapContainer" class="map-container"></div>
+        {{/if}}
     </div>
 </div>

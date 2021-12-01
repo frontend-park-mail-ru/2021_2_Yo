@@ -100,7 +100,11 @@ export default class EventPageView {
     #addFavouriteHandle(e: Event) {
         e.preventDefault();
 
-        Bus.emit(Events.EventAddFavReq, this.#event?.id);
+        if (!Userstore.get()) {
+            Bus.emit(Events.RouteUrl, UrlPathnames.Login);
+        } else {
+            Bus.emit(Events.EventAddFavReq, this.#event?.id);
+        }
     }
 
     #removeFavouriteHandle(e: Event) {
