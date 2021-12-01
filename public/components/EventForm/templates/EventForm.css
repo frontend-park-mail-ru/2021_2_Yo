@@ -112,3 +112,10 @@
     width: 65%;
     height: 100%;
 }
+
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+    .input-btn {
+        width: 28px;
+        height: 28px;
+    }
+}

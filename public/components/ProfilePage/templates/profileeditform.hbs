@@ -30,7 +30,9 @@
                 <span class="photo-input photo-input-label" id="photo-label">Не выбрано</span>
             {{/if}}
             <label for="avatarInput">
-                <img class="input-btn" src="../../server/img/add-photo.svg">
+                <svg class="input-btn">
+                    <use xlink:href="./server/img/sprite.svg#add-photo"></use>
+                </svg>
             </label>
         </div>
         {{#if user.imgUrl}}

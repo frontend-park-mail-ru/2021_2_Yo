@@ -129,10 +129,16 @@
 .button-container {
     box-sizing: border-box;
 
-    margin-top: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 4%;
 
     position: absolute;
     bottom: 0;
     right: 32px;
+}
+
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+    .calendar-block {
+        width: 370px;
+        height: 400px;
+    }
 }

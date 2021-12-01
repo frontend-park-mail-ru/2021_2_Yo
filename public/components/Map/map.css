@@ -22,7 +22,7 @@
 }
 
 .map-background {
-    width: 40vw;
+    width: 40%;
     height: max-content;
     z-index: 2000;
 
@@ -38,5 +38,5 @@
 
 .map-container {
     width: 100%;
-    height: 55vh;
+    height: 50vh;
 }

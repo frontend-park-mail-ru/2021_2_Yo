@@ -2,11 +2,14 @@
     <div id="events-list" class="grid-list">
     {{#each events}}
         <div class="event-li">
-            {{#if imgUrl}}
-                <img class="event-li__img" src="{{imgUrl}}">
-            {{else}}
-                <img class="event-li__img" src="./server/img/photo.png">
-            {{/if}}
+            <div class="card">
+                {{#if imgUrl}}
+                    <img class="event-li__img" src="{{imgUrl}}">
+                {{else}}
+                    <img class="event-li__img" src="./server/img/photo.png">
+                {{/if}}
+                <div class="card__title card_none"></div>
+            </div>
             <div class ="event-li__content">
                 <a class="event-li__title" href="/events?id={{id}}">{{title}}</a>
                 <div class="secondary-text secondary-text_small">
