@@ -32,22 +32,22 @@ export default class SignupView {
     render() {
         this.#parent.innerHTML = template();
 
-        const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+        const nameInput = <HTMLInputElement>document.getElementById('nameInput');
         this.#inputs.set('name', nameInput);
-        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
+        const surnameInput = <HTMLInputElement>document.getElementById('surnameInput');
         this.#inputs.set('surname', surnameInput);
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        const emailInput = <HTMLInputElement>document.getElementById('emailInput');
         this.#inputs.set('email', emailInput);
-        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
+        const passwordInput1 = <HTMLInputElement>document.getElementById('passwordInput1');
         this.#inputs.set('password1', passwordInput1);
-        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
+        const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
         this.#inputs.set('password2', passwordInput2);
 
         this.#addListeners();
     }
 
     #addListeners() {
-        const form = document.getElementById('regForm') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('regForm');
         form.addEventListener('submit', this.#signup.bind(this));
 
         const back = <HTMLElement>document.getElementById('back');
@@ -59,7 +59,7 @@ export default class SignupView {
     }
 
     #removeListeners() {
-        const form = document.getElementById('regForm') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('regForm');
         form.removeEventListener('submit', this.#signup.bind(this));
 
         const back = <HTMLElement>document.getElementById('back');
@@ -81,15 +81,15 @@ export default class SignupView {
     #signup(event: Event) {
         event.preventDefault();
 
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
-        this.#inputsData.set('name', {errors: [], value: this.#inputs.get('name')?.value.trim() as string});
-        this.#inputsData.set('surname', {errors: [], value: this.#inputs.get('surname')?.value.trim() as string});
-        this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
-        this.#inputsData.set('password1', {errors: [], value: this.#inputs.get('password1')?.value.trim() as string});
-        this.#inputsData.set('password2', {errors: [], value: this.#inputs.get('password2')?.value.trim() as string});
+        this.#inputsData.set('name', {errors: [], value: <string>this.#inputs.get('name')?.value.trim()});
+        this.#inputsData.set('surname', {errors: [], value: <string>this.#inputs.get('surname')?.value.trim()});
+        this.#inputsData.set('email', {errors: [], value: <string>this.#inputs.get('email')?.value.trim()});
+        this.#inputsData.set('password1', {errors: [], value: <string>this.#inputs.get('password1')?.value.trim()});
+        this.#inputsData.set('password2', {errors: [], value: <string>this.#inputs.get('password2')?.value.trim()});
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }
@@ -114,7 +114,7 @@ export default class SignupView {
     }
 
     #showServerErrors(error: string) {
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.textContent = error;
     }
 

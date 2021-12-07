@@ -124,11 +124,8 @@ export default class ProfileEditForm {
         this.#inputsData.clear();
         this.#inputs.clear();
 
-        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
-        this.#inputs.set('password1', passwordInput1);
-        this.#inputsData.set('password1', {errors: [], value: passwordInput1.value.trim()});
-
-        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
+        const passwordInput1 = <HTMLInputElement>document.getElementById('passwordInput1');
+        this.#inputs.set('password1', passwordInput1); this.#inputsData.set('password1', {errors: [], value: passwordInput1.value.trim()}); const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
         this.#inputs.set('password2', passwordInput2);
         this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
 
@@ -145,15 +142,15 @@ export default class ProfileEditForm {
         this.#inputsData.clear();
         this.#inputs.clear();
 
-        const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+        const nameInput = <HTMLInputElement>document.getElementById('nameInput');
         this.#inputs.set('name', nameInput);
         this.#inputsData.set('name', {errors: [], value: nameInput.value.trim()});
 
-        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
+        const surnameInput = <HTMLInputElement>document.getElementById('surnameInput');
         this.#inputs.set('surname', surnameInput);
         this.#inputsData.set('surname', {errors: [], value: surnameInput.value.trim()});
 
-        const selfDescriptionInput = document.getElementById('selfDescriptionInput') as HTMLInputElement;
+        const selfDescriptionInput = <HTMLInputElement>document.getElementById('selfDescriptionInput');
         this.#inputs.set('selfDescription', selfDescriptionInput);
         this.#inputsData.set('selfDescription', {errors: [], value: selfDescriptionInput.value.trim()});
 

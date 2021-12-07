@@ -6,10 +6,10 @@ import Events from '@eventbus/events';
 export default class SignupModel {
     signup(inputsData: Map<string, { errors: string[], value: string }>) {
         const postData: ApiPostSignupData = {
-            name: inputsData.get('name')?.value as string,
-            surname: inputsData.get('surname')?.value as string,
-            email: inputsData.get('email')?.value as string,
-            password: inputsData.get('password1')?.value as string
+            name: <string>inputsData.get('name')?.value,
+            surname: <string>inputsData.get('surname')?.value,
+            email: <string>inputsData.get('email')?.value,
+            password: <string>inputsData.get('password1')?.value,
         };
 
         fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {

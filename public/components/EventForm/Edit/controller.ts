@@ -30,7 +30,7 @@ export default class EventEditFormController {
         this.#view.subscribe();
 
         if (UserStore.get()) {
-            const id = new URL(window.location.href).searchParams?.get('id') as string;
+            const id = <string>new URL(window.location.href).searchParams?.get('id');
             this.#model.getEvent(id);
         } else {
             this.#userResSubscribe = true;
@@ -40,7 +40,7 @@ export default class EventEditFormController {
     }
 
     #getEventHandle = (() => {
-        const id = new URL(window.location.href).searchParams?.get('id') as string;
+        const id = <string>new URL(window.location.href).searchParams?.get('id');
         this.#model.getEvent(id);
     });
 

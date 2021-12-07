@@ -47,7 +47,7 @@ export default class ProfilePageController {
 
         const storedUser = UserStore.get();
         if (storedUser) {
-            const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+            const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
             if (storedUser.id === userURLId) {
                 this.#view.render(storedUser);
             } else {
@@ -97,12 +97,12 @@ export default class ProfilePageController {
     });
 
     #userErrorRenderHandle = (() => {
-        const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         this.#model.getUser(userURLId);
     }).bind(this);
 
     #renderHandle = (() => {
-        const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         const user = UserStore.get();
         if (user?.id === userURLId) {
             Bus.emit(Events.UserByIdRes, user);
@@ -151,7 +151,7 @@ export default class ProfilePageController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk);
-            this.#model.editPassword(inputsData.get('password1')?.value as string);
+            this.#model.editPassword(<string>inputsData.get('password1')?.value);
         } else {
             Bus.emit(Events.ValidationError);
         }

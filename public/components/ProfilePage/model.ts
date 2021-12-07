@@ -15,7 +15,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const user = json.body as UserData;
+                    const user = <UserData>json.body;
                     Bus.emit(Events.UserByIdRes, user);
                     return;
                 }
@@ -26,12 +26,12 @@ export default class ProfilePageModel {
 
     editUser(data: MultipartData) {
         const newUserInfo = {
-            name: data['input'].get('name')?.value as string,
-            surname: data['input'].get('surname')?.value as string,
-            description: data['input'].get('selfDescription')?.value as string,
+            name: <string>data['input'].get('name')?.value,
+            surname: <string>data['input'].get('surname')?.value,
+            description: <string>data['input'].get('selfDescription')?.value,
         };
 
-        const stored = UserStore.get() as UserData;
+        const stored = <UserData>UserStore.get();
 
         if (!data.file &&
             stored.name === newUserInfo.name &&
@@ -64,7 +64,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const stored = UserStore.get() as UserData;
+                    const stored = <UserData>UserStore.get();
                     Bus.emit(Events.UserRes, stored);
                     return;
                 }
@@ -77,7 +77,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const events = json.body.events as EventData[];
+                    const events = <EventData[]>json.body.events;
                     Bus.emit(Events.EventsRes, events);
                     return;
                 }
@@ -90,7 +90,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const events = json.body.events as EventData[];
+                    const events = <EventData[]>json.body.events;
                     Bus.emit(Events.EventsResFav, events);
                     return;
                 }
@@ -103,7 +103,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const users = json.body.users as UserData[];
+                    const users = <UserData[]>json.body.users;
                     Bus.emit(Events.SubscribersRes, users);
                     return;
                 }
@@ -116,7 +116,7 @@ export default class ProfilePageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const users = json.body.users as UserData[];
+                    const users = <UserData[]>json.body.users;
                     Bus.emit(Events.SubscriptionsRes, users);
                     return;
                 }

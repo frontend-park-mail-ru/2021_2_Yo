@@ -15,7 +15,7 @@ export default class EventPageController {
     }
 
     enable() {
-        const eventId = new URL(window.location.href).searchParams?.get('id') as string;
+        const eventId = <string>new URL(window.location.href).searchParams?.get('id');
 
         Bus.on(Events.EventRes, this.#eventHandle);
         Bus.on(Events.EventDelete, this.#eventDeleteHandle);
@@ -59,7 +59,7 @@ export default class EventPageController {
     });
 
     #getIsFav = (() => {
-        const eventId = new URL(window.location.href).searchParams?.get('id') as string;
+        const eventId = <string>new URL(window.location.href).searchParams?.get('id');
         this.#model.isEventFavourite(eventId);
     });
 

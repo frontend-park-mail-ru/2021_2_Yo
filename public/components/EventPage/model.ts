@@ -77,7 +77,7 @@ export default class EventPageModel {
             const {status, json} = data;
             if (status === 200) {
                 if (json.status === 200) {
-                    const user = json.body as UserData;
+                    const user = <UserData>json.body;
                     Bus.emit(Events.EventAuthorRes, user);
                     return;
                 }

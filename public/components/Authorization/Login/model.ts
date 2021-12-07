@@ -6,8 +6,8 @@ import Events from '@eventbus/events';
 export default class LoginModel {
     login(inputsData: Map<string, { errors: string[], value: string }>) {
         const postData: ApiPostLoginData = {
-            email: inputsData.get('email')?.value as string,
-            password: inputsData.get('password')?.value as string,
+            email: <string>inputsData.get('email')?.value,
+            password: <string>inputsData.get('password')?.value,
         };
 
         fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
