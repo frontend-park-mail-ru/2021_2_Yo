@@ -22,6 +22,7 @@ export default class FilterListComponent {
     #dateInput?: HTMLInputElement;
     #cityInput?: HTMLInputElement;
     #tagPlus?: HTMLElement;
+    #dateCross?: HTMLElement;
     #filter: FilterData;
 
     constructor(parent: HTMLElement) {
@@ -82,9 +83,17 @@ export default class FilterListComponent {
         this.#tagPlus?.addEventListener('click', this.#handleTagAdd);
         this.#dateInput?.addEventListener('change', this.#handleDateChange);
         this.#dateInput?.addEventListener('input', this.#handleDateInput);
+        this.#dateCross?.addEventListener('click', this.#handleDateDelete);
         this.#dateInput?.addEventListener('click', this.#handleCalendarRender);
         this.#cityInput?.addEventListener('input', this.#handleCityInput);
     }
+
+    #handleDateDelete = () => {
+        if (this.#dateInput) {
+            this.#dateInput.value = '';
+            this.#dateInput.dispatchEvent(new Event('change'));
+        }
+    };
 
     #handleSearch = () => {
         const value = this.#search?.value.trim();
@@ -218,6 +227,7 @@ export default class FilterListComponent {
         this.#tagInput = <HTMLInputElement>document.getElementById('filter-tag-input');
         this.#tagPlus = <HTMLElement>document.getElementById('tags-search-img');
         this.#dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        this.#dateCross = <HTMLElement>document.getElementById('date-delete-img');
         this.#cityInput = <HTMLInputElement>document.getElementById('filter-city-input');
         this.#addListeners();
         this.#renderFilter();
