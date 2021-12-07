@@ -1,4 +1,4 @@
-import {EventData, UserData} from '@/types';
+import { EventData, UserData } from '@/types';
 import ProfileEditForm from '@profile-page/ProfileEditForm/ProfileEditForm';
 import UserStore from '@modules/userstore';
 import * as template from '@profile-page/templates/profilepage.hbs';
@@ -117,7 +117,7 @@ export default class ProfilePageView {
         this.#user = user;
 
         const permission = (user?.id === UserStore.get()?.id);
-        this.#parent.innerHTML = template({user, permission});
+        this.#parent.innerHTML = template({ user, permission });
 
         this.#addListeners();
 
@@ -186,13 +186,13 @@ export default class ProfilePageView {
     renderEventList(events?: EventData[]) {
         const listBlock = <HTMLElement>document.getElementById('listBlock');
 
-        listBlock.innerHTML = listTemplate({events: events});
+        listBlock.innerHTML = listTemplate({ events: events });
     }
 
     renderUsersList(users?: UserData[]) {
         const listBlock = <HTMLElement>document.getElementById('listBlock');
 
-        listBlock.innerHTML = userList({users: users});
+        listBlock.innerHTML = userList({ users: users });
     }
 
     disableProfileForm() {

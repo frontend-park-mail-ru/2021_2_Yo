@@ -1,4 +1,3 @@
-import fStore, { parseParams } from '@/modules/filter';
 import MainPageModel from '@main-page/model';
 import MainPageView from '@main-page/view';
 import Bus from '@eventbus/eventbus';

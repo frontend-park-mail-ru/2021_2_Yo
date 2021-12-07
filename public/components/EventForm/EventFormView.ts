@@ -1,4 +1,4 @@
-import {EventData, InputData} from '@/types';
+import { EventData, InputData } from '@/types';
 import Calendar from '@calendar/calendar';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';

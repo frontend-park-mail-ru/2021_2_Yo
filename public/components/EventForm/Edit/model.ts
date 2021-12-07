@@ -1,5 +1,5 @@
-import {ApiStatus, EventData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
-import {fetchGet, fetchPostMultipart} from '@request/request';
+import { ApiStatus, EventData, ApiUrls, FetchResponseData, UrlPathnames } from '@/types';
+import { fetchGet, fetchPostMultipart } from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 
@@ -23,8 +23,8 @@ export default class EventEditFormModel {
 
         const id = new URL(window.location.href).searchParams.get('id');
 
-        fetchPostMultipart(ApiUrls.Events + '/' + id, {json: event, file: data['file']}, (data: FetchResponseData) => {
-            const {status, json} = data;
+        fetchPostMultipart(ApiUrls.Events + '/' + id, { json: event, file: data['file'] }, (data: FetchResponseData) => {
+            const { status, json } = data;
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
                     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id);
@@ -37,7 +37,7 @@ export default class EventEditFormModel {
     getEvent(id: string) {
         fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
-                const {status, json} = data;
+                const { status, json } = data;
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         const event = <EventData>json.body;

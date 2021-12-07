@@ -2,7 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import EventPageModel from '@event-page/model';
 import EventPageView from '@event-page/view';
-import {EventData, UserData} from '@/types';
+import { EventData, UserData } from '@/types';
 
 export default class EventPageController {
     #view: EventPageView;

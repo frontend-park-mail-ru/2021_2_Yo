@@ -1,4 +1,4 @@
-import {UrlPathnames} from '@/types';
+import { UrlPathnames } from '@/types';
 import Router from '@modules/routing';
 import SWInstall from '@modules/swinstaller';
 import ErrorPageController from '@error-page/controller';
@@ -29,13 +29,13 @@ const evController = new EventPageController(content);
 const evCreateController = new EventFormController(content);
 const evEditController = new EventEditFormController(content);
 
-Router.add(UrlPathnames.Main, {header: hController, content: mController});
-Router.add(UrlPathnames.Login, {content: lController});
-Router.add(UrlPathnames.Signup, {content: sController});
-Router.add(UrlPathnames.Error, {header: hController, content: eController});
-Router.add(UrlPathnames.Profile, {header: hController, content: profileController});
-Router.add(UrlPathnames.Event, {header: hController, content: evController});
-Router.add(UrlPathnames.Create, {header: hController, content: evCreateController});
-Router.add(UrlPathnames.Edit, {header: hController, content: evEditController});
+Router.add(UrlPathnames.Main, { header: hController, content: mController });
+Router.add(UrlPathnames.Login, { content: lController });
+Router.add(UrlPathnames.Signup, { content: sController });
+Router.add(UrlPathnames.Error, { header: hController, content: eController });
+Router.add(UrlPathnames.Profile, { header: hController, content: profileController });
+Router.add(UrlPathnames.Event, { header: hController, content: evController });
+Router.add(UrlPathnames.Create, { header: hController, content: evCreateController });
+Router.add(UrlPathnames.Edit, { header: hController, content: evEditController });
 
 Router.route();

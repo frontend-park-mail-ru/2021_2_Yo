@@ -2,8 +2,8 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import EventEditFormModel from '@event-edit/model';
 import EventEditView from '@event-edit/view';
-import {EventData, UrlPathnames} from '@/types';
-import {eventValidateFields} from '@modules/validation';
+import { EventData, UrlPathnames } from '@/types';
+import { eventValidateFields } from '@modules/validation';
 import UserStore from '@modules/userstore';
 
 type MultipartData = {

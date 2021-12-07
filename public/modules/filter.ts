@@ -212,7 +212,7 @@ class FilterStore {
 
         fetchGet(ApiUrls.Events + search, 
             (data: FetchResponseData) => {
-                const {status, json} = data;
+                const { status, json } = data;
                 if (status === ApiStatus.Ok) {
                     if (json.status) {
                         const events = <EventData[]>json.body.events;

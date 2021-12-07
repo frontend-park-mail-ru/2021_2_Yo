@@ -2,7 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as template from '@login/login.hbs';
 import '@authorization/Authorization.css';
-import {InputData} from '@/types';
+import { InputData } from '@/types';
 
 const CHILD_NUM = 2;
 
@@ -79,8 +79,8 @@ export default class LoginView {
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
-        this.#inputsData.set('email', {errors: [], value: <string>this.#inputs.get('email')?.value.trim()});
-        this.#inputsData.set('password', {errors: [], value: <string>this.#inputs.get('password')?.value.trim()});
+        this.#inputsData.set('email', { errors: [], value: <string>this.#inputs.get('email')?.value.trim() });
+        this.#inputsData.set('password', { errors: [], value: <string>this.#inputs.get('password')?.value.trim() });
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }

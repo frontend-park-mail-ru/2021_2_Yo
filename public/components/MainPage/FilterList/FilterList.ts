@@ -2,12 +2,12 @@ import * as template from '@main-page/FilterList/filterlist.hbs';
 import * as tagTemplate from '@templates/tag/tag.hbs';
 import '@templates/tag/tag.css';
 import '@main-page/FilterList/FilterList.css';
-import {FilterData} from '@/types';
+import { FilterData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import config from '@/config';
 import CityStore from '@/modules/citystore';
-import FilterStore, {FilterParams} from '@/modules/filter';
+import FilterStore, { FilterParams } from '@/modules/filter';
 import Calendar from '@calendar/calendar';
 
 const TAG_PING_TIME_MSEC = 500;

@@ -31,6 +31,7 @@
 	// Плагин с наборами правил для TypeScript
 	"plugins": ["@typescript-eslint"],
 	"rules": {
+        "object-curly-spacing": ["error", "always"],
         "indent": ["error", 4],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],

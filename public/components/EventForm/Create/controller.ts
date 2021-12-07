@@ -2,9 +2,9 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import EventCreateView from '@event-create/view';
 import EventFormModel from '@event-create/model';
-import {eventValidateFields} from '@modules/validation';
+import { eventValidateFields } from '@modules/validation';
 import UserStore from '@modules/userstore';
-import {UrlPathnames} from '@/types';
+import { UrlPathnames } from '@/types';
 
 type MultipartData = {
     input: Map<string, { errors: string[], value: string }>;

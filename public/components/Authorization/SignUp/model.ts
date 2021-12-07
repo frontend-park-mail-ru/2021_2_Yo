@@ -1,5 +1,5 @@
-import {ApiStatus, ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
-import {fetchPost} from '@request/request';
+import { ApiStatus, ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames } from '@/types';
+import { fetchPost } from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 
@@ -13,7 +13,7 @@ export default class SignupModel {
         };
 
         fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {
-            const {status, json, headers} = data;
+            const { status, json, headers } = data;
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
                     const token = headers?.get('X-CSRF-Token');

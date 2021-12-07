@@ -2,7 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as template from '@signup/signup.hbs';
 import '@authorization/Authorization.css';
-import {InputData} from '@/types';
+import { InputData } from '@/types';
 
 export default class SignupView {
     #parent: HTMLElement;
@@ -83,11 +83,11 @@ export default class SignupView {
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
-        this.#inputsData.set('name', {errors: [], value: <string>this.#inputs.get('name')?.value.trim()});
-        this.#inputsData.set('surname', {errors: [], value: <string>this.#inputs.get('surname')?.value.trim()});
-        this.#inputsData.set('email', {errors: [], value: <string>this.#inputs.get('email')?.value.trim()});
-        this.#inputsData.set('password1', {errors: [], value: <string>this.#inputs.get('password1')?.value.trim()});
-        this.#inputsData.set('password2', {errors: [], value: <string>this.#inputs.get('password2')?.value.trim()});
+        this.#inputsData.set('name', { errors: [], value: <string>this.#inputs.get('name')?.value.trim() });
+        this.#inputsData.set('surname', { errors: [], value: <string>this.#inputs.get('surname')?.value.trim() });
+        this.#inputsData.set('email', { errors: [], value: <string>this.#inputs.get('email')?.value.trim() });
+        this.#inputsData.set('password1', { errors: [], value: <string>this.#inputs.get('password1')?.value.trim() });
+        this.#inputsData.set('password2', { errors: [], value: <string>this.#inputs.get('password2')?.value.trim() });
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }

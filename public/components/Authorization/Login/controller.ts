@@ -1,6 +1,6 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import {authValidateFields} from '@modules/validation';
+import { authValidateFields } from '@modules/validation';
 import LoginView from '@login/view';
 import LoginModel from '@login/model';
 

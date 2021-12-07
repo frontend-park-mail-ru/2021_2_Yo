@@ -1,4 +1,4 @@
-import {UrlPathnames} from '@/types';
+import { UrlPathnames } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 

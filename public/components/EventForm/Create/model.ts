@@ -1,5 +1,5 @@
-import {ApiStatus, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
-import {fetchPostMultipart} from '@request/request';
+import { ApiStatus, ApiUrls, FetchResponseData, UrlPathnames } from '@/types';
+import { fetchPostMultipart } from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 
@@ -21,8 +21,8 @@ export default class EventFormModel {
             geo: <string>data['input'].get('geo')?.value,
         };
 
-        fetchPostMultipart(ApiUrls.Events, {json: event, file: data['file']}, (data: FetchResponseData) => {
-            const {status, json} = data;
+        fetchPostMultipart(ApiUrls.Events, { json: event, file: data['file'] }, (data: FetchResponseData) => {
+            const { status, json } = data;
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
                     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + json.body.id);

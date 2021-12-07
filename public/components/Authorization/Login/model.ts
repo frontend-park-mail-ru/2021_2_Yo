@@ -11,7 +11,7 @@ export default class LoginModel {
         };
 
         fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
-            const {status, json, headers} = data;
+            const { status, json, headers } = data;
 
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {

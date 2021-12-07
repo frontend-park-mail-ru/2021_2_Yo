@@ -12,7 +12,7 @@ export default class MainPageModel {
     #handleAddFav = (id: string) => {
         fetchPost(ApiUrls.Events + '/' + id + '/favourite', {},
             (data: FetchResponseData) => {
-                const {status, json} = data;
+                const { status, json } = data;
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         Bus.emit(Events.EventAddFavRes);
@@ -25,7 +25,7 @@ export default class MainPageModel {
     #handleRemoveFav = (id: string) => {
         fetchDelete(ApiUrls.Events + '/' + id + '/favourite',
             (data: FetchResponseData) => {
-                const {status, json} = data;
+                const { status, json } = data;
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         Bus.emit(Events.EventRemoveFavRes);

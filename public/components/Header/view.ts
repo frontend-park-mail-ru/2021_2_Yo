@@ -137,7 +137,7 @@ export default class HeaderView {
     render(user?: UserData) {
         this.#popupShown = false;
         const authAnchors = config.authAnchors;
-        this.#parent.innerHTML = template({authAnchors, user});
+        this.#parent.innerHTML = template({ authAnchors, user });
         this.#input = <HTMLInputElement>document.getElementById('header-input');
 
         this.#addListeners();

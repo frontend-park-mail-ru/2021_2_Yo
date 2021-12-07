@@ -1,4 +1,4 @@
-import {InputData, UserData} from '@/types';
+import { InputData, UserData } from '@/types';
 import Events from '@eventbus/events';
 import Bus from '@eventbus/eventbus';
 import UserStore from '@modules/userstore';
@@ -40,7 +40,7 @@ export default class ProfileEditForm {
         this.#passwordEditButton?.classList.remove('menu__item_clicked');
 
         const formContainer = <HTMLElement>document.getElementById('formContainer');
-        formContainer.innerHTML = profileForm({user});
+        formContainer.innerHTML = profileForm({ user });
 
         const form = <HTMLElement>document.getElementById('form');
         form.addEventListener('submit', this.#mainFormSubmitHandle.bind(this));
@@ -129,7 +129,7 @@ export default class ProfileEditForm {
         this.#inputsData.set('password1', { errors: [], value: passwordInput1.value.trim() }); 
         const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
         this.#inputs.set('password2', passwordInput2);
-        this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
+        this.#inputsData.set('password2', { errors: [], value: passwordInput2.value.trim() });
 
         this.#inputs.forEach((input, key) => {
             input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
@@ -146,19 +146,19 @@ export default class ProfileEditForm {
 
         const nameInput = <HTMLInputElement>document.getElementById('nameInput');
         this.#inputs.set('name', nameInput);
-        this.#inputsData.set('name', {errors: [], value: nameInput.value.trim()});
+        this.#inputsData.set('name', { errors: [], value: nameInput.value.trim() });
 
         const surnameInput = <HTMLInputElement>document.getElementById('surnameInput');
         this.#inputs.set('surname', surnameInput);
-        this.#inputsData.set('surname', {errors: [], value: surnameInput.value.trim()});
+        this.#inputsData.set('surname', { errors: [], value: surnameInput.value.trim() });
 
         const selfDescriptionInput = <HTMLInputElement>document.getElementById('selfDescriptionInput');
         this.#inputs.set('selfDescription', selfDescriptionInput);
-        this.#inputsData.set('selfDescription', {errors: [], value: selfDescriptionInput.value.trim()});
+        this.#inputsData.set('selfDescription', { errors: [], value: selfDescriptionInput.value.trim() });
 
         const avatarInput = <HTMLInputElement>document.getElementById('avatarInput');
         this.#inputs.set('avatar', avatarInput);
-        this.#inputsData.set('avatar', {errors: [], value: ''});
+        this.#inputsData.set('avatar', { errors: [], value: '' });
         let file: File | undefined;
         if (avatarInput.files) file = avatarInput.files[0];
 
@@ -166,7 +166,7 @@ export default class ProfileEditForm {
             input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
         });
 
-        Bus.emit(Events.UserEditReq, {input: this.#inputsData, file});
+        Bus.emit(Events.UserEditReq, { input: this.#inputsData, file });
     });
 
     #showValidationErrors() {

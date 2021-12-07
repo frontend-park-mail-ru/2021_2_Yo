@@ -1,6 +1,6 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import {EventFormView} from '@event-form/EventFormView';
+import { EventFormView } from '@event-form/EventFormView';
 import * as template from '@event-form/templates/eventform.hbs';
 import config from '@/config';
 
@@ -115,22 +115,22 @@ export default class EventCreateView extends EventFormView {
         this.setInputs();
 
         this.inputsData.clear();
-        this.inputsData.set('title', {errors: [], value: <string>this.inputs.get('title')?.value.trim()});
+        this.inputsData.set('title', { errors: [], value: <string>this.inputs.get('title')?.value.trim() });
         this.inputsData.set('description', {
             errors: [],
             value: <string>this.inputs.get('description')?.value.trim()
         });
-        this.inputsData.set('text', {errors: [], value: <string>this.inputs.get('text')?.value.trim()});
-        this.inputsData.set('date', {errors: [], value: <string>this.inputs.get('date')?.value.trim()});
-        this.inputsData.set('geo', {errors: [], value: <string>this.inputs.get('geo')?.placeholder.trim()});
-        this.inputsData.set('category', {errors: [], value: <string>this.inputs.get('category')?.value.trim()});
-        this.inputsData.set('tag', {errors: [], value: this.eventTags});
-        this.inputsData.set('image', {errors: [], value: ''});
+        this.inputsData.set('text', { errors: [], value: <string>this.inputs.get('text')?.value.trim() });
+        this.inputsData.set('date', { errors: [], value: <string>this.inputs.get('date')?.value.trim() });
+        this.inputsData.set('geo', { errors: [], value: <string>this.inputs.get('geo')?.placeholder.trim() });
+        this.inputsData.set('category', { errors: [], value: <string>this.inputs.get('category')?.value.trim() });
+        this.inputsData.set('tag', { errors: [], value: this.eventTags });
+        this.inputsData.set('image', { errors: [], value: '' });
 
         let file: undefined | File;
         const imageInput = <HTMLInputElement>document.getElementById('imageInput');
         if (imageInput.files) file = imageInput.files[0];
 
-        Bus.emit(Events.EventCreateReq, {input: this.inputsData, file});
+        Bus.emit(Events.EventCreateReq, { input: this.inputsData, file });
     }
 }
