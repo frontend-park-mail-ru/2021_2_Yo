@@ -38,6 +38,7 @@
             "@profile-page/*": [ "public/components/ProfilePage/*" ],
             "@calendar/*": [ "public/components/Calendar/*" ],
             "@map/*": [ "public/components/Map/*" ],
+            "@suggest-list/*": [ "public/components/SuggestList/*" ],
         },
         "lib": ["es2019", "es6", "dom", "webworker"],
     },
