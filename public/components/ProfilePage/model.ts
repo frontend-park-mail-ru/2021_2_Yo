@@ -1,4 +1,4 @@
-import {ApiUrls, EventData, FetchResponseData, UserData} from '@/types';
+import {ApiStatus, ApiUrls, EventData, FetchResponseData, UserData} from '@/types';
 import {fetchDelete, fetchGet, fetchPost, fetchPostMultipart} from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
@@ -13,8 +13,8 @@ export default class ProfilePageModel {
     getUser(userId: string) {
         fetchGet(ApiUrls.User + '/' + userId, (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const user = <UserData>json.body;
                     Bus.emit(Events.UserByIdRes, user);
                     return;
@@ -48,8 +48,8 @@ export default class ProfilePageModel {
                 file: data['file']
             }, (data: FetchResponseData) => {
                 const {status, json} = data;
-                if (status === 200) {
-                    if (json.status === 200) {
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
                         UserStore.reset();
                         Bus.emit(Events.UserReq);
                         return;
@@ -62,8 +62,8 @@ export default class ProfilePageModel {
     editPassword(password: string) {
         fetchPost(ApiUrls.User + '/password', {password}, (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const stored = <UserData>UserStore.get();
                     Bus.emit(Events.UserRes, stored);
                     return;
@@ -75,8 +75,8 @@ export default class ProfilePageModel {
     getUserEventsCreated(userId: string) {
         fetchGet(ApiUrls.User + '/' + userId + ApiUrls.Events + '/created', (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const events = <EventData[]>json.body.events;
                     Bus.emit(Events.EventsRes, events);
                     return;
@@ -88,8 +88,8 @@ export default class ProfilePageModel {
     getUserEventsFavourite(userId: string) {
         fetchGet(ApiUrls.User + '/' + userId + ApiUrls.Events + '/favourite', (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const events = <EventData[]>json.body.events;
                     Bus.emit(Events.EventsResFav, events);
                     return;
@@ -101,8 +101,8 @@ export default class ProfilePageModel {
     getSubscribers(userId: string) {
         fetchGet(ApiUrls.User + '/' + userId + '/subscribers', (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const users = <UserData[]>json.body.users;
                     Bus.emit(Events.SubscribersRes, users);
                     return;
@@ -114,8 +114,8 @@ export default class ProfilePageModel {
     getSubscriptions(userId: string) {
         fetchGet(ApiUrls.User + '/' + userId + '/subscriptions', (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const users = <UserData[]>json.body.users;
                     Bus.emit(Events.SubscriptionsRes, users);
                     return;
@@ -127,8 +127,8 @@ export default class ProfilePageModel {
     getIsSubscribed(userId: string) {
         fetchGet(ApiUrls.User + '/' + userId + '/subscription', (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const result = json.body.result;
                     Bus.emit(Events.UserIsSubscribedRes, result);
                     return;
@@ -140,8 +140,8 @@ export default class ProfilePageModel {
     makeSubscription(userId: string) {
         fetchPost(ApiUrls.User + '/' + userId + '/subscription', {}, (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     Bus.emit(Events.SubscribeRes, userId);
                     return;
                 }
@@ -152,8 +152,8 @@ export default class ProfilePageModel {
     unsubscribe(userId: string) {
         fetchDelete(ApiUrls.User + '/' + userId + '/subscription', (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     Bus.emit(Events.UnsubscribeRes, userId);
                     return;
                 }

@@ -125,7 +125,9 @@ export default class ProfileEditForm {
         this.#inputs.clear();
 
         const passwordInput1 = <HTMLInputElement>document.getElementById('passwordInput1');
-        this.#inputs.set('password1', passwordInput1); this.#inputsData.set('password1', {errors: [], value: passwordInput1.value.trim()}); const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
+        this.#inputs.set('password1', passwordInput1); 
+        this.#inputsData.set('password1', { errors: [], value: passwordInput1.value.trim() }); 
+        const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
         this.#inputs.set('password2', passwordInput2);
         this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
 

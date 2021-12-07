@@ -1,4 +1,4 @@
-import { ApiUrls, FetchResponseData } from '@/types';
+import { ApiStatus, ApiUrls, FetchResponseData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import { fetchPost, fetchDelete } from '@request/request';
@@ -13,8 +13,8 @@ export default class MainPageModel {
         fetchPost(ApiUrls.Events + '/' + id + '/favourite', {},
             (data: FetchResponseData) => {
                 const {status, json} = data;
-                if (status === 200) {
-                    if (json.status === 200) {
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
                         Bus.emit(Events.EventAddFavRes);
                     }
                 }
@@ -26,8 +26,8 @@ export default class MainPageModel {
         fetchDelete(ApiUrls.Events + '/' + id + '/favourite',
             (data: FetchResponseData) => {
                 const {status, json} = data;
-                if (status === 200) {
-                    if (json.status === 200) {
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
                         Bus.emit(Events.EventRemoveFavRes);
                     }
                 }

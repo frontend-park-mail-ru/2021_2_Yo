@@ -4,8 +4,6 @@ import * as template from '@signup/signup.hbs';
 import '@authorization/Authorization.css';
 import {InputData} from '@/types';
 
-const CHILD_NUM = 2;
-
 export default class SignupView {
     #parent: HTMLElement;
     #inputs = new Map<string, HTMLInputElement>();

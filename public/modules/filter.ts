@@ -1,4 +1,4 @@
-import { ApiUrls, EventData, FetchResponseData, FilterData, UrlPathnames } from '@/types';
+import { ApiStatus, ApiUrls, EventData, FetchResponseData, FilterData, UrlPathnames } from '@/types';
 import config from '@/config';
 import { fetchGet } from './request/request';
 import Bus from '@eventbus/eventbus';
@@ -213,7 +213,7 @@ class FilterStore {
         fetchGet(ApiUrls.Events + search, 
             (data: FetchResponseData) => {
                 const {status, json} = data;
-                if (status === 200) {
+                if (status === ApiStatus.Ok) {
                     if (json.status) {
                         const events = <EventData[]>json.body.events;
                         this.#events = events;

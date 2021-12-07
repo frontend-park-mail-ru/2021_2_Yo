@@ -1,4 +1,4 @@
-import {ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
+import {ApiStatus, ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
 import {fetchPost} from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
@@ -14,8 +14,8 @@ export default class SignupModel {
 
         fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {
             const {status, json, headers} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     const token = headers?.get('X-CSRF-Token');
                     if (token) {
                         Bus.emit(Events.CSRFRes, token);

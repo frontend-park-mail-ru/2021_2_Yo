@@ -1,4 +1,4 @@
-import { ApiUrls, FetchResponseData } from '@/types';
+import { ApiStatus, ApiUrls, FetchResponseData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import { fetchGet } from './request/request';
@@ -20,8 +20,8 @@ class CityStore {
     #getCities() {
         fetchGet(ApiUrls.Cities, 
             (data: FetchResponseData) => {
-                if (data.status === 200) {
-                    if (data.json.status === 200) {
+                if (data.status === ApiStatus.Ok) {
+                    if (data.json.status === ApiStatus.Ok) {
                         Bus.emit(Events.CitiesRes, data.json.body?.cities);
                     }
                 }

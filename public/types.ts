@@ -55,6 +55,10 @@ export type FetchResponseData = {
     headers?: Headers;
 }
 
+export enum ApiStatus {
+    Ok = 200,
+}
+
 export type ApiResponseJson = {
     status: number;
     message: string;

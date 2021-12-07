@@ -1,5 +1,5 @@
-import {EventData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
-import {fetchGet, fetchPost, fetchPostMultipart} from '@request/request';
+import {ApiStatus, EventData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
+import {fetchGet, fetchPostMultipart} from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 
@@ -25,8 +25,8 @@ export default class EventEditFormModel {
 
         fetchPostMultipart(ApiUrls.Events + '/' + id, {json: event, file: data['file']}, (data: FetchResponseData) => {
             const {status, json} = data;
-            if (status === 200) {
-                if (json.status === 200) {
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
                     Bus.emit(Events.RouteUrl, UrlPathnames.Event + '?id=' + id);
                     return;
                 }
@@ -38,8 +38,8 @@ export default class EventEditFormModel {
         fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
                 const {status, json} = data;
-                if (status === 200) {
-                    if (json.status === 200) {
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
                         const event = <EventData>json.body;
                         Bus.emit(Events.EventRes, event);
                     } else {
