@@ -19,13 +19,13 @@ export default class SignupView {
         Bus.on(Events.ValidationOk, this.#validationHandle);
     }
 
-    #validationHandle = ((error: string) => {
+    #validationHandle = (error: string) => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
         if (error) {
             this.#showServerErrors(error);
         }
-    }).bind(this);
+    };
 
     render() {
         this.#parent.innerHTML = template();

@@ -24,9 +24,9 @@ export default class SignupController {
         this.#view.disable();
     }
 
-    #validationHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
+    #validationHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
         this.#makeValidation(inputsData);
-    }).bind(this);
+    };
 
     #makeValidation(inputsData: Map<string, { errors: string[], value: string }>) {
         signupValidateFields(inputsData);

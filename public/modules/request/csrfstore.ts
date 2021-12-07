@@ -13,13 +13,13 @@ class CSRFStore {
         return this.#token;
     }
 
-    #csrfGetHandle = ((token: string) => {
+    #csrfGetHandle = (token: string) => {
         this.#token = token;
-    }).bind(this);
+    };
 
-    #csrfDeleteHandle = (() => {
+    #csrfDeleteHandle = () => {
         this.#token = undefined;
-    }).bind(this);
+    };
 }
 
 export default new CSRFStore();

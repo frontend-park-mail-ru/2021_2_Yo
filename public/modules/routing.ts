@@ -40,19 +40,19 @@ class Router {
         }
     };
 
-    #handleUpdate = ((params: string) => {
+    #handleUpdate = (params: string) => {
         if (this.#path && (window.location.search !== params)) {
             window.history.pushState({}, '', this.#path + params);
         }
-    }).bind(this);
+    };
 
-    #handleUrl = ((url: string) => {
+    #handleUrl = (url: string) => {
         this.route(<UrlPathnames>url);
-    }).bind(this);
+    };
 
-    #handleBack = (() => {
+    #handleBack = () => {
         this.back();
-    }).bind(this);
+    };
 
     add(path: UrlPathnames, controllers: Controllers) {
         this.#controllers.set(path, controllers);

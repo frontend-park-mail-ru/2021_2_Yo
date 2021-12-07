@@ -47,13 +47,13 @@ export default class EventBoardComponent {
         this.render(data);
     };
 
-    #eventsHandle = ((data: EventData[]) => {
+    #eventsHandle = (data: EventData[]) => {
         this.render(data);
-    }).bind(this);
+    };
 
-    #eventsError = (() => {
+    #eventsError = () => {
         this.error();
-    }).bind(this);
+    };
 
     error() {
         this.#parent.innerHTML = errorTemplate();

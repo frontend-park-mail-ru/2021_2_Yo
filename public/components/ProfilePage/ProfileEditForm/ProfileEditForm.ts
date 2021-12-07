@@ -23,10 +23,10 @@ export default class ProfileEditForm {
         Bus.on(Events.ValidationOk, this.#validationHandle);
     }
 
-    #validationHandle = (() => {
+    #validationHandle = () => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
-    }).bind(this);
+    };
 
     render(user?: UserData) {
         this.#parent.innerHTML = template();
@@ -43,7 +43,7 @@ export default class ProfileEditForm {
         formContainer.innerHTML = profileForm({ user });
 
         const form = <HTMLElement>document.getElementById('form');
-        form.addEventListener('submit', this.#mainFormSubmitHandle.bind(this));
+        form.addEventListener('submit', this.#mainFormSubmitHandle);
 
         const cancelButton = <HTMLElement>document.getElementById('cancelButton');
         cancelButton.addEventListener('click', this.#cancelEdit);
@@ -60,7 +60,7 @@ export default class ProfileEditForm {
         formContainer.innerHTML = passwordForm();
 
         const passForm = <HTMLElement>document.getElementById('passwordForm');
-        passForm.addEventListener('submit', this.#passwordFormSubmitHandle.bind(this));
+        passForm.addEventListener('submit', this.#passwordFormSubmitHandle);
 
         const cancelButton = <HTMLElement>document.getElementById('cancelButton');
         cancelButton.addEventListener('click', this.#cancelEdit);
@@ -90,12 +90,12 @@ export default class ProfileEditForm {
     #removeListeners() {
         const form = <HTMLElement>document.getElementById('form');
         if (form) {
-            form.removeEventListener('submit', this.#mainFormSubmitHandle.bind(this));
+            form.removeEventListener('submit', this.#mainFormSubmitHandle);
         }
 
         const passwordForm = <HTMLElement>document.getElementById('passwordForm');
         if (passwordForm) {
-            passwordForm.removeEventListener('submit', this.#passwordFormSubmitHandle.bind(this));
+            passwordForm.removeEventListener('submit', this.#passwordFormSubmitHandle);
         }
 
         const cancelButton = <HTMLElement>document.getElementById('cancelButton');
@@ -118,7 +118,7 @@ export default class ProfileEditForm {
         });
     }
 
-    #passwordFormSubmitHandle = ((ev: Event) => {
+    #passwordFormSubmitHandle = (ev: Event) => {
         ev.preventDefault();
 
         this.#inputsData.clear();
@@ -136,9 +136,9 @@ export default class ProfileEditForm {
         });
 
         Bus.emit(Events.UserPasswordEditReq, this.#inputsData);
-    });
+    };
 
-    #mainFormSubmitHandle = ((ev: Event) => {
+    #mainFormSubmitHandle = (ev: Event) => {
         ev.preventDefault();
 
         this.#inputsData.clear();
@@ -167,7 +167,7 @@ export default class ProfileEditForm {
         });
 
         Bus.emit(Events.UserEditReq, { input: this.#inputsData, file });
-    });
+    };
 
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {

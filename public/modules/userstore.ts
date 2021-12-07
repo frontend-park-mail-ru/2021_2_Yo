@@ -18,13 +18,13 @@ class UserStore {
         this.#user = undefined;
     }
 
-    #userHandle = ((user: UserData) => {
+    #userHandle = (user: UserData) => {
         this.#user = user;
-    }).bind(this);
+    };
 
-    #logoutHandle = (() => {
+    #logoutHandle = () => {
         this.#user = undefined;
-    }).bind(this);
+    };
 }
 
 export default new UserStore();

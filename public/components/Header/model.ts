@@ -10,7 +10,7 @@ export default class HeaderModel {
         Bus.on(Events.UserLogout, this.#logoutHandle);
     }
 
-    #userHandle = (() => {
+    #userHandle = () => {
         const stored = UserStore.get();
         if (stored) {
             Bus.emit(Events.UserRes, stored);
@@ -37,12 +37,12 @@ export default class HeaderModel {
                 }
             );
         }
-    }).bind(this);
+    };
 
-    #logoutHandle = (() => {
+    #logoutHandle = () => {
         void fetchGet(ApiUrls.Logout);
         Bus.emit(Events.CSRFDelete);
-    }).bind(this);
+    };
 
     disable() {
         Bus.off(Events.UserReq, this.#userHandle);

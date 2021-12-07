@@ -96,12 +96,12 @@ export default class ProfilePageController {
         this.#model.getSubscribers(id);
     });
 
-    #userErrorRenderHandle = (() => {
+    #userErrorRenderHandle = () => {
         const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         this.#model.getUser(userURLId);
-    }).bind(this);
+    };
 
-    #renderHandle = (() => {
+    #renderHandle = () => {
         const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         const user = UserStore.get();
         if (user?.id === userURLId) {
@@ -109,7 +109,7 @@ export default class ProfilePageController {
         } else {
             this.#model.getUser(userURLId);
         }
-    }).bind(this);
+    };
 
     #userGetHandle = ((user: UserData) => {
         this.#view.render(user);

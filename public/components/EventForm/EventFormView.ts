@@ -33,10 +33,10 @@ export abstract class EventFormView {
         Bus.on(Events.ValidationOk, this.validationHandle);
     }
 
-    protected validationHandle = (() => {
+    protected validationHandle = () => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
-    }).bind(this);
+    };
 
     protected handleInputChange(input: HTMLInputElement, key: string) {
         input.classList.remove('form-input_correct');
