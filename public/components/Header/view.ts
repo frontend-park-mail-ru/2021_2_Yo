@@ -110,7 +110,7 @@ export default class HeaderView {
     #inputHandle = () => {
         const value = this.#input?.value;
         FilterStore.set(FilterParams.Query, value);
-    });
+    };
 
     #logoutHandle = () => {
         this.#popupShown = !this.#popupShown;
