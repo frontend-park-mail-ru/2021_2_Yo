@@ -14,7 +14,7 @@ const fallback = '' +
     '    <title>Ошибка</title>\n' +
     '</head>\n' +
     '<body>\n' +
-    '    <p>Интернет крякнул</p>\n' +
+    '    <p>Нет подключения к интернету</p>\n' +
     '</body>\n' +
     '</html>';
 
@@ -40,7 +40,8 @@ function offlineResponse() {
 }
 
 function putInCache(event: FetchEvent, onlineResponse: Response) {
-    if (event.request.method === 'GET' && onlineResponse.status === 200) {
+    console.log(onlineResponse);
+    if (event.request.method === 'GET' && (onlineResponse.status === 200 || onlineResponse.type == 'opaque')) {
         const responseClone = onlineResponse.clone();
         void caches.open(CACHE_NAME)
             .then((cache) => {
@@ -54,10 +55,6 @@ function putInCache(event: FetchEvent, onlineResponse: Response) {
 }
 
 self.addEventListener('fetch', (event) => {
-    // if (event.request.url.match('^.*\\.(css|js)$')) {
-    //     return;
-    // }
-
     const staticReq = event.request.url.match('^.*\\.(jpg|png|jpeg|woff|ico|gif|webp|webm)$');
 
     if (staticReq) {

@@ -165,7 +165,8 @@ export default class EventPageView {
                 map.setZoom(ZOOM);
             }).catch(() => {
                 const container = <HTMLElement>document.getElementById('mapContainer');
-                container.textContent = 'Ошибка подключения к картам';
+                if (container)
+                    container.textContent = 'Ошибка подключения к картам';
             });
         }
     }
