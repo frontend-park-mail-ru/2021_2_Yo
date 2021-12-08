@@ -1,0 +1,50 @@
+.suggest-list-parent {
+    position: relative;
+}
+
+.suggest-list {
+    padding: 10px 0px;
+    box-sizing: border-box;
+    width: 100%;
+    background: white;
+    list-style-type: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    width: 100%;
+    z-index: 400;
+}
+
+.suggest-list__li-wrapper {
+    color: #505050;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.suggest-list__li_hover {
+    background: var(--category-selected);
+}
+
+.suggest-list__li-wrapper:hover {
+    background: var(--category-selected);
+}
+
+.suggest-list__li {
+    padding: 7px 15px;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.suggest-list_fade-out {
+    animation: fadeOut .5s;
+}
