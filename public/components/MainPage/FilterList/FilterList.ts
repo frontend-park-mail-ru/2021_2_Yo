@@ -80,7 +80,8 @@ export default class FilterListComponent {
         });
         this.#tagInput?.addEventListener('keydown', this.#handleTagAdd);
         this.#tagPlus?.addEventListener('click', this.#handleTagAdd);
-        this.#dateInput?.addEventListener('input', this.#handleDateChange);
+        this.#dateInput?.addEventListener('change', this.#handleDateChange);
+        this.#dateInput?.addEventListener('input', this.#handleDateInput);
         this.#dateInput?.addEventListener('click', this.#handleCalendarRender);
         this.#cityInput?.addEventListener('input', this.#handleCityInput);
     }
@@ -128,7 +129,15 @@ export default class FilterListComponent {
         this.#filter = FilterStore.set(FilterParams.Tags, tags);
     };
 
+    #handleDateInput = () => {
+        if (this.#dateInput?.value.trim() === '') {
+            this.#filter = FilterStore.set(FilterParams.Date, undefined);
+            return;
+        }
+    };
+
     #handleDateChange = () => {
+        this.#dateInput?.classList.remove('form-input_changed');
         const date = <string>this.#dateInput?.value;
         this.#filter = FilterStore.set(FilterParams.Date, date);
     };
@@ -161,7 +170,8 @@ export default class FilterListComponent {
             });
         }
         this.#tagPlus?.removeEventListener('click', this.#handleTagAdd);
-        this.#dateInput?.removeEventListener('input', this.#handleDateChange);
+        this.#dateInput?.removeEventListener('change', this.#handleDateChange);
+        this.#dateInput?.removeEventListener('input', this.#handleDateInput);
         this.#dateInput?.removeEventListener('click', this.#handleCalendarRender);
         this.#cityInput?.removeEventListener('input', this.#handleCityInput);
     }
@@ -185,13 +195,7 @@ export default class FilterListComponent {
         }
 
         if (this.#filter['date'] !== undefined && this.#filter['date'] !== '') {
-            const date = this.#filter['date']?.split('.').reduce((prev, curr) => {
-                return curr + '-' + prev;
-            }, '');
-            this.#filter['date'] = date?.slice(0, date.length - 1);
-            if (this.#dateInput) {
-                this.#dateInput.value = this.#filter['date'];
-            }
+            if (this.#dateInput) this.#dateInput.value = this.#filter['date'];
         }
 
         if (this.#filter['city'] !== undefined && this.#filter['city'] !== '') {

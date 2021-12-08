@@ -64,16 +64,15 @@ export abstract class EventFormView {
     };
 
     deleteTag = (e: MouseEvent) => {
-        const target = <HTMLElement>e.target;
-        const tagWrapper = <HTMLElement>e.currentTarget;
+        const target = <HTMLElement>e.currentTarget;
 
-        if (!target || !tagWrapper || !target.dataset['tag'])
-            return;
+        if (!target || !target.dataset['tag']) return;
 
         this.eventTags = this.eventTags.filter(tag => tag !== target.dataset['tag']);
 
-        tagWrapper.removeEventListener('click', this.deleteTag);
-        tagWrapper.outerHTML = '';
+        target.removeEventListener('click', this.deleteTag);
+        const tag = <HTMLElement>document.getElementById('tag-' + target.dataset['tag']);
+        tag.outerHTML = '';
     };
 
     #rerenderTags() {
@@ -89,7 +88,7 @@ export abstract class EventFormView {
         });
 
         this.eventTags.map(tag => {
-            const tagWrapper = <HTMLElement>document.getElementById('tag-' + tag);
+            const tagWrapper = <HTMLElement>document.getElementById('tag-cross-' + tag);
             if (tagWrapper) tagWrapper.addEventListener('click', this.deleteTag);
         });
     }
