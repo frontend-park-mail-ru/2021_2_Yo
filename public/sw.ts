@@ -40,7 +40,6 @@ function offlineResponse() {
 }
 
 function putInCache(event: FetchEvent, onlineResponse: Response) {
-    console.log(onlineResponse);
     if (event.request.method === 'GET' && (onlineResponse.status === 200 || onlineResponse.type == 'opaque')) {
         const responseClone = onlineResponse.clone();
         void caches.open(CACHE_NAME)

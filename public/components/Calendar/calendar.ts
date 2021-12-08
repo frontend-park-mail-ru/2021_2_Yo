@@ -24,6 +24,7 @@ export default class Calendar {
     #lastDayIndex?: number;
     #nextMonthDays?: number;
     #parent: HTMLElement;
+    #dateCell?: HTMLElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -80,21 +81,27 @@ export default class Calendar {
         let days = '';
 
         for (let i = <number>this.#firstDayIndex; i > 0; i--) {
-            days += `<div class="prev-date" data-month="${this.#date.getMonth() - 1}">
+            days += `<div class="prev-date" data-month="${this.#date.getMonth() - 1}" 
+                     data-fulldate="${i}.${this.#date.getMonth()+1}.${this.#date.getFullYear()}">
                         ${<number>this.#prevMonthLastDay - i + 1}
                     </div>`;
         }
 
         for (let i = 1; i <= <number>this.#lastDay; i++) {
             if (i === new Date().getDate() && this.#date.getMonth() === new Date().getMonth()) {
-                days += `<div class="today" data-month="${this.#date.getMonth()}">${i}</div>`;
+                days += `<div class="today" data-month="${this.#date.getMonth()}" 
+                         data-fulldate="${i}.${this.#date.getMonth()+1}.${this.#date.getFullYear()}">${i}</div>`;
             } else {
-                days += `<div data-month="${this.#date.getMonth()}">${i}</div>`;
+                days += `<div data-month="${this.#date.getMonth()}"
+                         data-fulldate="${i}.${this.#date.getMonth()+1}.${this.#date.getFullYear()}">${i}</div>`;
             }
         }
 
         for (let i = 1; i <= <number>this.#nextMonthDays; i++) {
-            days += `<div class="next-date" data-month="${this.#date.getMonth() + 1}">${i}</div>`;
+            days += `<div class="next-date" data-month="${this.#date.getMonth() + 1}"
+                     data-fulldate="${i}.${this.#date.getMonth()+1}.${this.#date.getFullYear()}">
+                        ${i}
+                     </div>`;
         }
 
         const monthDays = <HTMLElement>document.getElementById('calendar');
@@ -107,11 +114,17 @@ export default class Calendar {
         <div class="weekday">Сб</div>
         <div class="weekday">Вс</div>` + days;
 
+        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        if (dateInput) {
+            const dateCell = document.querySelectorAll(`[data-fulldate='${dateInput.value?.trim()}']`);
+            if (dateCell.length)
+                dateCell[0].classList.add('clicked');
+        }
+
         this.#addListeners();
     }
 
-    disable(e: Event) {
-        e.preventDefault();
+    disable() {
         this.#parent.innerHTML = '';
         this.#removeListeners();
     }
@@ -196,6 +209,8 @@ export default class Calendar {
         const inputError = <HTMLElement>document.getElementById('dateError');
         if (inputError)
             inputError.classList.add('error_none');
+
+        this.disable();
     }
 
     #renderNextMonth = () => {

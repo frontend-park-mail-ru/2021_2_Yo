@@ -135,6 +135,10 @@
     object-fit: cover;
 }
 
+.category {
+    color: var(--light-orange) !important;
+}
+
 @media only screen and (max-width: 649px) {
     .event-block {
         width: 100%;
