@@ -145,13 +145,15 @@ class FilterStore {
     }
 
     set(param: FilterParams, value?: string | string[] | number, header?: boolean): FilterData {
+        let filter = fStore.get();
+        if (filter[param] === <undefined>value) return fStore.get();
         this.#filter[param] = <undefined>value;
         const handle = (filter: FilterData) => {
             if (this.#isEqual(filter)) {
                 this.#handleFilterChange(header);
             }
         };
-        const filter = fStore.get();
+        filter = fStore.get();
         setTimeout(handle, REQ_WAIT_CHANGE_TIME_MSEC, filter);
         return filter;
     }

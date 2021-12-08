@@ -8,7 +8,12 @@ class CityStore {
 
     constructor() {
         this.cities = new Set<string>();
-        Bus.on(Events.CitiesRes, (cities) => {this.cities = new Set<string>(cities);});
+        Bus.on(Events.CitiesRes, (cities: string[]) => {
+            cities = cities.filter((city) => {
+                if (city !== '') return city;
+            });
+            this.cities = new Set<string>(cities.sort());
+        });
         Bus.on(Events.CityAdd, this.#addCity);
         Bus.on(Events.EventEditReq, this.#handleNewCity);
         Bus.on(Events.EventCreateReq, this.#handleNewCity);
@@ -43,7 +48,10 @@ class CityStore {
     }
 
     #addCity = (city: string) => {
-        this.cities.add(city);
+        const temp = [...this.cities];
+        temp.push(city);
+        temp.sort();
+        this.cities = new Set(temp);
     };
 }
 
