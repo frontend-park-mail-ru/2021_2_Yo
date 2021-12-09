@@ -32,7 +32,8 @@ export default class SuggestList {
         const reg = new RegExp(search);
         const res = this.#list.filter((item) => {
             if (item.toLowerCase().match(reg)) return item;
-        }).slice(0, this.#length);
+        });
+        // }).slice(0, this.#length);
         return res;
     }
 
