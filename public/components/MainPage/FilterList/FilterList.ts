@@ -24,6 +24,7 @@ export default class FilterListComponent {
     #citySuggestList?: SuggestList;
     #tagPlus?: HTMLElement;
     #dateCross?: HTMLElement;
+    #cityCross?: HTMLElement;
     #filter: FilterData;
 
     constructor(parent: HTMLElement) {
@@ -88,8 +89,16 @@ export default class FilterListComponent {
         this.#dateCross?.addEventListener('click', this.#handleDateDelete);
         this.#dateInput?.addEventListener('click', this.#handleCalendarRender);
         this.#cityInput?.addEventListener('suggest', <EventListener>this.#handleCityInput);
+        this.#cityCross?.addEventListener('click', this.#handleCityDelete);
     }
 
+    #handleCityDelete = () => {
+        if (this.#cityInput) {
+            this.#cityInput.value = '';
+            this.#cityInput.focus();
+        }
+    };
+    
     #handleDateDelete = () => {
         if (this.#dateInput) {
             this.#dateInput.value = '';
@@ -183,7 +192,8 @@ export default class FilterListComponent {
         this.#dateInput?.removeEventListener('change', this.#handleDateChange);
         this.#dateInput?.removeEventListener('input', this.#handleDateInput);
         this.#dateInput?.removeEventListener('click', this.#handleCalendarRender);
-        this.#cityInput?.addEventListener('suggest', <EventListener>this.#handleCityInput);
+        this.#cityInput?.removeEventListener('suggest', <EventListener>this.#handleCityInput);
+        this.#cityCross?.removeEventListener('click', this.#handleCityDelete);
     }
 
     #renderFilter() {
@@ -230,6 +240,7 @@ export default class FilterListComponent {
         this.#dateInput = <HTMLInputElement>document.getElementById('dateInput');
         this.#dateCross = <HTMLElement>document.getElementById('date-delete-img');
         this.#cityInput = <HTMLInputElement>document.getElementById('filter-city-input');
+        this.#cityCross = <HTMLElement>document.getElementById('city-delete-img');
         const citySuggestList = <HTMLElement>document.getElementById('city-suggest-list');
         this.#citySuggestList = new SuggestList('city', citySuggestList, this.#cityInput, CityStore.get());
         this.#addListeners();
