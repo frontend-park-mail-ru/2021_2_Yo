@@ -7,33 +7,34 @@ export default class SuggestList {
     #input: HTMLInputElement;
     #list: string[];
     #currentList?: string[];
-    #length: number;
     #shown: boolean;
     #selected?: number;
+    #top: number;
+    #bottom: number;
 
-    constructor(name: string, parent: HTMLElement, input: HTMLInputElement, list: Set<string> | Array<string>, length = 3) {
+    constructor(name: string, parent: HTMLElement, input: HTMLInputElement, list: Set<string> | Array<string>) {
         this.#name = name;
         this.#parent = parent;
         this.#input = input;
         this.#list = [...list].filter(item => {if (item !== '') return item;});
-        this.#length = length;
         this.#input.addEventListener('focus', this.#render);
         this.#input.addEventListener('focusout', this.#hide);
         this.#input.addEventListener('input', this.#render);
         this.#shown = false;
+        this.#top = 0;
+        this.#list.length > 3 ? this.#bottom = 3 : this.#bottom = this.#list.length;
     }
 
     #autoCompleteMatch(search: string): string[] {
         search = search.trim().toLowerCase();
         if (search === '') {
-            return this.#list.slice(0, this.#length);
+            return this.#list;
         }
 
         const reg = new RegExp(search);
         const res = this.#list.filter((item) => {
             if (item.toLowerCase().match(reg)) return item;
         });
-        // }).slice(0, this.#length);
         return res;
     }
 
@@ -91,15 +92,41 @@ export default class SuggestList {
 
         if (e.code === 'ArrowUp') {
             if (this.#selected === undefined || this.#selected === 0) {
-                this.#selected = this.#length - 1; 
+                this.#selected = this.#currentList.length - 1; 
+                this.#bottom = this.#selected;
+                this.#top = this.#currentList.length > 3 ? this.#bottom - 3 : 0;
+                if (this.#top !== 0) {
+                    const top = (<HTMLElement>items[this.#top]).offsetTop;
+                    const list = <HTMLElement>document.getElementById('suggest-list-' + this.#name);
+                    list.scrollTop = top;
+                }
             } else {
                 this.#selected -= 1;
+                if (this.#selected < this.#top) {
+                    const top = (<HTMLElement>items[this.#top]).offsetHeight;
+                    const list = <HTMLElement>document.getElementById('suggest-list-' + this.#name);
+                    list.scrollBy(0, -top);
+
+                    this.#top -= 1;
+                    this.#bottom -= 1;
+                }
             }
         } else {
-            if (this.#selected === this.#length - 1 || this.#selected === undefined) {
+            if (this.#selected === this.#currentList.length - 1 || this.#selected === undefined) {
                 this.#selected = 0;
+                this.#top = 0;
+                this.#bottom = this.#currentList.length > 3 ? 3 : this.#currentList.length - 1;
+                const list = <HTMLElement>document.getElementById('suggest-list-' + this.#name);
+                list.scrollTop = 0;
             } else {
                 this.#selected += 1;
+                if (this.#selected > this.#bottom) {
+                    const top = (<HTMLElement>items[this.#top]).offsetHeight;
+                    const list = <HTMLElement>document.getElementById('suggest-list-' + this.#name);
+                    list.scrollBy(0, top);
+                    this.#top += 1;
+                    this.#bottom = this.#selected;
+                }
             }
         }
         items[this.#selected].classList.add('suggest-list__li_hover');
@@ -107,8 +134,10 @@ export default class SuggestList {
 
     #rerender = () => {
         this.#removeEventListeners();
-        this.#selected = undefined;
         this.#currentList = this.#autoCompleteMatch(this.#input.value);
+        this.#selected = undefined;
+        this.#top = 0;
+        this.#bottom = this.#currentList.length > 3 ? 3 : this.#currentList.length - 1 ;
         if (this.#currentList.length === 0) {
             this.#dispatchSuggest(this.#input.value.trim());
             this.#hide();
