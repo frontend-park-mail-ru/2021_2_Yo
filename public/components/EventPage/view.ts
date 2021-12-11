@@ -35,7 +35,7 @@ export default class EventPageView {
 
     #addListeners() {
         const editButton = document.getElementById('editButton');
-        editButton?.addEventListener('mouseover', this.#editHandle);
+        editButton?.addEventListener('click', this.#editHandle);
 
         const deleteButton = document.getElementById('deleteButton');
         deleteButton?.addEventListener('click', this.#deleteHandle);
