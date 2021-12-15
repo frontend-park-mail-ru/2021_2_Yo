@@ -3,6 +3,7 @@ import Events from '@eventbus/events';
 import EventPageModel from '@event-page/model';
 import EventPageView from '@event-page/view';
 import { EventData, UserData } from '@/types';
+import userstore from '@modules/userstore';
 
 export default class EventPageController {
     #view: EventPageView;
@@ -30,8 +31,25 @@ export default class EventPageController {
         Bus.on(Events.EventFavRes, this.#handleFavRes);
         Bus.on(Events.EventFavReq, this.#getIsFav);
 
+        Bus.on(Events.FriendsReq, this.#getFriends);
+
+        Bus.on(Events.InviteReq, this.#makeInvitation);
+        Bus.on(Events.InviteRes, this.#closeInvitePopup);
+
         this.#model.getEvent(eventId);
     }
+
+    #closeInvitePopup = (() => {
+        this.#view.hidePopup();
+    });
+
+    #makeInvitation = ((userId: string) => {
+        this.#model.makeInvitation(userId);
+    });
+
+    #getFriends = (() => {
+        this.#model.getFriends();
+    });
 
     #addReqHandle = ((eventId: string) => {
         this.#model.addEventToFavourite(eventId);
@@ -48,6 +66,7 @@ export default class EventPageController {
 
     #authorHandle = ((author: UserData) => {
         this.#view.render(<EventData>this.#event, author);
+        this.#view.subscribe();
     });
 
     #eventDeleteHandle = ((eventId: string) => {
@@ -76,6 +95,11 @@ export default class EventPageController {
 
         Bus.off(Events.EventFavRes, this.#handleFavRes);
         Bus.off(Events.EventFavReq, this.#getIsFav);
+
+        Bus.off(Events.FriendsReq, this.#getFriends);
+
+        Bus.off(Events.InviteReq, this.#makeInvitation);
+        Bus.off(Events.InviteRes, this.#closeInvitePopup);
 
         this.#view.disable();
     }

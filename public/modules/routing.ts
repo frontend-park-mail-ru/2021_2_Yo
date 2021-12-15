@@ -7,6 +7,7 @@ interface Controller {
 
     enable(): void;
 }
+
 type Controllers = {
     header?: Controller,
     content: Controller,
@@ -34,7 +35,7 @@ class Router {
         for (const target of path) {
             if (target instanceof HTMLAnchorElement) {
                 e.preventDefault();
-                this.route(<UrlPathnames>(target.pathname + target.search));
+                this.route(<UrlPathnames>(target.pathname + target.search), <string>target.dataset.out);
                 break;
             }
         }
@@ -73,8 +74,13 @@ class Router {
         return UrlPathnames.Error;
     }
 
-    route(path?: UrlPathnames) {
+    route(path?: UrlPathnames, out?: string) {
         if (window.location.pathname + window.location.search === path) return;
+
+        if (path && out) {
+            window.location.href = path;
+            return;
+        }
 
         if (path) {
             window.history.pushState({}, '', path);
