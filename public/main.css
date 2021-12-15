@@ -23,6 +23,8 @@
   --light-orange: #ff965b;
   --btn_gray: #a4a4a4;
   --header-overlay-bg: rgba(216, 224, 255, 0.5);
+  --vk-color: #0077ff;
+  --tg-color: #37aee2;
   --app-bg-color: #efefef;
   --header-bg-color: linear-gradient(90deg, #490063 0%, #08bbbb 100%);
   --header-height: 56px;
@@ -367,6 +369,24 @@ textarea {
 
 .button-blue {
   background: var(--blue-btn-color);
+  border: 0 solid;
+  border-radius: 5px;
+
+  padding: 5px 20px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.65rem;
+  color: white;
+
+  width: max-content;
+
+  cursor: pointer;
+}
+
+.button-gray {
+  background: var(--light-gray-color);
   border: 0 solid;
   border-radius: 5px;
 

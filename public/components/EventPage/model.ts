@@ -4,6 +4,8 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import userstore from '@modules/userstore';
 
+let eventId: number;
+
 export default class EventPageModel {
     getEvent(id: string) {
         fetchGet(ApiUrls.Events + '/' + id,
@@ -12,6 +14,7 @@ export default class EventPageModel {
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         const event = <EventData>json.body;
+                        eventId = <number>event.id;
                         Bus.emit(Events.EventRes, event);
                     }
                 }
@@ -67,6 +70,9 @@ export default class EventPageModel {
                         const result = json.body.result;
                         Bus.emit(Events.EventFavRes, result);
                     }
+                    if (json.status === ApiStatus.NotAuthorized) {
+                        Bus.emit(Events.EventFavRes, false);
+                    }
                 }
             }
         );
@@ -83,5 +89,31 @@ export default class EventPageModel {
                 }
             }
         });
+    }
+
+    getFriends() {
+        fetchGet(ApiUrls.User + '/friends', (data: FetchResponseData) => {
+            const { status, json } = data;
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
+                    const users = <UserData[]>json.body.users;
+                    Bus.emit(Events.FriendsRes, users);
+                    return;
+                }
+            }
+        });
+    }
+
+    makeInvitation(userId: string) {
+        fetchPost(ApiUrls.User + '/' + userId + '/invite?eventId=' + eventId, {},
+            (data: FetchResponseData) => {
+                const { status, json } = data;
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
+                        console.log('ok');
+                    }
+                }
+            }
+        );
     }
 }

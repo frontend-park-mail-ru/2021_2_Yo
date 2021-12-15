@@ -59,6 +59,7 @@ export const ApiErrors = {
     409: 'Пользователь уже существует',
     500: 'Внутренняя ошибка сервера',
     404: 'Пользователь не найден',
+    401: 'Пользователь не авторизован',
 };
 
 export enum ApiStatus {
@@ -66,6 +67,7 @@ export enum ApiStatus {
     UserAlreadyExists = 409,
     Internal = 500,
     UserNotFound = 404,
+    NotAuthorized = 401,
 }
 
 export type ApiResponseJson = {

@@ -63,6 +63,12 @@ enum Events {
     SubscribeRes = 'subscribe:response',
     UnsubscribeReq = 'unsubscribe:request',
     UnsubscribeRes = 'unsubscribe:response',
+    FriendsReq = 'friends:request',
+    FriendsRes = 'friends:response',
+
+    // Invite
+    InviteReq = 'invite:request',
+    InviteRes = 'invite:response',
 
     // City Store
     CitiesRes = 'cities:request',
