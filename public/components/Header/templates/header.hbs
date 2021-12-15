@@ -6,28 +6,35 @@
         <div class="header__search">
             <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
         </div>
-        {{#if user}}
-            <div id="header-avatar" class="header__avatar-wrapper">
-                <img class="header__avatar"
-                {{#if user.imgUrl}}
-                    src="{{user.imgUrl}}"
-                {{else}}
-                    src="https://source.boringavatars.com/marble/32/{{user.name}}"
-                {{/if}}
-                >
+        {{!-- {{#if user}} --}}
+            <div class="flex">
+                <div id="header-notifications" class="header__button-wrapper" data-popupnum="0">
+                    <svg class="header__notifications">
+                        <use xlink:href="./server/img/sprite.svg#bell"></use>
+                    </svg>
+                </div>
+                <div id="header-avatar" class="header__button-wrapper" data-popupnum="1">
+                    <img class="header__avatar"
+                    {{#if user.imgUrl}}
+                        src="{{user.imgUrl}}"
+                    {{else}}
+                        src="https://source.boringavatars.com/marble/32/{{user.name}}"
+                    {{/if}}
+                    >
+                </div>
             </div>
-        {{else}}
+        {{!-- {{else}}
             <div>
             {{#each authAnchors}}
                 <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
             {{/each}}
             </div>
-        {{/if}}
+        {{/if}} --}}
     </div>
 </header>
 <div id="header-overlay" class="header-overlay header-overlay_hidden">
-    <div class="user-popup-wrapper content">
-        <div class="user-popup">
+    <div class="overlay-popup-wrapper content">
+        <div id="user-popup" class="overlay-popup user-popup hidden">
             <a class="user-popup-userblock" href="/user?id={{user.id}}">
                 <img class="header__avatar user-popup-avatar"
                 {{#if user.imgUrl}}
@@ -59,6 +66,9 @@
                     <span>Выйти из аккаунта</span>
                 </div>
             </a>
+        </div>
+        <div id="notifications-popup" class="overlay-popup notifications-popup hidden">
+            
         </div>
     </div>
 </div>

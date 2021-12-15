@@ -54,7 +54,6 @@
 
 ::-webkit-scrollbar-track {
   background: transparent;
-  /* margin-block-start: calc(var(--header-height) + 0.5em); */
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
 }
@@ -129,6 +128,10 @@ input:focus {
   background-color: var(--app-bg-color);
   margin-top: var(--header-height);
   overflow: visible;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .content {
