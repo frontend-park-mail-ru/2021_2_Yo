@@ -1,0 +1,19 @@
+{{#if users}}
+    <div id="userList" class="users-grid-list">
+        {{#each users}}
+            <a class="users-li" href="/user?id={{id}}">
+                {{#if imgUrl}}
+                    <img src="{{imgUrl}}" class="users-li__avatar">
+                {{else}}
+                    <img src="https://source.boringavatars.com/marble/32/{{name}}" class="users-li__avatar">
+                {{/if}}
+                <div class="primary-text">
+                    <div id="name">{{name}}</div>
+                    <div id="surname">{{surname}}</div>
+                </div>
+            </a>
+        {{/each}}
+    </div>
+{{else}}
+    <h2>Список пуст</h2>
+{{/if}}

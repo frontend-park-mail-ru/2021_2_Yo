@@ -1,0 +1,55 @@
+<div class="content">
+    <div class="back" id="backButton">< Назад</div>
+    <div class="primary-white-block profile-block">
+        <div class="profile-header">
+            {{#if user.imgUrl}}
+                <img src="{{user.imgUrl}}" class="profile-avatar">
+            {{else}}
+                <img src="https://source.boringavatars.com/marble/32/{{user.name}}" class="profile-avatar">
+            {{/if}}
+            <div class="profile-info">
+                {{#if permission}}
+                    <div class="buttons-block">
+                        <span class="primary-text primary-text_name">{{user.name}} {{user.surname}}</span>
+                        <svg class="button-edit" id="editButton">
+                            <use xlink:href="./server/img/sprite.svg#pencil"></use>
+                        </svg>
+                    </div>
+                {{else}}
+                    <div class="buttons-block">
+                        <span class="primary-text primary-text_name">{{user.name}} {{user.surname}}</span>
+                        <span class="profile-button-subscribe profile-button-subscribe_none" id="subscribeButton">
+                            <svg class="profile-button-subscribe__icon">
+                                <use xlink:href="./server/img/sprite.svg#plus"></use>
+                            </svg>
+                            <span>Подписаться</span>
+                        </span>
+                        <span class="profile-button-subscribe profile-button-subscribe_subscribed profile-button-subscribe_none"
+                              id="unsubscribeButton">
+                            <svg class="profile-button-subscribe__icon">
+                                <use xlink:href="./server/img/sprite.svg#ok"></use>
+                            </svg>
+                            <span>Вы подписаны</span>
+                        </span>
+                    </div>
+                {{/if}}
+                <div class="secondary-text">{{user.email}}</div>
+                {{#if user.description}}
+                    <div>
+                        <div class="primary-text">О себе</div>
+                        <div class="primary-text primary-text_small">{{user.description}}</div>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div id="mainContent" class="main-content">
+            <div class="profile-menu">
+                <span class="menu__item secondary-text menu__item_clicked" id="createdButton">СОЗДАННОЕ</span>
+                <span class="menu__item secondary-text" id="favouriteButton">ИЗБРАННОЕ</span>
+                <span class="menu__item secondary-text" id="subscriptionsButton">ПОДПИСКИ</span>
+                <span class="menu__item secondary-text" id="subscribersButton">ПОДПИСЧИКИ</span>
+            </div>
+            <div id="listBlock"></div>
+        </div>
+    </div>
+</div>

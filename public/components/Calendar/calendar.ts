@@ -24,11 +24,19 @@ export default class Calendar {
     #lastDayIndex?: number;
     #nextMonthDays?: number;
     #parent: HTMLElement;
+    #dateCell?: HTMLElement;
+    #dateInput: HTMLInputElement;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
 
-        this.#date = new Date();
+        this.#dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        if (this.#dateInput.value.trim()) {
+            const date = this.#dateInput.value.trim().split('.');
+            this.#date = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]));
+        } else {
+            this.#date = new Date();
+        }
         this.#date.setDate(1);
 
         this.#calculateDates();
@@ -86,25 +94,42 @@ export default class Calendar {
         }
 
         for (let i = 1; i <= <number>this.#lastDay; i++) {
+            const fullDate = new Date(this.#date.getFullYear(), this.#date.getMonth(), i).toLocaleDateString('ru-RU');
             if (i === new Date().getDate() && this.#date.getMonth() === new Date().getMonth()) {
-                days += `<div class="today" data-month="${this.#date.getMonth()}">${i}</div>`;
+                days += `<div class="today" data-month="${this.#date.getMonth()}" 
+                         data-fulldate="${fullDate}">${i}</div>`;
             } else {
-                days += `<div data-month="${this.#date.getMonth()}">${i}</div>`;
+                days += `<div data-month="${this.#date.getMonth()}"
+                         data-fulldate="${fullDate}">${i}</div>`;
             }
         }
 
         for (let i = 1; i <= <number>this.#nextMonthDays; i++) {
-            days += `<div class="next-date" data-month="${this.#date.getMonth() + 1}">${i}</div>`;
+            days += `<div class="next-date" data-month="${this.#date.getMonth() + 1}">
+                        ${i}
+                     </div>`;
         }
 
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
-        monthDays.innerHTML = days;
+        const monthDays = <HTMLElement>document.getElementById('calendar');
+        monthDays.innerHTML = `
+        <div class="weekday">Пн</div>
+        <div class="weekday">Вт</div>
+        <div class="weekday">Ср</div>
+        <div class="weekday">Чт</div>
+        <div class="weekday">Пт</div>
+        <div class="weekday">Сб</div>
+        <div class="weekday">Вс</div>` + days;
+
+        if (this.#dateInput) {
+            const dateCell = document.querySelectorAll(`[data-fulldate='${this.#dateInput.value?.trim()}']`);
+            if (dateCell.length)
+                dateCell[0].classList.add('clicked');
+        }
 
         this.#addListeners();
     }
 
-    disable(e: Event) {
-        e.preventDefault();
+    disable() {
         this.#parent.innerHTML = '';
         this.#removeListeners();
     }
@@ -116,7 +141,7 @@ export default class Calendar {
         prevMonthBtn.addEventListener('click', this.#renderPrevMonth);
         nextMonthBtn.addEventListener('click', this.#renderNextMonth);
 
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        const monthDays = <HTMLElement>document.getElementById('calendar');
         for (let i = 0; i < monthDays.children.length; i++) {
             const child = <HTMLElement>monthDays.children[i];
             child.addEventListener('click', this.#writeDate.bind(this,
@@ -142,7 +167,7 @@ export default class Calendar {
             nextMonthBtn.removeEventListener('click', this.#renderNextMonth);
         }
 
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        const monthDays = <HTMLElement>document.getElementById('calendar');
         if (monthDays) {
             for (let i = 0; i < monthDays.children.length; i++) {
                 const child = <HTMLElement>monthDays.children[i];
@@ -169,7 +194,7 @@ export default class Calendar {
     };
 
     #writeDate(day: number, month: number, dateCell: HTMLElement) {
-        const monthDays = <HTMLElement>document.getElementById('monthDays');
+        const monthDays = <HTMLElement>document.getElementById('calendar');
         for (let i = 0; i < monthDays.children.length; i++) {
             const child = <HTMLElement>monthDays.children[i];
             if (child.classList.contains('clicked')) {
@@ -178,8 +203,19 @@ export default class Calendar {
         }
 
         dateCell.classList.add('clicked');
-        const dateInput = <HTMLInputElement>document.getElementById('dateInput');
-        dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
+
+        this.#dateInput?.classList.remove('form-input_correct');
+        this.#dateInput?.classList.remove('form-input_error');
+        this.#dateInput?.classList.add('form-input_changed');
+        if (this.#dateInput)
+            this.#dateInput.value = new Date(this.#date.getFullYear(), month, day).toLocaleDateString('ru-RU');
+        this.#dateInput?.dispatchEvent(new Event('change'));
+
+        const inputError = <HTMLElement>document.getElementById('dateError');
+        if (inputError)
+            inputError.classList.add('error_none');
+
+        this.disable();
     }
 
     #renderNextMonth = () => {

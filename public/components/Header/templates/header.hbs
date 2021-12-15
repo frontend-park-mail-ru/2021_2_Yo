@@ -1,18 +1,10 @@
 <header id="header" class="header">
-    <div class="flex header__content header-text">
-        <a href="/">
+    <div class="flex header__content header-text content">
+        <a href="/" class="header__logo-anchor">
             <img id="header-logo" class="header__logo header-button" src="./img/logo.png">
         </a>
-        <div class="flex">
-            <div class="flex header__search">
-                <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
-                <svg id="header-search" class="header-button header__search-img">
-                    <use xlink:href="./server/img/sprite.svg#search"></use>
-                </svg>
-            </div>
-            <svg id="header-calendar" class="header-button header__calendar-img">
-                <use xlink:href="./server/img/sprite.svg#calendar"></use>
-            </svg>
+        <div class="header__search">
+            <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
         </div>
         {{#if user}}
             <div id="header-avatar" class="header__avatar-wrapper">
@@ -34,10 +26,10 @@
     </div>
 </header>
 <div id="header-overlay" class="header-overlay header-overlay_hidden">
-    <div class="user-popup-wrapper">
+    <div class="user-popup-wrapper content">
         <div class="user-popup">
             <a class="user-popup-userblock" href="/user?id={{user.id}}">
-                <img class="header__avatar"
+                <img class="header__avatar user-popup-avatar"
                 {{#if user.imgUrl}}
                     src="{{user.imgUrl}}"
                 {{else}}

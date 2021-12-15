@@ -27,7 +27,7 @@ export function fetchGet(url: string, callback?: Callback, error?: Callback) {
         headers = response.headers;
         return response.json();
     }).then(data => {
-        const json = data as ApiResponseJson;
+        const json = <ApiResponseJson>data;
         if (callback) {
             callback({
                 status: HTTPStatus,
@@ -48,13 +48,13 @@ export function fetchDelete(url: string, callback?: Callback, error?: Callback) 
         mode: 'cors',
         credentials: 'include',
         headers: {
-            'X-CSRF-Token': CSRFStore.get() as string,
+            'X-CSRF-Token': <string>CSRFStore.get(),
         }
     }).then((response) => {
         HTTPStatus = response.status;
         return response.json();
     }).then(data => {
-        const json = data as ApiResponseJson;
+        const json = <ApiResponseJson>data;
         if (callback) {
             callback({
                 status: HTTPStatus,
@@ -76,7 +76,7 @@ export function fetchPost(url: string, body: any, callback: Callback, error?: Ca
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            'X-CSRF-Token': CSRFStore.get() as string,
+            'X-CSRF-Token': <string>CSRFStore.get(),
         },
         body: JSON.stringify(body)
     }).then((response) => {
@@ -84,7 +84,7 @@ export function fetchPost(url: string, body: any, callback: Callback, error?: Ca
         headers = response.headers;
         return response.json();
     }).then(data => {
-        const json = data as ApiResponseJson;
+        const json = <ApiResponseJson>data;
         callback({
             status: HTTPStatus,
             json: json,
@@ -112,7 +112,7 @@ export function fetchPostMultipart(url: string, data: MultipartData, callback: C
         mode: 'cors',
         credentials: 'include',
         headers: {
-            'X-CSRF-Token': CSRFStore.get() as string,
+            'X-CSRF-Token': <string>CSRFStore.get(),
         },
         body: formData
     }).then((response) => {
@@ -120,7 +120,7 @@ export function fetchPostMultipart(url: string, data: MultipartData, callback: C
         headers = response.headers;
         return response.json();
     }).then(data => {
-        const json = data as ApiResponseJson;
+        const json = <ApiResponseJson>data;
         callback({
             status: HTTPStatus,
             json: json,

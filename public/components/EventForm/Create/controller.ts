@@ -1,10 +1,10 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import EventFormView from '@event-create/view';
+import EventCreateView from '@event-create/view';
 import EventFormModel from '@event-create/model';
-import {eventValidateFields} from '@modules/validation';
+import { eventValidateFields } from '@modules/validation';
 import UserStore from '@modules/userstore';
-import {UrlPathnames} from '@/types';
+import { UrlPathnames } from '@/types';
 
 type MultipartData = {
     input: Map<string, { errors: string[], value: string }>;
@@ -12,12 +12,12 @@ type MultipartData = {
 };
 
 export default class EventFormController {
-    #view: EventFormView;
+    #view: EventCreateView;
     #model: EventFormModel;
     #userResSubscribe: boolean;
 
     constructor(parent: HTMLElement) {
-        this.#view = new EventFormView(parent);
+        this.#view = new EventCreateView(parent);
         this.#model = new EventFormModel();
         this.#userResSubscribe = false;
     }

@@ -1,0 +1,50 @@
+<form id="form" class="editform">
+
+    <div class="input-block input-block_event-thin">
+        <div class="input-label">Имя</div>
+        <input class="form-input" placeholder="{{user.name}}" id="nameInput" maxlength="255"
+               value="{{user.name}}"/>
+        <span class="error error_none" id="nameError">none</span>
+    </div>
+
+    <div class="input-block input-block_event-thin">
+        <div class="input-label">Фамилия</div>
+        <input class="form-input" placeholder="{{user.surname}}" id="surnameInput" value="{{user.surname}}" maxlength="50"/>
+        <span class="error error_none" id="surnameError">none</span>
+    </div>
+
+    <div class="input-block input-block_event-wide">
+        <div class="input-label">О себе</div>
+        <textarea class="form-input" rows="7" id="selfDescriptionInput"
+                  maxlength="150">{{user.description}}</textarea>
+        <span class="error error_none" id="selfDescriptionError">none</span>
+    </div>
+
+    <div class="input-block input-block_event-thin">
+        <div class="input-label">Фотография</div>
+        <input class="photo-input_none" id="avatarInput" type="file" accept="image/*"/>
+        <div class="input-button-block">
+            {{#if user.imgUrl}}
+                <span class="photo-input photo-input-label" id="photo-label">Новое фото не выбрано</span>
+            {{else}}
+                <span class="photo-input photo-input-label" id="photo-label">Не выбрано</span>
+            {{/if}}
+            <label for="avatarInput">
+                <svg class="input-btn">
+                    <use xlink:href="./server/img/sprite.svg#add-photo"></use>
+                </svg>
+            </label>
+        </div>
+        {{#if user.imgUrl}}
+            <img class="photo" id="photo" src="{{user.imgUrl}}">
+        {{else}}
+            <img class="photo" id="photo">
+        {{/if}}
+        <span class="error error_none" id="avatarError">none</span>
+    </div>
+
+    <div class="buttons-block">
+        <span id="cancelButton" class="button-white">Отмена</span>
+        <button type="submit" class="button-blue">Сохранить</button>
+    </div>
+</form>

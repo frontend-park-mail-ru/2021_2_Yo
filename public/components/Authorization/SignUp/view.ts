@@ -2,8 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as template from '@signup/signup.hbs';
 import '@authorization/Authorization.css';
-
-const CHILD_NUM = 2;
+import { InputData } from '@/types';
 
 export default class SignupView {
     #parent: HTMLElement;
@@ -20,45 +19,55 @@ export default class SignupView {
         Bus.on(Events.ValidationOk, this.#validationHandle);
     }
 
-    #validationHandle = ((error: string) => {
+    #validationHandle = (error: string) => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
         if (error) {
             this.#showServerErrors(error);
         }
-    }).bind(this);
+    };
 
     render() {
         this.#parent.innerHTML = template();
 
-        const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+        const nameInput = <HTMLInputElement>document.getElementById('nameInput');
         this.#inputs.set('name', nameInput);
-        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
+        const surnameInput = <HTMLInputElement>document.getElementById('surnameInput');
         this.#inputs.set('surname', surnameInput);
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        const emailInput = <HTMLInputElement>document.getElementById('emailInput');
         this.#inputs.set('email', emailInput);
-        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
+        const passwordInput1 = <HTMLInputElement>document.getElementById('passwordInput1');
         this.#inputs.set('password1', passwordInput1);
-        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
+        const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
         this.#inputs.set('password2', passwordInput2);
 
         this.#addListeners();
     }
 
     #addListeners() {
-        const form = document.getElementById('regForm') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('regForm');
         form.addEventListener('submit', this.#signup.bind(this));
 
         const back = <HTMLElement>document.getElementById('back');
         back.addEventListener('click', this.#back);
+
+        this.#inputs.forEach((input, key) => {
+            input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+        });
     }
 
     #removeListeners() {
-        const form = document.getElementById('regForm') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('regForm');
         form.removeEventListener('submit', this.#signup.bind(this));
 
         const back = <HTMLElement>document.getElementById('back');
         back.addEventListener('click', this.#back);
+
+        this.#inputs.forEach((input, key) => {
+            if (input) {
+                input.removeEventListener('input', this.#handleInputChange.bind(this, input, key));
+            }
+        });
     }
 
     #back = (event: MouseEvent) => {
@@ -70,56 +79,50 @@ export default class SignupView {
     #signup(event: Event) {
         event.preventDefault();
 
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
-        this.#inputsData.set('name', {errors: [], value: this.#inputs.get('name')?.value.trim() as string});
-        this.#inputsData.set('surname', {errors: [], value: this.#inputs.get('surname')?.value.trim() as string});
-        this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
-        this.#inputsData.set('password1', {errors: [], value: this.#inputs.get('password1')?.value.trim() as string});
-        this.#inputsData.set('password2', {errors: [], value: this.#inputs.get('password2')?.value.trim() as string});
+        this.#inputsData.set('name', { errors: [], value: <string>this.#inputs.get('name')?.value.trim() });
+        this.#inputsData.set('surname', { errors: [], value: <string>this.#inputs.get('surname')?.value.trim() });
+        this.#inputsData.set('email', { errors: [], value: <string>this.#inputs.get('email')?.value.trim() });
+        this.#inputsData.set('password1', { errors: [], value: <string>this.#inputs.get('password1')?.value.trim() });
+        this.#inputsData.set('password2', { errors: [], value: <string>this.#inputs.get('password2')?.value.trim() });
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }
 
     #showValidationErrors() {
-        this.#inputsData.forEach((item, key) => {
-            const input = this.#inputs.get(key) as HTMLElement;
-            const par = input.parentElement as HTMLElement;
-            item.errors.forEach(error => {
+        this.#inputs.forEach((input, key) => {
+            const inputError = <HTMLElement>document.getElementById(key + 'Error');
+            inputError.classList.add('error_none');
+            const inputData = <InputData>this.#inputsData.get(key);
+
+            inputData.errors.forEach(error => {
                 if (error) {
-                    input.classList.add('form-input_error');
-                    par.classList.add('input-block_error');
-                    if (par.innerHTML.indexOf(error) === -1) {
-                        const p = document.createElement('p');
-                        p.classList.add('input-block__error');
-                        p.classList.add('error');
-                        p.textContent = error;
-                        par.appendChild(p);
-                    }
+                    if (key != 'geo')
+                        input.classList.add('form-input_error');
+                    inputError.classList.remove('error_none');
+                    inputError.textContent = error;
                 } else {
-                    item.errors = item.errors.slice(1);
+                    inputData.errors = inputData.errors.slice(1);
                 }
             });
         });
     }
 
     #showServerErrors(error: string) {
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.textContent = error;
     }
 
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                const par = input.parentElement as HTMLElement;
-                par.classList.remove('input-block_error');
-                input.classList.remove('form-input_error');
+                const inputError = <HTMLElement>document.getElementById(key + 'Error');
+                inputError.classList.add('error_none');
+
                 input.classList.add('form-input_correct');
-                while (par.children.length !== CHILD_NUM) {
-                    par.removeChild(par.lastChild as ChildNode);
-                }
             }
         });
     }
@@ -132,5 +135,18 @@ export default class SignupView {
         Bus.off(Events.AuthError, this.#validationHandle);
         Bus.off(Events.ValidationError, this.#validationHandle);
         Bus.off(Events.ValidationOk, this.#validationHandle);
+    }
+
+    #handleInputChange(input: HTMLInputElement, key: string) {
+        input.classList.remove('form-input_correct');
+        input.classList.remove('form-input_error');
+        const inputError = <HTMLElement>document.getElementById(key + 'Error');
+        inputError.classList.add('error_none');
+
+        if (input.value.trim()) {
+            input.classList.add('form-input_changed');
+        } else {
+            input.classList.remove('form-input_changed');
+        }
     }
 }

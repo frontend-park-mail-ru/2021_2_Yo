@@ -7,7 +7,6 @@ const inputLength = new Map([
     ['password', 50],
     ['title', 255],
     ['geo', 255],
-    ['city', 30],
     ['category', 30],
     ['description', 500],
     ['text', 2200],
@@ -92,7 +91,6 @@ export function eventValidateFields(inputsData: Map<string, InputsData>, imageFi
     const description = <InputsData>inputsData.get('description');
     const text = <InputsData>inputsData.get('text');
     const date = <InputsData>inputsData.get('date');
-    const city = <InputsData>inputsData.get('city');
     const geo = <InputsData>inputsData.get('geo');
     const category = <InputsData>inputsData.get('category');
     const image = <InputsData>inputsData.get('image');
@@ -107,9 +105,6 @@ export function eventValidateFields(inputsData: Map<string, InputsData>, imageFi
     date.errors.push(checkDate(date.value));
 
     geo.errors.push(checkEmpty(geo.value));
-
-    city.errors.push(checkEmpty(city.value));
-    city.errors.push(checkForbiddenSymbols(city.value));
 
     category.errors.push(checkEmpty(category.value));
     category.errors.push(checkForbiddenSymbols(category.value));
@@ -144,7 +139,7 @@ function checkEmpty(value: string): string {
 }
 
 function checkForbiddenSymbols(value: string): string {
-    if (!value.match('^[a-zA-Zа-яА-Я]+$') && value) {
+    if (value && !value.match('^[a-zA-Zа-яА-Я]+$')) {
         return 'Поле может содержать только буквы';
     }
     return '';
@@ -179,7 +174,13 @@ function checkDate(value: string): string {
     if (value.length && !value.match('^\\s*(3[01]|[12][0-9]|0?[1-9])\\.(1[012]|0?[1-9])\\.((?:19|20)\\d{2})\\s*$')) {
         return 'Неверный формат. Дата должна соответствовать формату дд.мм.гггг';
     }
-    if (Number(new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))) < Date.now()) {
+
+    const jsDate = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]));
+    const today = new Date();
+    if (Number(jsDate) < Date.now() &&
+        !(jsDate.getDate() == today.getDate() &&
+        jsDate.getMonth() == today.getMonth() &&
+        jsDate.getFullYear() == today.getFullYear())) {
         return 'Нельзя создать мероприятие в прошлом';
     }
     return '';

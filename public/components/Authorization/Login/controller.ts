@@ -1,6 +1,6 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import {authValidateFields} from '@modules/validation';
+import { authValidateFields } from '@modules/validation';
 import LoginView from '@login/view';
 import LoginModel from '@login/model';
 
@@ -25,9 +25,9 @@ export default class LoginController {
         this.#view.disable();
     }
 
-    #validationHandle = ((inputsData: Map<string, { errors: string[], value: string }>) => {
+    #validationHandle = (inputsData: Map<string, { errors: string[], value: string }>) => {
         this.#makeValidation(inputsData);
-    }).bind(this);
+    };
 
     #makeValidation(inputsData: Map<string, { errors: string[], value: string }>) {
         authValidateFields(inputsData);

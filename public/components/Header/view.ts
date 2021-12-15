@@ -1,61 +1,50 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import config from '@/config';
-import { UserData, UrlPathnames } from '@/types';
+import { UserData } from '@/types';
 import * as template from '@header/templates/header.hbs';
 import '@header/templates/Header.css';
-import { filterToUrl } from '@/modules/filter';
+import FilterStore, { FilterParams } from '@/modules/filter';
 
 export default class HeaderView {
     #parent: HTMLElement;
-    #popupShown: boolean;
+    #input?: HTMLInputElement;
+    #popupShown?: boolean;
     #headerFocusIds = ['header-input', 'header-search', 'header-calendar'];
     #headerClickIds = ['header', 'header-logo'];
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
-        this.#popupShown = false;
     }
 
     subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
         Bus.on(Events.UserError, this.#userHandle);
+        Bus.on(Events.RouteChange, this.#handleRouteChange);
     }
 
     #addListeners() {
-        const input = <HTMLInputElement>document.getElementById('header-input');
-        if (input) input.addEventListener('keypress', this.#inputHandle);
-
-        const search = <HTMLElement>document.getElementById('header-search');
-        if (search) search.addEventListener('click', this.#searchHandle);
+        if (this.#input) this.#input.addEventListener('input', this.#inputHandle);
 
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         if (avatar) avatar.addEventListener('click', this.#handleAvatar);
 
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.addEventListener('click', this.#handleOverlay);
+        if (overlay) overlay.addEventListener('click', this.#handleOverlayClick);
     }
 
     #removeListeners() {
-        const input = <HTMLInputElement>document.getElementById('header-input');
-        if (input) input.removeEventListener('keypress', this.#inputHandle);
-
-        const search = <HTMLElement>document.getElementById('header-search');
-        if (search) search.removeEventListener('click', this.#searchHandle);
+        if (this.#input) this.#input.removeEventListener('input', this.#inputHandle);
 
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         if (avatar) avatar.removeEventListener('click', this.#handleAvatar);
 
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.removeEventListener('click', this.#handleOverlay);
+        if (overlay) overlay.removeEventListener('click', this.#handleOverlayClick);
     }
 
-    #handleFocus = () => {
-        this.#toggleOverlay();
-    };
-
-    #handleOverlay = (e: MouseEvent) => {
-        if (this.#popupShown) this.#toggleOverlay();
+    #handleRouteChange = () => {
+        this.#renderFilter();
     };
 
     #handleAvatar = (e: MouseEvent) => {
@@ -63,87 +52,103 @@ export default class HeaderView {
         this.#toggleOverlay();
     };
 
+    #handleEscape = (e: KeyboardEvent) => {
+        if (e.code !== 'Escape') return;
+        this.#toggleOverlay();
+    };
+
+    #handleOverlayClick = () => {
+        if (this.#popupShown) {
+            this.#toggleOverlay();
+        }
+    };
+
     #listenOverlay() {
         if (this.#popupShown) {
             this.#headerFocusIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.addEventListener('focus', this.#handleFocus);
+                if (element) element.addEventListener('focus', this.#toggleOverlay);
             });
             this.#headerClickIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.addEventListener('click', this.#handleFocus);
+                if (element) element.addEventListener('click', this.#toggleOverlay);
             });
             const logout = document.getElementById('header-logout');
             if (logout) logout.addEventListener('click', this.#logoutHandle);
+
+            window.addEventListener('keydown', this.#handleEscape);
         } else {
             this.#headerFocusIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.removeEventListener('focus', this.#handleFocus);
+                if (element) element.removeEventListener('focus', this.#toggleOverlay);
             });
             this.#headerClickIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
-                if (element) element.removeEventListener('click', this.#handleFocus);
+                if (element) element.removeEventListener('click', this.#toggleOverlay);
             });
             const logout = document.getElementById('header-logout');
             if (logout) logout.removeEventListener('click', this.#logoutHandle);
+
+            window.removeEventListener('keydown', this.#handleEscape);
         }
     }
 
-    #toggleOverlay() {
-        const avatar = <HTMLElement>document.getElementById('header-avatar');
+    #toggleOverlay = () => {
         const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (!avatar || !overlay) return;
+        if (!overlay) return;
         if (this.#popupShown) {
-            avatar.classList.remove('header__avatar-wrapper_checked');
             overlay.classList.remove('header-overlay_shown');
             overlay.classList.add('header-overlay_hidden');
         } else {
-            avatar.classList.add('header__avatar-wrapper_checked');
             overlay.classList.remove('header-overlay_hidden');
             overlay.classList.add('header-overlay_shown');
         }
         this.#popupShown = !this.#popupShown;
         this.#listenOverlay();
-    }
+    };
 
-    #inputHandle = ((e: KeyboardEvent) => {
-        if (e.code !== 'Enter') return;
-        const input = <HTMLInputElement>e.currentTarget;
-        const value = input.value;
-        const params = filterToUrl({query: value});
-        Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
-        input.value = '';
-    }).bind(this);
+    #inputHandle = () => {
+        const value = this.#input?.value;
+        FilterStore.set(FilterParams.Query, value);
+    };
 
-    #searchHandle = (() => {
-        const input = <HTMLInputElement>document.getElementById('header-input');
-        const value = input.value;
-        const params = filterToUrl({query: value});
-        Bus.emit(Events.RouteUrl, UrlPathnames.Search + params);
-        input.value = '';
-    }).bind(this);
-
-    #logoutHandle = (() => {
+    #logoutHandle = () => {
+        this.#popupShown = !this.#popupShown;
+        this.#listenOverlay();
         Bus.emit(Events.UserLogout);
         this.render();
-    }).bind(this);
+    };
 
-    #userHandle = ((user: UserData) => {
+    #userHandle = (user: UserData) => {
         this.render(user);
-    }).bind(this);
+    };
+
+    #renderFilter() {
+        const filter = FilterStore.get();
+        if (this.#input) {
+            if (filter['query']) {
+                this.#input.value = filter['query'];
+            } else {
+                this.#input.value = '';
+            }
+        }
+    }
 
     render(user?: UserData) {
+        this.#popupShown = false;
         const authAnchors = config.authAnchors;
-        this.#parent.innerHTML = template({authAnchors, user});
+        this.#parent.innerHTML = template({ authAnchors, user });
+        this.#input = <HTMLInputElement>document.getElementById('header-input');
 
         this.#addListeners();
+        this.#renderFilter();
     }
 
     disable() {
         this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
-        Bus.off(Events.UserLogout, this.#logoutHandle);
         Bus.off(Events.UserError, this.#logoutHandle);
+        Bus.off(Events.RouteChange, this.#handleRouteChange);
         this.#parent.innerHTML = '';
     }
 }

@@ -1,26 +1,28 @@
 <div class="auth-background">
     <img class="auth-background__logo logo" src="./img/logo.png">
-    <div class="authform" id="authFormBackground">
-        <p class="label">Авторизация</p>
+    <div class="primary-white-block authform">
+        <p class="auth-title">Авторизация</p>
         <form id="authForm" novalidate>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Email</p>
-                <input class="form-input form-input_auth" id="emailInput" maxlength="150" name="email" type="email">
+                <div class="input-label">Email</div>
+                <input class="form-input" id="emailInput" maxlength="150" name="email" type="email"/>
+                <span class="error error_none" id="emailError">none</span>
             </div>
             <div class="input-block">
-                <p class="input-block__input-label input-label">Пароль</p>
-                <input type="password" class="form-input form-input_auth"
-                       id="passwordInput" maxlength="50">
+                <div class="input-label">Пароль</div>
+                <input class="form-input" type="password"
+                       id="passwordInput" maxlength="50"/>
+                <span class="error error_none" id="passwordError">none</span>
             </div>
             <p class="error" id="errors"></p>
-            <div class="authform__buttons buttons-block">
-                <input type="submit" value="ВОЙТИ" class="button-purple_login button-purple">
-                <a id="back" class="button-darkblue">НАЗАД</a>
+            <div class="buttons-block">
+                <a id="back" class="button-white">Назад</a>
+                <input type="submit" value="Войти" class="button-blue">
             </div>
         </form>
     </div>
-    <div class="authform-bottom">
-        <span>Нет аккаунта?</span>
-        <a class="purple-text-btn" href="/signup">Регистрация</a>
+    <div class="primary-white-block authform authform__bottom">
+        <span class="primary-text">Нет аккаунта?</span>
+        <a class="primary-text purple-text-btn" href="/signup">Регистрация</a>
     </div>
 </div>

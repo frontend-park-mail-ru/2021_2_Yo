@@ -5,25 +5,16 @@
             <use xlink:href="./server/img/sprite.svg#categories"></use>
         </svg>
         <span class="currentMonth">
-                <span id="currentMonth">Июнь</span>
-                <span id="currentYear"> 2021</span>
+                <span id="currentMonth"></span>
+                <span id="currentYear"></span>
             </span>
         <svg id="next" class="next-img">
             <use xlink:href="./server/img/sprite.svg#categories"></use>
         </svg>
     </div>
-    <div class="calendar">
-        <div class="weekdays">
-            <div>Пн</div>
-            <div>Вт</div>
-            <div>Ср</div>
-            <div>Чт</div>
-            <div>Пт</div>
-            <div>Сб</div>
-            <div>Вс</div>
-        </div>
-        <div class="days" id="monthDays">
-        </div>
-        <span class="button-darkblue button-darkblue_calendar" id="submit">ОК</span>
+    <div class="calendar" id="calendar">
+    </div>
+    <div class="button-container">
+        <button class="calendar-button" id="submit">ОК</button>
     </div>
 </div>

@@ -1,30 +1,38 @@
-import {ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames} from '@/types';
-import {fetchPost} from '@request/request';
+import { ApiStatus, ApiPostSignupData, ApiUrls, FetchResponseData, UrlPathnames, ApiErrors } from '@/types';
+import { fetchPost } from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 
 export default class SignupModel {
     signup(inputsData: Map<string, { errors: string[], value: string }>) {
         const postData: ApiPostSignupData = {
-            name: inputsData.get('name')?.value as string,
-            surname: inputsData.get('surname')?.value as string,
-            email: inputsData.get('email')?.value as string,
-            password: inputsData.get('password1')?.value as string
+            name: <string>inputsData.get('name')?.value,
+            surname: <string>inputsData.get('surname')?.value,
+            email: <string>inputsData.get('email')?.value,
+            password: <string>inputsData.get('password1')?.value,
         };
 
         fetchPost(ApiUrls.Signup, postData, (data: FetchResponseData) => {
-            const {status, json, headers} = data;
-            if (status === 200) {
-                if (json.status === 200) {
-                    const token = headers?.get('X-CSRF-Token');
+            const { status, json, headers } = data;
+            const token = headers?.get('X-CSRF-Token');
+
+            if (status === ApiStatus.Ok) {
+                switch (json.status) {
+                case ApiStatus.Ok:
                     if (token) {
                         Bus.emit(Events.CSRFRes, token);
                     }
                     Bus.emit(Events.RouteUrl, UrlPathnames.Main);
-                    return;
+                    break;
+                case ApiStatus.Internal:
+                    Bus.emit(Events.AuthError, ApiErrors['500']);
+                    break;
+                case ApiStatus.UserAlreadyExists:
+                    Bus.emit(Events.AuthError, ApiErrors['409']);
+                    break;
+
                 }
             }
-            Bus.emit(Events.AuthError, json.message);
         });
     }
 }

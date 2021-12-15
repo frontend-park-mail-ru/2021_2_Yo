@@ -2,6 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as template from '@login/login.hbs';
 import '@authorization/Authorization.css';
+import { InputData } from '@/types';
 
 const CHILD_NUM = 2;
 
@@ -20,20 +21,20 @@ export default class LoginView {
         Bus.on(Events.ValidationOk, this.#validationHandle);
     }
 
-    #validationHandle = ((error: string) => {
+    #validationHandle = (error: string) => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
         if (error) {
             this.#showServerErrors(error);
         }
-    }).bind(this);
+    };
 
     render() {
         this.#parent.innerHTML = template();
 
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        const emailInput = <HTMLInputElement>document.getElementById('emailInput');
         this.#inputs.set('email', emailInput);
-        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+        const passwordInput = <HTMLInputElement>document.getElementById('passwordInput');
         this.#inputs.set('password', passwordInput);
 
         this.#addListeners();
@@ -45,14 +46,24 @@ export default class LoginView {
 
         const back = <HTMLElement>document.getElementById('back');
         back.addEventListener('click', this.#back);
+
+        this.#inputs.forEach((input, key) => {
+            input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
+        });
     }
 
     #removeListeners() {
-        const form = document.getElementById('authForm') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('authForm');
         form.removeEventListener('submit', this.#authorize.bind(this));
 
         const back = <HTMLElement>document.getElementById('back');
         back.removeEventListener('click', this.#back);
+
+        this.#inputs.forEach((input, key) => {
+            if (input) {
+                input.removeEventListener('input', this.#handleInputChange.bind(this, input, key));
+            }
+        });
     }
 
     #back = (event: MouseEvent) => {
@@ -64,53 +75,47 @@ export default class LoginView {
     #authorize(event: Event) {
         event.preventDefault();
 
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
-        this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
-        this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
+        this.#inputsData.set('email', { errors: [], value: <string>this.#inputs.get('email')?.value.trim() });
+        this.#inputsData.set('password', { errors: [], value: <string>this.#inputs.get('password')?.value.trim() });
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }
 
     #showValidationErrors() {
-        this.#inputsData.forEach((item, key) => {
-            const input = this.#inputs.get(key) as HTMLElement;
-            const par = input.parentElement as HTMLElement;
-            item.errors.forEach(error => {
+        this.#inputs.forEach((input, key) => {
+            const inputError = <HTMLElement>document.getElementById(key + 'Error');
+            inputError.classList.add('error_none');
+            const inputData = <InputData>this.#inputsData.get(key);
+
+            inputData.errors.forEach(error => {
                 if (error) {
-                    input.classList.add('form-input_error');
-                    par.classList.add('input-block_error');
-                    if (par.innerHTML.indexOf(error) === -1) {
-                        const p = document.createElement('p');
-                        p.classList.add('input-block__error');
-                        p.classList.add('error');
-                        p.textContent = error;
-                        par.appendChild(p);
-                    }
+                    if (key != 'geo')
+                        input.classList.add('form-input_error');
+                    inputError.classList.remove('error_none');
+                    inputError.textContent = error;
                 } else {
-                    item.errors = item.errors.slice(1);
+                    inputData.errors = inputData.errors.slice(1);
                 }
             });
         });
     }
 
     #showServerErrors(error: string) {
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.textContent = error;
     }
 
     #showCorrectInputs() {
         this.#inputs.forEach((input, key) => {
             if (!this.#inputsData.get(key)?.errors.length) {
-                const par = input.parentElement as HTMLElement;
-                par.classList.remove('input-block_error');
-                input.classList.remove('form-input_error');
+                const inputError = <HTMLElement>document.getElementById(key + 'Error');
+                inputError.classList.add('error_none');
+
                 input.classList.add('form-input_correct');
-                while (par.children.length !== CHILD_NUM) {
-                    par.removeChild(par.lastChild as ChildNode);
-                }
             }
         });
     }
@@ -123,5 +128,18 @@ export default class LoginView {
         Bus.off(Events.AuthError, this.#validationHandle);
         Bus.off(Events.ValidationError, this.#validationHandle);
         Bus.off(Events.ValidationOk, this.#validationHandle);
+    }
+
+    #handleInputChange(input: HTMLInputElement, key: string) {
+        input.classList.remove('form-input_correct');
+        input.classList.remove('form-input_error');
+        const inputError = <HTMLElement>document.getElementById(key + 'Error');
+        inputError.classList.add('error_none');
+
+        if (input.value.trim()) {
+            input.classList.add('form-input_changed');
+        } else {
+            input.classList.remove('form-input_changed');
+        }
     }
 }

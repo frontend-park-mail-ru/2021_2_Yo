@@ -1,6 +1,7 @@
-import { parseParams } from '@/modules/filter';
 import MainPageModel from '@main-page/model';
 import MainPageView from '@main-page/view';
+import Bus from '@eventbus/eventbus';
+import Events from '@eventbus/events';
 
 export default class MainPageController {
     #model: MainPageModel;
@@ -13,8 +14,8 @@ export default class MainPageController {
 
     enable() {
         this.#model.enable();
-        const params = parseParams().category;
-        this.#view.render(params);
+        this.#view.render();
+        Bus.emit(Events.EventsReq);
     }
 
     disable() {

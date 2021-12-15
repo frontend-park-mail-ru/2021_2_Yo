@@ -1,46 +1,42 @@
-import { filterToUrl } from '@/modules/filter';
-import { ApiUrls, EventData, FetchResponseData, FilterData } from '@/types';
+import { ApiStatus, ApiUrls, FetchResponseData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import { fetchGet } from '@request/request';
+import { fetchPost, fetchDelete } from '@request/request';
 
 export default class MainPageModel {
     enable() {
-        Bus.on(Events.EventsReq, this.#eventsHandle);
-        Bus.on(Events.FilterChange, this.#filterHandle);
+        Bus.on(Events.EventAddFavReq, this.#handleAddFav);
+        Bus.on(Events.EventRemoveFavReq, this.#handleRemoveFav);
     }
 
-    #filterHandle = (filter: FilterData) => {
-        const search = filterToUrl(filter);
-        Bus.emit(Events.RouteUpdate, search);
-        this.#getEvents(search);
-    };
-
-    #eventsHandle = (() => {
-        this.#getEvents(); 
-    });
-
-    #getEvents(search?: string) {
-        if (search === undefined) search = '';
-        fetchGet(ApiUrls.Events + search, 
+    #handleAddFav = (id: string) => {
+        fetchPost(ApiUrls.Events + '/' + id + '/favourite', {},
             (data: FetchResponseData) => {
-                const {status, json} = data;
-                if (status === 200) {
-                    if (json.status) {
-                        const events = <EventData[]>json.body.events;
-                        Bus.emit(Events.EventsRes, events); 
-                        return;
+                const { status, json } = data;
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
+                        Bus.emit(Events.EventAddFavRes);
                     }
                 }
-                Bus.emit(Events.EventsError);
-            },
-            () => {
-                Bus.emit(Events.EventsError);
             }
         );
-    }
+    };
+
+    #handleRemoveFav = (id: string) => {
+        fetchDelete(ApiUrls.Events + '/' + id + '/favourite',
+            (data: FetchResponseData) => {
+                const { status, json } = data;
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
+                        Bus.emit(Events.EventRemoveFavRes);
+                    }
+                }
+            }
+        );
+    };
 
     disable() {
-        Bus.off(Events.EventsReq, this.#eventsHandle);
+        Bus.off(Events.EventAddFavReq, this.#handleAddFav);
+        Bus.off(Events.EventRemoveFavReq, this.#handleRemoveFav);
     }
 }

@@ -1,9 +1,9 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import EventEditFormModel from '@event-edit/model';
-import EventEditFormView from '@event-edit/view';
-import {EventData, UrlPathnames} from '@/types';
-import {eventValidateFields} from '@modules/validation';
+import EventEditView from '@event-edit/view';
+import { EventData, UrlPathnames } from '@/types';
+import { eventValidateFields } from '@modules/validation';
 import UserStore from '@modules/userstore';
 
 type MultipartData = {
@@ -12,12 +12,12 @@ type MultipartData = {
 };
 
 export default class EventEditFormController {
-    #view: EventEditFormView;
+    #view: EventEditView;
     #model: EventEditFormModel;
     #userResSubscribe: boolean;
 
     constructor(parent: HTMLElement) {
-        this.#view = new EventEditFormView(parent);
+        this.#view = new EventEditView(parent);
         this.#model = new EventEditFormModel();
         this.#userResSubscribe = false;
     }
@@ -30,7 +30,7 @@ export default class EventEditFormController {
         this.#view.subscribe();
 
         if (UserStore.get()) {
-            const id = new URL(window.location.href).searchParams?.get('id') as string;
+            const id = <string>new URL(window.location.href).searchParams?.get('id');
             this.#model.getEvent(id);
         } else {
             this.#userResSubscribe = true;
@@ -40,7 +40,7 @@ export default class EventEditFormController {
     }
 
     #getEventHandle = (() => {
-        const id = new URL(window.location.href).searchParams?.get('id') as string;
+        const id = <string>new URL(window.location.href).searchParams?.get('id');
         this.#model.getEvent(id);
     });
 

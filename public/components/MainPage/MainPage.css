@@ -1,0 +1,132 @@
+.main-page-content {
+  margin: 10px auto 20px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+}
+
+#filter-list-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+#event-board-wrapper {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 10px;
+}
+
+#gotop {
+  position: fixed;
+  left: 0;
+  top: var(--header-height);
+  width: fit-content;
+  cursor: pointer;
+  background: transparent;
+  height: 100vh;
+  padding: 10px 25px;
+  color: rgba(164, 164, 164, 0.75);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#gotop:hover {
+  background: rgba(170, 170, 170, 0.25);
+  color: rgba(174, 174, 174);
+}
+
+.gotop_hidden {
+  display: none;
+}
+
+.gotop_shown {
+  display: block;
+}
+
+.gotop-img {
+  margin-right: 5px;
+  height: 0.7rem;
+  width: 1.3rem;
+  fill: #a4a4a4;
+  display: inline;
+}
+
+#filter-button {
+  display: none;
+  width: 100%;
+  background-color: white;
+  color: #a4a4a4;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.filter-button-content {
+  display: flex;
+  align-items: center;
+}
+
+.filter-button-img {
+  height: 0.7rem;
+  width: 1.3rem;
+  fill: #A4A4A4;
+  margin-right: 5px;
+}
+
+.filter-button-img_hidden {
+  rotate: 180deg;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 650px) {
+  #gotop {
+    display: none;
+  }
+
+  #event-board-wrapper {
+    padding: 0px 30px;
+  }
+}
+
+/*Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1029px) {
+  .main-page-content {
+    grid-template-columns: 1fr;
+    margin-top: 0px;
+  }
+
+  #filter-list-wrapper {
+    transition: max-height 0.2s ease-out;
+  }
+
+  .filter-list_hidden {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .filter-list_shown {
+    height: fit-content;
+    max-height: 550px;
+  }
+
+  #gotop {
+    padding: 10px 15px;
+  }
+
+  #filter-button {
+    display: flex;
+    margin-top: -10px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+  .main-page-content {
+    grid-template-columns: 0.9fr 2fr;
+  }
+}

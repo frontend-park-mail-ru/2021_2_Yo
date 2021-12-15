@@ -1,0 +1,69 @@
+<div class="filter-list">
+    <section class="filter-li filter-search">
+        <div class="filter-tag__search">
+            <input class="filter-tag__search-input" type="text" id="filter-search-input" placeholder="Введите название...">
+        </div>  
+    </section>
+
+    <section class="filter-li">
+        <div class="filter-li__item filter-li__item_header">
+            Категория
+        </div>
+        {{#each categories}}
+        <div id="filter-category-{{@index}}" class="filter-li__item filter-li__item_selectable" data-num="{{@index}}">
+            {{name}}</div>
+        {{/each}}
+
+    </section>
+
+    <section class="filter-li">
+        <div class="filter-li__item filter-li__item_header">Теги</div>
+        <div class="filter-tag">
+            <div class="filter-tag__search">
+                <input class="filter-tag__search-input" type="text" id="filter-tag-input"
+                    placeholder="Например, вечеринка">
+                <svg id="tags-search-img" class="filter-tag__search-img">
+                    <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
+                </svg>
+            </div>
+        </div>
+        <div id="filter-tags" class="filter-tag__tags">
+        </div>
+    </section>
+
+    <section class="filter-li">
+        <div class="filter-li__item filter-li__item_header">
+            Дата
+            <svg class="filter-calendar-img">
+                <use xlink:href="./server/img/sprite.svg#calendar"></use>
+            </svg>
+        </div>
+        <div class="filter-tag">
+            <div class="filter-tag__search">
+                <input class="filter-tag__search-input filter-tag__search-input_date" id="dateInput" type="text" placeholder="дд.мм.гггг" autocomplete="off">
+                <svg id="date-delete-img" class="filter-tag__search-img filter-tag__search-img_cross">
+                    <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
+                </svg>
+            </div>
+        </div>
+    </section>
+    <div id="calendarBlock"></div>
+
+    <section class="filter-li">
+        <div class="filter-li__item filter-li__item_header">
+            Город
+            <svg class="filter-geo-img">
+                <use xlink:href="./server/img/sprite.svg#geo"></use>
+            </svg>
+        </div>
+        <div class="filter-tag">
+            <div class="filter-tag__search suggest-list-parent">
+                <input id="filter-city-input" class="filter-tag__search-input" type="text" autocomplete="off">
+                <svg id="city-delete-img" class="filter-tag__search-img filter-tag__search-img_cross">
+                    <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
+                </svg>
+            </div>
+            <div id="city-suggest-list" class="suggest-list-parent"></div>
+        </div>
+    </section>
+</div>
