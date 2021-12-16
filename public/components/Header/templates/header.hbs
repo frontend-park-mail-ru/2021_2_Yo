@@ -6,7 +6,7 @@
         <div class="header__search">
             <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
         </div>
-        {{!-- {{#if user}} --}}
+        {{#if user}}
             <div class="flex">
                 <div id="header-notifications" class="header__button-wrapper" data-popupnum="0">
                     <svg class="header__notifications">
@@ -23,13 +23,13 @@
                     >
                 </div>
             </div>
-        {{!-- {{else}}
+        {{else}}
             <div>
             {{#each authAnchors}}
                 <a class="header__auth-anchor" href="{{href}}">{{name}}</a>
             {{/each}}
             </div>
-        {{/if}} --}}
+        {{/if}}
     </div>
 </header>
 <div id="header-overlay" class="header-overlay header-overlay_hidden">

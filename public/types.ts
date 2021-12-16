@@ -47,6 +47,8 @@ export enum ApiUrls {
     Login = '/auth/login',
     Signup = '/auth/signup',
     Logout = '/auth/logout',
+    Notifications = '/user/notifications/all',
+    WebSocket = '/ws',
 }
 
 export type FetchResponseData = {

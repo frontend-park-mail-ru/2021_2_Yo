@@ -9,7 +9,7 @@ import * as notificationCreateTemplate from '@header/templates/notificationcreat
 import '@header/templates/Header.css';
 import FilterStore, { FilterParams } from '@/modules/filter';
 
-const notifications = [
+const notificationTemplates = [
     notificationSubscribeTemplate,
     notificationInviteTemplate,
     notificationCreateTemplate,
@@ -36,6 +36,7 @@ export default class HeaderView {
 
     subscribe() {
         Bus.on(Events.UserRes, this.#userHandle);
+        Bus.on(Events.UserNotificationsRes, this.#notificationsHandle);
         Bus.on(Events.UserError, this.#userHandle);
         Bus.on(Events.RouteChange, this.#handleRouteChange);
     }
@@ -161,6 +162,31 @@ export default class HeaderView {
         this.render(user);
     };
 
+    #notificationsAddListeners() {
+        const notifications = <HTMLCollectionOf<HTMLElement>>document.getElementsByClassName('notification');
+        const a = Array.of(notifications);
+        Array.from(notifications).map(notification => {
+            notification.addEventListener('click', () => {
+                const anchor = notification.dataset['anchor'];
+                if (anchor) {
+                    Bus.emit(Events.RouteUrl, anchor);
+                }
+            });
+        });
+    }
+
+    #notificationsHandle = (notifications: any[]) => {
+        this.#headerPopups[0].innerHTML = '';
+        // console.log(notifications);
+        notifications.map(notification => {
+            const type = +<string>notification['type'];
+            this.#headerPopups[0].innerHTML += notificationTemplates[type](notification);
+        });
+        // this.#headerPopups[0].innerHTML = notificationSubscribeTemplate(notifications[0]);
+        // this.#headerPopups[0].innerHTML = notificationInviteTemplate(notifications[0]);
+        this.#notificationsAddListeners();
+    };
+
     #renderFilter() {
         const filter = FilterStore.get();
         if (this.#input) {
@@ -173,9 +199,9 @@ export default class HeaderView {
     }
 
     #renderNotifications() {
-        this.#headerPopups[0].innerHTML = '';
-        this.#headerPopups[0].innerHTML = notifications.reduce((prev, curr) => prev += curr(), '');
-        this.#headerPopups[0].innerHTML += notifications.reduce((prev, curr) => prev += curr(), '');
+        // this.#headerPopups[0].innerHTML = '';
+        // this.#headerPopups[0].innerHTML = notifications.reduce((prev, curr) => prev += curr(), '');
+        // this.#headerPopups[0].innerHTML += notifications.reduce((prev, curr) => prev += curr(), '');
     }
 
     render(user?: UserData) {
@@ -194,6 +220,7 @@ export default class HeaderView {
     disable() {
         this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
+        Bus.off(Events.UserNotificationsRes, this.#notificationsHandle);
         Bus.off(Events.UserError, this.#logoutHandle);
         Bus.off(Events.RouteChange, this.#handleRouteChange);
         this.#parent.innerHTML = '';
