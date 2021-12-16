@@ -312,4 +312,8 @@
   .header__auth-anchor:last-child {
     display: none;
   }
+
+  .notifications-popup {
+    max-width: 70%;
+  }
 }
