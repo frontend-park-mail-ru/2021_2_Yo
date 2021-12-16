@@ -15,6 +15,7 @@ const API = 'https://bmstusa.ru/api';
 // const API = 'https://95.163.212.36:8081';
 
 export function fetchGet(url: string, callback?: Callback, error?: Callback) {
+    url = url.trim();
     let HTTPStatus: number;
     let headers: Headers;
 
