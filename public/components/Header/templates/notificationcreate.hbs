@@ -1,5 +1,9 @@
 <div class="notification" data-anchor="/events?id={{eventId}}">
+    {{#if userImgUrl}}
     <img class="header__avatar notification__avatar" src="{{userImgUrl}}">
+    {{else}}
+    <img class="header__avatar notification__avatar" src="https://source.boringavatars.com/marble/50/{{userName}}">
+    {{/if}}
     <div class="notification__text">
         <a href="/user?id={{userId}}" class="notification__anchor">{{userName}} {{userSurname}}</a>
         создал мероприятие
