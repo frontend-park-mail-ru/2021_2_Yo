@@ -3,15 +3,32 @@ import Events from '@eventbus/events';
 import config from '@/config';
 import { UserData } from '@/types';
 import * as template from '@header/templates/header.hbs';
+import * as notificationSubscribeTemplate from '@header/templates/notificationsubscribe.hbs';
+import * as notificationInviteTemplate from '@header/templates/notificationinvite.hbs';
+import * as notificationCreateTemplate from '@header/templates/notificationcreate.hbs';
 import '@header/templates/Header.css';
 import FilterStore, { FilterParams } from '@/modules/filter';
+
+const notifications = [
+    notificationSubscribeTemplate,
+    notificationInviteTemplate,
+    notificationCreateTemplate,
+];
+
+enum PopupStatus {
+    Hidden = -1,
+    Notifications = 0,
+    User = 1,
+}
 
 export default class HeaderView {
     #parent: HTMLElement;
     #input?: HTMLInputElement;
-    #popupShown?: boolean;
-    #headerFocusIds = ['header-input', 'header-search', 'header-calendar'];
+    #overlay?: HTMLElement;
+    #popupStatus: PopupStatus = PopupStatus.Hidden;
+    #headerFocusIds = ['header-input', 'header-calendar'];
     #headerClickIds = ['header', 'header-logo'];
+    #headerPopups: HTMLElement[] = [];
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -29,8 +46,10 @@ export default class HeaderView {
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         if (avatar) avatar.addEventListener('click', this.#handleAvatar);
 
-        const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.addEventListener('click', this.#handleOverlayClick);
+        const notifications = <HTMLElement>document.getElementById('header-notifications');
+        if (notifications) notifications.addEventListener('click', this.#handleNotifications);
+
+        if (this.#overlay) this.#overlay.addEventListener('click', this.#handleOverlayClick);
     }
 
     #removeListeners() {
@@ -39,17 +58,24 @@ export default class HeaderView {
         const avatar = <HTMLElement>document.getElementById('header-avatar');
         if (avatar) avatar.removeEventListener('click', this.#handleAvatar);
 
-        const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (overlay) overlay.removeEventListener('click', this.#handleOverlayClick);
+        const notifications = <HTMLElement>document.getElementById('header-notifications');
+        if (notifications) notifications.removeEventListener('click', this.#handleNotifications);
+
+        if (this.#overlay) this.#overlay.removeEventListener('click', this.#handleOverlayClick);
     }
 
     #handleRouteChange = () => {
         this.#renderFilter();
     };
 
+    #handleNotifications = (e: MouseEvent) => {
+        e.stopPropagation();
+        this.#toggleOverlay(e);
+    };
+
     #handleAvatar = (e: MouseEvent) => {
         e.stopPropagation();
-        this.#toggleOverlay();
+        this.#toggleOverlay(e);
     };
 
     #handleEscape = (e: KeyboardEvent) => {
@@ -58,13 +84,13 @@ export default class HeaderView {
     };
 
     #handleOverlayClick = () => {
-        if (this.#popupShown) {
+        if (this.#popupStatus !== PopupStatus.Hidden) {
             this.#toggleOverlay();
         }
     };
 
     #listenOverlay() {
-        if (this.#popupShown) {
+        if (this.#popupStatus !== PopupStatus.Hidden) {
             this.#headerFocusIds.map(id => {
                 const element = <HTMLElement>document.getElementById(id);
                 if (element) element.addEventListener('focus', this.#toggleOverlay);
@@ -93,18 +119,30 @@ export default class HeaderView {
         }
     }
 
-    #toggleOverlay = () => {
-        const overlay = <HTMLElement>document.getElementById('header-overlay');
-        if (!overlay) return;
-        if (this.#popupShown) {
-            overlay.classList.remove('header-overlay_shown');
-            overlay.classList.add('header-overlay_hidden');
+    #toggleOverlay = (e?: Event) => {
+        if (!this.#overlay) return;
+        let needRefresh = false;
+        const target = <HTMLElement>e?.currentTarget;
+        if (!target || target.dataset['popupnum'] === undefined || +target.dataset['popupnum'] === this.#popupStatus) {
+            this.#overlay.classList.remove('header-overlay_shown');
+            this.#overlay.classList.add('header-overlay_hidden');
+            this.#headerPopups.map(popup => popup.classList.add('hidden'));
+            this.#popupStatus = PopupStatus.Hidden;
+            needRefresh = true;
         } else {
-            overlay.classList.remove('header-overlay_hidden');
-            overlay.classList.add('header-overlay_shown');
+            const popupNum = +target.dataset['popupnum'];
+            if (this.#popupStatus === PopupStatus.Hidden) {
+                this.#overlay.classList.remove('header-overlay_hidden');
+                this.#overlay.classList.add('header-overlay_shown');
+                needRefresh = true;
+            } else {
+                this.#headerPopups[this.#popupStatus].classList.add('hidden');
+            }
+            this.#headerPopups[popupNum].classList.remove('hidden');
+            this.#popupStatus = popupNum;
         }
-        this.#popupShown = !this.#popupShown;
-        this.#listenOverlay();
+
+        if (needRefresh) this.#listenOverlay();
     };
 
     #inputHandle = () => {
@@ -113,7 +151,7 @@ export default class HeaderView {
     };
 
     #logoutHandle = () => {
-        this.#popupShown = !this.#popupShown;
+        this.#popupStatus = PopupStatus.Hidden;
         this.#listenOverlay();
         Bus.emit(Events.UserLogout);
         this.render();
@@ -134,14 +172,23 @@ export default class HeaderView {
         }
     }
 
+    #renderNotifications() {
+        this.#headerPopups[0].innerHTML = '';
+        this.#headerPopups[0].innerHTML = notifications.reduce((prev, curr) => prev += curr(), '');
+        this.#headerPopups[0].innerHTML += notifications.reduce((prev, curr) => prev += curr(), '');
+    }
+
     render(user?: UserData) {
-        this.#popupShown = false;
+        this.#popupStatus = PopupStatus.Hidden;
         const authAnchors = config.authAnchors;
         this.#parent.innerHTML = template({ authAnchors, user });
         this.#input = <HTMLInputElement>document.getElementById('header-input');
+        this.#overlay = <HTMLElement>document.getElementById('header-overlay');
+        this.#headerPopups = ['notifications-popup', 'user-popup'].map(id => <HTMLElement>document.getElementById(id));
 
         this.#addListeners();
         this.#renderFilter();
+        this.#renderNotifications();
     }
 
     disable() {
