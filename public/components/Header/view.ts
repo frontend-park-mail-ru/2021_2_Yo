@@ -107,21 +107,21 @@ export default class HeaderView {
         this.#listenOverlay();
     };
 
-    #inputHandle = (() => {
+    #inputHandle = () => {
         const value = this.#input?.value;
         FilterStore.set(FilterParams.Query, value);
-    }).bind(this);
+    };
 
-    #logoutHandle = (() => {
+    #logoutHandle = () => {
         this.#popupShown = !this.#popupShown;
         this.#listenOverlay();
         Bus.emit(Events.UserLogout);
         this.render();
-    }).bind(this);
+    };
 
-    #userHandle = ((user: UserData) => {
+    #userHandle = (user: UserData) => {
         this.render(user);
-    }).bind(this);
+    };
 
     #renderFilter() {
         const filter = FilterStore.get();
@@ -137,7 +137,7 @@ export default class HeaderView {
     render(user?: UserData) {
         this.#popupShown = false;
         const authAnchors = config.authAnchors;
-        this.#parent.innerHTML = template({authAnchors, user});
+        this.#parent.innerHTML = template({ authAnchors, user });
         this.#input = <HTMLInputElement>document.getElementById('header-input');
 
         this.#addListeners();

@@ -67,7 +67,10 @@ module.exports = (env, argv) => {
                 inject: 'body',
             }),
             new CleanWebpackPlugin(),
-            new ESLintPlugin({extensions: ['.js', '.ts']}),
+            new ESLintPlugin({
+                extensions: ['.js', '.ts'],
+                fix: true,
+            }),
             new MiniCssExtractPlugin(),
             new getDotEnvPlugin(argv.mode),
         ],

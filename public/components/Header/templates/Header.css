@@ -116,7 +116,7 @@
   background: var(--overlay-bg);
   z-index: 1000;
   opacity: 0;
-  transition: visibility 0.3s, opacity 0.3s linear;
+  transition: visibility 0.1s, opacity 0.1s linear;
 }
 
 .header-overlay_hidden {

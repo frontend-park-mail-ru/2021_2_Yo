@@ -1,8 +1,8 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import UserStore from '@modules/userstore';
-import {fetchGet} from '@request/request';
-import {ApiUrls, FetchResponseData, UserData} from '@/types';
+import { fetchGet } from '@request/request';
+import { ApiStatus, ApiUrls, FetchResponseData, UserData } from '@/types';
 
 export default class HeaderModel {
     enable() {
@@ -10,16 +10,16 @@ export default class HeaderModel {
         Bus.on(Events.UserLogout, this.#logoutHandle);
     }
 
-    #userHandle = (() => {
+    #userHandle = () => {
         const stored = UserStore.get();
         if (stored) {
             Bus.emit(Events.UserRes, stored);
         } else {
             fetchGet(ApiUrls.User,
                 (data: FetchResponseData) => {
-                    const {status, json, headers} = data;
-                    if (status === 200) {
-                        if (json.status === 200) {
+                    const { status, json, headers } = data;
+                    if (status === ApiStatus.Ok) {
+                        if (json.status === ApiStatus.Ok) {
                             const user = <UserData>json.body;
                             Bus.emit(Events.UserRes, user);
 
@@ -37,12 +37,12 @@ export default class HeaderModel {
                 }
             );
         }
-    }).bind(this);
+    };
 
-    #logoutHandle = (() => {
+    #logoutHandle = () => {
         void fetchGet(ApiUrls.Logout);
         Bus.emit(Events.CSRFDelete);
-    }).bind(this);
+    };
 
     disable() {
         Bus.off(Events.UserReq, this.#userHandle);

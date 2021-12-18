@@ -1,4 +1,4 @@
-import { ApiPostLoginData, ApiUrls, FetchResponseData } from '@/types';
+import { ApiStatus, ApiPostLoginData, ApiUrls, FetchResponseData, ApiErrors } from '@/types';
 import { fetchPost } from '@request/request';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
@@ -6,24 +6,29 @@ import Events from '@eventbus/events';
 export default class LoginModel {
     login(inputsData: Map<string, { errors: string[], value: string }>) {
         const postData: ApiPostLoginData = {
-            email: inputsData.get('email')?.value as string,
-            password: inputsData.get('password')?.value as string,
+            email: <string>inputsData.get('email')?.value,
+            password: <string>inputsData.get('password')?.value,
         };
 
         fetchPost(ApiUrls.Login, postData, (data: FetchResponseData) => {
-            const {status, json, headers} = data;
+            const { status, json, headers } = data;
+            const token = headers?.get('X-CSRF-Token');
 
-            if (status === 200) {
-                if (json.status === 200) {
-                    const token = headers?.get('X-CSRF-Token');
+            if (status === ApiStatus.Ok)
+                switch (json.status) {
+                case ApiStatus.Ok:
                     if (token) {
                         Bus.emit(Events.CSRFRes, token);
                     }
                     Bus.emit(Events.RouteBack);
-                    return;
+                    break;
+                case ApiStatus.UserNotFound:
+                    Bus.emit(Events.AuthError, ApiErrors['404']);
+                    break;
+                case ApiStatus.Internal:
+                    Bus.emit(Events.AuthError, ApiErrors['500']);
+                    break;
                 }
-            }
-            Bus.emit(Events.AuthError, json.message);
         });
     }
 }

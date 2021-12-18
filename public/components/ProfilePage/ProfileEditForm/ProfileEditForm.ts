@@ -1,4 +1,4 @@
-import {InputData, UserData} from '@/types';
+import { InputData, UserData } from '@/types';
 import Events from '@eventbus/events';
 import Bus from '@eventbus/eventbus';
 import UserStore from '@modules/userstore';
@@ -23,10 +23,10 @@ export default class ProfileEditForm {
         Bus.on(Events.ValidationOk, this.#validationHandle);
     }
 
-    #validationHandle = (() => {
+    #validationHandle = () => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
-    }).bind(this);
+    };
 
     render(user?: UserData) {
         this.#parent.innerHTML = template();
@@ -40,10 +40,10 @@ export default class ProfileEditForm {
         this.#passwordEditButton?.classList.remove('menu__item_clicked');
 
         const formContainer = <HTMLElement>document.getElementById('formContainer');
-        formContainer.innerHTML = profileForm({user});
+        formContainer.innerHTML = profileForm({ user });
 
         const form = <HTMLElement>document.getElementById('form');
-        form.addEventListener('submit', this.#mainFormSubmitHandle.bind(this));
+        form.addEventListener('submit', this.#mainFormSubmitHandle);
 
         const cancelButton = <HTMLElement>document.getElementById('cancelButton');
         cancelButton.addEventListener('click', this.#cancelEdit);
@@ -60,7 +60,7 @@ export default class ProfileEditForm {
         formContainer.innerHTML = passwordForm();
 
         const passForm = <HTMLElement>document.getElementById('passwordForm');
-        passForm.addEventListener('submit', this.#passwordFormSubmitHandle.bind(this));
+        passForm.addEventListener('submit', this.#passwordFormSubmitHandle);
 
         const cancelButton = <HTMLElement>document.getElementById('cancelButton');
         cancelButton.addEventListener('click', this.#cancelEdit);
@@ -90,12 +90,12 @@ export default class ProfileEditForm {
     #removeListeners() {
         const form = <HTMLElement>document.getElementById('form');
         if (form) {
-            form.removeEventListener('submit', this.#mainFormSubmitHandle.bind(this));
+            form.removeEventListener('submit', this.#mainFormSubmitHandle);
         }
 
         const passwordForm = <HTMLElement>document.getElementById('passwordForm');
         if (passwordForm) {
-            passwordForm.removeEventListener('submit', this.#passwordFormSubmitHandle.bind(this));
+            passwordForm.removeEventListener('submit', this.#passwordFormSubmitHandle);
         }
 
         const cancelButton = <HTMLElement>document.getElementById('cancelButton');
@@ -118,48 +118,47 @@ export default class ProfileEditForm {
         });
     }
 
-    #passwordFormSubmitHandle = ((ev: Event) => {
+    #passwordFormSubmitHandle = (ev: Event) => {
         ev.preventDefault();
 
         this.#inputsData.clear();
         this.#inputs.clear();
 
-        const passwordInput1 = document.getElementById('passwordInput1') as HTMLInputElement;
-        this.#inputs.set('password1', passwordInput1);
-        this.#inputsData.set('password1', {errors: [], value: passwordInput1.value.trim()});
-
-        const passwordInput2 = document.getElementById('passwordInput2') as HTMLInputElement;
+        const passwordInput1 = <HTMLInputElement>document.getElementById('passwordInput1');
+        this.#inputs.set('password1', passwordInput1); 
+        this.#inputsData.set('password1', { errors: [], value: passwordInput1.value.trim() }); 
+        const passwordInput2 = <HTMLInputElement>document.getElementById('passwordInput2');
         this.#inputs.set('password2', passwordInput2);
-        this.#inputsData.set('password2', {errors: [], value: passwordInput2.value.trim()});
+        this.#inputsData.set('password2', { errors: [], value: passwordInput2.value.trim() });
 
         this.#inputs.forEach((input, key) => {
             input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
         });
 
         Bus.emit(Events.UserPasswordEditReq, this.#inputsData);
-    });
+    };
 
-    #mainFormSubmitHandle = ((ev: Event) => {
+    #mainFormSubmitHandle = (ev: Event) => {
         ev.preventDefault();
 
         this.#inputsData.clear();
         this.#inputs.clear();
 
-        const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+        const nameInput = <HTMLInputElement>document.getElementById('nameInput');
         this.#inputs.set('name', nameInput);
-        this.#inputsData.set('name', {errors: [], value: nameInput.value.trim()});
+        this.#inputsData.set('name', { errors: [], value: nameInput.value.trim() });
 
-        const surnameInput = document.getElementById('surnameInput') as HTMLInputElement;
+        const surnameInput = <HTMLInputElement>document.getElementById('surnameInput');
         this.#inputs.set('surname', surnameInput);
-        this.#inputsData.set('surname', {errors: [], value: surnameInput.value.trim()});
+        this.#inputsData.set('surname', { errors: [], value: surnameInput.value.trim() });
 
-        const selfDescriptionInput = document.getElementById('selfDescriptionInput') as HTMLInputElement;
+        const selfDescriptionInput = <HTMLInputElement>document.getElementById('selfDescriptionInput');
         this.#inputs.set('selfDescription', selfDescriptionInput);
-        this.#inputsData.set('selfDescription', {errors: [], value: selfDescriptionInput.value.trim()});
+        this.#inputsData.set('selfDescription', { errors: [], value: selfDescriptionInput.value.trim() });
 
         const avatarInput = <HTMLInputElement>document.getElementById('avatarInput');
         this.#inputs.set('avatar', avatarInput);
-        this.#inputsData.set('avatar', {errors: [], value: ''});
+        this.#inputsData.set('avatar', { errors: [], value: '' });
         let file: File | undefined;
         if (avatarInput.files) file = avatarInput.files[0];
 
@@ -167,8 +166,8 @@ export default class ProfileEditForm {
             input.addEventListener('input', this.#handleInputChange.bind(this, input, key));
         });
 
-        Bus.emit(Events.UserEditReq, {input: this.#inputsData, file});
-    });
+        Bus.emit(Events.UserEditReq, { input: this.#inputsData, file });
+    };
 
     #showValidationErrors() {
         this.#inputs.forEach((input, key) => {
