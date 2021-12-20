@@ -2,7 +2,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as template from '@login/login.hbs';
 import '@authorization/Authorization.css';
-import {InputData} from '@/types';
+import { InputData } from '@/types';
 
 const CHILD_NUM = 2;
 
@@ -21,20 +21,20 @@ export default class LoginView {
         Bus.on(Events.ValidationOk, this.#validationHandle);
     }
 
-    #validationHandle = ((error: string) => {
+    #validationHandle = (error: string) => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
         if (error) {
             this.#showServerErrors(error);
         }
-    }).bind(this);
+    };
 
     render() {
         this.#parent.innerHTML = template();
 
-        const emailInput = document.getElementById('emailInput') as HTMLInputElement;
+        const emailInput = <HTMLInputElement>document.getElementById('emailInput');
         this.#inputs.set('email', emailInput);
-        const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+        const passwordInput = <HTMLInputElement>document.getElementById('passwordInput');
         this.#inputs.set('password', passwordInput);
 
         this.#addListeners();
@@ -53,7 +53,7 @@ export default class LoginView {
     }
 
     #removeListeners() {
-        const form = document.getElementById('authForm') as HTMLFormElement;
+        const form = <HTMLFormElement>document.getElementById('authForm');
         form.removeEventListener('submit', this.#authorize.bind(this));
 
         const back = <HTMLElement>document.getElementById('back');
@@ -75,12 +75,12 @@ export default class LoginView {
     #authorize(event: Event) {
         event.preventDefault();
 
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.innerHTML = '';
 
         this.#inputsData.clear();
-        this.#inputsData.set('email', {errors: [], value: this.#inputs.get('email')?.value.trim() as string});
-        this.#inputsData.set('password', {errors: [], value: this.#inputs.get('password')?.value.trim() as string});
+        this.#inputsData.set('email', { errors: [], value: <string>this.#inputs.get('email')?.value.trim() });
+        this.#inputsData.set('password', { errors: [], value: <string>this.#inputs.get('password')?.value.trim() });
 
         Bus.emit(Events.SubmitLogin, this.#inputsData);
     }
@@ -105,7 +105,7 @@ export default class LoginView {
     }
 
     #showServerErrors(error: string) {
-        const errorsBlock = document.getElementById('errors') as HTMLParagraphElement;
+        const errorsBlock = <HTMLParagraphElement>document.getElementById('errors');
         errorsBlock.textContent = error;
     }
 

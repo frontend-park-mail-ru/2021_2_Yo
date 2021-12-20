@@ -1,4 +1,4 @@
-import {EventData, InputData} from '@/types';
+import { EventData, InputData } from '@/types';
 import Calendar from '@calendar/calendar';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
@@ -33,10 +33,10 @@ export abstract class EventFormView {
         Bus.on(Events.ValidationOk, this.validationHandle);
     }
 
-    protected validationHandle = (() => {
+    protected validationHandle = () => {
         this.#showValidationErrors();
         this.#showCorrectInputs();
-    }).bind(this);
+    };
 
     protected handleInputChange(input: HTMLInputElement, key: string) {
         input.classList.remove('form-input_correct');

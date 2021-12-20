@@ -1,0 +1,79 @@
+.suggest-list-parent {
+    position: relative;
+}
+
+.suggest-list-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 400;
+    width: 100%;
+}
+
+.suggest-list-wrapper:after {
+    position: absolute;
+    content: "";
+    bottom: -20px;
+    height: 20px;
+    width: 1px;
+}
+
+.suggest-list {
+    padding: 0px;
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 136px;
+    overflow-y: overlay;
+    background: white;
+    list-style-type: none;
+    border-radius: 5px;
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.suggest-list__li-wrapper {
+    color: #505050;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.suggest-list__li_hover {
+    background: var(--category-selected);
+}
+
+.suggest-list__li-wrapper:hover {
+    background: var(--category-selected);
+}
+
+.suggest-list__li {
+    padding: 7px 15px;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.suggest-list_fade-out {
+    animation: fadeOut .5s;
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1029px) {
+    .suggest-list {
+        max-height: 104px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+    .suggest-list {
+        max-height: 116px;
+    }
+}

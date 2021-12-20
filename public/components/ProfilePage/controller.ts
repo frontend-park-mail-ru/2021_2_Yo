@@ -1,9 +1,9 @@
 import ProfilePageView from '@profile-page/view';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import {passwordEditValidateFields, userEditValidateFields} from '@modules/validation';
+import { passwordEditValidateFields, userEditValidateFields } from '@modules/validation';
 import ProfilePageModel from '@profile-page/model';
-import {EventData, UserData} from '@/types';
+import { EventData, UserData } from '@/types';
 import UserStore from '@modules/userstore';
 
 type MultipartData = {
@@ -47,7 +47,7 @@ export default class ProfilePageController {
 
         const storedUser = UserStore.get();
         if (storedUser) {
-            const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+            const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
             if (storedUser.id === userURLId) {
                 this.#view.render(storedUser);
             } else {
@@ -96,20 +96,20 @@ export default class ProfilePageController {
         this.#model.getSubscribers(id);
     });
 
-    #userErrorRenderHandle = (() => {
-        const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+    #userErrorRenderHandle = () => {
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         this.#model.getUser(userURLId);
-    }).bind(this);
+    };
 
-    #renderHandle = (() => {
-        const userURLId = new URL(window.location.href).searchParams?.get('id') as string;
+    #renderHandle = () => {
+        const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         const user = UserStore.get();
         if (user?.id === userURLId) {
             Bus.emit(Events.UserByIdRes, user);
         } else {
             this.#model.getUser(userURLId);
         }
-    }).bind(this);
+    };
 
     #userGetHandle = ((user: UserData) => {
         this.#view.render(user);
@@ -151,7 +151,7 @@ export default class ProfilePageController {
 
         if (valid) {
             Bus.emit(Events.ValidationOk);
-            this.#model.editPassword(inputsData.get('password1')?.value as string);
+            this.#model.editPassword(<string>inputsData.get('password1')?.value);
         } else {
             Bus.emit(Events.ValidationError);
         }

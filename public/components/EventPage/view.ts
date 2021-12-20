@@ -1,5 +1,5 @@
-import {EventData, UrlPathnames, UserData} from '@/types';
-import {Loader} from '@googlemaps/js-api-loader';
+import { EventData, UrlPathnames, UserData } from '@/types';
+import { Loader } from '@googlemaps/js-api-loader';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import Userstore from '../../modules/userstore';
@@ -24,7 +24,7 @@ export default class EventPageView {
 
         const permission = (this.#event.authorid === Userstore.get()?.id);
         const unpermission = !permission;
-        this.#parent.innerHTML = template({event, permission, unpermission, author});
+        this.#parent.innerHTML = template({ event, permission, unpermission, author });
 
         this.#renderMap();
 
@@ -165,7 +165,8 @@ export default class EventPageView {
                 map.setZoom(ZOOM);
             }).catch(() => {
                 const container = <HTMLElement>document.getElementById('mapContainer');
-                container.textContent = 'Ошибка подключения к картам';
+                if (container)
+                    container.textContent = 'Ошибка подключения к картам';
             });
         }
     }

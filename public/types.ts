@@ -55,6 +55,19 @@ export type FetchResponseData = {
     headers?: Headers;
 }
 
+export const ApiErrors = {
+    409: 'Пользователь уже существует',
+    500: 'Внутренняя ошибка сервера',
+    404: 'Пользователь не найден',
+};
+
+export enum ApiStatus {
+    Ok = 200,
+    UserAlreadyExists = 409,
+    Internal = 500,
+    UserNotFound = 404,
+}
+
 export type ApiResponseJson = {
     status: number;
     message: string;

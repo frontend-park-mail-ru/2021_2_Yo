@@ -2,16 +2,16 @@ import * as template from '@main-page/FilterList/filterlist.hbs';
 import * as tagTemplate from '@templates/tag/tag.hbs';
 import '@templates/tag/tag.css';
 import '@main-page/FilterList/FilterList.css';
-import {FilterData} from '@/types';
+import { FilterData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import config from '@/config';
 import CityStore from '@/modules/citystore';
-import FilterStore, {FilterParams} from '@/modules/filter';
+import FilterStore, { FilterParams } from '@/modules/filter';
 import Calendar from '@calendar/calendar';
+import SuggestList from '@/components/SuggestList/SuggestList';
 
 const TAG_PING_TIME_MSEC = 500;
-
 
 export default class FilterListComponent {
     #parent: HTMLElement;
@@ -21,7 +21,10 @@ export default class FilterListComponent {
     #tagInput?: HTMLInputElement;
     #dateInput?: HTMLInputElement;
     #cityInput?: HTMLInputElement;
+    #citySuggestList?: SuggestList;
     #tagPlus?: HTMLElement;
+    #dateCross?: HTMLElement;
+    #cityCross?: HTMLElement;
     #filter: FilterData;
 
     constructor(parent: HTMLElement) {
@@ -51,8 +54,9 @@ export default class FilterListComponent {
             tagCross.removeEventListener('click', this.#handleTagDelete);
         });
 
-        this.#filter['tags'].push(tag);
-        FilterStore.set(FilterParams.Tags, this.#filter['tags']);
+        const tags = Array.from(this.#filter['tags']);
+        tags.push(tag);
+        this.#filter = FilterStore.set(FilterParams.Tags, tags);
         this.#renderTags();
         return true;
     }
@@ -82,9 +86,25 @@ export default class FilterListComponent {
         this.#tagPlus?.addEventListener('click', this.#handleTagAdd);
         this.#dateInput?.addEventListener('change', this.#handleDateChange);
         this.#dateInput?.addEventListener('input', this.#handleDateInput);
+        this.#dateCross?.addEventListener('click', this.#handleDateDelete);
         this.#dateInput?.addEventListener('click', this.#handleCalendarRender);
-        this.#cityInput?.addEventListener('input', this.#handleCityInput);
+        this.#cityInput?.addEventListener('suggest', <EventListener>this.#handleCityInput);
+        this.#cityCross?.addEventListener('click', this.#handleCityDelete);
     }
+
+    #handleCityDelete = () => {
+        if (this.#cityInput) {
+            this.#cityInput.value = '';
+            this.#cityInput.focus();
+        }
+    };
+    
+    #handleDateDelete = () => {
+        if (this.#dateInput) {
+            this.#dateInput.value = '';
+            this.#dateInput.dispatchEvent(new Event('change'));
+        }
+    };
 
     #handleSearch = () => {
         const value = this.#search?.value.trim();
@@ -138,13 +158,12 @@ export default class FilterListComponent {
 
     #handleDateChange = () => {
         this.#dateInput?.classList.remove('form-input_changed');
-        const date = <string>this.#dateInput?.value;
+        const date = <string>this.#dateInput?.value.trim();
         this.#filter = FilterStore.set(FilterParams.Date, date);
     };
 
-    #handleCityInput = () => {
-        const value = <string>this.#cityInput?.value;
-        this.#filter = FilterStore.set(FilterParams.City, value);
+    #handleCityInput = (e: CustomEvent) => {
+        this.#filter = FilterStore.set(FilterParams.City, e.detail);
     };
 
     #handleCalendarRender = () => {
@@ -173,7 +192,8 @@ export default class FilterListComponent {
         this.#dateInput?.removeEventListener('change', this.#handleDateChange);
         this.#dateInput?.removeEventListener('input', this.#handleDateInput);
         this.#dateInput?.removeEventListener('click', this.#handleCalendarRender);
-        this.#cityInput?.removeEventListener('input', this.#handleCityInput);
+        this.#cityInput?.removeEventListener('suggest', <EventListener>this.#handleCityInput);
+        this.#cityCross?.removeEventListener('click', this.#handleCityDelete);
     }
 
     #renderFilter() {
@@ -218,12 +238,17 @@ export default class FilterListComponent {
         this.#tagInput = <HTMLInputElement>document.getElementById('filter-tag-input');
         this.#tagPlus = <HTMLElement>document.getElementById('tags-search-img');
         this.#dateInput = <HTMLInputElement>document.getElementById('dateInput');
+        this.#dateCross = <HTMLElement>document.getElementById('date-delete-img');
         this.#cityInput = <HTMLInputElement>document.getElementById('filter-city-input');
+        this.#cityCross = <HTMLElement>document.getElementById('city-delete-img');
+        const citySuggestList = <HTMLElement>document.getElementById('city-suggest-list');
+        this.#citySuggestList = new SuggestList('city', citySuggestList, this.#cityInput, CityStore.get());
         this.#addListeners();
         this.#renderFilter();
     }
 
     disable() {
+        this.#citySuggestList?.disable();
         this.#removeListeners();
         this.#parent.innerHTML = '';
     }

@@ -54,6 +54,8 @@
         <div>
             <div class="secondary-text">{{event.date}}</div>
             <div class="secondary-text">{{event.city}}</div>
+            <span class="secondary-text">Категория: </span>
+            <a class="secondary-text category" href="/?category={{event.category}}">{{event.category}}</a>
         </div>
 
         {{#if event.tag}}

@@ -1,9 +1,9 @@
-import {Loader} from '@googlemaps/js-api-loader';
+import { Loader } from '@googlemaps/js-api-loader';
 import './map.css';
 import * as template from './map.hbs';
-import {EventData} from '@/types';
+import { EventData } from '@/types';
 
-const MSC_LAT_LNG = {lat: 55.751244, lng: 37.618423};
+const MSC_LAT_LNG = { lat: 55.751244, lng: 37.618423 };
 const ADDRESS_NOT_FOUND = 'Адрес не найден';
 const ZOOM = 16;
 

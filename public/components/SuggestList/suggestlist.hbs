@@ -1,0 +1,9 @@
+<div class="suggest-list-wrapper">
+    <ul id="suggest-list-{{name}}" class="suggest-list">
+        {{#each list}}
+        <li class="suggest-list__li-wrapper suggest-list__li-{{../name}}" data-suggest="{{this}}">
+            <div class="suggest-list__li">{{this}}</div>
+        </li>
+        {{/each}}
+    </ul>
+</div>

@@ -40,7 +40,10 @@
         </div>
         <div class="filter-tag">
             <div class="filter-tag__search">
-                <input class="filter-tag__search-input" id="dateInput" type="text" placeholder="дд.мм.гггг" autocomplete="off">
+                <input class="filter-tag__search-input filter-tag__search-input_date" id="dateInput" type="text" placeholder="дд.мм.гггг" autocomplete="off">
+                <svg id="date-delete-img" class="filter-tag__search-img filter-tag__search-img_cross">
+                    <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
+                </svg>
             </div>
         </div>
     </section>
@@ -54,27 +57,13 @@
             </svg>
         </div>
         <div class="filter-tag">
-            <div class="filter-tag__search">
-                <input class="filter-tag__search-input" type="text" id="filter-city-input" list="citiesList">
-                <datalist id="citiesList">
-                    {{#each cities}}
-                    <option>{{this}}</option>
-                    {{/each}}
-                </datalist>
-                {{!-- <select>
-                    {{#each cities}}
-                    <option>{{this}}</option>
-                    {{/each}}
-                </select> --}}
-            </div>
-        </div>
-        {{!-- <div class="filter-tag__tags">
-            <div class="tag tag_delitable tag_purple">
-                <span>г. Москва</span>
-                <svg class="tag-img">
-                    <use xlink:href="./server/img/sprite.svg#cross"></use>
+            <div class="filter-tag__search suggest-list-parent">
+                <input id="filter-city-input" class="filter-tag__search-input" type="text" autocomplete="off">
+                <svg id="city-delete-img" class="filter-tag__search-img filter-tag__search-img_cross">
+                    <use xlink:href="./server/img/sprite.svg#stroke-plus"></use>
                 </svg>
             </div>
-        </div> --}}
+            <div id="city-suggest-list" class="suggest-list-parent"></div>
+        </div>
     </section>
 </div>
