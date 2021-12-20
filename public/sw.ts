@@ -1,7 +1,7 @@
 /// <reference lib="WebWorker" />
 
 const CACHE_NAME = 'BMSTUSAcache';
-const cacheUrls = ['/api/events/cities', '/api/events', '/api/user'];
+const cacheUrls = ['/'];
 
 export type {};
 declare const self: ServiceWorkerGlobalScope;

@@ -1,9 +1,9 @@
 import ProfilePageView from '@profile-page/view';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import { passwordEditValidateFields, userEditValidateFields } from '@modules/validation';
+import {passwordEditValidateFields, userEditValidateFields} from '@modules/validation';
 import ProfilePageModel from '@profile-page/model';
-import { EventData, UserData } from '@/types';
+import {EventData, UserData} from '@/types';
 import UserStore from '@modules/userstore';
 
 type MultipartData = {
@@ -102,6 +102,7 @@ export default class ProfilePageController {
     };
 
     #renderHandle = () => {
+        this.#view.disableProfileForm();
         const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         const user = UserStore.get();
         if (user?.id === userURLId) {

@@ -51,7 +51,7 @@ export default class ProfilePageModel {
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         UserStore.reset();
-                        Bus.emit(Events.UserReq);
+                        Bus.emit(Events.UserRes, stored);
                         return;
                     }
                 }
