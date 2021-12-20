@@ -85,6 +85,7 @@
   width: 70px;
   height: var(--header-height);
   cursor: pointer;
+  position: relative;
 }
 
 .header__button-wrapper:hover {
@@ -95,6 +96,15 @@
   width: 26.4px;
   height: 32px;
   fill: white;
+}
+
+.header__notifications-circle {
+  fill: red;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: 7px;
+  right: 16px;
 }
 
 .header__avatar {
@@ -252,13 +262,16 @@
   overflow: overlay;
 }
 
-.notification {
+.notification, .notification_empty {
   width: 100%;
   padding: 10px 20px;
   display: flex;
   box-sizing: border-box;
   align-items: center;
   height: 70px;
+}
+
+.notification {
   cursor: pointer;
 }
 

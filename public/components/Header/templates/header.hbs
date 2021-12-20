@@ -12,6 +12,12 @@
                     <svg class="header__notifications">
                         <use xlink:href="./server/img/sprite.svg#bell"></use>
                     </svg>
+                    <svg id="header-notifications-circle" class="header__notifications-circle hidden">
+                        <use xlink:href="./server/img/sprite.svg#circle"></use>
+                    </svg>
+                    <audio id="notifications-audio" controls>
+                        <source src="server/audio/notification.wav" type="audio/wav">
+                    </audio>
                 </div>
                 <div id="header-avatar" class="header__button-wrapper" data-popupnum="1">
                     <img class="header__avatar"

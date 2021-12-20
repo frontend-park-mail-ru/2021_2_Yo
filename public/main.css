@@ -117,6 +117,10 @@ input:focus {
   outline: none;
 }
 
+audio {
+  display: none;
+}
+
 #App {
   width: 100%;
   font-family: Roboto;
