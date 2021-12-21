@@ -94,6 +94,7 @@ export default class EventPageModel {
     getFriends() {
         fetchGet(ApiUrls.User + '/friends?eventId' + eventId, (data: FetchResponseData) => {
             const {status, json} = data;
+            console.log('check');
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
                     const users = <UserData[]>json.body.users;
