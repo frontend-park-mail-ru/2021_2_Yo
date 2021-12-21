@@ -1,3 +1,5 @@
+import { type } from 'os';
+
 export type UserData = {
     id: string;
     imgUrl?: string;
@@ -102,3 +104,18 @@ export type InputData = {
     errors: string[],
     value: string | string[],
 }
+
+export interface NotificationSubscribe {
+    type: string,
+    userId: string,
+    userImgUrl: string,
+    userName: string,
+    userSurname: string,
+}
+
+export interface NotificationInvite extends NotificationSubscribe {
+    eventId: string,
+    eventTitle: string,
+}
+
+export type Notification = NotificationSubscribe | NotificationInvite;

@@ -1,11 +1,12 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import config from '@/config';
-import { UserData } from '@/types';
+import { Notification, UserData } from '@/types';
 import * as template from '@header/templates/header.hbs';
 import * as notificationSubscribeTemplate from '@header/templates/notificationsubscribe.hbs';
 import * as notificationInviteTemplate from '@header/templates/notificationinvite.hbs';
 import * as notificationCreateTemplate from '@header/templates/notificationcreate.hbs';
+import * as notificationEmptyTemplate from '@header/templates/notificationempty.hbs';
 import '@header/templates/Header.css';
 import FilterStore, { FilterParams } from '@/modules/filter';
 
@@ -13,6 +14,7 @@ const notificationTemplates = [
     notificationSubscribeTemplate,
     notificationInviteTemplate,
     notificationCreateTemplate,
+    notificationEmptyTemplate,
 ];
 
 enum PopupStatus {
@@ -71,6 +73,8 @@ export default class HeaderView {
 
     #handleNotifications = (e: MouseEvent) => {
         e.stopPropagation();
+        const circle = <HTMLElement>document.getElementById('header-notifications-circle');
+        circle.classList.add('hidden');
         this.#toggleOverlay(e);
     };
 
@@ -164,28 +168,42 @@ export default class HeaderView {
 
     #notificationsAddListeners() {
         const notifications = <HTMLCollectionOf<HTMLElement>>document.getElementsByClassName('notification');
-        const a = Array.of(notifications);
         Array.from(notifications).map(notification => {
-            notification.addEventListener('click', () => {
-                const anchor = notification.dataset['anchor'];
-                if (anchor) {
-                    Bus.emit(Events.RouteUrl, anchor);
-                }
-            });
+            notification.addEventListener('click', this.#handleNotificationClick);
         });
     }
 
-    #notificationsHandle = (notifications: any[]) => {
+    #handleNotificationClick = (e: MouseEvent) => {
+        const target = <HTMLElement>e.currentTarget;
+        const anchor = target.dataset['anchor'];
+        if (anchor) {
+            Bus.emit(Events.RouteUrl, anchor);
+        }
+    };
+
+    #notificationsHandle = (notifications: Notification[]) => {
         this.#headerPopups[0].innerHTML = '';
-        // console.log(notifications);
+        if (notifications.length === 0) {
+            this.#headerPopups[0].innerHTML += notificationTemplates[3]();
+            return;
+        }
+        const audio = <HTMLAudioElement>document.getElementById('notifications-audio');
+        void audio.play();
+        const circle = <HTMLElement>document.getElementById('header-notifications-circle');
+        circle.classList.remove('hidden');
         notifications.map(notification => {
-            const type = +<string>notification['type'];
+            const type = +notification['type'];
             this.#headerPopups[0].innerHTML += notificationTemplates[type](notification);
         });
-        // this.#headerPopups[0].innerHTML = notificationSubscribeTemplate(notifications[0]);
-        // this.#headerPopups[0].innerHTML = notificationInviteTemplate(notifications[0]);
         this.#notificationsAddListeners();
     };
+
+    #notificationsRemoveListeners() {
+        const notifications = <HTMLCollectionOf<HTMLElement>>document.getElementsByClassName('notification');
+        Array.from(notifications).map(notification => {
+            notification.removeEventListener('click', this.#handleNotificationClick);
+        });
+    }
 
     #renderFilter() {
         const filter = FilterStore.get();
@@ -198,12 +216,6 @@ export default class HeaderView {
         }
     }
 
-    #renderNotifications() {
-        // this.#headerPopups[0].innerHTML = '';
-        // this.#headerPopups[0].innerHTML = notifications.reduce((prev, curr) => prev += curr(), '');
-        // this.#headerPopups[0].innerHTML += notifications.reduce((prev, curr) => prev += curr(), '');
-    }
-
     render(user?: UserData) {
         this.#popupStatus = PopupStatus.Hidden;
         const authAnchors = config.authAnchors;
@@ -214,10 +226,10 @@ export default class HeaderView {
 
         this.#addListeners();
         this.#renderFilter();
-        this.#renderNotifications();
     }
 
     disable() {
+        this.#notificationsRemoveListeners();
         this.#removeListeners();
         Bus.off(Events.UserRes, this.#userHandle);
         Bus.off(Events.UserNotificationsRes, this.#notificationsHandle);
