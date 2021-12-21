@@ -6,7 +6,7 @@ import * as template from '@main-page/EventBoard/eventboard.hbs';
 import * as eventTemplate from '@main-page/EventBoard/eventcard.hbs';
 import * as eventFavOnTemplate from '@main-page/EventBoard/eventfavon.hbs';
 import * as eventFavOffTemplate from '@main-page/EventBoard/eventfavoff.hbs';
-import '@main-page/EventBoard/EventBoard.css';
+import '@main-page/EventBoard/EventBoard.scss';
 import UserStore from '@/modules/userstore';
 
 const WIDTH_BREAKPOINTS = [

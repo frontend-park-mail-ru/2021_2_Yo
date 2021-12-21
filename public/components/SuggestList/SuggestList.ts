@@ -1,5 +1,5 @@
 import * as template from '@suggest-list/suggestlist.hbs';
-import '@suggest-list/SuggestList.css';
+import '@suggest-list/SuggestList.scss';
 
 export default class SuggestList {
     #name: string;

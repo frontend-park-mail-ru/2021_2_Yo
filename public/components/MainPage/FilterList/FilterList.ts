@@ -1,7 +1,7 @@
 import * as template from '@main-page/FilterList/filterlist.hbs';
 import * as tagTemplate from '@templates/tag/tag.hbs';
-import '@templates/tag/tag.css';
-import '@main-page/FilterList/FilterList.css';
+import '@templates/tag/tag.scss';
+import '@main-page/FilterList/FilterList.scss';
 import { FilterData } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';

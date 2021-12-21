@@ -1,5 +1,5 @@
 import { Loader } from '@googlemaps/js-api-loader';
-import './map.css';
+import './map.scss';
 import * as template from './map.hbs';
 import { EventData } from '@/types';
 

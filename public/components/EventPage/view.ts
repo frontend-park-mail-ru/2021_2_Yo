@@ -5,8 +5,8 @@ import Events from '@eventbus/events';
 import userstore from '../../modules/userstore';
 import * as template from '@event-page/templates/eventpage.hbs';
 import * as friendsTemplate from '@templates/friendslist/friendslist.hbs';
-import '@templates/friendslist/friendslist.css';
-import '@event-page/templates/EventPage.css';
+import '@templates/friendslist/friendslist.scss';
+import '@event-page/templates/EventPage.scss';
 
 const KEY = process.env.MAPS_API_KEY?.toString();
 const PLACES_LIB = 'places';

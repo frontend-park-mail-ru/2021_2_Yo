@@ -1,5 +1,5 @@
 import * as template from '@calendar/calendar.hbs';
-import '@calendar/Calendar.css';
+import '@calendar/Calendar.scss';
 
 const months = [
     'Январь',

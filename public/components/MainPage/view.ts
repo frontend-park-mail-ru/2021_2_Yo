@@ -1,7 +1,7 @@
 import FilterListComponent from '@/components/MainPage/FilterList/FilterList';
 import EventBoardComponent from '@main-page/EventBoard/EventBoard';
 import * as template from '@main-page/mainpage.hbs';
-import '@main-page/MainPage.css';
+import '@main-page/MainPage.scss';
 
 const GO_TOP_HEIGHT_PROPORTION = 0.5;
 

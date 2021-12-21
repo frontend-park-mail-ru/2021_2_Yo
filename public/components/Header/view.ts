@@ -7,7 +7,7 @@ import * as notificationSubscribeTemplate from '@header/templates/notificationsu
 import * as notificationInviteTemplate from '@header/templates/notificationinvite.hbs';
 import * as notificationCreateTemplate from '@header/templates/notificationcreate.hbs';
 import * as notificationEmptyTemplate from '@header/templates/notificationempty.hbs';
-import '@header/templates/Header.css';
+import '@header/templates/Header.scss';
 import FilterStore, { FilterParams } from '@/modules/filter';
 
 const notificationTemplates = [
