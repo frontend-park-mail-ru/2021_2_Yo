@@ -255,18 +255,14 @@ audio {
   border-radius: 5px;
   border: 1px solid rgba(164, 164, 164, 0.2);
   box-sizing: border-box;
-
   padding: 5px 10px;
-
   font-size: 1.5rem;
   line-height: 1.65rem;
   font-family: inherit;
   font-style: normal;
   font-weight: normal;
   color: var(--black-text-color);
-
   width: 100%;
-
   outline: none;
 }
 
@@ -339,17 +335,13 @@ textarea {
   border: 1px solid var(--secondary_gray);
   box-sizing: border-box;
   border-radius: 5px;
-
   padding: 5px 20px;
-
   font-style: normal;
   font-weight: normal;
   font-size: 1.5rem;
   line-height: 1.65rem;
   color: var(--secondary_gray);
-
   width: max-content;
-
   cursor: pointer;
 }
 
@@ -378,17 +370,13 @@ textarea {
   background: var(--blue-btn-color);
   border: 0 solid;
   border-radius: 5px;
-
   padding: 5px 20px;
-
   font-style: normal;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 1.65rem;
   color: white;
-
   width: max-content;
-
   cursor: pointer;
 }
 
@@ -396,17 +384,13 @@ textarea {
   background: var(--light-gray-color);
   border: 0 solid;
   border-radius: 5px;
-
   padding: 5px 20px;
-
   font-style: normal;
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 1.65rem;
   color: white;
-
   width: max-content;
-
   cursor: pointer;
 }
 
@@ -479,7 +463,6 @@ textarea {
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
-
   padding: 40px 60px;
   box-sizing: border-box;
 }
@@ -490,7 +473,6 @@ textarea {
   font-size: 2.22vh;
   line-height: 2.59vh;
   color: var(--black-text-color);
-
   margin: 0;
 }
 

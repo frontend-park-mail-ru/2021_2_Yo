@@ -92,6 +92,12 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
+.header-notifications-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .header__notifications {
   width: 26.4px;
   height: 32px;
