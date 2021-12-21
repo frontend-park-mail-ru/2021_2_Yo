@@ -58,5 +58,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY   }}
-          source: "public/*"
+          source: "dist/*"
           target: "/home/ubuntu/bmstusa/frontend"
