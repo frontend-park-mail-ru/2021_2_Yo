@@ -34,8 +34,8 @@ jobs:
       - name: Upload build result
         uses: actions/upload-artifact@v1
         with:
-          name: public
-          path: .
+          name: dist
+          path: ./dist
 
   deploy:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       - name: Download build
         uses: actions/download-artifact@v1
         with:
-          name: public
+          name: dist
       - name: Delete folder
         uses: appleboy/ssh-action@master
         with:
