@@ -6,7 +6,6 @@
     {{/if}}
     <div class="notification__text">
         <a href="/user?id={{notification.userId}}" class="notification__anchor">{{notification.userName}} {{notification.userSurname}}</a>
-        {{!-- создал мероприятие --}}
         {{text}}
         <a href="/events?id={{notification.eventId}}" class="notification__anchor">{{notification.eventTitle}}</a>
     </div>
