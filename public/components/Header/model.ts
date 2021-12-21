@@ -5,7 +5,6 @@ import { fetchGet, fetchPost, WS } from '@request/request';
 import { ApiStatus, ApiUrls, FetchResponseData, UserData, Notification } from '@/types';
 
 export default class HeaderModel {
-    // #notifications: Notification[] = [];
     #notifications: Set<Notification> = new Set<Notification>();
     #ws?: WebSocket;
 
