@@ -6,7 +6,7 @@ const cacheUrls = ['/'];
 export type {};
 declare const self: ServiceWorkerGlobalScope;
 
-const fallback = '' +
+const fallback =
     '<!DOCTYPE html>\n' +
     '<html lang="en">\n' +
     '<head>\n' +
