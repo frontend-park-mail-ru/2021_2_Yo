@@ -17,7 +17,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16.13.0
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: build
-          path: ./build
+          path: ./public
 
 #  deploy:
 #    runs-on: ubuntu-latest
