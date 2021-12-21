@@ -5,7 +5,8 @@ import { fetchGet, fetchPost, WS } from '@request/request';
 import { ApiStatus, ApiUrls, FetchResponseData, UserData, Notification } from '@/types';
 
 export default class HeaderModel {
-    #notifications: Notification[] = [];
+    // #notifications: Notification[] = [];
+    #notifications: Set<Notification> = new Set<Notification>();
     #ws?: WebSocket;
 
     enable() {
@@ -30,7 +31,9 @@ export default class HeaderModel {
 
     #wsMessageHandle = (event: MessageEvent) => {
         const data = JSON.parse(event['data']);
-        this.#notifications.unshift(data);
+        const notifications = [...this.#notifications];
+        notifications.unshift(data);
+        this.#notifications = new Set(notifications);
         Bus.emit(Events.UserNotificationsRes, this.#notifications);
     };
 
@@ -44,7 +47,7 @@ export default class HeaderModel {
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         const notifications: Notification[] = json.body.notifications;
-                        this.#notifications = notifications;
+                        this.#notifications = new Set(notifications);
                         Bus.emit(Events.UserNotificationsRes, notifications);
                     }
                 }
@@ -53,10 +56,11 @@ export default class HeaderModel {
     };
 
     #notificationsSeenHandle = () => {
-        this.#notifications = this.#notifications.map((notification) => {
+        const notifications = [...this.#notifications].map((notification) => {
             notification['seen'] = true;
             return notification;
         });
+        this.#notifications = new Set(notifications);
         fetchPost(ApiUrls.Notifications);
     };
 
