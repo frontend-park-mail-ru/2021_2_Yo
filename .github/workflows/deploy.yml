@@ -1,0 +1,65 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - деплой_nginx_BT-37
+      - рк4_бекенд
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.0
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install npm
+        run: npm install
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            ./dist
+            ./public
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+      - name: Delete folder
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: sudo rm -r /home/ubuntu/bmstusa/frontend
+      - name: Transfer build files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY   }}
+          source: "./"
+          target: "/home/ubuntu/bmstusa/frontend"
