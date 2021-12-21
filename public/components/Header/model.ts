@@ -1,7 +1,7 @@
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import UserStore from '@modules/userstore';
-import { fetchGet } from '@request/request';
+import { fetchGet, fetchPost } from '@request/request';
 import { ApiStatus, ApiUrls, FetchResponseData, UserData, Notification } from '@/types';
 
 export default class HeaderModel {
@@ -10,7 +10,8 @@ export default class HeaderModel {
 
     enable() {
         Bus.on(Events.UserReq, this.#userHandle);
-        Bus.on(Events.UserNotificationsReq, this.#notificationsHandle);
+        Bus.on(Events.UserNotificationsReq, this.#notificationsReqHandle);
+        Bus.on(Events.UserNotificationsSeen, this.#notificationsSeenHandle);
         Bus.on(Events.UserLogout, this.#logoutHandle);
     }
 
@@ -34,11 +35,9 @@ export default class HeaderModel {
     };
 
     #wsCloseHandle = () => {
-        // console.log('CLOSED');
-        // this.#ws?.removeEventListener;
     };
 
-    #notificationsHandle = () => {
+    #notificationsReqHandle = () => {
         fetchGet(ApiUrls.Notifications,
             (data: FetchResponseData) => {
                 const { status, json } = data;
@@ -50,6 +49,17 @@ export default class HeaderModel {
                     }
                 }
             }
+        );
+    };
+
+    #notificationsSeenHandle = () => {
+        this.#notifications = this.#notifications.map((notification) => {
+            notification['seen'] = true;
+            return notification;
+        });
+        fetchPost(ApiUrls.Notifications,
+            undefined,
+            () => {},
         );
     };
 
@@ -92,6 +102,7 @@ export default class HeaderModel {
     disable() {
         Bus.off(Events.UserReq, this.#userHandle);
         Bus.off(Events.UserLogout, this.#logoutHandle);
-        Bus.off(Events.UserNotificationsReq, this.#notificationsHandle);
+        Bus.off(Events.UserNotificationsReq, this.#notificationsReqHandle);
+        Bus.off(Events.UserNotificationsSeen, this.#notificationsSeenHandle);
     }
 }

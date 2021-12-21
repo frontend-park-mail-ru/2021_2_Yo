@@ -31,6 +31,7 @@ export default class HeaderView {
     #headerFocusIds = ['header-input', 'header-calendar'];
     #headerClickIds = ['header', 'header-logo'];
     #headerPopups: HTMLElement[] = [];
+    #seen?: boolean;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -75,7 +76,9 @@ export default class HeaderView {
         e.stopPropagation();
         const circle = <HTMLElement>document.getElementById('header-notifications-circle');
         circle.classList.add('hidden');
+        this.#seen = true;
         this.#toggleOverlay(e);
+        Bus.emit(Events.UserNotificationsSeen);
     };
 
     #handleAvatar = (e: MouseEvent) => {
@@ -181,16 +184,28 @@ export default class HeaderView {
         }
     };
 
+    #isSeen(notifications: Notification[]): boolean {
+        for (const notification of notifications) {
+            if (!notification['seen']) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     #notificationsHandle = (notifications: Notification[]) => {
         this.#headerPopups[0].innerHTML = '';
         if (notifications.length === 0) {
             this.#headerPopups[0].innerHTML += notificationTemplates[3]();
             return;
         }
-        const audio = <HTMLAudioElement>document.getElementById('notifications-audio');
-        void audio.play();
-        const circle = <HTMLElement>document.getElementById('header-notifications-circle');
-        circle.classList.remove('hidden');
+        if (!this.#isSeen(notifications)) {
+            const audio = <HTMLAudioElement>document.getElementById('notifications-audio');
+            audio['muted'] = false;
+            void audio.play();
+            const circle = <HTMLElement>document.getElementById('header-notifications-circle');
+            circle.classList.remove('hidden');
+        }
         notifications.map(notification => {
             const type = +notification['type'];
             this.#headerPopups[0].innerHTML += notificationTemplates[type](notification);

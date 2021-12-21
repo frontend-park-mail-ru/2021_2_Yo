@@ -18,7 +18,7 @@ export default class SuggestList {
         this.#input = input;
         this.#list = [...list].filter(item => {if (item !== '') return item;});
         this.#input.addEventListener('focus', this.#render);
-        this.#input.addEventListener('focusout', this.#hide);
+        this.#input.addEventListener('blur', this.#hide);
         this.#input.addEventListener('input', this.#render);
         this.#shown = false;
         this.#top = 0;
@@ -55,7 +55,6 @@ export default class SuggestList {
         const suggest = <string>target.dataset['suggest'];
         this.#input.value = suggest;
         this.#dispatchSuggest(suggest);
-        this.#hide();
     };
 
     #removeEventListeners() {

@@ -111,6 +111,7 @@ export interface NotificationSubscribe {
     userImgUrl: string,
     userName: string,
     userSurname: string,
+    seen: boolean,
 }
 
 export interface NotificationInvite extends NotificationSubscribe {

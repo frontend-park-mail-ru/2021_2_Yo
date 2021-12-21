@@ -17,6 +17,7 @@ enum Events {
     UserIsSubscribedRes = 'user-subscribed:response',
     UserNotificationsReq = 'user-notifications:request',
     UserNotificationsRes = 'user-notifications:response',
+    UserNotificationsSeen = 'user-notifications:seen',
 
     // Events
     EventsReq = 'events:request',

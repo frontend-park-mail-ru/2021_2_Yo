@@ -18,7 +18,6 @@ export function fetchGet(url: string, callback?: Callback, error?: Callback) {
     url = url.trim();
     let HTTPStatus: number;
     let headers: Headers;
-    console.log('URL:', url);
 
     return void fetch(API + url, {
         method: METHODS.GET,

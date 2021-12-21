@@ -182,15 +182,11 @@ class FilterStore {
     }
 
     #handleRouteChange = (path: string) => {
-        // return;
-        console.log('route change?');
-        console.log('PATH: <' + path + '>');
         if (path == UrlPathnames.Main) {
             if (!this.#enabled) {
                 this.enable();
             }
             this.#filter = parseParams();
-            console.log(this.#filter);
         } else {
             if (this.#enabled) {
                 this.disable();
@@ -200,8 +196,6 @@ class FilterStore {
     };
 
     #handleFilterChange = (header?: boolean) => {
-        console.log('filter change!!!');
-        console.log(this.#filter);
         let search = filterToUrl();
         if (this.#onlyQuery() && header !== false) {
             Bus.emit(Events.RouteUrl, UrlPathnames.Main + search);
@@ -218,7 +212,6 @@ class FilterStore {
             }
         }
 
-        console.log('SEARCH: <' + search + '>');
         fetchGet(ApiUrls.Events + search, 
             (data: FetchResponseData) => {
                 const { status, json } = data;
