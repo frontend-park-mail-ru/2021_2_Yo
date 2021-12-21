@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - деплой_nginx_BT-37
+      - рк4_бекенд
   pull_request:
     branches:
       - main
@@ -35,7 +36,9 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: dist
-          path: ./dist
+          path: |
+            ./dist
+            ./public
 
   deploy:
     runs-on: ubuntu-latest
@@ -58,5 +61,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY   }}
-          source: "dist/*"
           target: "/home/ubuntu/bmstusa/frontend"
