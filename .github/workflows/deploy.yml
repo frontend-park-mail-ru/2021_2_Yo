@@ -33,7 +33,7 @@ jobs:
         run: npm run build
 
       - name: Upload build result
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: build
           path: |
@@ -45,7 +45,7 @@ jobs:
     needs: build
     steps:
       - name: Download build
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: build
       - name: Delete folder
