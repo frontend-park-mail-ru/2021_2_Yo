@@ -34,7 +34,7 @@ jobs:
       - name: Upload build result
         uses: actions/upload-artifact@v1
         with:
-          name: build
+          name: public
           path: ./public
 
   deploy:
@@ -51,5 +51,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY   }}
-          source: "public"
+          source: "public/*"
           target: "/home/ubuntu/bmstusa/frontend"
