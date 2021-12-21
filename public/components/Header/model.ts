@@ -34,7 +34,7 @@ export default class HeaderModel {
         const notifications = [...this.#notifications];
         notifications.unshift(data);
         this.#notifications = new Set(notifications);
-        Bus.emit(Events.UserNotificationsRes, this.#notifications);
+        Bus.emit(Events.UserNotificationsRes, [...this.#notifications]);
     };
 
     #wsCloseHandle = () => {
@@ -48,7 +48,7 @@ export default class HeaderModel {
                     if (json.status === ApiStatus.Ok) {
                         const notifications: Notification[] = json.body.notifications;
                         this.#notifications = new Set(notifications);
-                        Bus.emit(Events.UserNotificationsRes, notifications);
+                        Bus.emit(Events.UserNotificationsRes, [...notifications]);
                     }
                 }
             }
