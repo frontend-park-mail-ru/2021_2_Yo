@@ -179,11 +179,14 @@ $event-page-icon-box-big-br: 8px;
   &__icon {
     width: 100%;
     height: 100%;
+    &_green {
+      fill: green;
+    }
   }
 
   &__icon_logout {
     transform: rotate(270deg);
-    color: var(--black-text-color);
+    color: var(--light-gray-color);
   }
 }
 
