@@ -2,18 +2,25 @@ import { EventData, UrlPathnames, UserData } from '@/types';
 import { Loader } from '@googlemaps/js-api-loader';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
-import Userstore from '../../modules/userstore';
+import userstore from '../../modules/userstore';
 import * as template from '@event-page/templates/eventpage.hbs';
-import '@event-page/templates/EventPage.css';
+import * as friendsTemplate from '@templates/friendslist/friendslist.hbs';
+import '@templates/friendslist/friendslist.scss';
+import '@event-page/templates/EventPage.scss';
 
 const KEY = process.env.MAPS_API_KEY?.toString();
 const PLACES_LIB = 'places';
+const MAPS_ERROR_STR = 'Ошибка подключения к картам';
 
 const ZOOM = 16;
+const COPY_TIMEOUT = 1000;
 
 export default class EventPageView {
     #parent: HTMLElement;
     #event?: EventData;
+    #friends?: NodeListOf<HTMLElement>;
+    #friendToInviteId?: string;
+    #copied = false;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -22,15 +29,23 @@ export default class EventPageView {
     render(event: EventData, author: UserData) {
         this.#event = event;
 
-        const permission = (this.#event.authorid === Userstore.get()?.id);
-        const unpermission = !permission;
-        this.#parent.innerHTML = template({ event, permission, unpermission, author });
+        const permission = (this.#event.authorid === userstore.get()?.id);
+        const shareURL = document.location.href;
+        this.#parent.innerHTML = template({ event, permission, author, shareURL });
 
         this.#renderMap();
 
         this.#addListeners();
 
         Bus.emit(Events.EventFavReq);
+    }
+
+    subscribe() {
+        Bus.on(Events.FriendsRes, this.#showInvitePopup);
+    }
+
+    unsubscribe() {
+        Bus.off(Events.FriendsRes, this.#showInvitePopup);
     }
 
     #addListeners() {
@@ -41,10 +56,10 @@ export default class EventPageView {
         deleteButton?.addEventListener('click', this.#deleteHandle);
 
         const overlay = <HTMLElement>document.getElementById('overlay');
-        overlay?.addEventListener('click', this.#hideEditPopup.bind(this));
+        overlay?.addEventListener('click', this.hidePopup.bind(this));
 
-        const popupOpenButton = <HTMLElement>document.getElementById('popupOpen');
-        popupOpenButton?.addEventListener('click', this.#showEditPopup.bind(this));
+        const editPopupOpenButton = <HTMLElement>document.getElementById('editPopupOpen');
+        editPopupOpenButton?.addEventListener('click', this.#showEditPopup.bind(this));
 
         const addFavouriteButton = document.getElementById('addFavourite');
         addFavouriteButton?.addEventListener('click', this.#addFavouriteHandle.bind(this));
@@ -54,6 +69,15 @@ export default class EventPageView {
 
         const backButton = document.getElementById('backButton');
         backButton?.addEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        const shareIcon = document.getElementById('shareIcon');
+        shareIcon?.addEventListener('click', this.#showSharePopup);
+
+        const inviteIcon = document.getElementById('inviteIcon');
+        inviteIcon?.addEventListener('click', this.#makeFriendsRequest);
+
+        const copyLinkButton = document.getElementById('copy');
+        copyLinkButton?.addEventListener('click', this.#copyLink);
     }
 
     #removeListeners() {
@@ -64,26 +88,115 @@ export default class EventPageView {
         deleteButton?.removeEventListener('click', this.#deleteHandle);
 
         const overlay = <HTMLElement>document.getElementById('overlay');
-        overlay?.removeEventListener('click', this.#hideEditPopup.bind(this));
+        overlay?.removeEventListener('click', this.hidePopup.bind(this));
 
-        const popupOpenButton = <HTMLElement>document.getElementById('popupOpen');
-        popupOpenButton?.removeEventListener('click', this.#showEditPopup.bind(this));
+        const editPopupOpenButton = <HTMLElement>document.getElementById('editPopupOpen');
+        editPopupOpenButton?.removeEventListener('click', this.#showEditPopup.bind(this));
 
         const addFavouriteButton = <HTMLElement>document.getElementById('addFavourite');
-        if (addFavouriteButton) {
-            addFavouriteButton.removeEventListener('click', this.#addFavouriteHandle.bind(this));
-        }
+        addFavouriteButton?.removeEventListener('click', this.#addFavouriteHandle.bind(this));
 
         const removeFavouriteButton = <HTMLElement>document.getElementById('removeFavourite');
-        if (removeFavouriteButton) {
-            removeFavouriteButton.removeEventListener('click', this.#removeFavouriteHandle.bind(this));
-        }
+        removeFavouriteButton?.removeEventListener('click', this.#removeFavouriteHandle.bind(this));
 
         const backButton = document.getElementById('backButton');
-        if (backButton) {
-            backButton.removeEventListener('click', () => Bus.emit(Events.RouteBack));
-        }
+        backButton?.removeEventListener('click', () => Bus.emit(Events.RouteBack));
+
+        const shareIcon = document.getElementById('shareIcon');
+        shareIcon?.removeEventListener('click', this.#showSharePopup);
+
+        const inviteIcon = document.getElementById('inviteIcon');
+        inviteIcon?.removeEventListener('click', this.#makeFriendsRequest);
+
+        const copyLinkButton = document.getElementById('copy');
+        copyLinkButton?.removeEventListener('click', this.#copyLink);
+
+        this.#friends?.forEach((item) => {
+            if (item)
+                item.removeEventListener('click', this.#friendClicked.bind(this, item));
+        });
     }
+
+    #makeFriendsRequest = (() => {
+        if (!userstore.get()) {
+            Bus.emit(Events.RouteUrl, UrlPathnames.Login);
+            return;
+        }
+
+        Bus.emit(Events.FriendsReq);
+    });
+
+    #friendClicked = ((item: HTMLElement) => {
+        this.#friends?.forEach((friendsItem) => {
+            friendsItem.classList.remove('friend-list-item_clicked');
+            friendsItem.dataset.toinvite = '';
+        });
+        item.classList.add('friend-list-item_clicked');
+
+        this.#friendToInviteId = item.dataset.friendid;
+        item.dataset.toinvite = 'true';
+
+        const inviteButton = <HTMLElement>document.getElementById('inviteButton');
+        inviteButton.classList.remove('friend-list-button_notactive', 'button-gray');
+        inviteButton.classList.add('button-blue');
+
+        inviteButton.addEventListener('click', this.#makeInvitation);
+    });
+
+    #makeInvitation = (() => {
+        Bus.emit(Events.InviteReq, this.#friendToInviteId);
+    });
+
+    #copyLink = ((e: Event) => {
+        e.preventDefault();
+        if (this.#copied) return;
+        this.#copied = true;
+        void navigator.clipboard.writeText(window.location.href);
+
+        const copy = <HTMLElement>document.getElementById('event-copy-svg');
+        const check = <HTMLElement>document.getElementById('event-check-svg');
+        copy.classList.add('hidden');
+        check.classList.remove('hidden'); 
+        setTimeout(() => {
+            this.#copied = false;
+            copy.classList.remove('hidden');
+            check.classList.add('hidden'); 
+        }, COPY_TIMEOUT);
+    });
+
+    #showInvitePopup = ((users: UserData[]) => {
+        this.#friendToInviteId = undefined;
+
+        const popup = document.getElementById('invitePopup');
+        popup?.classList.remove('popup_none');
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.classList.remove('popup_none');
+
+        const friendList = <HTMLElement>document.getElementById('friendList');
+        if (friendList)
+            friendList.innerHTML = friendsTemplate({ users });
+
+        this.#friends = document.querySelectorAll('[data-friendid]');
+        this.#friends.forEach((item) => {
+            if (item)
+                item.addEventListener('click', this.#friendClicked.bind(this, item));
+        });
+
+        const inviteButton = <HTMLElement>document.getElementById('inviteButton');
+        inviteButton.classList.add('friend-list-button_notactive', 'button-gray');
+        inviteButton.classList.remove('button-blue');
+    });
+
+    #showSharePopup = ((e: Event) => {
+        e.preventDefault();
+
+        const popup = document.getElementById('sharePopup');
+        popup?.classList.remove('popup_none');
+
+        const overlay = <HTMLElement>document.getElementById('overlay');
+        overlay?.classList.remove('popup_none');
+    });
 
     #editHandle = ((e: Event) => {
         e.preventDefault();
@@ -100,7 +213,7 @@ export default class EventPageView {
     #addFavouriteHandle(e: Event) {
         e.preventDefault();
 
-        if (!Userstore.get()) {
+        if (!userstore.get()) {
             Bus.emit(Events.RouteUrl, UrlPathnames.Login);
         } else {
             Bus.emit(Events.EventAddFavReq, this.#event?.id);
@@ -113,24 +226,34 @@ export default class EventPageView {
         Bus.emit(Events.EventRemoveFavReq, this.#event?.id);
     }
 
-    #hideEditPopup() {
-        const popup = document.getElementById('editPopup');
-        popup?.classList.add('edit-popup_none');
+    hidePopup() {
+        const editPopup = document.getElementById('editPopup');
+        const sharePopup = document.getElementById('sharePopup');
+        const invitePopup = document.getElementById('invitePopup');
+        editPopup?.classList.add('popup_none');
+        sharePopup?.classList.add('popup_none');
+        invitePopup?.classList.add('popup_none');
 
         const overlay = <HTMLElement>document.getElementById('overlay');
-        overlay?.classList.add('edit-popup_none');
+        overlay?.classList.add('popup_none');
+
+        const inviteButton = <HTMLElement>document.getElementById('inviteButton');
+        if (inviteButton) {
+            inviteButton.removeEventListener('click', this.#makeInvitation);
+        }
     }
 
     #showEditPopup() {
         const popup = document.getElementById('editPopup');
-        popup?.classList.remove('edit-popup_none');
+        popup?.classList.remove('popup_none');
 
         const overlay = <HTMLElement>document.getElementById('overlay');
-        overlay?.classList.remove('edit-popup_none');
+        overlay?.classList.remove('popup_none');
     }
 
     disable() {
         this.#removeListeners();
+        this.unsubscribe();
         this.#parent.innerHTML = '';
     }
 
@@ -144,8 +267,12 @@ export default class EventPageView {
         }
 
         if (loader) {
+            const container = <HTMLElement>document.getElementById('mapContainer');
+            if (!container)
+                return;
+
             void loader.load().then(() => {
-                const map = new google.maps.Map(<HTMLElement>document.getElementById('mapContainer'), {
+                const map = new google.maps.Map(container, {
                     zoom: ZOOM,
                 });
 
@@ -164,9 +291,7 @@ export default class EventPageView {
                 map.setCenter(parsedPosition);
                 map.setZoom(ZOOM);
             }).catch(() => {
-                const container = <HTMLElement>document.getElementById('mapContainer');
-                if (container)
-                    container.textContent = 'Ошибка подключения к картам';
+                container.textContent = MAPS_ERROR_STR;
             });
         }
     }

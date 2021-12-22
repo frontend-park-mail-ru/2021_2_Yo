@@ -9,12 +9,14 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-const API = 'https://bmstusa.ru';
+const API = 'https://bmstusa.ru/api';
+export const WS = 'wss://bmstusa.ru/ws';
 // const API = 'https://bmstusasa.herokuapp.com';
 // const API = 'https://yobmstu.herokuapp.com';
 // const API = 'https://95.163.212.36:8081';
 
 export function fetchGet(url: string, callback?: Callback, error?: Callback) {
+    url = url.trim();
     let HTTPStatus: number;
     let headers: Headers;
 
@@ -66,7 +68,7 @@ export function fetchDelete(url: string, callback?: Callback, error?: Callback) 
     });
 }
 
-export function fetchPost(url: string, body: any, callback: Callback, error?: Callback) {
+export function fetchPost(url: string, body?: any, callback?: Callback, error?: Callback) {
     let HTTPStatus: number;
     let headers: Headers;
 
@@ -85,11 +87,13 @@ export function fetchPost(url: string, body: any, callback: Callback, error?: Ca
         return response.json();
     }).then(data => {
         const json = <ApiResponseJson>data;
-        callback({
-            status: HTTPStatus,
-            json: json,
-            headers: headers,
-        });
+        if (callback) {
+            callback({
+                status: HTTPStatus,
+                json: json,
+                headers: headers,
+            });
+        }
     }).catch(() => {
         if (error) error();
     });

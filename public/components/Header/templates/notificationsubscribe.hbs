@@ -1,0 +1,11 @@
+<div class="notification" data-anchor="/user?id={{notification.userId}}">
+    {{#if notification.userImgUrl}}
+    <img class="header__avatar notification__avatar" src="{{notification.userImgUrl}}">
+    {{else}}
+    <img class="header__avatar notification__avatar" src="https://source.boringavatars.com/marble/50/{{notification.userName}}">
+    {{/if}}
+    <div class="notification__text">
+        <a href="/user?id={{notification.userId}}" class="notification__anchor">{{notification.userName}} {{notification.userSurname}}</a>
+        {{text}}
+    </div>
+</div>

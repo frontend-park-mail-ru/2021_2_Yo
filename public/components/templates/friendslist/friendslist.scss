@@ -1,0 +1,45 @@
+.friend-list {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 10px;
+
+    overflow: scroll;
+    max-height: 341px;
+    width: max-content;
+}
+
+.friend-avatar {
+    background: black;
+    height: 50px;
+    width: 50px;
+
+    border-radius: 50%;
+}
+
+.friend-list-item {
+    display: grid;
+    grid-template-columns: 20% auto;
+    align-items: center;
+
+    padding: 5px;
+    width: 320px;
+    box-sizing: border-box;
+}
+
+.friend-list-item_clicked {
+    background: rgba(170, 170, 170, 0.2) !important;
+}
+
+.friend-list-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.friend-list__button {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.friend-list-button_notactive {
+    cursor: default;
+}

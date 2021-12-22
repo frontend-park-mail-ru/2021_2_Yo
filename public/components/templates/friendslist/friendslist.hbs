@@ -1,0 +1,14 @@
+{{#if users}}
+    {{#each users}}
+        <div class="friend-list-item" data-friendid="{{id}}">
+            {{#if imgUrl}}
+                <img class="friend-avatar" src="{{imgUrl}}">
+            {{else}}
+                <img src="https://source.boringavatars.com/marble/32/{{name}}" class="friend-avatar">
+            {{/if}}
+            <span class="primary-text friend-list-name">{{name}} {{surname}}</span>
+        </div>
+    {{/each}}
+{{else}}
+    <div class="primary-text">Вам некого пригласить</div>
+{{/if}}

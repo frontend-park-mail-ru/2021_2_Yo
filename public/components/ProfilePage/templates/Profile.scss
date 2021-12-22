@@ -1,0 +1,298 @@
+$profilepage-avatar-br: 50%;
+$profilepage-text-name-fs: 2rem;
+$profilepage-text-name-lh: 2.4rem;
+$profilepage-btn-subscribe-br: 5px;
+$profilepage-btn-subscribe-fs: 1.2rem;
+$profilepage-header-avatar-br: 50%;
+$profilepage-users-li-avatar-br: 50%;
+
+.profile-block {
+  display: grid;
+  grid-gap: 20px;
+  width: 75%;
+  margin: 20px auto;
+  grid-template-columns: 100%;
+  height: max-content;
+  grid-area: content;
+}
+
+.profile-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 5%;
+
+  &__name {
+    display: inline-block;
+  }
+
+  &__avatar {
+    display: inline-block;
+    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: $profilepage-header-avatar-br;
+    overflow: hidden;
+  }
+}
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: $profilepage-avatar-br;
+  object-fit: cover;
+}
+
+.profile-info {
+  height: max-content;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 100%;
+}
+
+.primary-text {
+  &_name {
+    font-size: $profilepage-text-name-fs !important;
+    line-height: $profilepage-text-name-lh !important;
+  }
+}
+
+.profile-menu {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 24px;
+  justify-content: start;
+}
+
+.menu {
+  &__item {
+    cursor: pointer;
+  }
+
+  &__item_clicked {
+    color: var(--black-text-color) !important;
+  }
+}
+
+.button-edit {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  fill: var(--black-text-color);
+}
+
+.profile-button-subscribe {
+  padding: 5px 20px;
+
+  background: var(--light-purple);
+  color: white;
+  fill: white;
+
+  border-radius: $profilepage-btn-subscribe-br;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  cursor: pointer;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: $profilepage-btn-subscribe-fs;
+
+  &_none {
+    display: none;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  &_subscribed {
+    background: var(--gray-bg-color) !important;
+    color: var(--black-text-color) !important;
+    fill: var(--black-text-color) !important;
+  }
+}
+
+.users-grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.users-li {
+  display: grid;
+  grid-template-columns: 30% auto;
+  grid-gap: 10%;
+  align-items: center;
+
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: $profilepage-users-li-avatar-br;
+  }
+}
+
+.main-content {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 100%;
+  height: max-content;
+}
+
+.editform {
+  display: grid;
+  grid-gap: 5px;
+  width: 100%;
+  grid-template-columns: 100%;
+}
+
+@media only screen and (max-width: 649px) {
+  .profile-block {
+    margin: 0;
+    width: 100%;
+  }
+
+  .card {
+    margin: auto;
+    max-height: 210px;
+    max-width: 400px;
+  }
+
+  .profile-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .button-edit {
+    width: 20px;
+    height: 20px;
+  }
+
+  .profile-menu {
+    grid-gap: 3%;
+  }
+
+  .event-li {
+    display: inline-block;
+
+    &__content {
+      display: none;
+    }
+  }
+
+  .users-grid-list {
+    grid-template-columns: 100%;
+  }
+
+  .users-li {
+    grid-template-columns: max-content max-content;
+    grid-gap: 10px;
+
+    &__avatar {
+      width: 55px;
+      height: 55px;
+    }
+
+    &__img {
+      height: 210px;
+    }
+  }
+
+  #name {
+    display: inline;
+    margin-right: 3px;
+  }
+
+  #surname {
+    display: inline;
+  }
+
+  .profile-button-subscribe {
+    &__icon {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+@media only screen and (min-width: 650px) and (max-width: 1029px) {
+  .event-li {
+    display: inline-block;
+
+    &__content {
+      display: none;
+    }
+  }
+
+  .grid-list {
+    grid-template-columns: 50% 50%;
+  }
+
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+
+  .button-edit {
+    width: 18px;
+    height: 18px;
+  }
+
+  .users-grid-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .users-li {
+    grid-template-columns: max-content max-content;
+    grid-gap: 10px;
+
+    &__avatar {
+      width: 55px;
+      height: 55px;
+    }
+  }
+
+  .profile-button-subscribe {
+    &__icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1030px) and (max-width: 1449px) {
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  .button-edit {
+    width: 20px;
+    height: 20px;
+  }
+
+  .users-li {
+    &__avatar {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .profile-button-subscribe__icon {
+    &__icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1030px) {
+  .card__info,
+  .card__title,
+  .card_gradient {
+    display: none;
+  }
+}

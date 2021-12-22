@@ -15,6 +15,9 @@ enum Events {
     UserByIdRes = 'user-by-id:response',
     UserIsSubscribedReq = 'user-subscribed:request',
     UserIsSubscribedRes = 'user-subscribed:response',
+    UserNotificationsReq = 'user-notifications:request',
+    UserNotificationsRes = 'user-notifications:response',
+    UserNotificationsSeen = 'user-notifications:seen',
 
     // Events
     EventsReq = 'events:request',
@@ -63,6 +66,12 @@ enum Events {
     SubscribeRes = 'subscribe:response',
     UnsubscribeReq = 'unsubscribe:request',
     UnsubscribeRes = 'unsubscribe:response',
+    FriendsReq = 'friends:request',
+    FriendsRes = 'friends:response',
+
+    // Invite
+    InviteReq = 'invite:request',
+    InviteRes = 'invite:response',
 
     // City Store
     CitiesRes = 'cities:request',

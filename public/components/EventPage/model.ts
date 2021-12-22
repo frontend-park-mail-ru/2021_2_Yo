@@ -5,6 +5,8 @@ import Events from '@eventbus/events';
 import userstore from '@modules/userstore';
 
 export default class EventPageModel {
+    eventId?: number;
+
     getEvent(id: string) {
         fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
@@ -12,6 +14,7 @@ export default class EventPageModel {
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         const event = <EventData>json.body;
+                        this.eventId = <number>event.id;
                         Bus.emit(Events.EventRes, event);
                     }
                 }
@@ -67,6 +70,9 @@ export default class EventPageModel {
                         const result = json.body.result;
                         Bus.emit(Events.EventFavRes, result);
                     }
+                    if (json.status === ApiStatus.NotAuthorized) {
+                        Bus.emit(Events.EventFavRes, false);
+                    }
                 }
             }
         );
@@ -83,5 +89,31 @@ export default class EventPageModel {
                 }
             }
         });
+    }
+
+    getFriends() {
+        fetchGet(ApiUrls.User + '/friends?eventId=' + this.eventId, (data: FetchResponseData) => {
+            const { status, json } = data;
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
+                    const users = <UserData[]>json.body.users;
+                    Bus.emit(Events.FriendsRes, users);
+                    return;
+                }
+            }
+        });
+    }
+
+    makeInvitation(userId: string) {
+        fetchPost(ApiUrls.User + '/' + userId + '/invite?eventId=' + this.eventId, {},
+            (data: FetchResponseData) => {
+                const { status, json } = data;
+                if (status === ApiStatus.Ok) {
+                    if (json.status === ApiStatus.Ok) {
+                        Bus.emit(Events.InviteRes);
+                    }
+                }
+            }
+        );
     }
 }

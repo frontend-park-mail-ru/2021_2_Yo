@@ -51,7 +51,7 @@ export default class ProfilePageModel {
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         UserStore.reset();
-                        Bus.emit(Events.UserReq);
+                        Bus.emit(Events.UserRes, stored);
                         return;
                     }
                 }
@@ -131,6 +131,10 @@ export default class ProfilePageModel {
                 if (json.status === ApiStatus.Ok) {
                     const result = json.body.result;
                     Bus.emit(Events.UserIsSubscribedRes, result);
+                    return;
+                }
+                if (json.status === ApiStatus.NotAuthorized) {
+                    Bus.emit(Events.UserIsSubscribedRes);
                     return;
                 }
             }

@@ -4,9 +4,9 @@ import UserStore from '@modules/userstore';
 import * as template from '@profile-page/templates/profilepage.hbs';
 import * as userList from '@profile-page/templates/userlist.hbs';
 import * as listTemplate from '@templates/eventlisthorizontal/eventlist.hbs';
-import '@templates/eventlisthorizontal/eventlist.css';
+import '@templates/eventlisthorizontal/eventlist.scss';
 import Bus from '@eventbus/eventbus';
-import '@profile-page/templates/Profile.css';
+import '@profile-page/templates/Profile.scss';
 import Events from '@eventbus/events';
 
 export default class ProfilePageView {

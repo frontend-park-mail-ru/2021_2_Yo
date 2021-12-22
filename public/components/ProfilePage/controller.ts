@@ -3,7 +3,7 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import { passwordEditValidateFields, userEditValidateFields } from '@modules/validation';
 import ProfilePageModel from '@profile-page/model';
-import { EventData, UserData } from '@/types';
+import { EventData, UrlPathnames, UserData } from '@/types';
 import UserStore from '@modules/userstore';
 
 type MultipartData = {
@@ -53,6 +53,8 @@ export default class ProfilePageController {
             } else {
                 this.#model.getUser(userURLId);
             }
+        } else {
+            this.#model.getUser(userURLId);
         }
     }
 
@@ -73,6 +75,8 @@ export default class ProfilePageController {
     }
 
     #subscribeHandle = ((id: string) => {
+        if (!UserStore.get())
+            Bus.emit(Events.RouteUrl, UrlPathnames.Login);
         this.#model.makeSubscription(id);
     });
 
@@ -102,6 +106,7 @@ export default class ProfilePageController {
     };
 
     #renderHandle = () => {
+        this.#view.disableProfileForm();
         const userURLId = <string>new URL(window.location.href).searchParams?.get('id');
         const user = UserStore.get();
         if (user?.id === userURLId) {

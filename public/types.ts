@@ -1,3 +1,5 @@
+import { type } from 'os';
+
 export type UserData = {
     id: string;
     imgUrl?: string;
@@ -47,6 +49,8 @@ export enum ApiUrls {
     Login = '/auth/login',
     Signup = '/auth/signup',
     Logout = '/auth/logout',
+    Notifications = '/user/notifications/all',
+    WebSocket = '/ws',
 }
 
 export type FetchResponseData = {
@@ -59,6 +63,7 @@ export const ApiErrors = {
     409: 'Пользователь уже существует',
     500: 'Внутренняя ошибка сервера',
     404: 'Пользователь не найден',
+    401: 'Пользователь не авторизован',
 };
 
 export enum ApiStatus {
@@ -66,6 +71,7 @@ export enum ApiStatus {
     UserAlreadyExists = 409,
     Internal = 500,
     UserNotFound = 404,
+    NotAuthorized = 401,
 }
 
 export type ApiResponseJson = {
@@ -98,3 +104,19 @@ export type InputData = {
     errors: string[],
     value: string | string[],
 }
+
+export interface NotificationSubscribe {
+    type: string,
+    userId: string,
+    userImgUrl: string,
+    userName: string,
+    userSurname: string,
+    seen: boolean,
+}
+
+export interface NotificationInvite extends NotificationSubscribe {
+    eventId: string,
+    eventTitle: string,
+}
+
+export type Notification = NotificationSubscribe | NotificationInvite;

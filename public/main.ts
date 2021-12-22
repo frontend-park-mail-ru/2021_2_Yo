@@ -10,7 +10,7 @@ import EventPageController from '@event-page/controller';
 import EventFormController from '@event-create/controller';
 import EventEditFormController from '@event-edit/controller';
 import ProfilePageController from './components/ProfilePage/controller';
-import '@/main.css';
+import '@/main.scss';
 import * as app from '@/app.hbs';
 
 SWInstall();
