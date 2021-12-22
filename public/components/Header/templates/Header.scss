@@ -311,6 +311,7 @@ $notification-text-fz: 1.15rem;
   overflow: hidden;
   font-size: $notification-text-fz;
   color: #505050;
+  max-height: 51px;
 }
 
 .notification__anchor {
