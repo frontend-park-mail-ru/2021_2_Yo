@@ -37,17 +37,20 @@ server {
 
         location ~ \.(js|css|ogg|ogv|svgz|eot|otf|zip|tgz|gz|rar|doc|xls|exe)$ {
                 root /home/ubuntu/bmstusa/frontend/dist;
-
+                add_header Cache-Control "private; max-age=60";
+                expires 60s;
         }
 
-        location /server/img {
+	location /server {
                 root /home/ubuntu/bmstusa/frontend/public;
-                expires 90d;
+                add_header Cache-Control "private; max-age=60";
+                expires 60s;
         }
 
-	location /img {
+        location /img {
                 root /home/ubuntu/bmstusa/frontend/public/server;
-                expires 90d;
+                add_header Cache-Control "private; max-age=60";
+                expires 60s;
         }
 
         location /grafana {
@@ -58,9 +61,11 @@ server {
 
 
     listen 443 ssl http2; # managed by Certbot
+    listen [::]:443 ssl http2 ipv6only=on;
     ssl_certificate /etc/letsencrypt/live/bmstusa.ru/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/bmstusa.ru/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    #ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 
@@ -77,7 +82,7 @@ server {
     } # managed by Certbot
 
 
-       server_name bmstusa.ru www.bmstusa.ru;
-       listen 80;
+        server_name bmstusa.ru www.bmstusa.ru;
+        listen 80;
 #       return 404; # managed by Certbot
 }
