@@ -7,7 +7,7 @@
             <input id="header-input" class="header__search-input" type="text" placeholder="Найдем тусу под ваши вкусы...">
         </div>
         {{#if user}}
-            <div class="header-notifications-wrapper">
+            <div class="header-buttons-wrapper">
                 <div id="header-notifications" class="header__button-wrapper" data-popupnum="0">
                     <svg class="header__notifications">
                         <use xlink:href="./server/img/sprite.svg#bell"></use>
@@ -16,7 +16,7 @@
                         <use xlink:href="./server/img/sprite.svg#circle"></use>
                     </svg>
                     <audio id="notifications-audio" controls muted>
-                        <source src="server/audio/notification.wav" type="audio/wav">
+                        <source src="./server/audio/notification.wav" type="audio/wav">
                     </audio>
                 </div>
                 <div id="header-avatar" class="header__button-wrapper" data-popupnum="1">
