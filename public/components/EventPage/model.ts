@@ -4,9 +4,9 @@ import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import userstore from '@modules/userstore';
 
-let eventId: number;
-
 export default class EventPageModel {
+    eventId?: number;
+
     getEvent(id: string) {
         fetchGet(ApiUrls.Events + '/' + id,
             (data: FetchResponseData) => {
@@ -14,7 +14,7 @@ export default class EventPageModel {
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         const event = <EventData>json.body;
-                        eventId = <number>event.id;
+                        this.eventId = <number>event.id;
                         Bus.emit(Events.EventRes, event);
                     }
                 }
@@ -92,7 +92,7 @@ export default class EventPageModel {
     }
 
     getFriends() {
-        fetchGet(ApiUrls.User + '/friends?eventId=' + eventId, (data: FetchResponseData) => {
+        fetchGet(ApiUrls.User + '/friends?eventId=' + this.eventId, (data: FetchResponseData) => {
             const { status, json } = data;
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
@@ -105,7 +105,7 @@ export default class EventPageModel {
     }
 
     makeInvitation(userId: string) {
-        fetchPost(ApiUrls.User + '/' + userId + '/invite?eventId=' + eventId, {},
+        fetchPost(ApiUrls.User + '/' + userId + '/invite?eventId=' + this.eventId, {},
             (data: FetchResponseData) => {
                 const { status, json } = data;
                 if (status === ApiStatus.Ok) {

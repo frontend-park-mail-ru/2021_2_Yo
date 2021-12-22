@@ -1,5 +1,5 @@
-import { EventData, UrlPathnames, UserData } from '@/types';
-import { Loader } from '@googlemaps/js-api-loader';
+import {EventData, UrlPathnames, UserData} from '@/types';
+import {Loader} from '@googlemaps/js-api-loader';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import userstore from '../../modules/userstore';
@@ -10,6 +10,7 @@ import '@event-page/templates/EventPage.scss';
 
 const KEY = process.env.MAPS_API_KEY?.toString();
 const PLACES_LIB = 'places';
+const MAPS_ERROR_STR = 'Ошибка подключения к картам';
 
 const ZOOM = 16;
 
@@ -28,7 +29,7 @@ export default class EventPageView {
 
         const permission = (this.#event.authorid === userstore.get()?.id);
         const shareURL = document.location.href;
-        this.#parent.innerHTML = template({ event, permission, author, shareURL });
+        this.#parent.innerHTML = template({event, permission, author, shareURL});
 
         this.#renderMap();
 
@@ -108,8 +109,7 @@ export default class EventPageView {
         const copyLinkButton = document.getElementById('copy');
         copyLinkButton?.removeEventListener('click', this.#copyLink);
 
-        this.#friends = document.querySelectorAll('[data-friendid]');
-        this.#friends.forEach((item) => {
+        this.#friends?.forEach((item) => {
             if (item)
                 item.removeEventListener('click', this.#friendClicked.bind(this, item));
         });
@@ -162,7 +162,7 @@ export default class EventPageView {
 
         const friendList = <HTMLElement>document.getElementById('friendList');
         if (friendList)
-            friendList.innerHTML = friendsTemplate({ users });
+            friendList.innerHTML = friendsTemplate({users});
 
         this.#friends = document.querySelectorAll('[data-friendid]');
         this.#friends.forEach((item) => {
@@ -278,7 +278,7 @@ export default class EventPageView {
                 map.setCenter(parsedPosition);
                 map.setZoom(ZOOM);
             }).catch(() => {
-                container.textContent = 'Ошибка подключения к картам';
+                container.textContent = MAPS_ERROR_STR;
             });
         }
     }

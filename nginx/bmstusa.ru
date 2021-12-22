@@ -37,7 +37,7 @@ server {
 
         location ~ \.(js|css|ogg|ogv|svgz|eot|otf|zip|tgz|gz|rar|doc|xls|exe)$ {
                 root /home/ubuntu/bmstusa/frontend/dist;
-                expires 90d;
+
         }
 
         location /server/img {

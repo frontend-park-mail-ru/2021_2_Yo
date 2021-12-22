@@ -23,9 +23,9 @@ export default class HeaderModel {
     }
 
     #wsOpenHandle = () => {
-        const user = UserStore.get();
-        if (!user) return;
-        this.#ws?.send(JSON.stringify({ id: user['id'] }));
+        // const user = UserStore.get();
+        // if (!user) return;
+        // this.#ws?.send(JSON.stringify({ id: user['id'] }));
     };
 
     #wsMessageHandle = (event: MessageEvent) => {

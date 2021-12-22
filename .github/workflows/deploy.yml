@@ -6,9 +6,9 @@ on:
       - main
       - деплой_nginx_BT-37
       - рк4_бекенд
-  pull_request:
-    branches:
-      - main
+#  pull_request:
+#    branches:
+#      - main
 
 jobs:
   build:

@@ -133,6 +133,10 @@ export default class ProfilePageModel {
                     Bus.emit(Events.UserIsSubscribedRes, result);
                     return;
                 }
+                if (json.status === ApiStatus.NotAuthorized) {
+                    Bus.emit(Events.UserIsSubscribedRes);
+                    return;
+                }
             }
         });
     }
