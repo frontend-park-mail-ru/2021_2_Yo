@@ -5,7 +5,6 @@ import { passwordEditValidateFields, userEditValidateFields } from '@modules/val
 import ProfilePageModel from '@profile-page/model';
 import { EventData, UrlPathnames, UserData } from '@/types';
 import UserStore from '@modules/userstore';
-import userstore from '@modules/userstore';
 
 type MultipartData = {
     input: Map<string, { errors: string[], value: string }>,
@@ -76,7 +75,7 @@ export default class ProfilePageController {
     }
 
     #subscribeHandle = ((id: string) => {
-        if (!userstore.get())
+        if (!UserStore.get())
             Bus.emit(Events.RouteUrl, UrlPathnames.Login);
         this.#model.makeSubscription(id);
     });

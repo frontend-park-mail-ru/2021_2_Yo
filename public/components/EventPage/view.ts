@@ -1,5 +1,5 @@
-import {EventData, UrlPathnames, UserData} from '@/types';
-import {Loader} from '@googlemaps/js-api-loader';
+import { EventData, UrlPathnames, UserData } from '@/types';
+import { Loader } from '@googlemaps/js-api-loader';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import userstore from '../../modules/userstore';
@@ -29,7 +29,7 @@ export default class EventPageView {
 
         const permission = (this.#event.authorid === userstore.get()?.id);
         const shareURL = document.location.href;
-        this.#parent.innerHTML = template({event, permission, author, shareURL});
+        this.#parent.innerHTML = template({ event, permission, author, shareURL });
 
         this.#renderMap();
 
@@ -162,7 +162,7 @@ export default class EventPageView {
 
         const friendList = <HTMLElement>document.getElementById('friendList');
         if (friendList)
-            friendList.innerHTML = friendsTemplate({users});
+            friendList.innerHTML = friendsTemplate({ users });
 
         this.#friends = document.querySelectorAll('[data-friendid]');
         this.#friends.forEach((item) => {

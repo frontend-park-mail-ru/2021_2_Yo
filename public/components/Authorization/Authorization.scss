@@ -1,3 +1,7 @@
+$auth-z-index-first-layer: 1;
+$auth-title-fz: 3rem;
+$auth-title-fw: 500;
+
 .auth-background {
     position: fixed;
     top: 0;
@@ -14,30 +18,12 @@
 .auth-background__logo {
     position: relative;
     top: 68px;
-    z-index: 1;
+    z-index: $auth-z-index-first-layer;
 }
 
 .logo {
     height: 136px;
     width: 400px;
-}
-
-.form-input_auth {
-    width: 26.8vw;
-    height: 2.96vh;
-    border: 1px solid black;
-}
-
-.button-purple_login {
-    width: 180px;
-}
-
-.button-purple_signup {
-    width: 300px;
-}
-
-.authform__buttons {
-    margin-top: 2.78vh;
 }
 
 .authform__bottom {
@@ -51,8 +37,8 @@
 
 .auth-title {
     font-style: normal;
-    font-weight: 500;
-    font-size: 3rem;
+    font-weight: $auth-title-fw;
+    font-size: $auth-title-fz;
 }
 
 .authform {
