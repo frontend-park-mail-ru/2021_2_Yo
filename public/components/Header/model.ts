@@ -37,6 +37,11 @@ export default class HeaderModel {
     };
 
     #wsCloseHandle = () => {
+        console.log('CLOSED');
+        const user = UserStore.get();
+        if (user) {
+            this.#wsOpen();
+        }
     };
 
     #notificationsReqHandle = () => {
@@ -96,6 +101,7 @@ export default class HeaderModel {
     #logoutHandle = () => {
         void fetchGet(ApiUrls.Logout);
         Bus.emit(Events.CSRFDelete);
+        this.#ws?.close();
     };
 
     disable() {
