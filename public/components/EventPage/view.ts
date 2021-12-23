@@ -13,12 +13,14 @@ const PLACES_LIB = 'places';
 const MAPS_ERROR_STR = 'Ошибка подключения к картам';
 
 const ZOOM = 16;
+const COPY_TIMEOUT = 1000;
 
 export default class EventPageView {
     #parent: HTMLElement;
     #event?: EventData;
     #renderedFriends?: NodeListOf<HTMLElement>;
     #friendsToInvite?: string[];
+    #copied = false;
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -150,8 +152,19 @@ export default class EventPageView {
 
     #copyLink = ((e: Event) => {
         e.preventDefault();
-
+        if (this.#copied) return;
+        this.#copied = true;
         void navigator.clipboard.writeText(window.location.href);
+
+        const copy = <HTMLElement>document.getElementById('event-copy-svg');
+        const check = <HTMLElement>document.getElementById('event-check-svg');
+        copy.classList.add('hidden');
+        check.classList.remove('hidden'); 
+        setTimeout(() => {
+            this.#copied = false;
+            copy.classList.remove('hidden');
+            check.classList.add('hidden'); 
+        }, COPY_TIMEOUT);
     });
 
     showInvitePopup = ((availableFriends: UserData[], friends: UserData[]) => {
