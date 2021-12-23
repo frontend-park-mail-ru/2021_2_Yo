@@ -55,13 +55,11 @@ export default class EventPageController {
     });
 
     #showInvitePopup = ((friends: UserData[]) => {
-        console.log('friends', friends);
         this.#view.showInvitePopup(<UserData[]>this.#availableFriends, friends);
     });
 
     #getAllFriends = ((users: UserData[]) => {
         this.#availableFriends = users;
-        console.log('available friends', this.#availableFriends);
         this.#model.getFriends();
     });
 

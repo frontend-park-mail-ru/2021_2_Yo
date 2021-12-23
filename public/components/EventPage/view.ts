@@ -143,7 +143,6 @@ export default class EventPageView {
 
             inviteButton.addEventListener('click', this.#makeInvitation);
         }
-        console.log('friends to invite', this.#friendsToInvite);
     });
 
     #makeInvitation = (() => {
