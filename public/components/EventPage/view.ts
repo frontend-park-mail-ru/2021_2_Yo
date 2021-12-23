@@ -17,8 +17,8 @@ const ZOOM = 16;
 export default class EventPageView {
     #parent: HTMLElement;
     #event?: EventData;
-    #friends?: NodeListOf<HTMLElement>;
-    #friendToInviteId?: string;
+    #renderedFriends?: NodeListOf<HTMLElement>;
+    #friendsToInvite?: string[];
 
     constructor(parent: HTMLElement) {
         this.#parent = parent;
@@ -36,14 +36,6 @@ export default class EventPageView {
         this.#addListeners();
 
         Bus.emit(Events.EventFavReq);
-    }
-
-    subscribe() {
-        Bus.on(Events.FriendsRes, this.#showInvitePopup);
-    }
-
-    unsubscribe() {
-        Bus.off(Events.FriendsRes, this.#showInvitePopup);
     }
 
     #addListeners() {
@@ -109,7 +101,7 @@ export default class EventPageView {
         const copyLinkButton = document.getElementById('copy');
         copyLinkButton?.removeEventListener('click', this.#copyLink);
 
-        this.#friends?.forEach((item) => {
+        this.#renderedFriends?.forEach((item) => {
             if (item)
                 item.removeEventListener('click', this.#friendClicked.bind(this, item));
         });
@@ -121,28 +113,39 @@ export default class EventPageView {
             return;
         }
 
-        Bus.emit(Events.FriendsReq);
+        Bus.emit(Events.FriendsAvailableReq);
     });
 
     #friendClicked = ((item: HTMLElement) => {
-        this.#friends?.forEach((friendsItem) => {
-            friendsItem.classList.remove('friend-list-item_clicked');
-            friendsItem.dataset.toinvite = '';
-        });
-        item.classList.add('friend-list-item_clicked');
+        if (item.dataset.toinvite === 'true') {
+            item.classList.remove('friend-list-item_clicked');
 
-        this.#friendToInviteId = item.dataset.friendid;
-        item.dataset.toinvite = 'true';
+            this.#friendsToInvite?.splice(this.#friendsToInvite?.indexOf(<string>item.dataset.friendid), 1);
+            item.dataset.toinvite = '';
 
-        const inviteButton = <HTMLElement>document.getElementById('inviteButton');
-        inviteButton.classList.remove('friend-list-button_notactive', 'button-gray');
-        inviteButton.classList.add('button-blue');
+            const inviteButton = <HTMLElement>document.getElementById('inviteButton');
+            if (!this.#friendsToInvite) {
+                inviteButton.classList.add('friend-list-button_notactive', 'button-gray');
+                inviteButton.classList.remove('button-blue');
+                inviteButton.removeEventListener('click', this.#makeInvitation);
+            }
+        } else {
+            item.classList.add('friend-list-item_clicked');
 
-        inviteButton.addEventListener('click', this.#makeInvitation);
+            this.#friendsToInvite?.push(<string>item.dataset.friendid);
+            item.dataset.toinvite = 'true';
+
+            const inviteButton = <HTMLElement>document.getElementById('inviteButton');
+            inviteButton.classList.remove('friend-list-button_notactive', 'button-gray');
+            inviteButton.classList.add('button-blue');
+
+            inviteButton.addEventListener('click', this.#makeInvitation);
+        }
+        console.log('friends to invite', this.#friendsToInvite);
     });
 
     #makeInvitation = (() => {
-        Bus.emit(Events.InviteReq, this.#friendToInviteId);
+        Bus.emit(Events.InviteReq, this.#friendsToInvite);
     });
 
     #copyLink = ((e: Event) => {
@@ -151,8 +154,8 @@ export default class EventPageView {
         void navigator.clipboard.writeText(window.location.href);
     });
 
-    #showInvitePopup = ((users: UserData[]) => {
-        this.#friendToInviteId = undefined;
+    showInvitePopup = ((availableFriends: UserData[], friends: UserData[]) => {
+        this.#friendsToInvite = [];
 
         const popup = document.getElementById('invitePopup');
         popup?.classList.remove('popup_none');
@@ -162,12 +165,19 @@ export default class EventPageView {
 
         const friendList = <HTMLElement>document.getElementById('friendList');
         if (friendList)
-            friendList.innerHTML = friendsTemplate({ users });
+            friendList.innerHTML = friendsTemplate({ 'users': friends });
 
-        this.#friends = document.querySelectorAll('[data-friendid]');
-        this.#friends.forEach((item) => {
-            if (item)
-                item.addEventListener('click', this.#friendClicked.bind(this, item));
+        this.#renderedFriends = document.querySelectorAll('[data-friendid]');
+        this.#renderedFriends.forEach((item) => {
+            item.classList.remove('friend-list-item_clicked', 'friend-list-item_not-available');
+            item.dataset.toinvite = '';
+            if (item) {
+                if (!availableFriends.filter(friend => friend.id === item.dataset.friendid)) {
+                    item.classList.add('friend-list-item_not-available');
+                } else {
+                    item.addEventListener('click', this.#friendClicked.bind(this, item));
+                }
+            }
         });
 
         const inviteButton = <HTMLElement>document.getElementById('inviteButton');
@@ -240,7 +250,6 @@ export default class EventPageView {
 
     disable() {
         this.#removeListeners();
-        this.unsubscribe();
         this.#parent.innerHTML = '';
     }
 

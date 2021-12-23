@@ -1,45 +1,49 @@
 .friend-list {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-gap: 10px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 10px;
 
-    overflow: scroll;
-    max-height: 341px;
-    width: max-content;
+  overflow: scroll;
+  max-height: 341px;
+  width: max-content;
+
+  &__button {
+    margin-right: 0;
+    margin-left: auto;
+  }
 }
 
 .friend-avatar {
-    background: black;
-    height: 50px;
-    width: 50px;
+  background: black;
+  height: 50px;
+  width: 50px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .friend-list-item {
-    display: grid;
-    grid-template-columns: 20% auto;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 20% auto;
+  align-items: center;
 
-    padding: 5px;
-    width: 320px;
-    box-sizing: border-box;
-}
+  padding: 5px;
+  width: 320px;
+  box-sizing: border-box;
 
-.friend-list-item_clicked {
+  &_clicked {
     background: rgba(170, 170, 170, 0.2) !important;
+  }
+
+  &_not-available {
+    opacity: 0.5;
+  }
 }
 
 .friend-list-name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.friend-list__button {
-    margin-right: 0;
-    margin-left: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .friend-list-button_notactive {
-    cursor: default;
+  cursor: default;
 }

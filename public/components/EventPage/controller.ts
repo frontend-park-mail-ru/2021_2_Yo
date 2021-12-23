@@ -9,6 +9,7 @@ export default class EventPageController {
     #view: EventPageView;
     #model: EventPageModel;
     #event?: EventData;
+    #availableFriends?: UserData[];
 
     constructor(parent: HTMLElement) {
         this.#view = new EventPageView(parent);
@@ -31,7 +32,9 @@ export default class EventPageController {
         Bus.on(Events.EventFavRes, this.#handleFavRes);
         Bus.on(Events.EventFavReq, this.#getIsFav);
 
-        Bus.on(Events.FriendsReq, this.#getFriends);
+        Bus.on(Events.FriendsAvailableReq, this.#getAvailableFriends);
+        Bus.on(Events.FriendsAvailableRes, this.#getAllFriends);
+        Bus.on(Events.FriendsRes, this.#showInvitePopup);
 
         Bus.on(Events.InviteReq, this.#makeInvitation);
         Bus.on(Events.InviteRes, this.#closeInvitePopup);
@@ -43,11 +46,22 @@ export default class EventPageController {
         this.#view.hidePopup();
     });
 
-    #makeInvitation = ((userId: string) => {
-        this.#model.makeInvitation(userId);
+    #makeInvitation = ((usersId: string[]) => {
+        this.#model.makeInvitation(usersId);
     });
 
-    #getFriends = (() => {
+    #getAvailableFriends = (() => {
+        this.#model.getAvailableFriends();
+    });
+
+    #showInvitePopup = ((friends: UserData[]) => {
+        console.log('friends', friends);
+        this.#view.showInvitePopup(<UserData[]>this.#availableFriends, friends);
+    });
+
+    #getAllFriends = ((users: UserData[]) => {
+        this.#availableFriends = users;
+        console.log('available friends', this.#availableFriends);
         this.#model.getFriends();
     });
 
@@ -66,7 +80,6 @@ export default class EventPageController {
 
     #authorHandle = ((author: UserData) => {
         this.#view.render(<EventData>this.#event, author);
-        this.#view.subscribe();
     });
 
     #eventDeleteHandle = ((eventId: string) => {
@@ -96,7 +109,9 @@ export default class EventPageController {
         Bus.off(Events.EventFavRes, this.#handleFavRes);
         Bus.off(Events.EventFavReq, this.#getIsFav);
 
-        Bus.off(Events.FriendsReq, this.#getFriends);
+        Bus.off(Events.FriendsAvailableReq, this.#getAvailableFriends);
+        Bus.off(Events.FriendsAvailableRes, this.#getAllFriends);
+        Bus.off(Events.FriendsRes, this.#showInvitePopup);
 
         Bus.off(Events.InviteReq, this.#makeInvitation);
         Bus.off(Events.InviteRes, this.#closeInvitePopup);
