@@ -1,5 +1,5 @@
-import { EventData, UrlPathnames, UserData } from '@/types';
-import { Loader } from '@googlemaps/js-api-loader';
+import {EventData, UrlPathnames, UserData} from '@/types';
+import {Loader} from '@googlemaps/js-api-loader';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import userstore from '../../modules/userstore';
@@ -31,7 +31,7 @@ export default class EventPageView {
 
         const permission = (this.#event.authorid === userstore.get()?.id);
         const shareURL = document.location.href;
-        this.#parent.innerHTML = template({ event, permission, author, shareURL });
+        this.#parent.innerHTML = template({event, permission, author, shareURL});
 
         this.#renderMap();
 
@@ -126,7 +126,7 @@ export default class EventPageView {
             item.dataset.toinvite = '';
 
             const inviteButton = <HTMLElement>document.getElementById('inviteButton');
-            if (!this.#friendsToInvite) {
+            if (this.#friendsToInvite?.length == 0) {
                 inviteButton.classList.add('friend-list-button_notactive', 'button-gray');
                 inviteButton.classList.remove('button-blue');
                 inviteButton.removeEventListener('click', this.#makeInvitation);
@@ -159,11 +159,11 @@ export default class EventPageView {
         const copy = <HTMLElement>document.getElementById('event-copy-svg');
         const check = <HTMLElement>document.getElementById('event-check-svg');
         copy.classList.add('hidden');
-        check.classList.remove('hidden'); 
+        check.classList.remove('hidden');
         setTimeout(() => {
             this.#copied = false;
             copy.classList.remove('hidden');
-            check.classList.add('hidden'); 
+            check.classList.add('hidden');
         }, COPY_TIMEOUT);
     });
 
@@ -178,14 +178,14 @@ export default class EventPageView {
 
         const friendList = <HTMLElement>document.getElementById('friendList');
         if (friendList)
-            friendList.innerHTML = friendsTemplate({ 'users': friends });
+            friendList.innerHTML = friendsTemplate({'users': friends});
 
         this.#renderedFriends = document.querySelectorAll('[data-friendid]');
         this.#renderedFriends.forEach((item) => {
             item.classList.remove('friend-list-item_clicked', 'friend-list-item_not-available');
             item.dataset.toinvite = '';
             if (item) {
-                if (!availableFriends.filter(friend => friend.id === item.dataset.friendid)) {
+                if (availableFriends.filter(friend => friend.id === item.dataset.friendid).length == 0) {
                     item.classList.add('friend-list-item_not-available');
                 } else {
                     item.addEventListener('click', this.#friendClicked.bind(this, item));

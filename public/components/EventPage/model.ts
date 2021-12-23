@@ -105,7 +105,7 @@ export default class EventPageModel {
     }
 
     getFriends() {
-        fetchGet(ApiUrls.User + '/friends' + this.eventId, (data: FetchResponseData) => {
+        fetchGet(ApiUrls.User + '/friends', (data: FetchResponseData) => {
             const { status, json } = data;
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
