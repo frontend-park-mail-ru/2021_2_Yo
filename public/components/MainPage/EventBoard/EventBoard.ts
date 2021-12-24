@@ -1,9 +1,10 @@
-import { EventData } from '@/types';
+import { EventData, UrlPathnames } from '@/types';
 import Bus from '@eventbus/eventbus';
 import Events from '@eventbus/events';
 import * as errorTemplate from '@main-page/EventBoard/eventerror.hbs';
 import * as template from '@main-page/EventBoard/eventboard.hbs';
 import * as eventTemplate from '@main-page/EventBoard/eventcard.hbs';
+import * as eventEmptyTemplate from '@main-page/EventBoard/eventempty.hbs';
 import * as eventFavOnTemplate from '@main-page/EventBoard/eventfavon.hbs';
 import * as eventFavOffTemplate from '@main-page/EventBoard/eventfavoff.hbs';
 import '@main-page/EventBoard/EventBoard.scss';
@@ -82,6 +83,12 @@ export default class EventBoardComponent {
         const target = <HTMLElement>e.target;
         const id = target.dataset['fav'];
         if (id) {
+            const user = UserStore.get();
+            if (user === undefined) {
+                Bus.emit(Events.RouteUrl, UrlPathnames.Login);
+                return;
+            }
+
             const fav = <HTMLElement>document.getElementById('event-fav-' + id);
             if (target.dataset['status'] === 'on') {
                 Bus.emit(Events.EventRemoveFavReq, id);
@@ -104,12 +111,11 @@ export default class EventBoardComponent {
 
     render(data?: EventData[]) {
         this.#parent.innerHTML = '';
-        const user = UserStore.get() ? true : false;
 
-        for (let i = 0; i < this.#cols; i++) {
-            this.#parent.innerHTML += template(i);
-        }
-        if (data) {
+        if (data && data.length > 0) {
+            for (let i = 0; i < this.#cols; i++) {
+                this.#parent.innerHTML += template(i);
+            }
             const cols: HTMLElement[] = [];
             for (let i = 0; i < this.#cols; i++) {
                 const col = <HTMLElement>document.getElementById('event-column-' + i.toString());
@@ -117,11 +123,10 @@ export default class EventBoardComponent {
             }
             data.map((event, index) => {
                 const colNum = index % this.#cols;
-                cols[colNum].innerHTML += eventTemplate({
-                    event: event,
-                    user: user,
-                });
+                cols[colNum].innerHTML += eventTemplate({ event: event });
             });
+        } else {
+            this.#parent.innerHTML += eventEmptyTemplate();
         }
         this.#board = <HTMLElement>document.getElementById('event-board-wrapper');
         this.#addListeners();
