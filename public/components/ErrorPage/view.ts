@@ -1,4 +1,5 @@
 import * as template from '@error-page/errorpage.hbs';
+import '@error-page/ErrorPage.scss';
 
 export default class ErrorPageView {
     #parent: HTMLElement;
