@@ -1,6 +1,6 @@
 <p  align="center">
 
-<a href="https://bmstusa.ru" target="_blank" rel="noopener noreferrer">
+<a href="https://bmstusa.ru" rel="noopener">
 
 <img src="https://bmstusa.ru/images/91375b53-227d-47e8-be8d-195835beb520.webp"  alt="Project logo"></a>
 
