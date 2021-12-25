@@ -35,7 +35,11 @@ class Router {
         for (const target of path) {
             if (target instanceof HTMLAnchorElement) {
                 e.preventDefault();
-                this.route(<UrlPathnames>(target.pathname + target.search), <string>target.dataset.out);
+                if (target['target'] === '_blank') {
+                    window.open(target['href'], '_blank');
+                } else {
+                    this.route(<UrlPathnames>(target.pathname + target.search), <string>target.dataset.out);
+                }
                 break;
             }
         }

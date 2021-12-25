@@ -7,6 +7,8 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+
 
 function getDotEnvPlugin(mode) {
     if (mode === 'development') {
@@ -52,11 +54,15 @@ module.exports = (env, argv) => {
             ],
         },
         optimization: {
+            minimize: true,
             splitChunks: {
                 chunks: 'all'
             },
             minimizer: [
                 new CssMinimizerPlugin(),
+                new TerserPlugin({
+                    parallel: true,
+                }),
             ],
         },
         output: {

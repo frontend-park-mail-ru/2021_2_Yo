@@ -24,16 +24,16 @@ export default class ProfilePageModel {
 
     }
 
-    editUser(data: MultipartData) {
+    editUser(mdata: MultipartData) {
         const newUserInfo = {
-            name: <string>data['input'].get('name')?.value,
-            surname: <string>data['input'].get('surname')?.value,
-            description: <string>data['input'].get('selfDescription')?.value,
+            name: <string>mdata['input'].get('name')?.value,
+            surname: <string>mdata['input'].get('surname')?.value,
+            description: <string>mdata['input'].get('selfDescription')?.value,
         };
 
         const stored = <UserData>UserStore.get();
 
-        if (!data.file &&
+        if (!mdata.file &&
             stored.name === newUserInfo.name &&
             stored.surname === newUserInfo.surname &&
             stored.description === newUserInfo.description) {
@@ -45,14 +45,17 @@ export default class ProfilePageModel {
 
             fetchPostMultipart(ApiUrls.User + '/info', {
                 json: stored,
-                file: data['file']
+                file: mdata['file']
             }, (data: FetchResponseData) => {
                 const { status, json } = data;
                 if (status === ApiStatus.Ok) {
                     if (json.status === ApiStatus.Ok) {
                         UserStore.reset();
-                        Bus.emit(Events.UserRes, stored);
-                        return;
+                        if (!mdata['file']) {
+                            Bus.emit(Events.UserRes, stored);
+                        } else {
+                            Bus.emit(Events.UserReq);
+                        }
                     }
                 }
             });

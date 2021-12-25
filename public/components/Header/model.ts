@@ -17,16 +17,9 @@ export default class HeaderModel {
 
     #wsOpen() {
         this.#ws = new WebSocket(WS);
-        this.#ws.addEventListener('open', this.#wsOpenHandle);
         this.#ws.addEventListener('message', this.#wsMessageHandle);
         this.#ws.addEventListener('close', this.#wsCloseHandle);
     }
-
-    #wsOpenHandle = () => {
-        // const user = UserStore.get();
-        // if (!user) return;
-        // this.#ws?.send(JSON.stringify({ id: user['id'] }));
-    };
 
     #wsMessageHandle = (event: MessageEvent) => {
         const data = JSON.parse(event['data']);
@@ -37,6 +30,10 @@ export default class HeaderModel {
     };
 
     #wsCloseHandle = () => {
+        const user = UserStore.get();
+        if (user) {
+            this.#wsOpen();
+        }
     };
 
     #notificationsReqHandle = () => {
@@ -96,6 +93,7 @@ export default class HeaderModel {
     #logoutHandle = () => {
         void fetchGet(ApiUrls.Logout);
         Bus.emit(Events.CSRFDelete);
+        this.#ws?.close();
     };
 
     disable() {

@@ -12,22 +12,20 @@
                 </svg>
                 {{event.viewed}}
             </div>
-            {{#if user}}
-                {{#if event.favourite}}
-                <div id="event-fav-{{event.id}}"
-                    class="event-img-overlay__star event-img-overlay__item event-img-overlay__item_selected"
-                    data-fav="{{event.id}}" data-status="on">
-                    <svg class="star-img" data-fav="{{event.id}}" data-status="on">
-                        <use xlink:href="./server/img/sprite.svg#star-selected" data-fav="{{event.id}}" data-status="on"></use>
-                {{else}}
-                <div id="event-fav-{{event.id}}" class="event-img-overlay__star event-img-overlay__item"
-                    data-fav="{{event.id}}" data-status="off">
-                    <svg class="star-img" data-fav="{{event.id}}" data-status="off">
-                        <use xlink:href="./server/img/sprite.svg#star" data-fav="{{event.id}}" data-status="off"></use>
-                {{/if}}
-                    </svg>
-                </div>
+            {{#if event.favourite}}
+            <div id="event-fav-{{event.id}}"
+                class="event-img-overlay__star event-img-overlay__item event-img-overlay__item_selected"
+                data-fav="{{event.id}}" data-status="on">
+                <svg class="star-img" data-fav="{{event.id}}" data-status="on">
+                    <use xlink:href="./server/img/sprite.svg#star-selected" data-fav="{{event.id}}" data-status="on"></use>
+            {{else}}
+            <div id="event-fav-{{event.id}}" class="event-img-overlay__star event-img-overlay__item"
+                data-fav="{{event.id}}" data-status="off">
+                <svg class="star-img" data-fav="{{event.id}}" data-status="off">
+                    <use xlink:href="./server/img/sprite.svg#star" data-fav="{{event.id}}" data-status="off"></use>
             {{/if}}
+                </svg>
+            </div>
             <div class="event-img-overlay-info">
                 <div class="event-img-overlay-info__title">{{event.title}}</div>
                 <div class="event-img-overlay-info__meta">{{event.city}},{{event.date}}</div>

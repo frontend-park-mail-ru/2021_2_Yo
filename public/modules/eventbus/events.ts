@@ -66,8 +66,10 @@ enum Events {
     SubscribeRes = 'subscribe:response',
     UnsubscribeReq = 'unsubscribe:request',
     UnsubscribeRes = 'unsubscribe:response',
-    FriendsReq = 'friends:request',
-    FriendsRes = 'friends:response',
+    FriendsAvailableReq = 'friends-available:request',
+    FriendsAvailableRes = 'friends-available:response',
+    FriendsReq = 'friends-all:request',
+    FriendsRes = 'friends-all:response',
 
     // Invite
     InviteReq = 'invite:request',

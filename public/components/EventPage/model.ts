@@ -91,8 +91,21 @@ export default class EventPageModel {
         });
     }
 
-    getFriends() {
+    getAvailableFriends() {
         fetchGet(ApiUrls.User + '/friends?eventId=' + this.eventId, (data: FetchResponseData) => {
+            const { status, json } = data;
+            if (status === ApiStatus.Ok) {
+                if (json.status === ApiStatus.Ok) {
+                    const users = <UserData[]>json.body.users;
+                    Bus.emit(Events.FriendsAvailableRes, users);
+                    return;
+                }
+            }
+        });
+    }
+
+    getFriends() {
+        fetchGet(ApiUrls.User + '/friends', (data: FetchResponseData) => {
             const { status, json } = data;
             if (status === ApiStatus.Ok) {
                 if (json.status === ApiStatus.Ok) {
@@ -104,8 +117,8 @@ export default class EventPageModel {
         });
     }
 
-    makeInvitation(userId: string) {
-        fetchPost(ApiUrls.User + '/' + userId + '/invite?eventId=' + this.eventId, {},
+    makeInvitation(usersId: string[]) {
+        fetchPost(ApiUrls.User + '/invite?eventId=' + this.eventId, { usersId },
             (data: FetchResponseData) => {
                 const { status, json } = data;
                 if (status === ApiStatus.Ok) {
