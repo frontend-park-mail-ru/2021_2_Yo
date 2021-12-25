@@ -1,10 +1,10 @@
-<p  align="center">
+<div style="text-align:center">
 
 <a href="https://bmstusa.ru" rel="noopener">
 
 <img src="https://bmstusa.ru/images/91375b53-227d-47e8-be8d-195835beb520.webp"  alt="Project logo"></a>
 
-</p>
+</div>
 
 <h2  align="center">BMSTUSA </h2>
 <h3  align="center">Молодёжный сервис для агрегирования мероприятий для вас и ваших друзей<h4>
